@@ -13,7 +13,8 @@ personnaliser et collectionner des cartes holographiques, pensée pour télépho
   Image · Carte · Talent · Attaque · Règle · Effet.
 - **19 types** avec icônes (18 types + incolore), image importée recadrable (zoom, position).
 - **10 effets holographiques**, effet à l'inclinaison au doigt ou à la souris, **gyroscope** (iPhone : autorisation demandée).
-- **Export en image** (PNG 840 × 1174) et partage (partage natif si le navigateur le permet).
+- **Export en image** (PNG 840 × 1174, bouton « Télécharger en image »).
+- **Partage en GIF animé** (bouton « Partager ») : un petit encodeur GIF89a écrit pour ce projet (quantification median-cut, LZW, sans dépendance ni worker) génère une boucle de 11 images montrant l'effet holo choisi en mouvement, puis utilise le partage natif du navigateur si disponible, sinon propose le téléchargement. Peut prendre plusieurs secondes sur téléphone (barre de progression affichée).
 - **Fluidité adaptative** : l'effet par défaut est composé de calques pré-dessinés simplement déplacés ;
   un gouverneur mesure le rythme de l'écran (120 / 90 / 60 Hz) et simplifie l'effet par paliers si besoin.
 
@@ -54,7 +55,8 @@ Les autres effets sont redessinés à chaque image et sont plus lourds sur tél�
 - **Connexion Google / Apple** : demande des identifiants OAuth, un serveur de vérification et une page hébergée
   sur ton propre domaine. Rattacher alors les cartes à l'identifiant du compte plutôt qu'au pseudo.
 - Convertir les 8 autres effets en calques déplacés (comme le holo classique) pour viser 120 Hz.
-- L'export PNG des effets autres que « classique » et « reverse à étoiles » est une approximation.
+- L'export PNG et le GIF animé, pour les effets autres que « classique » et « reverse à étoiles », sont une approximation.
+- Le GIF animé n'a pas été chronométré sur un vrai téléphone (seulement en navigateur de bureau, sans accélération graphique).
 - Les polices (Barlow, Barlow Condensed) viennent de `fonts.googleapis.com`.
 - Pas de tests automatisés dans ce dépôt.
 
