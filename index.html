@@ -354,6 +354,19 @@ body[data-q]:not([data-q="0"]) .sparkle,body[data-q]:not([data-q="0"]) .rev.spot
 .sso.a small{background:rgba(255,255,255,.2)}
 .sso small[hidden]{display:none}
 .sso:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.exp-box{max-width:380px;text-align:left}
+.exp-opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.exp-opt{display:flex;flex-direction:column;align-items:center;text-align:center;padding:18px 10px;border-radius:16px;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:#fff;cursor:pointer;transition:transform .15s,background .15s,border-color .15s;font-family:Barlow,sans-serif}
+.exp-opt:hover,.exp-opt:focus-visible{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.55);transform:translateY(-2px);outline:none}
+.exp-opt.hi{border-color:#6bd6ff;background:linear-gradient(135deg,rgba(107,214,255,.14),rgba(255,107,214,.14))}
+.exp-ico{font-size:30px;margin-bottom:8px}
+.exp-opt strong{font:600 14px 'Barlow Condensed',sans-serif;letter-spacing:.03em;margin-bottom:3px}
+.exp-opt small{font:400 11px/1.3 Barlow,sans-serif;opacity:.72}
+.exp-opt:disabled{opacity:.5;cursor:default;transform:none}
+.exp-prog{margin:14px 0 4px}
+.exp-track{height:7px;background:rgba(255,255,255,.15);border-radius:99px;overflow:hidden}
+.exp-fill{height:100%;width:0%;background:linear-gradient(90deg,#6bd6ff,#ff6bd6);transition:width .12s linear;border-radius:99px}
+.exp-lbl{font:500 12px Barlow,sans-serif;text-align:center;margin:7px 0 0;opacity:.8}
 </style>
 </head>
 <body class="locked">
@@ -428,6 +441,18 @@ body[data-q]:not([data-q="0"]) .sparkle,body[data-q]:not([data-q="0"]) .rev.spot
 <button type="button" id="e-del" class="linkbtn">Supprimer cette carte</button>
 <div class="toast" id="toast" role="status"></div>
 <div class="cfm" id="cfm" hidden><div class="cfm-box" role="alertdialog" aria-modal="true" aria-labelledby="cfm-t" aria-describedby="cfm-p"><h3 id="cfm-t"></h3><p id="cfm-p"></p><div class="cfm-b"><button type="button" id="cfm-no" class="gbtn">Continuer</button><button type="button" id="cfm-yes" class="gbtn primary"></button></div></div></div>
+<div class="cfm" id="exp-modal" hidden>
+  <div class="cfm-box exp-box" role="dialog" aria-modal="true" aria-labelledby="exp-t">
+    <h3 id="exp-t">Télécharger ma carte</h3>
+    <p id="exp-desc" style="margin:0 0 4px;font:400 14px/1.4 Barlow,sans-serif;opacity:.8">Choisis le format :</p>
+    <div class="exp-opts">
+      <button type="button" id="exp-opt-png" class="exp-opt"><span class="exp-ico">📸</span><strong>Image fixe</strong><small>PNG haute résolution<br>840 × 1 174 px</small></button>
+      <button type="button" id="exp-opt-gif" class="exp-opt hi"><span class="exp-ico">✨</span><strong>Animation holo</strong><small>GIF animé en boucle<br>reflets holographiques</small></button>
+    </div>
+    <div id="exp-prog" class="exp-prog" hidden><div class="exp-track"><div id="exp-fill" class="exp-fill"></div></div><p id="exp-lbl" class="exp-lbl">Génération… 0 %</p></div>
+    <div class="cfm-b"><button type="button" id="exp-close" class="gbtn">Fermer</button></div>
+  </div>
+</div>
 <div class="intro" id="intro"><h2>Personnalise<br>ta carte</h2><button type="button" id="lesgo" class="lesgo">Let's go</button></div>
 
 <script>
@@ -1000,7 +1025,44 @@ async function saveBlob(b,name){
   if(d){try{await d.save({filename:name,data:b})}catch(e){if(e&&e.code!=='declined')xmsg('Téléchargement impossible ici ('+(e.code||'erreur')+').')}return}
   const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.append(a);a.click();a.remove();
 }
-$('dl').addEventListener('click',async()=>{try{await saveBlob(await pngBlob())}catch(e){xmsg('Impossible de créer l\u2019image.')}});
+/* ---- modale d'export : choix Image fixe (PNG) / Animation holo (GIF) ---- */
+let expIntent='download';
+function openExpModal(intent){
+  expIntent=intent;
+  $('exp-t').textContent=intent==='share'?'Partager ma carte':'Télécharger ma carte';
+  $('exp-desc').textContent=intent==='share'?'Choisis le format à partager :':'Choisis le format à télécharger :';
+  $('exp-prog').hidden=true;$('exp-fill').style.width='0%';
+  $('exp-opt-png').disabled=$('exp-opt-gif').disabled=false;
+  $('exp-modal').hidden=false;$('exp-opt-png').focus();
+}
+function closeExpModal(){$('exp-modal').hidden=true}
+$('exp-close').addEventListener('click',closeExpModal);
+$('exp-modal').addEventListener('click',e=>{if(e.target.id==='exp-modal')closeExpModal()});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('exp-modal').hidden)closeExpModal()});
+async function deliver(blob,name,type,title){
+  if(expIntent==='share'){
+    const f=new File([blob],name,{type});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title});return}catch(e){if(e.name==='AbortError')return}}
+    xmsg('Le partage direct n\u2019est pas disponible ici : le fichier est proposé en téléchargement.');
+  }
+  await saveBlob(blob,name);
+}
+$('exp-opt-png').addEventListener('click',async()=>{
+  closeExpModal();
+  try{await deliver(await pngBlob(),fileName(),'image/png',cur.name||'MyCard')}
+  catch(e){xmsg('Impossible de créer l\u2019image.')}
+});
+$('exp-opt-gif').addEventListener('click',async()=>{
+  const bp=$('exp-opt-png'),bg=$('exp-opt-gif'),prog=$('exp-prog'),fill=$('exp-fill'),lbl=$('exp-lbl');
+  bp.disabled=bg.disabled=true;prog.hidden=false;fill.style.width='0%';lbl.textContent='Génération… 0 %';
+  const onp=(i,n)=>{if(i==null){lbl.textContent='Finalisation…';return}const pct=Math.round(i/n*100);fill.style.width=pct+'%';lbl.textContent='Génération… '+pct+' %'};
+  try{
+    const blob=await gifBlob(onp);closeExpModal();
+    await deliver(blob,gifName(),'image/gif',(cur.name||'MyCard')+' (Holo)');
+  }catch(e){xmsg('Impossible de créer le GIF animé.')}
+  finally{bp.disabled=bg.disabled=false}
+});
+$('dl').addEventListener('click',()=>openExpModal('download'));
 /* ---- GIF animé : montre l'effet holo choisi en train de bouger, pour le partage ---- */
 const gifName=()=>((cur.name||'MyCard').replace(/[^\w\-]+/g,'_')||'MyCard')+'.gif';
 async function gifFrames(onProgress){
@@ -1021,16 +1083,7 @@ async function gifBlob(onProgress){
   const bytes=buildGIF(frames,W,H,8,0,96);
   return new Blob([bytes],{type:'image/gif'});
 }
-$('sh').addEventListener('click',async()=>{
-  const b=$('sh');if(b.disabled)return;b.disabled=true;const old=b.textContent;
-  const prog=(i,n)=>{b.textContent=i==null?'Finalisation…':`Création du GIF… ${i}/${n}`};prog(0,11);
-  try{
-    const blob=await gifBlob(prog),f=new File([blob],gifName(),{type:'image/gif'});
-    if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:'MyCard'});return}catch(e){if(e.name==='AbortError')return}}
-    xmsg('Le partage direct n\u2019est pas disponible ici : le GIF est proposé en téléchargement.');await saveBlob(blob,gifName());
-  }catch(e){xmsg('Impossible de créer le GIF animé.')}
-  finally{b.disabled=false;b.textContent=old}
-});
+$('sh').addEventListener('click',()=>openExpModal('share'));
 
 
 /* ---- deck : bibliothèque + éventail, sauvegarde dans le navigateur ---- */

@@ -14,7 +14,8 @@ personnaliser et collectionner des cartes holographiques, pensée pour télépho
 - **19 types** avec icônes (18 types + incolore), image importée recadrable (zoom, position).
 - **10 effets holographiques**, effet à l'inclinaison au doigt ou à la souris, **gyroscope** (iPhone : autorisation demandée).
 - **Export en image** (PNG 840 × 1174, bouton « Télécharger en image »).
-- **Partage en GIF animé** (bouton « Partager ») : un petit encodeur GIF89a écrit pour ce projet (quantification median-cut, LZW, sans dépendance ni worker) génère une boucle de 11 images montrant l'effet holo choisi en mouvement, puis utilise le partage natif du navigateur si disponible, sinon propose le téléchargement. Peut prendre plusieurs secondes sur téléphone (barre de progression affichée).
+- **Fenêtre d'export unifiée** : les boutons « Télécharger en image » et « Partager » ouvrent la même fenêtre, avec le choix entre **Image fixe** (PNG) et **Animation holo** (GIF), une vraie barre de progression pendant la génération du GIF, puis le partage natif du navigateur si disponible, sinon le téléchargement.
+- **GIF animé** : un petit encodeur GIF89a écrit pour ce projet (quantification median-cut, LZW, sans dépendance ni worker) génère une boucle de 11 images montrant l'effet holo choisi en mouvement. Peut prendre plusieurs secondes sur téléphone.
 - **Fluidité adaptative** : l'effet par défaut est composé de calques pré-dessinés simplement déplacés ;
   un gouverneur mesure le rythme de l'écran (120 / 90 / 60 Hz) et simplifie l'effet par paliers si besoin.
 
