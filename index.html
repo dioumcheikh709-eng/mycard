@@ -354,6 +354,19 @@ body[data-q]:not([data-q="0"]) .sparkle,body[data-q]:not([data-q="0"]) .rev.spot
 .sso.a small{background:rgba(255,255,255,.2)}
 .sso small[hidden]{display:none}
 .sso:focus-visible{outline:3px solid #fff;outline-offset:3px}
+/* ---- modal export PNG / GIF ---- */
+.exp-box{max-width:380px;text-align:left}
+.exp-opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.exp-opt{display:flex;flex-direction:column;align-items:center;text-align:center;padding:18px 10px;border-radius:16px;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:#fff;cursor:pointer;transition:transform .15s,background .15s,border-color .15s;font-family:Barlow,sans-serif}
+.exp-opt:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.55);transform:translateY(-2px)}
+.exp-opt.hi{border-color:#6bd6ff;background:linear-gradient(135deg,rgba(107,214,255,.14),rgba(255,107,214,.14))}
+.exp-ico{font-size:30px;margin-bottom:8px}
+.exp-opt strong{font:600 14px 'Barlow Condensed',sans-serif;letter-spacing:.03em;margin-bottom:3px}
+.exp-opt small{font:400 11px/1.3 Barlow,sans-serif;opacity:.72}
+.exp-prog{margin:14px 0 4px}
+.exp-track{height:7px;background:rgba(255,255,255,.15);border-radius:99px;overflow:hidden}
+.exp-fill{height:100%;width:0%;background:linear-gradient(90deg,#6bd6ff,#ff6bd6);transition:width .12s linear;border-radius:99px}
+.exp-lbl{font:500 12px Barlow,sans-serif;text-align:center;margin:7px 0 0;opacity:.8}
 </style>
 </head>
 <body class="locked">
@@ -428,6 +441,30 @@ body[data-q]:not([data-q="0"]) .sparkle,body[data-q]:not([data-q="0"]) .rev.spot
 <button type="button" id="e-del" class="linkbtn">Supprimer cette carte</button>
 <div class="toast" id="toast" role="status"></div>
 <div class="cfm" id="cfm" hidden><div class="cfm-box" role="alertdialog" aria-modal="true" aria-labelledby="cfm-t" aria-describedby="cfm-p"><h3 id="cfm-t"></h3><p id="cfm-p"></p><div class="cfm-b"><button type="button" id="cfm-no" class="gbtn">Continuer</button><button type="button" id="cfm-yes" class="gbtn primary"></button></div></div></div>
+<!-- Modal export PNG / GIF -->
+<div class="cfm" id="exp-modal" hidden>
+  <div class="cfm-box exp-box" role="dialog" aria-modal="true" aria-labelledby="exp-t">
+    <h3 id="exp-t">Télécharger ma carte</h3>
+    <p id="exp-desc" style="margin:0 0 4px;font:400 14px/1.4 Barlow,sans-serif;opacity:.8">Choisis le format :</p>
+    <div class="exp-opts">
+      <button type="button" id="exp-opt-png" class="exp-opt">
+        <span class="exp-ico">📸</span>
+        <strong>Image fixe</strong>
+        <small>PNG haute résolution<br>840 × 1 174 px</small>
+      </button>
+      <button type="button" id="exp-opt-gif" class="exp-opt hi">
+        <span class="exp-ico">✨</span>
+        <strong>Animation holo</strong>
+        <small>GIF animé en boucle<br>reflets holographiques</small>
+      </button>
+    </div>
+    <div id="exp-prog" class="exp-prog" hidden>
+      <div class="exp-track"><div id="exp-fill" class="exp-fill"></div></div>
+      <p id="exp-lbl" class="exp-lbl">Génération... 0 %</p>
+    </div>
+    <div class="cfm-b"><button type="button" id="exp-close" class="gbtn">Fermer</button></div>
+  </div>
+</div>
 <div class="intro" id="intro"><h2>Personnalise<br>ta carte</h2><button type="button" id="lesgo" class="lesgo">Let's go</button></div>
 
 <script>
@@ -841,21 +878,141 @@ async function drawCard(c0,op){
   return cv;
 }
 const xmsg=m=>{hint.textContent=m};
-const fileName=()=>((cur.name||'MyCard').replace(/[^\w\-]+/g,'_')||'MyCard')+'.png';
+const fileBase=ext=>((cur.name||'MyCard').replace(/[^\w\-]+/g,'_')||'MyCard')+'.'+ext;
 async function pngBlob(){const cv=await drawCard();return new Promise(ok=>cv.toBlob(ok,'image/png'))}
-async function saveBlob(b){
-  const d=window.claude&&claude.use?await claude.use('downloads'):null;
-  if(d){try{await d.save({filename:fileName(),data:b})}catch(e){if(e&&e.code!=='declined')xmsg('Téléchargement impossible ici ('+(e.code||'erreur')+').')}return}
-  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=fileName();document.body.append(a);a.click();a.remove();
+async function saveBlob(b,ext){
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=fileBase(ext||'png');document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);
 }
-$('dl').addEventListener('click',async()=>{try{await saveBlob(await pngBlob())}catch(e){xmsg('Impossible de créer l\u2019image.')}});
-$('sh').addEventListener('click',async()=>{
+
+/* ---- Encodeur GIF89a pur JS (LZW, 256 couleurs, sans dépendance) ---- */
+async function createGifBlob(c,onPct){
+  const W=200,H=Math.round(W*475/340),FRAMES=24,DELAY=4; /* 24 frames, 40 ms chacune ≈ 25 fps */
+  const bytes=[];
+  const byte=v=>bytes.push(v&0xff);
+  const word=v=>{byte(v);byte(v>>8)};
+  const str=s=>{for(let i=0;i<s.length;i++)byte(s.charCodeAt(i))};
+
+  /* Palette 256 couleurs : spectre + niveaux de gris */
+  const pal=[];
+  for(let i=0;i<192;i++){const h=i/192;const r=Math.round(255*Math.max(0,Math.min(1,Math.abs(h*6-3)-1)));const g=Math.round(255*Math.max(0,Math.min(1,2-Math.abs(h*6-2))));const b=Math.round(255*Math.max(0,Math.min(1,2-Math.abs(h*6-4))));pal.push([r,g,b])}
+  for(let i=0;i<64;i++){const v=Math.round(i*4);pal.push([v,v,v])}
+
+  /* Quantification rapide : index couleur la plus proche dans la palette */
+  const palBuf=new Uint8Array(256*3);pal.forEach(([r,g,b],i)=>{palBuf[i*3]=r;palBuf[i*3+1]=g;palBuf[i*3+2]=b});
+  function nearestIdx(r,g,b){let best=0,bd=1e9;for(let i=0;i<256;i++){const dr=r-palBuf[i*3],dg=g-palBuf[i*3+1],db=b-palBuf[i*3+2],d=dr*dr+dg*dg+db*db;if(d<bd){bd=d;best=i}}return best}
+
+  /* LZW compress */
+  function lzwEncode(indices){
+    const minSize=8,clr=256,eoi=257;
+    let codeSize=minSize+1,maxCode=512,next=eoi+1;
+    const table=new Map();
+    const out=[];let buf=0,bits=0;
+    const emit=code=>{buf|=code<<bits;bits+=codeSize;while(bits>=8){out.push(buf&0xff);buf>>=8;bits-=8}};
+    const flush=()=>{if(bits>0)out.push(buf&0xff)};
+    emit(clr);let prev=indices[0];
+    for(let i=1;i<indices.length;i++){
+      const cur=indices[i];const key=(prev<<8)|cur;
+      if(table.has(key)){prev=table.get(key)}
+      else{emit(prev);if(next<4096){table.set(key,next++);if(next>maxCode&&codeSize<12){codeSize++;maxCode<<=1}}else{emit(clr);table.clear();codeSize=minSize+1;maxCode=512;next=eoi+1}prev=cur}
+    }
+    emit(prev);emit(eoi);flush();return out;
+  }
+
+  /* En-tête GIF89a */
+  str('GIF89a');word(W);word(H);byte(0xf7);byte(0);byte(0); /* packed: gct, 256 colors */
+  for(const [r,g,b] of pal){byte(r);byte(g);byte(b)}
+  /* Netscape loop */
+  byte(0x21);byte(0xff);byte(0x0b);str('NETSCAPE2.0');byte(3);byte(1);word(0);byte(0);
+
+  /* Canvas de rendu */
+  const cv=document.createElement('canvas');cv.width=W;cv.height=H;
+  const ctx=cv.getContext('2d');
+
+  for(let f=0;f<FRAMES;f++){
+    /* Dessiner la carte à l'angle de ce frame */
+    const t=f/FRAMES;
+    const mx=50+Math.sin(t*Math.PI*2)*40;
+    const my=50+Math.cos(t*Math.PI*2*0.8)*30;
+    const rx=Math.cos(t*Math.PI*2*0.8)*6;
+    const ry=Math.sin(t*Math.PI*2)*8;
+
+    /* Dessiner la carte complète via drawCard() avec position simulée */
+    const srcW=840,srcH=1174;
+    const src=await drawCard(mx,my,0.7);
+    ctx.clearRect(0,0,W,H);
+    ctx.save();
+    ctx.translate(W/2,H/2);
+    ctx.transform(1,ry*0.003,rx*-0.003,1,0,0);
+    ctx.drawImage(src,-W/2,-H/2,W,H);
+    ctx.restore();
+
+    /* Récupérer les pixels et quantifier */
+    const px=ctx.getImageData(0,0,W,H).data;
+    const indices=new Uint8Array(W*H);
+    for(let i=0;i<W*H;i++){indices[i]=nearestIdx(px[i*4],px[i*4+1],px[i*4+2])}
+
+    /* Graphic Control Extension : délai */
+    byte(0x21);byte(0xf9);byte(4);byte(0);word(DELAY);byte(0);byte(0);
+    /* Image descriptor */
+    byte(0x2c);word(0);word(0);word(W);word(H);byte(0);
+    /* LZW image data */
+    byte(8); /* min LZW code size */
+    const lzw=lzwEncode(indices);
+    for(let i=0;i<lzw.length;i+=255){
+      const chunk=lzw.slice(i,i+255);byte(chunk.length);for(const b of chunk)byte(b);
+    }
+    byte(0); /* block terminator */
+
+    if(onPct)onPct(Math.round((f+1)/FRAMES*100));
+    /* Yield au browser toutes les 4 frames */
+    if(f%4===3)await new Promise(r=>setTimeout(r,0));
+  }
+  byte(0x3b); /* trailer */
+  return new Blob([new Uint8Array(bytes)],{type:'image/gif'});
+}
+
+/* ---- Modal export ---- */
+let expIntent='download';
+function openExpModal(intent){
+  expIntent=intent;
+  $('exp-t').textContent=intent==='share'?'Partager ma carte':'Télécharger ma carte';
+  $('exp-desc').textContent=intent==='share'?'Choisis le format à partager :':'Choisis le format à télécharger :';
+  $('exp-prog').hidden=true;$('exp-fill').style.width='0%';
+  $('exp-modal').hidden=false;
+}
+$('exp-close').addEventListener('click',()=>{$('exp-modal').hidden=true});
+$('dl').addEventListener('click',()=>openExpModal('download'));
+$('sh').addEventListener('click',()=>openExpModal('share'));
+
+$('exp-opt-png').addEventListener('click',async()=>{
+  $('exp-modal').hidden=true;
   try{
-    const b=await pngBlob(),f=new File([b],fileName(),{type:'image/png'});
-    if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:'MyCard'});return}catch(e){if(e.name==='AbortError')return}}
-    xmsg('Le partage direct n\u2019est pas disponible ici : l\u2019image est proposée en téléchargement.');await saveBlob(b);
-  }catch(e){xmsg('Impossible de créer l\u2019image.')}
+    const b=await pngBlob();
+    if(expIntent==='share'){
+      const f=new File([b],fileBase('png'),{type:'image/png'});
+      if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:cur.name||'MyCard'});return}catch(e){if(e.name==='AbortError')return}}
+      xmsg('Partage non disponible : l\'image est téléchargée.');
+    }
+    await saveBlob(b,'png');
+  }catch(e){xmsg('Impossible de créer l\'image.')}
 });
+
+$('exp-opt-gif').addEventListener('click',async()=>{
+  const prog=$('exp-prog'),fill=$('exp-fill'),lbl=$('exp-lbl');
+  prog.hidden=false;fill.style.width='0%';lbl.textContent='Génération du GIF... 0 %';
+  try{
+    const b=await createGifBlob(cur,pct=>{fill.style.width=pct+'%';lbl.textContent='Génération du GIF... '+pct+' %'});
+    $('exp-modal').hidden=true;
+    if(expIntent==='share'){
+      const f=new File([b],fileBase('gif'),{type:'image/gif'});
+      if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:(cur.name||'MyCard')+' (Holo)'});return}catch(e){if(e.name==='AbortError')return}}
+      xmsg('Partage non disponible : le GIF est téléchargé.');
+    }
+    await saveBlob(b,'gif');
+  }catch(e){prog.hidden=true;xmsg('Erreur lors de la création du GIF.')}
+});
+
+
 
 
 /* ---- deck : bibliothèque + éventail, sauvegarde dans le navigateur ---- */
