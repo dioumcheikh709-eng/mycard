@@ -13,7 +13,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MyCard holographique</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500&family=Tajawal:wght@400;500;700&display=swap">
 <style>
 :root{
   box-sizing:border-box;
@@ -146,7 +146,7 @@ body{margin:0;min-height:100vh;box-sizing:border-box;padding:24px 16px;backgroun
 .glare{z-index:5;mix-blend-mode:overlay;opacity:.5;overflow:hidden}
 
 /* ---- card text ---- */
-.ui{inset:0;z-index:3;pointer-events:none;color:#fff;font-family:'Barlow Condensed',Impact,sans-serif;text-shadow:0 1px 2px #000b;container-type:inline-size}
+.ui{inset:0;z-index:3;pointer-events:none;color:#fff;font-family:'Barlow Condensed',Impact,sans-serif;text-shadow:0 1px 2px #000b;container-type:inline-size;direction:ltr}
 .ui>*{position:absolute}
 .vbadge{left:5%;top:3.6%;font:italic 700 3.4cqw/1 'Barlow Condensed';background:#fffd;color:#222;padding:.8cqw 2.2cqw;border-radius:99px 1cqw 1cqw 99px;text-shadow:none;letter-spacing:.02em}
 .name{left:19%;top:2.4%;font:700 9.2cqw/1.1 'Barlow Condensed';letter-spacing:-.01em;white-space:nowrap}
@@ -188,7 +188,7 @@ body{margin:0;min-height:100vh;box-sizing:border-box;padding:24px 16px;backgroun
 .login p{margin:0;font:400 15px Barlow,sans-serif;opacity:.8}
 .login input{width:100%;box-sizing:border-box;font:400 16px Barlow,sans-serif;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:10px;padding:12px 14px;text-align:center}
 .login input:focus-visible,.who button:focus-visible{outline:2px solid currentColor;outline-offset:2px}
-body.locked>:not(#login):not(.bg){display:none!important}
+body.locked>:not(#login):not(#lang-pick):not(.bg){display:none!important}
 body.locked .login{display:flex}
 .who{font:500 13px Barlow,sans-serif;opacity:.8}
 .who button{font:inherit;color:inherit;background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
@@ -367,95 +367,329 @@ body[data-q]:not([data-q="0"]) .sparkle,body[data-q]:not([data-q="0"]) .rev.spot
 .exp-track{height:7px;background:rgba(255,255,255,.15);border-radius:99px;overflow:hidden}
 .exp-fill{height:100%;width:0%;background:linear-gradient(90deg,#6bd6ff,#ff6bd6);transition:width .12s linear;border-radius:99px}
 .exp-lbl{font:500 12px Barlow,sans-serif;text-align:center;margin:7px 0 0;opacity:.8}
+[dir=rtl] body,[dir=rtl] button,[dir=rtl] input,[dir=rtl] select,[dir=rtl] textarea,[dir=rtl] h1,[dir=rtl] h2,[dir=rtl] h3,[dir=rtl] p,[dir=rtl] span,[dir=rtl] small,[dir=rtl] strong,[dir=rtl] label,[dir=rtl] output{font-family:'Tajawal',Barlow,system-ui,sans-serif}
+[dir=rtl] .dk-tools,[dir=rtl] .who,[dir=rtl] .cfm-b,[dir=rtl] .actions,[dir=rtl] .nav,[dir=rtl] .exp-opts,[dir=rtl] .ask{direction:rtl}
+[dir=rtl] .dk-menu{right:auto;left:0}
+[dir=rtl] .dk-back{left:auto;right:max(12px,env(safe-area-inset-right))}
+[dir=rtl] .steps{direction:rtl}
+[dir=rtl] .ask{padding:6px 20px 6px 6px}
+[dir=rtl] .sso{padding:0 20px 0 84px}
+[dir=rtl] .sso small{right:auto;left:14px}
+[dir=rtl] .num::before{margin-right:0;margin-left:1.4cqw}
+.lang-pick .lgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+.lang-pick .lgrid button{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:14px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font:600 15px Barlow,sans-serif;cursor:pointer}
+.lang-pick .lgrid button:hover,.lang-pick .lgrid button:focus-visible{background:rgba(255,255,255,.18);border-color:#fff;outline:none}
+.lang-pick .lgrid span.flag{font-size:22px}
+.langbtn{display:inline-flex;align-items:center;gap:4px}
+.lang-menu{position:absolute;z-index:40;min-width:170px;box-sizing:border-box;padding:6px;border-radius:16px;background:rgba(22,44,160,.97);border:1px solid rgba(255,255,255,.28);box-shadow:0 16px 40px rgba(5,12,70,.55)}
+.lang-menu[hidden]{display:none}
+.lang-menu button{display:flex;align-items:center;gap:8px;width:100%;border:0;border-radius:10px;padding:9px 11px;background:none;color:#fff;font:500 14px Barlow,sans-serif;text-align:left;cursor:pointer}
+[dir=rtl] .lang-menu button{text-align:right}
+.lang-menu button:hover,.lang-menu button:focus-visible{background:rgba(255,255,255,.14);outline:none}
+.lang-menu button[aria-checked=true]{font-weight:700}
 </style>
 </head>
 <body class="locked">
 <div class="bg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-<button type="button" id="e-back" class="dk-back">‹ Deck</button>
+<button type="button" id="e-back" class="dk-back" data-i18n="stage.back">‹ Deck</button>
 <section id="login" class="login">
   <div class="logo" role="img" aria-label="MyCard">MyCard</div>
-  <p class="hello">Bienvenue :)</p>
-  <h1>Entre ton nom pour<br>créer ta carte</h1>
-  <div class="ask"><input id="u-name" type="text" maxlength="24" placeholder="Ton nom d'utilisateur" autocomplete="username" aria-label="Nom d'utilisateur"><button type="button" id="u-go" class="send" aria-label="Continuer"><svg viewBox="0 0 24 24"><path d="M3 11.5L21 3L13.5 21L11 13Z" fill="#fff"/></svg></button></div>
-  <div class="or" role="separator"><span>ou</span></div>
-  <button type="button" id="sso-google" class="sso g" aria-label="Se connecter avec Google (bientôt disponible)"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.98-3.09z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.98 3.09C6.22 6.86 8.87 4.75 12 4.75z"/></svg><span>Se connecter avec Google</span><small>bientôt</small></button>
-  <button type="button" id="sso-apple" class="sso a" aria-label="Se connecter avec Apple (bientôt disponible)"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span>Se connecter avec Apple</span><small>bientôt</small></button>
+  <p class="hello" data-i18n="login.hello">Bienvenue :)</p>
+  <h1 data-i18n-html="login.title">Entre ton nom pour<br>créer ta carte</h1>
+  <div class="ask"><input id="u-name" type="text" maxlength="24" placeholder="Ton nom d'utilisateur" autocomplete="username" aria-label="Nom d'utilisateur" data-i18n-ph="login.namePlaceholder" data-i18n-aria="login.nameAria"><button type="button" id="u-go" class="send" aria-label="Continuer" data-i18n-aria="login.continueAria"><svg viewBox="0 0 24 24"><path d="M3 11.5L21 3L13.5 21L11 13Z" fill="#fff"/></svg></button></div>
+  <div class="or" role="separator"><span data-i18n="login.or">ou</span></div>
+  <button type="button" id="sso-google" class="sso g" aria-label="Se connecter avec Google (bientôt disponible)" data-i18n-aria="login.googleAria"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.98-3.09z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.98 3.09C6.22 6.86 8.87 4.75 12 4.75z"/></svg><span data-i18n="login.googleBtn">Se connecter avec Google</span><small data-i18n="login.soon">bientôt</small></button>
+  <button type="button" id="sso-apple" class="sso a" aria-label="Se connecter avec Apple (bientôt disponible)" data-i18n-aria="login.appleAria"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span data-i18n="login.appleBtn">Se connecter avec Apple</span><small data-i18n="login.soon">bientôt</small></button>
   <div class="hint" id="u-err" role="status"></div>
+  <p class="hint" style="margin-top:2px" data-i18n="login.uniqueNote"></p>
+</section>
+<section id="lang-pick" class="login lang-pick" hidden>
+  <div class="logo" role="img" aria-label="MyCard">MyCard</div>
+  <h1 data-i18n="lang.title">Choisis ta langue</h1>
+  <p class="hello" data-i18n="lang.subtitle">Tu pourras la changer plus tard.</p>
+  <div class="lgrid" id="lgrid"></div>
 </section>
 <section class="deck" id="deck" aria-label="Mon deck">
-  <header class="dk-head"><div><p class="dk-hello" id="dk-hello"></p><h1>Mon deck</h1><p class="dk-count" id="dk-count"></p></div>
-    <div class="dk-tools"><button type="button" id="dk-sort" class="dk-sort" aria-haspopup="menu" aria-expanded="false" aria-controls="dk-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg><span id="dk-sort-l">Récentes</span></button><div class="dk-menu" id="dk-menu" role="menu" aria-label="Trier les cartes" hidden></div><button type="button" id="dk-new" class="dk-plus" aria-label="Nouvelle carte">+</button></div></header>
+  <header class="dk-head"><div><p class="dk-hello" id="dk-hello"></p><h1 data-i18n="deck.title">Mon deck</h1><p class="dk-count" id="dk-count"></p></div>
+    <div class="dk-tools"><button type="button" id="dk-sort" class="dk-sort" aria-haspopup="menu" aria-expanded="false" aria-controls="dk-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg><span id="dk-sort-l" data-i18n="deck.sortDefault">Récentes</span></button><div class="dk-menu" id="dk-menu" role="menu" aria-label="Trier les cartes" data-i18n-aria="deck.sortAria" hidden></div><button type="button" id="lang-btn" class="gbtn langbtn" aria-haspopup="menu" aria-expanded="false"><span aria-hidden="true">🌐</span><span id="lang-btn-l"></span></button><div class="lang-menu" id="lang-menu2" role="menu" hidden></div><button type="button" id="dk-new" class="dk-plus" aria-label="Nouvelle carte">+</button></div></header>
   <div class="dk-grid" id="dk-grid"></div>
-  <p class="dk-empty" id="dk-empty" hidden>Ton deck est vide. Touche « Nouvelle carte » pour créer ta première carte.</p>
-  <button type="button" id="dk-change" class="linkbtn">changer d'utilisateur</button>
+  <p class="dk-empty" id="dk-empty" hidden data-i18n="deck.empty">Ton deck est vide. Touche « Nouvelle carte » pour créer ta première carte.</p>
+  <button type="button" id="dk-change" class="linkbtn" data-i18n="deck.changeUser">changer d'utilisateur</button>
 </section>
-<div class="who"><span id="who-n"></span> · <button type="button" id="u-change">changer</button></div>
+<div class="who"><span id="who-n"></span> · <button type="button" id="u-change" data-i18n="stage.change">changer</button> · <button type="button" id="who-lang-btn" class="langbtn" aria-haspopup="menu" aria-expanded="false"><span aria-hidden="true">🌐</span> <span id="who-lang-l"></span></button><div class="lang-menu" id="lang-menu1" role="menu" hidden></div></div>
 <div class="stage" id="stage"><div class="shadow" id="shadow"></div><div class="glow" id="glow"></div><div class="flipper" id="flipper"><div class="card" id="card"></div><div class="cardback"><div class="logo">MyCard</div></div></div></div>
-<div class="actions"><button type="button" id="dl" class="gbtn">Télécharger en image</button><button type="button" id="sh" class="gbtn">Partager</button></div>
-<div class="vbar"><button type="button" id="v-edit" class="gbtn primary">Personnaliser</button></div>
-<div class="hint" id="hint">Bouge la souris ou le doigt sur la carte</div>
-<button type="button" id="gyro" class="gbtn" hidden aria-pressed="false">Activer le gyroscope</button>
-<a id="gopen" class="glink" hidden target="_blank" rel="noopener">Ouvrir la page seule dans le navigateur</a>
+<div class="actions"><button type="button" id="dl" class="gbtn" data-i18n="stage.download">Télécharger en image</button><button type="button" id="sh" class="gbtn" data-i18n="stage.share">Partager</button></div>
+<div class="vbar"><button type="button" id="v-edit" class="gbtn primary" data-i18n="stage.personalize">Personnaliser</button></div>
+<div class="hint" id="hint" data-i18n="stage.hintDefault">Bouge la souris ou le doigt sur la carte</div>
+<button type="button" id="gyro" class="gbtn" hidden aria-pressed="false" data-i18n="stage.gyroActivate">Activer le gyroscope</button>
+<a id="gopen" class="glink" hidden target="_blank" rel="noopener" data-i18n="stage.gyroOpenAlone">Ouvrir la page seule dans le navigateur</a>
 <section class="panel" id="panel">
-  <nav class="steps" id="steps" aria-label="Étapes"></nav>
-  <div class="step editor" data-t="Image">
-    <label class="wide">Choisis ton image<input type="file" id="f-img" accept="image/*"></label>
-    <label class="wide">Zoom<input type="range" id="f-zoom" min="1" max="3" step="0.01" value="1"></label>
-    <label>Position horizontale<input type="range" id="f-x" min="-50" max="50" step="1" value="0"></label>
-    <label>Position verticale<input type="range" id="f-y" min="-50" max="50" step="1" value="0"></label>
-    <button type="button" id="f-center">Recentrer</button>
-    <button type="button" id="f-reset">Retirer l'image</button>
+  <nav class="steps" id="steps" aria-label="Étapes" data-i18n-aria="panel.stepsAria"></nav>
+  <div class="step editor" data-step="image">
+    <label class="wide"><span data-i18n="panel.image.choose">Choisis ton image</span><input type="file" id="f-img" accept="image/*"></label>
+    <label class="wide"><span data-i18n="panel.image.zoom">Zoom</span><input type="range" id="f-zoom" min="1" max="3" step="0.01" value="1"></label>
+    <label><span data-i18n="panel.image.posH">Position horizontale</span><input type="range" id="f-x" min="-50" max="50" step="1" value="0"></label>
+    <label><span data-i18n="panel.image.posV">Position verticale</span><input type="range" id="f-y" min="-50" max="50" step="1" value="0"></label>
+    <button type="button" id="f-center" data-i18n="panel.image.recenter">Recentrer</button>
+    <button type="button" id="f-reset" data-i18n="panel.image.remove">Retirer l'image</button>
   </div>
-  <div class="step editor" data-t="Carte" hidden>
-    <label class="wide">Nom de la carte<input type="text" id="f-name" maxlength="12"></label>
-    <label>PV<input type="text" id="f-hp" inputmode="numeric" maxlength="4"></label>
-    <label>Badge spécial<input type="text" id="f-special" maxlength="16"></label>
-    <label class="wide">Ligne « Evolves from » (vide = masquée)<input type="text" id="f-evo" maxlength="30"></label>
-    <div class="wide en-row"><span>Type de la carte</span><div class="tgrid" id="tgrid"></div></div>
+  <div class="step editor" data-step="card" hidden>
+    <label class="wide"><span data-i18n="panel.card.name">Nom de la carte</span><input type="text" id="f-name" maxlength="12"></label>
+    <label><span data-i18n="panel.card.hp">PV</span><input type="text" id="f-hp" inputmode="numeric" maxlength="4"></label>
+    <label><span data-i18n="panel.card.special">Badge spécial</span><input type="text" id="f-special" maxlength="16"></label>
+    <label class="wide"><span data-i18n="panel.card.evo">Ligne « Evolves from » (vide = masquée)</span><input type="text" id="f-evo" maxlength="30"></label>
+    <div class="wide en-row"><span data-i18n="panel.card.type">Type de la carte</span><div class="tgrid" id="tgrid"></div></div>
     <select id="f-type" hidden></select>
   </div>
-  <div class="step editor" data-t="Talent" hidden>
-    <label class="wide chk"><input type="checkbox" id="f-ab-on"> Afficher un talent</label>
-    <label class="wide">Nom du talent<input type="text" id="f-ab-n" maxlength="22"></label>
-    <label class="wide">Texte du talent<textarea id="f-ab-t" maxlength="260"></textarea></label>
+  <div class="step editor" data-step="ability" hidden>
+    <label class="wide chk"><input type="checkbox" id="f-ab-on"> <span data-i18n="panel.ability.show">Afficher un talent</span></label>
+    <label class="wide"><span data-i18n="panel.ability.name">Nom du talent</span><input type="text" id="f-ab-n" maxlength="22"></label>
+    <label class="wide"><span data-i18n="panel.ability.text">Texte du talent</span><textarea id="f-ab-t" maxlength="260"></textarea></label>
   </div>
-  <div class="step editor" data-t="Attaque" hidden>
-    <label>Nom de l'attaque<input type="text" id="f-atk" maxlength="22"></label>
-    <label>Dégâts<input type="text" id="f-dmg" maxlength="5"></label>
-    <label class="wide">Texte de l'attaque<textarea id="f-atkt" maxlength="260"></textarea></label>
-    <div class="wide en-row"><span>Énergies de l'attaque</span><div id="f-en"><select></select><select></select><select></select><select></select></div></div>
-    <label>Faiblesse<select id="f-weak"></select></label>
-    <label>Résistance<select id="f-res"></select></label>
+  <div class="step editor" data-step="attack" hidden>
+    <label><span data-i18n="panel.attack.name">Nom de l'attaque</span><input type="text" id="f-atk" maxlength="22"></label>
+    <label><span data-i18n="panel.attack.damage">Dégâts</span><input type="text" id="f-dmg" maxlength="5"></label>
+    <label class="wide"><span data-i18n="panel.attack.text">Texte de l'attaque</span><textarea id="f-atkt" maxlength="260"></textarea></label>
+    <div class="wide en-row"><span data-i18n="panel.attack.energies">Énergies de l'attaque</span><div id="f-en"><select></select><select></select><select></select><select></select></div></div>
+    <label><span data-i18n="panel.attack.weakness">Faiblesse</span><select id="f-weak"></select></label>
+    <label><span data-i18n="panel.attack.resistance">Résistance</span><select id="f-res"></select></label>
   </div>
-  <div class="step editor" data-t="Règle" hidden>
-    <label class="wide">Titre de la règle<input type="text" id="f-rt" maxlength="20"></label>
-    <label class="wide">Texte de la règle<textarea id="f-rx" maxlength="140"></textarea></label>
+  <div class="step editor" data-step="rule" hidden>
+    <label class="wide"><span data-i18n="panel.rule.title">Titre de la règle</span><input type="text" id="f-rt" maxlength="20"></label>
+    <label class="wide"><span data-i18n="panel.rule.text">Texte de la règle</span><textarea id="f-rx" maxlength="140"></textarea></label>
   </div>
-  <div class="step editor" data-t="Effet" hidden>
-    <div class="wide en-row"><span>Effet holographique</span><div class="fxgrid" id="fxgrid"></div></div>
+  <div class="step editor" data-step="effect" hidden>
+    <div class="wide en-row"><span data-i18n="panel.effect.label">Effet holographique</span><div class="fxgrid" id="fxgrid"></div></div>
     <select id="f-fx" hidden><option value="classic">Holo classique (diagonal, style V)</option><option value="reverse">Reverse holo (étoiles à 5 branches)</option><option value="regular">Holo régulier</option><option value="cosmos">Cosmos / galaxie</option><option value="sitereverse">Reverse holo foil</option><option value="vfull">V pleine illustration</option><option value="rainbow">Rainbow / secret</option><option value="shinyv">Shiny V</option><option value="amazing">Amazing Rare</option><option value="vmax">VMax</option></select>
-    <label class="wide"><span>Intensité de l'effet : <output id="kv">100%</output></span><input type="range" id="f-k" min="0" max="2" step="0.05" value="1"></label>
+    <label class="wide"><span data-i18n="panel.effect.intensity">Intensité de l'effet :</span> <output id="kv">100%</output><input type="range" id="f-k" min="0" max="2" step="0.05" value="1"></label>
   </div>
-  <div class="nav"><button type="button" id="s-prev" class="gbtn">← Précédent</button><button type="button" id="s-next" class="gbtn">Suivant →</button></div>
+  <div class="nav"><button type="button" id="s-prev" class="gbtn" data-i18n="panel.prev">← Précédent</button><button type="button" id="s-next" class="gbtn" data-i18n="panel.next">Suivant →</button></div>
 </section>
-<button type="button" id="e-del" class="linkbtn">Supprimer cette carte</button>
+<button type="button" id="e-del" class="linkbtn" data-i18n="panel.deleteCard">Supprimer cette carte</button>
 <div class="toast" id="toast" role="status"></div>
-<div class="cfm" id="cfm" hidden><div class="cfm-box" role="alertdialog" aria-modal="true" aria-labelledby="cfm-t" aria-describedby="cfm-p"><h3 id="cfm-t"></h3><p id="cfm-p"></p><div class="cfm-b"><button type="button" id="cfm-no" class="gbtn">Continuer</button><button type="button" id="cfm-yes" class="gbtn primary"></button></div></div></div>
+<div class="cfm" id="cfm" hidden><div class="cfm-box" role="alertdialog" aria-modal="true" aria-labelledby="cfm-t" aria-describedby="cfm-p"><h3 id="cfm-t"></h3><p id="cfm-p"></p><div class="cfm-b"><button type="button" id="cfm-no" class="gbtn" data-i18n="confirm.continue">Continuer</button><button type="button" id="cfm-yes" class="gbtn primary"></button></div></div></div>
 <div class="cfm" id="exp-modal" hidden>
   <div class="cfm-box exp-box" role="dialog" aria-modal="true" aria-labelledby="exp-t">
-    <h3 id="exp-t">Télécharger ma carte</h3>
-    <p id="exp-desc" style="margin:0 0 4px;font:400 14px/1.4 Barlow,sans-serif;opacity:.8">Choisis le format :</p>
+    <h3 id="exp-t" data-i18n="export.downloadTitle">Télécharger ma carte</h3>
+    <p id="exp-desc" style="margin:0 0 4px;font:400 14px/1.4 Barlow,sans-serif;opacity:.8" data-i18n="export.downloadDesc">Choisis le format :</p>
     <div class="exp-opts">
-      <button type="button" id="exp-opt-png" class="exp-opt"><span class="exp-ico">📸</span><strong>Image fixe</strong><small>PNG haute résolution<br>840 × 1 174 px</small></button>
-      <button type="button" id="exp-opt-gif" class="exp-opt hi"><span class="exp-ico">✨</span><strong>Animation holo</strong><small>GIF animé en boucle<br>reflets holographiques</small></button>
+      <button type="button" id="exp-opt-png" class="exp-opt"><span class="exp-ico">📸</span><strong data-i18n="export.pngTitle">Image fixe</strong><small data-i18n-html="export.pngDesc">PNG haute résolution<br>840 × 1 174 px</small></button>
+      <button type="button" id="exp-opt-gif" class="exp-opt hi"><span class="exp-ico">✨</span><strong data-i18n="export.gifTitle">Animation holo</strong><small data-i18n-html="export.gifDesc">GIF animé en boucle<br>reflets holographiques</small></button>
     </div>
-    <div id="exp-prog" class="exp-prog" hidden><div class="exp-track"><div id="exp-fill" class="exp-fill"></div></div><p id="exp-lbl" class="exp-lbl">Génération… 0 %</p></div>
-    <div class="cfm-b"><button type="button" id="exp-close" class="gbtn">Fermer</button></div>
+    <div id="exp-prog" class="exp-prog" hidden><div class="exp-track"><div id="exp-fill" class="exp-fill"></div></div><p id="exp-lbl" class="exp-lbl"></p></div>
+    <div class="cfm-b"><button type="button" id="exp-close" class="gbtn" data-i18n="export.close">Fermer</button></div>
   </div>
 </div>
-<div class="intro" id="intro"><h2>Personnalise<br>ta carte</h2><button type="button" id="lesgo" class="lesgo">Let's go</button></div>
+<div class="intro" id="intro"><h2 data-i18n-html="intro.title">Personnalise<br>ta carte</h2><button type="button" id="lesgo" class="lesgo" data-i18n="intro.go">Let's go</button></div>
 
 <script>
+const I18N={
+fr:{dir:'ltr',
+ 'login.hello':'Bienvenue :)','login.title':"Entre ton nom pour<br>créer ta carte",'login.namePlaceholder':"Ton nom d'utilisateur",'login.nameAria':"Nom d'utilisateur",'login.continueAria':'Continuer','login.or':'ou',
+ 'login.googleBtn':'Se connecter avec Google','login.googleAria':'Se connecter avec Google (bientôt disponible)','login.appleBtn':'Se connecter avec Apple','login.appleAria':'Se connecter avec Apple (bientôt disponible)','login.soon':'bientôt',
+ 'login.errNeedName':"Entre un nom d'utilisateur pour continuer.",'login.errProviderNotReady':"La connexion avec {provider} n'est pas encore activée. Continue avec ton nom d'utilisateur pour le moment.",'login.uniqueNote':"L'unicité du pseudo sera vérifiée une fois la connexion Google activée.",'deck.hello':'Bonjour, {user} :)',
+ 'lang.title':'Choisis ta langue','lang.subtitle':'Tu pourras la changer plus tard.',
+ 'deck.title':'Mon deck','deck.newTitle':'Nouvelle carte','deck.newDesc':'Crée une carte','deck.empty':'Ton deck est vide. Touche « Nouvelle carte » pour créer ta première carte.','deck.changeUser':"changer d'utilisateur",
+ 'deck.sortDefault':'Récentes','deck.sortAria':'Trier les cartes','deck.cardsOne':'carte','deck.cardsMany':'cartes','deck.changeLang':'langue',
+ 'deck.sort.added':'Plus récemment ajoutées','deck.sort.addedShort':'Ajout récent','deck.sort.first':'Ajoutées en premier','deck.sort.firstShort':'Ajout ancien',
+ 'deck.sort.recent':'Plus récemment modifiées','deck.sort.recentShort':'Modif. récente','deck.sort.old':'Modifiées il y a longtemps','deck.sort.oldShort':'Modif. ancienne',
+ 'deck.sort.az':'Nom A → Z','deck.sort.azShort':'A → Z','deck.sort.za':'Nom Z → A','deck.sort.zaShort':'Z → A',
+ 'deck.sort.pvd':'PV décroissants','deck.sort.pvdShort':'PV ↓','deck.sort.pva':'PV croissants','deck.sort.pvaShort':'PV ↑','deck.sort.type':'Par type','deck.sort.typeShort':'Type',
+ 'deck.group.added':"Date d'ajout",'deck.group.modified':'Dernière modification','deck.group.name':'Nom','deck.group.other':'Autres',
+ 'stage.back':'‹ Deck','stage.change':'changer','stage.download':'Télécharger en image','stage.share':'Partager','stage.personalize':'Personnaliser','stage.hintDefault':'Bouge la souris ou le doigt sur la carte',
+ 'stage.gyroActivate':'Activer le gyroscope','stage.gyroActive':'Gyroscope actif','stage.gyroOpenAlone':'Ouvrir la page seule dans le navigateur',
+ 'gyro.sensorActive':'Capteur actif : β {b}° γ {g}°','gyro.noMotion':'Aucun mouvement reçu.','gyro.httpsNeeded':' La page doit être en HTTPS pour accéder au capteur.',
+ 'gyro.framed':" La page est affichée dans un cadre (l'app ou le site) qui bloque le capteur : ouvre-la seule dans ton navigateur avec le lien ci-dessous.",
+ 'gyro.reload':' Recharge la page, puis accepte la demande « mouvement et orientation ».','gyro.checkSettings':' Vérifie dans les réglages du site que les capteurs de mouvement sont autorisés.',
+ 'gyro.permissionDenied':'Autorisation refusée. Recharge la page pour que le navigateur te la redemande.','gyro.tiltNow':'Incline ton téléphone, ou touche la carte',
+ 'panel.stepsAria':'Étapes','panel.step.image':'Image','panel.step.card':'Carte','panel.step.ability':'Talent','panel.step.attack':'Attaque','panel.step.rule':'Règle','panel.step.effect':'Effet',
+ 'panel.image.choose':'Choisis ton image','panel.image.zoom':'Zoom','panel.image.posH':'Position horizontale','panel.image.posV':'Position verticale','panel.image.recenter':'Recentrer','panel.image.remove':"Retirer l'image",
+ 'panel.card.name':'Nom de la carte','panel.card.hp':'PV','panel.card.special':'Badge spécial','panel.card.evo':'Ligne « Evolves from » (vide = masquée)','panel.card.type':'Type de la carte',
+ 'panel.ability.show':'Afficher un talent','panel.ability.name':'Nom du talent','panel.ability.text':'Texte du talent',
+ 'panel.attack.name':"Nom de l'attaque",'panel.attack.damage':'Dégâts','panel.attack.text':"Texte de l'attaque",'panel.attack.energies':"Énergies de l'attaque",'panel.attack.weakness':'Faiblesse','panel.attack.resistance':'Résistance',
+ 'panel.rule.title':'Titre de la règle','panel.rule.text':'Texte de la règle','panel.effect.label':'Effet holographique','panel.effect.intensity':"Intensité de l'effet :",
+ 'panel.prev':'← Précédent','panel.next':'Suivant →','panel.done':'Terminé ✓','panel.deleteCard':'Supprimer cette carte','panel.confirmDelete':'Confirmer la suppression ?',
+ 'toast.saved':'Carte enregistrée ✓','toast.deleted':'Carte supprimée',
+ 'fx.classic':'Holo classique (diagonal, style V)','fx.reverse':'Reverse holo (étoiles à 5 branches)','fx.regular':'Holo régulier','fx.cosmos':'Cosmos / galaxie','fx.sitereverse':'Reverse holo foil',
+ 'fx.vfull':'V pleine illustration','fx.rainbow':'Rainbow / secret','fx.shinyv':'Shiny V','fx.amazing':'Amazing Rare','fx.vmax':'VMax',
+ 'type.G':'Plante','type.R':'Feu','type.W':'Eau','type.L':'Électrik','type.P':'Psy','type.I':'Glace','type.F':'Combat','type.X':'Poison','type.O':'Sol','type.Y':'Vol',
+ 'type.B':'Insecte','type.K':'Roche','type.H':'Spectre','type.A':'Dragon','type.D':'Ténèbres','type.S':'Acier','type.Z':'Fée','type.N':'Normal','type.C':'Incolore',
+ 'confirm.cancelTitle':'Annuler la personnalisation ?','confirm.cancelNewText':'Cette nouvelle carte ne sera pas créée.','confirm.cancelEditText':'Les modifications faites sur cette carte seront perdues.',
+ 'confirm.cancelNewYes':'Annuler la création','confirm.cancelEditYes':'Annuler les modifications','confirm.continue':'Continuer',
+ 'export.downloadTitle':'Télécharger ma carte','export.shareTitle':'Partager ma carte','export.downloadDesc':'Choisis le format à télécharger :','export.shareDesc':'Choisis le format à partager :',
+ 'export.pngTitle':'Image fixe','export.pngDesc':'PNG haute résolution<br>840 × 1 174 px','export.gifTitle':'Animation holo','export.gifDesc':'GIF animé en boucle<br>reflets holographiques',
+ 'export.generating':'Génération… {pct} %','export.finalizing':'Finalisation…','export.close':'Fermer',
+ 'export.errImg':"Impossible de créer l'image.",'export.errGif':'Impossible de créer le GIF animé.','export.shareUnavailable':"Le partage direct n'est pas disponible ici : le fichier est proposé en téléchargement.",'export.dlError':'Téléchargement impossible ici ({err}).',
+ 'intro.title':'Personnalise<br>ta carte','intro.go':"C'est parti",
+ 'perf.line':'écran {hz} Hz · {ms} ms · palier {tier}','perf.stride':' (effet ÷{n})'},
+
+en:{dir:'ltr',
+ 'login.hello':'Welcome :)','login.title':'Enter your name to<br>create your card','login.namePlaceholder':'Your username','login.nameAria':'Username','login.continueAria':'Continue','login.or':'or',
+ 'login.googleBtn':'Sign in with Google','login.googleAria':'Sign in with Google (coming soon)','login.appleBtn':'Sign in with Apple','login.appleAria':'Sign in with Apple (coming soon)','login.soon':'soon',
+ 'login.errNeedName':'Enter a username to continue.','login.errProviderNotReady':'Signing in with {provider} isn\u2019t active yet. Continue with your username for now.','login.uniqueNote':'Username uniqueness will be checked once Google sign-in is active.','deck.hello':'Hi, {user} :)',
+ 'lang.title':'Choose your language','lang.subtitle':'You can change it later.',
+ 'deck.title':'My deck','deck.newTitle':'New card','deck.newDesc':'Create a card','deck.empty':'Your deck is empty. Tap "New card" to create your first card.','deck.changeUser':'switch user',
+ 'deck.sortDefault':'Recent','deck.sortAria':'Sort cards','deck.cardsOne':'card','deck.cardsMany':'cards','deck.changeLang':'language',
+ 'deck.sort.added':'Most recently added','deck.sort.addedShort':'Newly added','deck.sort.first':'Added first','deck.sort.firstShort':'Oldest added',
+ 'deck.sort.recent':'Most recently edited','deck.sort.recentShort':'Recently edited','deck.sort.old':'Edited long ago','deck.sort.oldShort':'Oldest edit',
+ 'deck.sort.az':'Name A → Z','deck.sort.azShort':'A → Z','deck.sort.za':'Name Z → A','deck.sort.zaShort':'Z → A',
+ 'deck.sort.pvd':'HP descending','deck.sort.pvdShort':'HP ↓','deck.sort.pva':'HP ascending','deck.sort.pvaShort':'HP ↑','deck.sort.type':'By type','deck.sort.typeShort':'Type',
+ 'deck.group.added':'Date added','deck.group.modified':'Last edited','deck.group.name':'Name','deck.group.other':'Other',
+ 'stage.back':'‹ Deck','stage.change':'switch','stage.download':'Download image','stage.share':'Share','stage.personalize':'Customize','stage.hintDefault':'Move your mouse or finger over the card',
+ 'stage.gyroActivate':'Enable gyroscope','stage.gyroActive':'Gyroscope on','stage.gyroOpenAlone':'Open the page on its own in your browser',
+ 'gyro.sensorActive':'Sensor active: β {b}° γ {g}°','gyro.noMotion':'No motion received.','gyro.httpsNeeded':' The page must be served over HTTPS to access the sensor.',
+ 'gyro.framed':' The page is shown inside a frame (the app or site) that blocks the sensor: open it on its own in your browser using the link below.',
+ 'gyro.reload':' Reload the page, then accept the "motion & orientation" prompt.','gyro.checkSettings':' Check in the site settings that motion sensors are allowed.',
+ 'gyro.permissionDenied':'Permission denied. Reload the page so the browser asks again.','gyro.tiltNow':'Tilt your phone, or touch the card',
+ 'panel.stepsAria':'Steps','panel.step.image':'Image','panel.step.card':'Card','panel.step.ability':'Ability','panel.step.attack':'Attack','panel.step.rule':'Rule','panel.step.effect':'Effect',
+ 'panel.image.choose':'Choose your image','panel.image.zoom':'Zoom','panel.image.posH':'Horizontal position','panel.image.posV':'Vertical position','panel.image.recenter':'Recenter','panel.image.remove':'Remove image',
+ 'panel.card.name':'Card name','panel.card.hp':'HP','panel.card.special':'Special badge','panel.card.evo':'"Evolves from" line (empty = hidden)','panel.card.type':'Card type',
+ 'panel.ability.show':'Show an ability','panel.ability.name':'Ability name','panel.ability.text':'Ability text',
+ 'panel.attack.name':'Attack name','panel.attack.damage':'Damage','panel.attack.text':'Attack text','panel.attack.energies':'Attack energy cost','panel.attack.weakness':'Weakness','panel.attack.resistance':'Resistance',
+ 'panel.rule.title':'Rule title','panel.rule.text':'Rule text','panel.effect.label':'Holographic effect','panel.effect.intensity':'Effect intensity:',
+ 'panel.prev':'← Previous','panel.next':'Next →','panel.done':'Done ✓','panel.deleteCard':'Delete this card','panel.confirmDelete':'Confirm deletion?',
+ 'toast.saved':'Card saved ✓','toast.deleted':'Card deleted',
+ 'fx.classic':'Classic holo (diagonal, V style)','fx.reverse':'Reverse holo (5-point stars)','fx.regular':'Regular holo','fx.cosmos':'Cosmos / galaxy','fx.sitereverse':'Reverse holo foil',
+ 'fx.vfull':'Full-art V','fx.rainbow':'Rainbow / secret','fx.shinyv':'Shiny V','fx.amazing':'Amazing Rare','fx.vmax':'VMax',
+ 'type.G':'Grass','type.R':'Fire','type.W':'Water','type.L':'Electric','type.P':'Psychic','type.I':'Ice','type.F':'Fighting','type.X':'Poison','type.O':'Ground','type.Y':'Flying',
+ 'type.B':'Bug','type.K':'Rock','type.H':'Ghost','type.A':'Dragon','type.D':'Dark','type.S':'Steel','type.Z':'Fairy','type.N':'Normal','type.C':'Colorless',
+ 'confirm.cancelTitle':'Cancel customization?','confirm.cancelNewText':'This new card will not be created.','confirm.cancelEditText':'Changes made to this card will be lost.',
+ 'confirm.cancelNewYes':'Cancel creation','confirm.cancelEditYes':'Discard changes','confirm.continue':'Keep editing',
+ 'export.downloadTitle':'Download my card','export.shareTitle':'Share my card','export.downloadDesc':'Choose a format to download:','export.shareDesc':'Choose a format to share:',
+ 'export.pngTitle':'Still image','export.pngDesc':'High-res PNG<br>840 × 1,174 px','export.gifTitle':'Holo animation','export.gifDesc':'Looping animated GIF<br>holographic reflections',
+ 'export.generating':'Generating… {pct}%','export.finalizing':'Finishing up…','export.close':'Close',
+ 'export.errImg':'Couldn\u2019t create the image.','export.errGif':'Couldn\u2019t create the animated GIF.','export.shareUnavailable':'Direct sharing isn\u2019t available here: the file is offered for download instead.','export.dlError':'Download failed here ({err}).',
+ 'intro.title':'Customize<br>your card','intro.go':"Let's go",
+ 'perf.line':'screen {hz} Hz · {ms} ms · tier {tier}','perf.stride':' (effect ÷{n})'},
+
+es:{dir:'ltr',
+ 'login.hello':'Bienvenido/a :)','login.title':'Escribe tu nombre para<br>crear tu carta','login.namePlaceholder':'Tu nombre de usuario','login.nameAria':'Nombre de usuario','login.continueAria':'Continuar','login.or':'o',
+ 'login.googleBtn':'Iniciar sesión con Google','login.googleAria':'Iniciar sesión con Google (próximamente)','login.appleBtn':'Iniciar sesión con Apple','login.appleAria':'Iniciar sesión con Apple (próximamente)','login.soon':'pronto',
+ 'login.errNeedName':'Escribe un nombre de usuario para continuar.','login.errProviderNotReady':'El inicio de sesión con {provider} todavía no está activo. Continúa con tu nombre de usuario por ahora.','login.uniqueNote':'La unicidad del nombre se comprobará cuando se active el inicio de sesión con Google.','deck.hello':'Hola, {user} :)',
+ 'lang.title':'Elige tu idioma','lang.subtitle':'Podrás cambiarlo más tarde.',
+ 'deck.title':'Mi mazo','deck.newTitle':'Nueva carta','deck.newDesc':'Crea una carta','deck.empty':'Tu mazo está vacío. Toca «Nueva carta» para crear tu primera carta.','deck.changeUser':'cambiar de usuario',
+ 'deck.sortDefault':'Recientes','deck.sortAria':'Ordenar cartas','deck.cardsOne':'carta','deck.cardsMany':'cartas','deck.changeLang':'idioma',
+ 'deck.sort.added':'Añadidas más recientemente','deck.sort.addedShort':'Añadida reciente','deck.sort.first':'Añadidas primero','deck.sort.firstShort':'Añadida antigua',
+ 'deck.sort.recent':'Editadas más recientemente','deck.sort.recentShort':'Edición reciente','deck.sort.old':'Editadas hace tiempo','deck.sort.oldShort':'Edición antigua',
+ 'deck.sort.az':'Nombre A → Z','deck.sort.azShort':'A → Z','deck.sort.za':'Nombre Z → A','deck.sort.zaShort':'Z → A',
+ 'deck.sort.pvd':'PS descendente','deck.sort.pvdShort':'PS ↓','deck.sort.pva':'PS ascendente','deck.sort.pvaShort':'PS ↑','deck.sort.type':'Por tipo','deck.sort.typeShort':'Tipo',
+ 'deck.group.added':'Fecha de creación','deck.group.modified':'Última edición','deck.group.name':'Nombre','deck.group.other':'Otros',
+ 'stage.back':'‹ Mazo','stage.change':'cambiar','stage.download':'Descargar imagen','stage.share':'Compartir','stage.personalize':'Personalizar','stage.hintDefault':'Mueve el ratón o el dedo sobre la carta',
+ 'stage.gyroActivate':'Activar giroscopio','stage.gyroActive':'Giroscopio activo','stage.gyroOpenAlone':'Abrir la página sola en el navegador',
+ 'gyro.sensorActive':'Sensor activo: β {b}° γ {g}°','gyro.noMotion':'No se ha recibido movimiento.','gyro.httpsNeeded':' La página debe estar en HTTPS para acceder al sensor.',
+ 'gyro.framed':' La página se muestra dentro de un marco (la app o el sitio) que bloquea el sensor: ábrela sola en tu navegador con el enlace de abajo.',
+ 'gyro.reload':' Recarga la página y acepta la solicitud de «movimiento y orientación».','gyro.checkSettings':' Comprueba en los ajustes del sitio que los sensores de movimiento estén permitidos.',
+ 'gyro.permissionDenied':'Permiso denegado. Recarga la página para que el navegador lo vuelva a pedir.','gyro.tiltNow':'Inclina tu teléfono, o toca la carta',
+ 'panel.stepsAria':'Pasos','panel.step.image':'Imagen','panel.step.card':'Carta','panel.step.ability':'Habilidad','panel.step.attack':'Ataque','panel.step.rule':'Regla','panel.step.effect':'Efecto',
+ 'panel.image.choose':'Elige tu imagen','panel.image.zoom':'Zoom','panel.image.posH':'Posición horizontal','panel.image.posV':'Posición vertical','panel.image.recenter':'Recentrar','panel.image.remove':'Quitar la imagen',
+ 'panel.card.name':'Nombre de la carta','panel.card.hp':'PS','panel.card.special':'Insignia especial','panel.card.evo':'Línea «Evoluciona de» (vacía = oculta)','panel.card.type':'Tipo de la carta',
+ 'panel.ability.show':'Mostrar una habilidad','panel.ability.name':'Nombre de la habilidad','panel.ability.text':'Texto de la habilidad',
+ 'panel.attack.name':'Nombre del ataque','panel.attack.damage':'Daño','panel.attack.text':'Texto del ataque','panel.attack.energies':'Coste de energía del ataque','panel.attack.weakness':'Debilidad','panel.attack.resistance':'Resistencia',
+ 'panel.rule.title':'Título de la regla','panel.rule.text':'Texto de la regla','panel.effect.label':'Efecto holográfico','panel.effect.intensity':'Intensidad del efecto:',
+ 'panel.prev':'← Anterior','panel.next':'Siguiente →','panel.done':'Listo ✓','panel.deleteCard':'Eliminar esta carta','panel.confirmDelete':'¿Confirmar eliminación?',
+ 'toast.saved':'Carta guardada ✓','toast.deleted':'Carta eliminada',
+ 'fx.classic':'Holo clásico (diagonal, estilo V)','fx.reverse':'Reverse holo (estrellas de 5 puntas)','fx.regular':'Holo normal','fx.cosmos':'Cosmos / galaxia','fx.sitereverse':'Reverse holo foil',
+ 'fx.vfull':'V a toda ilustración','fx.rainbow':'Rainbow / secreta','fx.shinyv':'Shiny V','fx.amazing':'Amazing Rare','fx.vmax':'VMax',
+ 'type.G':'Planta','type.R':'Fuego','type.W':'Agua','type.L':'Eléctrico','type.P':'Psíquico','type.I':'Hielo','type.F':'Lucha','type.X':'Veneno','type.O':'Tierra','type.Y':'Volador',
+ 'type.B':'Bicho','type.K':'Roca','type.H':'Fantasma','type.A':'Dragón','type.D':'Siniestro','type.S':'Acero','type.Z':'Hada','type.N':'Normal','type.C':'Incoloro',
+ 'confirm.cancelTitle':'¿Cancelar la personalización?','confirm.cancelNewText':'Esta nueva carta no se creará.','confirm.cancelEditText':'Se perderán los cambios hechos en esta carta.',
+ 'confirm.cancelNewYes':'Cancelar creación','confirm.cancelEditYes':'Descartar cambios','confirm.continue':'Seguir editando',
+ 'export.downloadTitle':'Descargar mi carta','export.shareTitle':'Compartir mi carta','export.downloadDesc':'Elige el formato para descargar:','export.shareDesc':'Elige el formato para compartir:',
+ 'export.pngTitle':'Imagen fija','export.pngDesc':'PNG en alta resolución<br>840 × 1174 px','export.gifTitle':'Animación holo','export.gifDesc':'GIF animado en bucle<br>reflejos holográficos',
+ 'export.generating':'Generando… {pct} %','export.finalizing':'Finalizando…','export.close':'Cerrar',
+ 'export.errImg':'No se pudo crear la imagen.','export.errGif':'No se pudo crear el GIF animado.','export.shareUnavailable':'No se puede compartir directamente aquí: el archivo se ofrece para descargar.','export.dlError':'Descarga no disponible aquí ({err}).',
+ 'intro.title':'Personaliza<br>tu carta','intro.go':'Vamos',
+ 'perf.line':'pantalla {hz} Hz · {ms} ms · nivel {tier}','perf.stride':' (efecto ÷{n})'},
+
+de:{dir:'ltr',
+ 'login.hello':'Willkommen :)','login.title':'Gib deinen Namen ein, um<br>deine Karte zu erstellen','login.namePlaceholder':'Dein Benutzername','login.nameAria':'Benutzername','login.continueAria':'Weiter','login.or':'oder',
+ 'login.googleBtn':'Mit Google anmelden','login.googleAria':'Mit Google anmelden (bald verfügbar)','login.appleBtn':'Mit Apple anmelden','login.appleAria':'Mit Apple anmelden (bald verfügbar)','login.soon':'bald',
+ 'login.errNeedName':'Gib einen Benutzernamen ein, um fortzufahren.','login.errProviderNotReady':'Die Anmeldung mit {provider} ist noch nicht aktiv. Mach vorerst mit deinem Benutzernamen weiter.','login.uniqueNote':'Die Eindeutigkeit des Namens wird geprüft, sobald die Google-Anmeldung aktiv ist.','deck.hello':'Hallo, {user} :)',
+ 'lang.title':'Wähle deine Sprache','lang.subtitle':'Du kannst sie später ändern.',
+ 'deck.title':'Mein Deck','deck.newTitle':'Neue Karte','deck.newDesc':'Karte erstellen','deck.empty':'Dein Deck ist leer. Tippe auf „Neue Karte“, um deine erste Karte zu erstellen.','deck.changeUser':'Benutzer wechseln',
+ 'deck.sortDefault':'Neueste','deck.sortAria':'Karten sortieren','deck.cardsOne':'Karte','deck.cardsMany':'Karten','deck.changeLang':'Sprache',
+ 'deck.sort.added':'Zuletzt hinzugefügt','deck.sort.addedShort':'Neu hinzugefügt','deck.sort.first':'Zuerst hinzugefügt','deck.sort.firstShort':'Älteste zuerst',
+ 'deck.sort.recent':'Zuletzt bearbeitet','deck.sort.recentShort':'Kürzlich bearbeitet','deck.sort.old':'Lange nicht bearbeitet','deck.sort.oldShort':'Älteste Bearbeitung',
+ 'deck.sort.az':'Name A → Z','deck.sort.azShort':'A → Z','deck.sort.za':'Name Z → A','deck.sort.zaShort':'Z → A',
+ 'deck.sort.pvd':'KP absteigend','deck.sort.pvdShort':'KP ↓','deck.sort.pva':'KP aufsteigend','deck.sort.pvaShort':'KP ↑','deck.sort.type':'Nach Typ','deck.sort.typeShort':'Typ',
+ 'deck.group.added':'Hinzugefügt am','deck.group.modified':'Zuletzt bearbeitet','deck.group.name':'Name','deck.group.other':'Weitere',
+ 'stage.back':'‹ Deck','stage.change':'wechseln','stage.download':'Als Bild herunterladen','stage.share':'Teilen','stage.personalize':'Anpassen','stage.hintDefault':'Bewege Maus oder Finger über die Karte',
+ 'stage.gyroActivate':'Gyroskop aktivieren','stage.gyroActive':'Gyroskop aktiv','stage.gyroOpenAlone':'Seite allein im Browser öffnen',
+ 'gyro.sensorActive':'Sensor aktiv: β {b}° γ {g}°','gyro.noMotion':'Keine Bewegung erkannt.','gyro.httpsNeeded':' Die Seite muss über HTTPS aufgerufen werden, um auf den Sensor zuzugreifen.',
+ 'gyro.framed':' Die Seite wird in einem Rahmen (App oder Website) angezeigt, der den Sensor blockiert: öffne sie über den Link unten allein im Browser.',
+ 'gyro.reload':' Lade die Seite neu und erlaube dann „Bewegung und Ausrichtung“.','gyro.checkSettings':' Prüfe in den Website-Einstellungen, ob Bewegungssensoren erlaubt sind.',
+ 'gyro.permissionDenied':'Zugriff verweigert. Lade die Seite neu, damit der Browser erneut fragt.','gyro.tiltNow':'Neige dein Handy oder berühre die Karte',
+ 'panel.stepsAria':'Schritte','panel.step.image':'Bild','panel.step.card':'Karte','panel.step.ability':'Fähigkeit','panel.step.attack':'Attacke','panel.step.rule':'Regel','panel.step.effect':'Effekt',
+ 'panel.image.choose':'Bild auswählen','panel.image.zoom':'Zoom','panel.image.posH':'Horizontale Position','panel.image.posV':'Vertikale Position','panel.image.recenter':'Zentrieren','panel.image.remove':'Bild entfernen',
+ 'panel.card.name':'Kartenname','panel.card.hp':'KP','panel.card.special':'Spezial-Badge','panel.card.evo':'„Entwickelt sich aus“-Zeile (leer = ausgeblendet)','panel.card.type':'Kartentyp',
+ 'panel.ability.show':'Fähigkeit anzeigen','panel.ability.name':'Name der Fähigkeit','panel.ability.text':'Text der Fähigkeit',
+ 'panel.attack.name':'Name der Attacke','panel.attack.damage':'Schaden','panel.attack.text':'Text der Attacke','panel.attack.energies':'Energiekosten der Attacke','panel.attack.weakness':'Schwäche','panel.attack.resistance':'Resistenz',
+ 'panel.rule.title':'Titel der Regel','panel.rule.text':'Text der Regel','panel.effect.label':'Holo-Effekt','panel.effect.intensity':'Effektstärke:',
+ 'panel.prev':'← Zurück','panel.next':'Weiter →','panel.done':'Fertig ✓','panel.deleteCard':'Diese Karte löschen','panel.confirmDelete':'Löschen bestätigen?',
+ 'toast.saved':'Karte gespeichert ✓','toast.deleted':'Karte gelöscht',
+ 'fx.classic':'Klassisches Holo (diagonal, V-Stil)','fx.reverse':'Reverse-Holo (5-zackige Sterne)','fx.regular':'Reguläres Holo','fx.cosmos':'Kosmos / Galaxie','fx.sitereverse':'Reverse-Holo-Folie',
+ 'fx.vfull':'Vollbild-V','fx.rainbow':'Rainbow / Secret','fx.shinyv':'Shiny V','fx.amazing':'Amazing Rare','fx.vmax':'VMax',
+ 'type.G':'Pflanze','type.R':'Feuer','type.W':'Wasser','type.L':'Elektro','type.P':'Psycho','type.I':'Eis','type.F':'Kampf','type.X':'Gift','type.O':'Boden','type.Y':'Flug',
+ 'type.B':'Käfer','type.K':'Gestein','type.H':'Geist','type.A':'Drache','type.D':'Unlicht','type.S':'Stahl','type.Z':'Fee','type.N':'Normal','type.C':'Farblos',
+ 'confirm.cancelTitle':'Anpassung abbrechen?','confirm.cancelNewText':'Diese neue Karte wird nicht erstellt.','confirm.cancelEditText':'Änderungen an dieser Karte gehen verloren.',
+ 'confirm.cancelNewYes':'Erstellung abbrechen','confirm.cancelEditYes':'Änderungen verwerfen','confirm.continue':'Weiter bearbeiten',
+ 'export.downloadTitle':'Karte herunterladen','export.shareTitle':'Karte teilen','export.downloadDesc':'Format zum Herunterladen wählen:','export.shareDesc':'Format zum Teilen wählen:',
+ 'export.pngTitle':'Standbild','export.pngDesc':'PNG in hoher Auflösung<br>840 × 1174 px','export.gifTitle':'Holo-Animation','export.gifDesc':'Animiertes GIF in Schleife<br>holografische Reflexe',
+ 'export.generating':'Erstellung… {pct} %','export.finalizing':'Wird abgeschlossen…','export.close':'Schließen',
+ 'export.errImg':'Bild konnte nicht erstellt werden.','export.errGif':'Animiertes GIF konnte nicht erstellt werden.','export.shareUnavailable':'Direktes Teilen ist hier nicht verfügbar: die Datei wird stattdessen zum Herunterladen angeboten.','export.dlError':'Download hier nicht möglich ({err}).',
+ 'intro.title':'Gestalte<br>deine Karte','intro.go':"Los geht's",
+ 'perf.line':'Bildschirm {hz} Hz · {ms} ms · Stufe {tier}','perf.stride':' (Effekt ÷{n})'},
+
+ar:{dir:'rtl',
+ 'login.hello':'أهلًا بك :)','login.title':'أدخل اسمك<br>لإنشاء بطاقتك','login.namePlaceholder':'اسم المستخدم','login.nameAria':'اسم المستخدم','login.continueAria':'متابعة','login.or':'أو',
+ 'login.googleBtn':'تسجيل الدخول عبر Google','login.googleAria':'تسجيل الدخول عبر Google (قريبًا)','login.appleBtn':'تسجيل الدخول عبر Apple','login.appleAria':'تسجيل الدخول عبر Apple (قريبًا)','login.soon':'قريبًا',
+ 'login.errNeedName':'أدخل اسم مستخدم للمتابعة.','login.errProviderNotReady':'تسجيل الدخول عبر {provider} غير مفعّل بعد. تابع باسم المستخدم في الوقت الحالي.','login.uniqueNote':'سيتم التحقق من تفرّد الاسم عند تفعيل تسجيل الدخول عبر Google.','deck.hello':'أهلًا، {user} :)',
+ 'lang.title':'اختر لغتك','lang.subtitle':'يمكنك تغييرها لاحقًا.',
+ 'deck.title':'مجموعتي','deck.newTitle':'بطاقة جديدة','deck.newDesc':'أنشئ بطاقة','deck.empty':'مجموعتك فارغة. اضغط على «بطاقة جديدة» لإنشاء أول بطاقة.','deck.changeUser':'تغيير المستخدم',
+ 'deck.sortDefault':'الأحدث','deck.sortAria':'ترتيب البطاقات','deck.cardsOne':'بطاقة','deck.cardsMany':'بطاقات','deck.changeLang':'اللغة',
+ 'deck.sort.added':'الأحدث إضافةً','deck.sort.addedShort':'إضافة حديثة','deck.sort.first':'الأقدم إضافةً','deck.sort.firstShort':'إضافة قديمة',
+ 'deck.sort.recent':'الأحدث تعديلًا','deck.sort.recentShort':'تعديل حديث','deck.sort.old':'الأقدم تعديلًا','deck.sort.oldShort':'تعديل قديم',
+ 'deck.sort.az':'الاسم أ ← ي','deck.sort.azShort':'أ ← ي','deck.sort.za':'الاسم ي ← أ','deck.sort.zaShort':'ي ← أ',
+ 'deck.sort.pvd':'نقاط الحياة تنازليًا','deck.sort.pvdShort':'الحياة ↓','deck.sort.pva':'نقاط الحياة تصاعديًا','deck.sort.pvaShort':'الحياة ↑','deck.sort.type':'حسب النوع','deck.sort.typeShort':'النوع',
+ 'deck.group.added':'تاريخ الإضافة','deck.group.modified':'آخر تعديل','deck.group.name':'الاسم','deck.group.other':'أخرى',
+ 'stage.back':'› المجموعة','stage.change':'تغيير','stage.download':'تنزيل كصورة','stage.share':'مشاركة','stage.personalize':'تخصيص','stage.hintDefault':'حرّك الفأرة أو إصبعك فوق البطاقة',
+ 'stage.gyroActivate':'تفعيل الجيروسكوب','stage.gyroActive':'الجيروسكوب مفعّل','stage.gyroOpenAlone':'افتح الصفحة وحدها في المتصفح',
+ 'gyro.sensorActive':'المستشعر نشط: β {b}° γ {g}°','gyro.noMotion':'لم تُستقبل أي حركة.','gyro.httpsNeeded':' يجب أن تكون الصفحة عبر HTTPS للوصول إلى المستشعر.',
+ 'gyro.framed':' تُعرض الصفحة داخل إطار (تطبيق أو موقع) يمنع المستشعر: افتحها وحدها في متصفحك عبر الرابط أدناه.',
+ 'gyro.reload':' أعد تحميل الصفحة ثم اقبل طلب «الحركة والاتجاه».','gyro.checkSettings':' تحقق في إعدادات الموقع أن مستشعرات الحركة مسموح بها.',
+ 'gyro.permissionDenied':'تم رفض الإذن. أعد تحميل الصفحة ليطلبها المتصفح مجددًا.','gyro.tiltNow':'أمِل هاتفك، أو المس البطاقة',
+ 'panel.stepsAria':'الخطوات','panel.step.image':'الصورة','panel.step.card':'البطاقة','panel.step.ability':'القدرة','panel.step.attack':'الهجوم','panel.step.rule':'القاعدة','panel.step.effect':'التأثير',
+ 'panel.image.choose':'اختر صورتك','panel.image.zoom':'التكبير','panel.image.posH':'الموضع الأفقي','panel.image.posV':'الموضع الرأسي','panel.image.recenter':'إعادة التوسيط','panel.image.remove':'إزالة الصورة',
+ 'panel.card.name':'اسم البطاقة','panel.card.hp':'نقاط الحياة','panel.card.special':'شارة خاصة','panel.card.evo':'سطر «يتطور من» (فارغ = مخفي)','panel.card.type':'نوع البطاقة',
+ 'panel.ability.show':'إظهار قدرة','panel.ability.name':'اسم القدرة','panel.ability.text':'نص القدرة',
+ 'panel.attack.name':'اسم الهجوم','panel.attack.damage':'الضرر','panel.attack.text':'نص الهجوم','panel.attack.energies':'تكلفة طاقة الهجوم','panel.attack.weakness':'الضعف','panel.attack.resistance':'المقاومة',
+ 'panel.rule.title':'عنوان القاعدة','panel.rule.text':'نص القاعدة','panel.effect.label':'التأثير الهولوغرافي','panel.effect.intensity':'شدة التأثير:',
+ 'panel.prev':'→ السابق','panel.next':'التالي ←','panel.done':'تم ✓','panel.deleteCard':'حذف هذه البطاقة','panel.confirmDelete':'تأكيد الحذف؟',
+ 'toast.saved':'تم حفظ البطاقة ✓','toast.deleted':'تم حذف البطاقة',
+ 'fx.classic':'هولو كلاسيكي (قطري، نمط V)','fx.reverse':'هولو معكوس (نجوم خماسية)','fx.regular':'هولو عادي','fx.cosmos':'كوزموس / مجرّة','fx.sitereverse':'هولو معكوس لامع',
+ 'fx.vfull':'V بتصميم كامل','fx.rainbow':'قوس قزح / سرّي','fx.shinyv':'Shiny V','fx.amazing':'Amazing Rare','fx.vmax':'VMax',
+ 'type.G':'نبات','type.R':'نار','type.W':'ماء','type.L':'كهرباء','type.P':'خارق','type.I':'جليد','type.F':'قتال','type.X':'سم','type.O':'أرض','type.Y':'طيران',
+ 'type.B':'حشرة','type.K':'صخر','type.H':'شبح','type.A':'تنين','type.D':'ظلام','type.S':'فولاذ','type.Z':'جنّية','type.N':'عادي','type.C':'عديم اللون',
+ 'confirm.cancelTitle':'إلغاء التخصيص؟','confirm.cancelNewText':'لن يتم إنشاء هذه البطاقة الجديدة.','confirm.cancelEditText':'ستُفقد التعديلات التي أجريتها على هذه البطاقة.',
+ 'confirm.cancelNewYes':'إلغاء الإنشاء','confirm.cancelEditYes':'تجاهل التعديلات','confirm.continue':'متابعة التعديل',
+ 'export.downloadTitle':'تنزيل بطاقتي','export.shareTitle':'مشاركة بطاقتي','export.downloadDesc':'اختر صيغة التنزيل:','export.shareDesc':'اختر صيغة المشاركة:',
+ 'export.pngTitle':'صورة ثابتة','export.pngDesc':'PNG عالي الدقة<br>840 × 1174 بكسل','export.gifTitle':'حركة هولوغرافية','export.gifDesc':'GIF متحرك متكرر<br>انعكاسات هولوغرافية',
+ 'export.generating':'جارٍ الإنشاء… {pct}٪','export.finalizing':'جارٍ الإنهاء…','export.close':'إغلاق',
+ 'export.errImg':'تعذّر إنشاء الصورة.','export.errGif':'تعذّر إنشاء GIF المتحرك.','export.shareUnavailable':'المشاركة المباشرة غير متاحة هنا: الملف متاح للتنزيل بدلًا من ذلك.','export.dlError':'تعذّر التنزيل هنا ({err}).',
+ 'intro.title':'خصّص<br>بطاقتك','intro.go':'ابدأ',
+ 'perf.line':'الشاشة {hz} هرتز · {ms} مللي ثانية · المستوى {tier}','perf.stride':' (التأثير ÷{n})'}
+};
+
+let lang='fr';
+try{
+  lang=localStorage.getItem('mycard-lang')||(()=>{const b=(navigator.language||'fr').slice(0,2);return ['fr','en','es','de','ar'].includes(b)?b:'fr'})();
+}catch(e){}
+function tr(key,vars){
+  let s=(I18N[lang]&&I18N[lang][key])!=null?I18N[lang][key]:(I18N.fr[key]!=null?I18N.fr[key]:key);
+  if(vars)for(const k in vars)s=s.split('{'+k+'}').join(vars[k]);
+  return s;
+}
+const LANGS=[['fr','\u{1F1EB}\u{1F1F7}','Fran\u00e7ais'],['en','\u{1F1EC}\u{1F1E7}','English'],['es','\u{1F1EA}\u{1F1F8}','Espa\u00f1ol'],['de','\u{1F1E9}\u{1F1EA}','Deutsch'],['ar','\u{1F1F8}\u{1F1E6}','\u0627\u0644\u0639\u0631\u0628\u064a\u0629']];
 let user='';const Bd=document.body;let deck=[];let editing=false,photoEl=null,photoKey=null,needSave=false,FX={},fxDirty=true,CW=340,CH=475;
 const lite=h=>{const n=parseInt(h.slice(1),16);return '#'+[16,8,0].map(q=>{const v=(n>>q)&255;return Math.round(v+(255-v)*.55).toString(16).padStart(2,'0')}).join('')};
 const ICON={
@@ -483,6 +717,7 @@ const TY={};
  .forEach(([k,n,c])=>TY[k]={n,c,l:lite(c),ink:(k==='L'||k==='C')?'#222':'#fff'});
 TY.C.l='#FFFFFF';
 const svgOf=(k,sz)=>`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'${sz?` width='${sz}' height='${sz}'`:''} fill='currentColor' color='${(TY[k]||TY.C).ink}'>${ICON[k]||ICON.C}</svg>`;
+const typeName=k=>tr('type.'+(TY[k]?k:'C'));
 const E=(t)=>{const y=TY[t]||TY.C;return `<span class="e" style="--c:${y.c};--l:${y.l}">${svgOf(t)}</span>`};
 const CARDS=[
  {id:'c3',name:'MyCard',hp:310,type:'D',evo:'Evolves from MyCard',special:'SPECIAL CARD',
@@ -562,16 +797,16 @@ const uin=$('u-name');
 try{uin.value=localStorage.getItem('mycard-user')||''}catch(err){}
 function enterUser(){
   const v=uin.value.trim();
-  if(!v){$('u-err').textContent='Entre un nom d\u2019utilisateur pour continuer.';return}
+  if(!v){$('u-err').textContent=tr('login.errNeedName');return}
   user=v;try{localStorage.setItem('mycard-user',v)}catch(err){}
-  $('u-err').textContent='';$('who-n').textContent='Bonjour, '+user+' :)';startDeck();
+  $('u-err').textContent='';$('who-n').textContent=tr('deck.hello',{user});maybePickLang();
 }
 $('u-go').addEventListener('click',enterUser);
 /* ---- connexion Google / Apple : l'interface est prête ; le branchement réel viendra avec les identifiants et le serveur ---- */
 const AUTH={google:{ready:false,label:'Google'},apple:{ready:false,label:'Apple'}};   /* ready:true une fois l'authentification réellement en place */
 function signInWith(provider){
   const a=AUTH[provider];
-  if(!a.ready){$('u-err').textContent='La connexion avec '+a.label+' n\u2019est pas encore activée. Continue avec ton nom d\u2019utilisateur pour le moment.';return}
+  if(!a.ready){$('u-err').textContent=tr('login.errProviderNotReady',{provider:a.label});return}
   /* À brancher : lancer la connexion réelle (redirection OAuth ou SDK), puis appeler enterUser() avec le profil reçu */
 }
 $('sso-google').addEventListener('click',()=>signInWith('google'));
@@ -599,15 +834,17 @@ $('lesgo').addEventListener('click',()=>{
 });
 
 /* ---- éditeur ---- */
-const optHtml=none=>(none?'<option value="">—</option>':'')+Object.entries(TY).map(([k,v])=>`<option value="${k}">${v.n}</option>`).join('');
+const optHtml=none=>(none?'<option value="">—</option>':'')+Object.entries(TY).map(([k,v])=>`<option value="${k}">${typeName(k)}</option>`).join('');
 $('f-type').innerHTML=optHtml();$('f-weak').innerHTML=optHtml();$('f-res').innerHTML=optHtml(1);
 const ens=[...document.querySelectorAll('#f-en select')];ens.forEach(q=>q.innerHTML=optHtml(1));
 const tg=$('tgrid');
-tg.innerHTML=Object.entries(TY).map(([k,v])=>`<button type="button" data-k="${k}" aria-pressed="false" title="${v.n}"><span class="dot" style="--c:${v.c};--l:${v.l}">${svgOf(k)}</span><small>${v.n}</small></button>`).join('');
+function rebuildTypeGrid(){tg.innerHTML=Object.entries(TY).map(([k,v])=>`<button type="button" data-k="${k}" aria-pressed="${k===$('f-type').value}" title="${typeName(k)}"><span class="dot" style="--c:${v.c};--l:${v.l}">${svgOf(k)}</span><small>${typeName(k)}</small></button>`).join('')}
+rebuildTypeGrid();
 const syncType=()=>[...tg.children].forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===$('f-type').value));
 tg.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$('f-type').value=b.dataset.k;$('f-type').dispatchEvent(new Event('input'));syncType()});
 const fg=$('fxgrid');
-fg.innerHTML=[...$('f-fx').options].map(o=>`<button type="button" data-v="${o.value}" aria-pressed="${o.value==='classic'}">${o.textContent}</button>`).join('');
+function rebuildFxGrid(){[...$('f-fx').options].forEach(o=>o.textContent=tr('fx.'+o.value));fg.innerHTML=[...$('f-fx').options].map(o=>`<button type="button" data-v="${o.value}" aria-pressed="${o.value===$('f-fx').value}">${o.textContent}</button>`).join('')}
+rebuildFxGrid();
 fg.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$('f-fx').value=b.dataset.v;$('f-fx').dispatchEvent(new Event('change'));[...fg.children].forEach(x=>x.setAttribute('aria-pressed',x===b))});
 const txt=v=>esc(v).replace(/\n/g,'<br>');
 function frame(){const p=card.querySelector('.photo');if(p)p.style.transform=`translate(${cur.px||0}%,${cur.py||0}%) scale(${cur.zoom||1})`}
@@ -645,15 +882,16 @@ $('f-reset').addEventListener('click',()=>{cur.img=null;$('f-img').value='';rece
 fill(cur);
 /* ---- étapes de personnalisation ---- */
 const stepEls=[...document.querySelectorAll('.step')],stepNav=$('steps');let si=0;
-stepEls.forEach((el,i)=>{const b=document.createElement('button');b.type='button';b.textContent=(i+1)+'. '+el.dataset.t;b.addEventListener('click',()=>goStep(i));stepNav.append(b)});
+function rebuildStepNav(){[...stepNav.children].forEach((b,i)=>b.textContent=(i+1)+'. '+tr('panel.step.'+stepEls[i].dataset.step))}
+stepEls.forEach((el,i)=>{const b=document.createElement('button');b.type='button';b.textContent=(i+1)+'. '+tr('panel.step.'+el.dataset.step);b.addEventListener('click',()=>goStep(i));stepNav.append(b)});
 function goStep(i){
   si=Math.max(0,Math.min(stepEls.length-1,i));
   stepEls.forEach((el,k)=>el.hidden=k!==si);
   [...stepNav.children].forEach((b,k)=>{b.setAttribute('aria-pressed',k===si);if(k===si)stepNav.scrollTo({left:b.offsetLeft-stepNav.clientWidth/2+b.offsetWidth/2,behavior:'smooth'})});
-  $('s-prev').disabled=si===0;$('s-next').textContent=si===stepEls.length-1?'Terminé ✓':'Suivant →';
+  $('s-prev').disabled=si===0;$('s-next').textContent=si===stepEls.length-1?tr('panel.done'):tr('panel.next');
 }
 $('s-prev').addEventListener('click',()=>goStep(si-1));
-$('s-next').addEventListener('click',()=>{if(si===stepEls.length-1){showDeck();toast('Carte enregistrée ✓')}else goStep(si+1)});
+$('s-next').addEventListener('click',()=>{if(si===stepEls.length-1){showDeck();toast(tr('toast.saved'))}else goStep(si+1)});
 goStep(0);
 
 /* ---- tilt + holo motion (smoothed, idle sweep when untouched) ---- */
@@ -683,29 +921,28 @@ addEventListener('deviceorientation',e=>{
   if(!gyroWanted||e.beta==null||e.gamma==null)return;
   gyroOn=true;
   const now=performance.now();
-  if(now-lastShow>250){lastShow=now;hint.textContent='Capteur actif : β '+e.beta.toFixed(0)+'° γ '+e.gamma.toFixed(0)+'°'}
-  if(active)return;
+  if(now-lastShow>250){lastShow=now;hint.textContent=tr('gyro.sensorActive',{b:e.beta.toFixed(0),g:e.gamma.toFixed(0)})}
   if(!g0)g0={b:e.beta,g:e.gamma};
   g0.b+=(e.beta-g0.b)*.002;g0.g+=(e.gamma-g0.g)*.002;   /* le point neutre suit doucement ta posture */
   const dx=clamp(e.gamma-g0.g),dy=clamp(e.beta-g0.b);
   t={mx:50+dx*50,my:50+dy*50,rx:-dy*20,ry:dx*20,o:1};
 });
 function explain(){
-  let m='Aucun mouvement reçu.';
-  if(!isSecureContext)m+=' La page doit être en HTTPS pour accéder au capteur.';
-  else if(framed)m+=' La page est affichée dans un cadre (l\u2019app ou le site) qui bloque le capteur : ouvre-la seule dans ton navigateur avec le lien ci-dessous.';
-  else m+=needsAsk?' Recharge la page, puis accepte la demande « mouvement et orientation ».':' Vérifie dans les réglages du site que les capteurs de mouvement sont autorisés.';
+  let m=tr('gyro.noMotion');
+  if(!isSecureContext)m+=tr('gyro.httpsNeeded');
+  else if(framed)m+=tr('gyro.framed');
+  else m+=needsAsk?tr('gyro.reload'):tr('gyro.checkSettings');
   hint.textContent=m;
 }
 async function setGyro(on){
-  gyroWanted=on;g0=null;if(!on){gyroOn=false;hint.textContent='Bouge la souris ou le doigt sur la carte'}
+  gyroWanted=on;g0=null;if(!on){gyroOn=false;hint.textContent=tr('stage.hintDefault')}
   if(on&&needsAsk){
-    try{if(await DeviceOrientationEvent.requestPermission()!=='granted'){gyroWanted=false;hint.textContent='Autorisation refusée. Recharge la page pour que le navigateur te la redemande.'}}
+    try{if(await DeviceOrientationEvent.requestPermission()!=='granted'){gyroWanted=false;hint.textContent=tr('gyro.permissionDenied')}}
     catch(err){gyroWanted=false;explain()}
   }
   gbtn.setAttribute('aria-pressed',gyroWanted);
-  gbtn.textContent=gyroWanted?'Gyroscope actif':'Activer le gyroscope';
-  if(gyroWanted){hint.textContent='Incline ton téléphone, ou touche la carte';
+  gbtn.textContent=gyroWanted?tr('stage.gyroActive'):tr('stage.gyroActivate');
+  if(gyroWanted){hint.textContent=tr('gyro.tiltNow');
     setTimeout(()=>{if(gyroWanted&&!gyroOn)explain()},1800)}
 }
 gbtn.addEventListener('click',()=>setGyro(!gyroWanted));
@@ -1022,15 +1259,15 @@ async function pngBlob(){const cv=await drawCard();return new Promise(ok=>cv.toB
 async function saveBlob(b,name){
   name=name||fileName();
   const d=window.claude&&claude.use?await claude.use('downloads'):null;
-  if(d){try{await d.save({filename:name,data:b})}catch(e){if(e&&e.code!=='declined')xmsg('Téléchargement impossible ici ('+(e.code||'erreur')+').')}return}
+  if(d){try{await d.save({filename:name,data:b})}catch(e){if(e&&e.code!=='declined')xmsg(tr('export.dlError',{err:e.code||'?'}))}return}
   const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.append(a);a.click();a.remove();
 }
 /* ---- modale d'export : choix Image fixe (PNG) / Animation holo (GIF) ---- */
 let expIntent='download';
 function openExpModal(intent){
   expIntent=intent;
-  $('exp-t').textContent=intent==='share'?'Partager ma carte':'Télécharger ma carte';
-  $('exp-desc').textContent=intent==='share'?'Choisis le format à partager :':'Choisis le format à télécharger :';
+  $('exp-t').textContent=intent==='share'?tr('export.shareTitle'):tr('export.downloadTitle');
+  $('exp-desc').textContent=intent==='share'?tr('export.shareDesc'):tr('export.downloadDesc');
   $('exp-prog').hidden=true;$('exp-fill').style.width='0%';
   $('exp-opt-png').disabled=$('exp-opt-gif').disabled=false;
   $('exp-modal').hidden=false;$('exp-opt-png').focus();
@@ -1043,23 +1280,23 @@ async function deliver(blob,name,type,title){
   if(expIntent==='share'){
     const f=new File([blob],name,{type});
     if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title});return}catch(e){if(e.name==='AbortError')return}}
-    xmsg('Le partage direct n\u2019est pas disponible ici : le fichier est proposé en téléchargement.');
+    xmsg(tr('export.shareUnavailable'));
   }
   await saveBlob(blob,name);
 }
 $('exp-opt-png').addEventListener('click',async()=>{
   closeExpModal();
   try{await deliver(await pngBlob(),fileName(),'image/png',cur.name||'MyCard')}
-  catch(e){xmsg('Impossible de créer l\u2019image.')}
+  catch(e){xmsg(tr('export.errImg'))}
 });
 $('exp-opt-gif').addEventListener('click',async()=>{
   const bp=$('exp-opt-png'),bg=$('exp-opt-gif'),prog=$('exp-prog'),fill=$('exp-fill'),lbl=$('exp-lbl');
-  bp.disabled=bg.disabled=true;prog.hidden=false;fill.style.width='0%';lbl.textContent='Génération… 0 %';
-  const onp=(i,n)=>{if(i==null){lbl.textContent='Finalisation…';return}const pct=Math.round(i/n*100);fill.style.width=pct+'%';lbl.textContent='Génération… '+pct+' %'};
+  bp.disabled=bg.disabled=true;prog.hidden=false;fill.style.width='0%';lbl.textContent=tr('export.generating',{pct:0});
+  const onp=(i,n)=>{if(i==null){lbl.textContent=tr('export.finalizing');return}const pct=Math.round(i/n*100);fill.style.width=pct+'%';lbl.textContent=tr('export.generating',{pct})};
   try{
     const blob=await gifBlob(onp);closeExpModal();
     await deliver(blob,gifName(),'image/gif',(cur.name||'MyCard')+' (Holo)');
-  }catch(e){xmsg('Impossible de créer le GIF animé.')}
+  }catch(e){xmsg(tr('export.errGif'))}
   finally{bp.disabled=bg.disabled=false}
 });
 $('dl').addEventListener('click',()=>openExpModal('download'));
@@ -1153,13 +1390,13 @@ function newCard(){
 function openEditor(c,isNew){               /* personnalisation (panneau visible) */
   Bd.classList.remove('view-deck','viewing');Bd.classList.add('view-edit');
   editing=false;render(c);fill(c);goStep(0);editNew=!!isNew;editSnap=JSON.stringify(c);editing=true;
-  const d=$('e-del');delete d.dataset.arm;d.textContent='Supprimer cette carte';
+  const d=$('e-del');delete d.dataset.arm;d.textContent=tr('panel.deleteCard');
   if(isNew)playIntro();else quickOpen();
 }
 function openCard(c){                        /* affichage en grand, sans le panneau */
   Bd.classList.remove('view-deck');Bd.classList.add('view-edit','viewing');
   editing=false;render(c);fill(c);goStep(0);editNew=false;editSnap=null;
-  const d=$('e-del');delete d.dataset.arm;d.textContent='Supprimer cette carte';
+  const d=$('e-del');delete d.dataset.arm;d.textContent=tr('panel.deleteCard');
   quickOpen();
 }
 function startEdit(){Bd.classList.remove('viewing');editNew=false;editSnap=JSON.stringify(cur);editing=true;goStep(0);window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})}
@@ -1168,22 +1405,20 @@ function quickOpen(){
   Bd.classList.remove('introing','introshow');document.documentElement.classList.remove('introing');
   fl.classList.remove('back','flipping');st.classList.remove('flipping','settle','rise','dropin');void st.offsetWidth;st.classList.add('dropin','settle');window.scrollTo(0,0);
 }
-function deleteCard(id){removeCard(id);showDeck();toast('Carte supprimée')}
-const SORTS=[['added','Plus récemment ajoutées','Ajout récent',"Date d'ajout"],['first','Ajoutées en premier','Ajout ancien',"Date d'ajout"],
-  ['recent','Plus récemment modifiées','Modif. récente','Dernière modification'],['old','Modifiées il y a longtemps','Modif. ancienne','Dernière modification'],
-  ['az','Nom A → Z','A → Z','Nom'],['za','Nom Z → A','Z → A','Nom'],['pvd','PV décroissants','PV ↓','Autres'],['pva','PV croissants','PV ↑','Autres'],['type','Par type','Type','Autres']];
+function deleteCard(id){removeCard(id);showDeck();toast(tr('toast.deleted'))}
+const SORTS=[['added','added'],['first','added'],['recent','modified'],['old','modified'],['az','name'],['za','name'],['pvd','other'],['pva','other'],['type','other']];
 let sortKey='recent';try{sortKey=localStorage.getItem('mycard-sort')||'recent'}catch(e){}
 if(!SORTS.some(x=>x[0]===sortKey))sortKey='recent';
 const nmOf=c=>String(c.name||''),coll=(a,b)=>a.localeCompare(b,'fr',{sensitivity:'base',numeric:true});
 /* date d'ajout : champ c ; pour les anciennes cartes, déduite de leur identifiant (horodatage encodé), sinon de la dernière modification */
 const createdOf=c=>{if(c.c)return c.c;const m=/^c([0-9a-z]{7,9})[0-9a-z]{3}$/.exec(String(c.id||''));if(m){const v=parseInt(m[1],36);if(v>1e12&&v<4e12)return v}return c.t||0};
 const CMP={added:(a,b)=>createdOf(b)-createdOf(a),first:(a,b)=>createdOf(a)-createdOf(b),recent:(a,b)=>b.t-a.t,old:(a,b)=>a.t-b.t,az:(a,b)=>coll(nmOf(a),nmOf(b)),za:(a,b)=>coll(nmOf(b),nmOf(a)),
-  pvd:(a,b)=>(parseInt(b.hp)||0)-(parseInt(a.hp)||0),pva:(a,b)=>(parseInt(a.hp)||0)-(parseInt(b.hp)||0),type:(a,b)=>coll((TY[a.type]||TY.C).n,(TY[b.type]||TY.C).n)};
+  pvd:(a,b)=>(parseInt(b.hp)||0)-(parseInt(a.hp)||0),pva:(a,b)=>(parseInt(a.hp)||0)-(parseInt(b.hp)||0),type:(a,b)=>coll(typeName(a.type),typeName(b.type))};
 const sortedDeck=()=>[...deck].sort((a,b)=>CMP[sortKey](a,b)||coll(nmOf(a),nmOf(b))||b.t-a.t);
 function renderSortMenu(){
   let g='';
-  $('dk-menu').innerHTML=SORTS.map(([k,l,,grp])=>{const h=grp!==g?`<div class="hd" role="presentation">${grp}</div>`:'';g=grp;return h+`<button type="button" role="menuitemradio" aria-checked="${k===sortKey}" data-k="${k}">${l}</button>`}).join('');
-  $('dk-sort-l').textContent=SORTS.find(x=>x[0]===sortKey)[2];
+  $('dk-menu').innerHTML=SORTS.map(([k,grp])=>{const h=grp!==g?`<div class="hd" role="presentation">${tr('deck.group.'+grp)}</div>`:'';g=grp;return h+`<button type="button" role="menuitemradio" aria-checked="${k===sortKey}" data-k="${k}">${tr('deck.sort.'+k)}</button>`}).join('');
+  $('dk-sort-l').textContent=tr('deck.sort.'+sortKey+'Short');
 }
 function toggleMenu(open){$('dk-menu').hidden=!open;$('dk-sort').setAttribute('aria-expanded',open)}
 renderSortMenu();
@@ -1199,11 +1434,11 @@ document.addEventListener('click',e=>{                                   /* appu
 },true);
 document.addEventListener('keydown',e=>{if(e.key==='Escape')toggleMenu(false)});
 function renderDeck(){
-  $('dk-hello').textContent='Bonjour, '+user+' :)';
-  $('dk-count').textContent=deck.length+(deck.length>1?' cartes':' carte');
+  $('dk-hello').textContent=tr('deck.hello',{user});
+  $('dk-count').textContent=deck.length+' '+(deck.length>1?tr('deck.cardsMany'):tr('deck.cardsOne'));
   $('dk-empty').hidden=deck.length>0;
-  const meta=c=>esc((TY[c.type]||TY.C).n)+' · '+esc(c.hp)+' PV';
-  $('dk-grid').innerHTML='<button type="button" class="tile new" data-act="new"><span class="tcov"><i>+</i></span><b>Nouvelle carte</b><small>Crée une carte</small></button>'+
+  const meta=c=>esc(typeName(c.type))+' · '+esc(c.hp)+' '+tr('panel.card.hp');
+  $('dk-grid').innerHTML=`<button type="button" class="tile new" data-act="new"><span class="tcov"><i>+</i></span><b>${tr('deck.newTitle')}</b><small>${tr('deck.newDesc')}</small></button>`+
     sortedDeck().map(c=>`<button type="button" class="tile" data-id="${c.id}"><span class="tcov"><img alt="" data-thumb="${c.id}"></span><b>${esc(c.name)}</b><small>${meta(c)}</small></button>`).join('');
   fillThumbs();
 }
@@ -1232,7 +1467,7 @@ $('dk-grid').addEventListener('click',e=>{
   setTimeout(()=>{opening=false;t.classList.remove('veil');hydrated.then(()=>openCard(c))},calm?0:750);
 });
 $('v-edit').addEventListener('click',startEdit);
-$('e-del').addEventListener('click',()=>{const b=$('e-del');if(!b.dataset.arm){b.dataset.arm=1;b.textContent='Confirmer la suppression ?';clearTimeout(delT);delT=setTimeout(()=>{delete b.dataset.arm;b.textContent='Supprimer cette carte'},3000);return}deleteCard(cur.id)});
+$('e-del').addEventListener('click',()=>{const b=$('e-del');if(!b.dataset.arm){b.dataset.arm=1;b.textContent=tr('panel.confirmDelete');clearTimeout(delT);delT=setTimeout(()=>{delete b.dataset.arm;b.textContent=tr('panel.deleteCard')},3000);return}deleteCard(cur.id)});
 $('dk-new').addEventListener('click',newCard);
 function ask(title,text,yes){
   return new Promise(res=>{
@@ -1244,7 +1479,7 @@ function ask(title,text,yes){
 }
 $('e-back').addEventListener('click',async()=>{
   if(Bd.classList.contains('viewing')){showDeck();return}          /* simple affichage : rien à annuler */
-  const yes=await ask('Annuler la personnalisation ?',editNew?'Cette nouvelle carte ne sera pas créée.':'Les modifications faites sur cette carte seront perdues.',editNew?'Annuler la création':'Annuler les modifications');
+  const yes=await ask(tr('confirm.cancelTitle'),editNew?tr('confirm.cancelNewText'):tr('confirm.cancelEditText'),editNew?tr('confirm.cancelNewYes'):tr('confirm.cancelEditYes'));
   if(!yes)return;
   clearTimeout(sv);needSave=false;const id=cur.id;
   if(editNew)removeCard(id);
@@ -1330,6 +1565,56 @@ setInterval(()=>{if(perfEl)perfEl.textContent='écran '+gov.hz+' Hz · '+gov.ema
     }else fxPending=true;
   }
 })(t0);
+
+/* ---- application de la langue : texte statique (data-i18n*), reconstructions dynamiques, RTL ---- */
+function applyI18n(){
+  document.documentElement.lang=lang;document.documentElement.dir=(I18N[lang]||I18N.fr).dir;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=tr(el.dataset.i18n)});
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{el.innerHTML=tr(el.dataset.i18nHtml)});
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{el.placeholder=tr(el.dataset.i18nPh)});
+  document.querySelectorAll('[data-i18n-aria]').forEach(el=>{el.setAttribute('aria-label',tr(el.dataset.i18nAria))});
+  if(typeof rebuildTypeGrid==='function')rebuildTypeGrid();
+  if(typeof rebuildFxGrid==='function')rebuildFxGrid();
+  if(typeof rebuildStepNav==='function')rebuildStepNav();
+  if(typeof goStep==='function')goStep(si);
+  document.querySelectorAll('#f-weak,#f-res').forEach(sel=>{const v=sel.value;sel.innerHTML=optHtml(1);sel.value=v});
+  document.querySelectorAll('#f-en select').forEach(sel=>{const v=sel.value;sel.innerHTML=optHtml(1);sel.value=v});
+  if(document.getElementById('f-type')){const v=$('f-type').value;$('f-type').innerHTML=optHtml();$('f-type').value=v}
+  if(typeof renderSortMenu==='function')renderSortMenu();
+  if(Bd.classList.contains('view-deck')&&typeof renderDeck==='function')renderDeck();
+  if(user)$('who-n').textContent=tr('deck.hello',{user});
+  if(!$('exp-modal').hidden)openExpModal(expIntent);
+  document.querySelectorAll('.langbtn span:last-child').forEach(el=>{el.textContent=(LANGS.find(x=>x[0]===lang)||LANGS[0])[2]});
+}
+function setLang(code){
+  if(!I18N[code])return;lang=code;try{localStorage.setItem('mycard-lang',code)}catch(e){}
+  applyI18n();[$('lang-menu1'),$('lang-menu2')].forEach(m=>{if(m)m.hidden=true});
+}
+function buildLangMenu(menu){
+  menu.innerHTML=LANGS.map(([code,flag,name])=>`<button type="button" role="menuitemradio" aria-checked="${code===lang}" data-l="${code}"><span aria-hidden="true">${flag}</span> ${name}</button>`).join('');
+  menu.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.l)));
+}
+function wireLangMenu(btn,menu){
+  buildLangMenu(menu);
+  btn.addEventListener('click',e=>{e.stopPropagation();const open=menu.hidden;document.querySelectorAll('.lang-menu').forEach(m=>m.hidden=true);if(open){buildLangMenu(menu);const r=btn.getBoundingClientRect();menu.style.top=(r.bottom+6+scrollY)+'px';menu.style.left=Math.max(8,Math.min(innerWidth-186,r.left+scrollX))+'px';menu.hidden=false;btn.setAttribute('aria-expanded','true')}else btn.setAttribute('aria-expanded','false')});
+}
+document.addEventListener('click',e=>{if(!e.target.closest('.lang-menu')&&!e.target.closest('.langbtn')){document.querySelectorAll('.lang-menu').forEach(m=>m.hidden=true)}});
+addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.lang-menu').forEach(m=>m.hidden=true)});
+wireLangMenu($('lang-btn'),$('lang-menu2'));
+wireLangMenu($('who-lang-btn'),$('lang-menu1'));
+
+/* ---- écran de choix de langue (une fois, après le pseudo) ---- */
+$('lgrid').innerHTML=LANGS.map(([code,flag,name])=>`<button type="button" data-l="${code}"><span class="flag" aria-hidden="true">${flag}</span>${name}</button>`).join('');
+$('lgrid').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+  setLang(b.dataset.l);try{localStorage.setItem('mycard-lang-chosen','1')}catch(e){}
+  $('lang-pick').hidden=true;startDeck();
+}));
+function maybePickLang(){
+  let chosen=false;try{chosen=localStorage.getItem('mycard-lang-chosen')==='1'}catch(e){}
+  if(chosen){startDeck();return}
+  document.getElementById('login').hidden=true;$('lang-pick').hidden=false;
+}
+applyI18n();
 </script>
 </body>
 </html>

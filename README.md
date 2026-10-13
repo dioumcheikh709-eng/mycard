@@ -41,6 +41,11 @@ Tout reste **dans le navigateur** ; rien n'est envoyé à un serveur.
 
 Chaque nom d'utilisateur a sa bibliothèque propre **sur cet appareil**. Les anciennes sauvegardes (clé `mycard-deck:<nom>`) sont converties au lancement.
 
+## Langues
+Interface en **français, anglais, espagnol, allemand et arabe** (RTL pris en charge). Après le pseudo, un écran propose de choisir la langue une seule fois ; elle reste modifiable ensuite via le bouton 🌐 (bibliothèque et fiche de carte). Le texte imprimé *sur* la carte (HP, Ability, weakness/resistance/retreat…) reste volontairement en anglais, comme une vraie carte à collectionner.
+
+Limites connues : les chiffres de dimension du PNG peuvent s'afficher dans un ordre inhabituel en arabe (effet bidi standard, pas un bug) ; l'accord du pluriel arabe du compteur de cartes est simplifié (pas de forme duelle).
+
 ## Effets
 Holo classique · Reverse à étoiles · Holo régulier · Cosmos · Reverse holo foil · V pleine illustration · Rainbow · Shiny V · Amazing Rare · VMax.
 
