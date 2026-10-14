@@ -190,6 +190,7 @@ body{margin:0;min-height:100vh;box-sizing:border-box;padding:24px 16px;backgroun
 .login input:focus-visible,.who button:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 body.locked>:not(#login):not(#lang-pick):not(.bg){display:none!important}
 body.locked .login{display:flex}
+.login[hidden]{display:none!important}
 .who{font:500 13px Barlow,sans-serif;opacity:.8}
 .who button{font:inherit;color:inherit;background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
 .gbtn{font:600 15px 'Barlow Condensed',sans-serif;letter-spacing:.04em;border:0;border-radius:99px;padding:9px 20px;background:var(--chip);color:var(--ink);cursor:pointer}
@@ -799,7 +800,7 @@ function enterUser(){
   const v=uin.value.trim();
   if(!v){$('u-err').textContent=tr('login.errNeedName');return}
   user=v;try{localStorage.setItem('mycard-user',v)}catch(err){}
-  $('u-err').textContent='';$('who-n').textContent=tr('deck.hello',{user});maybePickLang();
+  $('u-err').textContent='';$('who-n').textContent=tr('deck.hello',{user});startDeck();
 }
 $('u-go').addEventListener('click',enterUser);
 /* ---- connexion Google / Apple : l'interface est prête ; le branchement réel viendra avec les identifiants et le serveur ---- */
@@ -1603,18 +1604,18 @@ addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.l
 wireLangMenu($('lang-btn'),$('lang-menu2'));
 wireLangMenu($('who-lang-btn'),$('lang-menu1'));
 
-/* ---- écran de choix de langue (une fois, après le pseudo) ---- */
+/* ---- écran de choix de langue (une fois, AVANT le pseudo) ---- */
 $('lgrid').innerHTML=LANGS.map(([code,flag,name])=>`<button type="button" data-l="${code}"><span class="flag" aria-hidden="true">${flag}</span>${name}</button>`).join('');
 $('lgrid').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
   setLang(b.dataset.l);try{localStorage.setItem('mycard-lang-chosen','1')}catch(e){}
-  $('lang-pick').hidden=true;startDeck();
+  $('lang-pick').hidden=true;document.getElementById('login').hidden=false;uin.focus();
 }));
-function maybePickLang(){
+function initOnboarding(){
   let chosen=false;try{chosen=localStorage.getItem('mycard-lang-chosen')==='1'}catch(e){}
-  if(chosen){startDeck();return}
-  document.getElementById('login').hidden=true;$('lang-pick').hidden=false;
+  if(!chosen){document.getElementById('login').hidden=true;$('lang-pick').hidden=false}
 }
 applyI18n();
+initOnboarding();
 </script>
 </body>
 </html>
