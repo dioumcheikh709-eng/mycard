@@ -41,6 +41,9 @@ Tout reste **dans le navigateur** ; rien n'est envoyé à un serveur.
 
 Chaque nom d'utilisateur a sa bibliothèque propre **sur cet appareil**. Les anciennes sauvegardes (clé `mycard-deck:<nom>`) sont converties au lancement.
 
+## Paramètres
+Accessible depuis la bibliothèque (icône ⚙️) : pseudo actuel avec bouton pour en changer, **politique de confidentialité** et **crédits** (chacun dans un volet repliable), traduits dans les 5 langues.
+
 ## Langues
 Interface en **français, anglais, espagnol, allemand et arabe** (RTL pris en charge). Après le pseudo, un écran propose de choisir la langue une seule fois ; elle reste modifiable ensuite via le bouton 🌐 (bibliothèque et fiche de carte). Le texte imprimé *sur* la carte (HP, Ability, weakness/resistance/retreat…) reste volontairement en anglais, comme une vraie carte à collectionner.
 
