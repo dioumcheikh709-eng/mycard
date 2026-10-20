@@ -378,17 +378,12 @@ body[data-q]:not([data-q="0"]) .sparkle,body[data-q]:not([data-q="0"]) .rev.spot
 [dir=rtl] .sso{padding:0 20px 0 84px}
 [dir=rtl] .sso small{right:auto;left:14px}
 [dir=rtl] .num::before{margin-right:0;margin-left:1.4cqw}
-.lang-pick .lgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
-.lang-pick .lgrid button{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:14px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font:600 15px Barlow,sans-serif;cursor:pointer}
-.lang-pick .lgrid button:hover,.lang-pick .lgrid button:focus-visible{background:rgba(255,255,255,.18);border-color:#fff;outline:none}
-.lang-pick .lgrid span.flag{font-size:22px}
-.langbtn{display:inline-flex;align-items:center;gap:4px}
-.lang-menu{position:absolute;z-index:40;min-width:170px;box-sizing:border-box;padding:6px;border-radius:16px;background:rgba(22,44,160,.97);border:1px solid rgba(255,255,255,.28);box-shadow:0 16px 40px rgba(5,12,70,.55)}
-.lang-menu[hidden]{display:none}
-.lang-menu button{display:flex;align-items:center;gap:8px;width:100%;border:0;border-radius:10px;padding:9px 11px;background:none;color:#fff;font:500 14px Barlow,sans-serif;text-align:left;cursor:pointer}
-[dir=rtl] .lang-menu button{text-align:right}
-.lang-menu button:hover,.lang-menu button:focus-visible{background:rgba(255,255,255,.14);outline:none}
-.lang-menu button[aria-checked=true]{font-weight:700}
+.lang-pick .lgrid,.set-block .lgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+.lang-pick .lgrid button,.set-block .lgrid button{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:14px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font:600 15px Barlow,sans-serif;cursor:pointer}
+.lang-pick .lgrid button:hover,.lang-pick .lgrid button:focus-visible,.set-block .lgrid button:hover,.set-block .lgrid button:focus-visible{background:rgba(255,255,255,.18);border-color:#fff;outline:none}
+.lang-pick .lgrid span.flag,.set-block .lgrid span.flag{font-size:22px}
+.set-block .lgrid button[aria-pressed="true"]{background:rgba(255,255,255,.28);border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.35) inset}
+.iconbtn{display:inline-flex;align-items:center}
 .set-block{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:14px 16px}
 .set-h{margin:0;font:700 17px 'Barlow Condensed',sans-serif;letter-spacing:.02em;cursor:default}
 details.set-block>summary.set-h{cursor:pointer;list-style:none}
@@ -422,7 +417,7 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
 </section>
 <section class="deck" id="deck" aria-label="Mon deck">
   <header class="dk-head"><div><p class="dk-hello" id="dk-hello"></p><h1 data-i18n="deck.title">Mon deck</h1><p class="dk-count" id="dk-count"></p></div>
-    <div class="dk-tools"><button type="button" id="dk-sort" class="dk-sort" aria-haspopup="menu" aria-expanded="false" aria-controls="dk-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg><span id="dk-sort-l" data-i18n="deck.sortDefault">Récentes</span></button><div class="dk-menu" id="dk-menu" role="menu" aria-label="Trier les cartes" data-i18n-aria="deck.sortAria" hidden></div><button type="button" id="lang-btn" class="gbtn langbtn" aria-haspopup="menu" aria-expanded="false"><span aria-hidden="true">🌐</span><span id="lang-btn-l"></span></button><div class="lang-menu" id="lang-menu2" role="menu" hidden></div><button type="button" id="dk-settings" class="gbtn langbtn" aria-label="Paramètres"><span aria-hidden="true">⚙️</span></button><button type="button" id="dk-new" class="dk-plus" aria-label="Nouvelle carte">+</button></div></header>
+    <div class="dk-tools"><button type="button" id="dk-sort" class="dk-sort" aria-haspopup="menu" aria-expanded="false" aria-controls="dk-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg><span id="dk-sort-l" data-i18n="deck.sortDefault">Récentes</span></button><div class="dk-menu" id="dk-menu" role="menu" aria-label="Trier les cartes" data-i18n-aria="deck.sortAria" hidden></div><button type="button" id="dk-settings" class="gbtn iconbtn" aria-label="Paramètres"><span aria-hidden="true">⚙️</span></button><button type="button" id="dk-new" class="dk-plus" aria-label="Nouvelle carte">+</button></div></header>
   <div class="dk-grid" id="dk-grid"></div>
   <p class="dk-empty" id="dk-empty" hidden data-i18n="deck.empty">Ton deck est vide. Touche « Nouvelle carte » pour créer ta première carte.</p>
   <button type="button" id="dk-change" class="linkbtn" data-i18n="deck.changeUser">changer d'utilisateur</button>
@@ -434,6 +429,10 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
     <p class="set-p" id="set-loggedas"></p>
     <button type="button" id="set-change" class="gbtn" data-i18n="deck.changeUser">changer d'utilisateur</button>
   </div>
+  <div class="set-block">
+    <h2 class="set-h" data-i18n="settings.language">Langue</h2>
+    <div class="lgrid" id="set-lgrid"></div>
+  </div>
   <details class="set-block">
     <summary class="set-h" data-i18n="settings.privacyTitle">Politique de confidentialité</summary>
     <p class="set-p" id="set-privacy" style="white-space:pre-line"></p>
@@ -444,7 +443,7 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
     <a id="set-creditslink" href="https://github.com/simeydotme/pokemon-cards-css" target="_blank" rel="noopener" class="glink" data-i18n="settings.creditsLink">pokemon-cards-css sur GitHub</a>
   </details>
 </section>
-<div class="who"><span id="who-n"></span> · <button type="button" id="u-change" data-i18n="stage.change">changer</button> · <button type="button" id="who-lang-btn" class="langbtn" aria-haspopup="menu" aria-expanded="false"><span aria-hidden="true">🌐</span> <span id="who-lang-l"></span></button><div class="lang-menu" id="lang-menu1" role="menu" hidden></div></div>
+<div class="who"><span id="who-n"></span> · <button type="button" id="u-change" data-i18n="stage.change">changer</button></div>
 <div class="stage" id="stage"><div class="shadow" id="shadow"></div><div class="glow" id="glow"></div><div class="flipper" id="flipper"><div class="card" id="card"></div><div class="cardback"><div class="logo">MyCard</div></div></div></div>
 <div class="actions"><button type="button" id="dl" class="gbtn" data-i18n="stage.download">Télécharger en image</button><button type="button" id="sh" class="gbtn" data-i18n="stage.share">Partager</button></div>
 <div class="vbar"><button type="button" id="v-edit" class="gbtn primary" data-i18n="stage.personalize">Personnaliser</button></div>
@@ -550,7 +549,7 @@ fr:{dir:'ltr',
  'export.errImg':"Impossible de créer l'image.",'export.errGif':'Impossible de créer le GIF animé.','export.shareUnavailable':"Le partage direct n'est pas disponible ici : le fichier est proposé en téléchargement.",'export.dlError':'Téléchargement impossible ici ({err}).',
  'intro.title':'Personnalise<br>ta carte','intro.go':"C'est parti",
  'perf.line':'écran {hz} Hz · {ms} ms · palier {tier}','perf.stride':' (effet ÷{n})',
- 'settings.title':'Paramètres','settings.account':'Compte','settings.loggedAs':'Connecté en tant que {user}',
+ 'settings.title':'Paramètres','settings.account':'Compte','settings.language':'Langue','settings.loggedAs':'Connecté en tant que {user}',
  'settings.privacyTitle':'Politique de confidentialité',
  'settings.privacy':"MyCard fonctionne entièrement dans ton navigateur. Il n'y a pas de serveur, et rien de ce que tu fais ici ne nous est envoyé, ni à personne d'autre.\n\nTon pseudo, tes cartes et tes réglages sont stockés uniquement sur cet appareil, dans le navigateur. Les photos que tu ajoutes à une carte restent aussi sur cet appareil et ne sont jamais envoyées ailleurs.\n\nCette page charge des polices depuis Google Fonts ; ce chargement peut partager ton adresse IP avec Google, comme pour tout site qui utilise Google Fonts.\n\nIl n'y a ni outil de mesure d'audience, ni publicité, ni cookie de suivi.\n\nSi tu effaces les données de ton navigateur, ou si tu ouvres l'appli sur un autre appareil ou un autre navigateur, tes cartes n'y seront pas accessibles : elles ne sont pas encore sauvegardées ailleurs.\n\nCette note sera mise à jour si la connexion par compte et le stockage en ligne sont ajoutés plus tard.",
  'settings.creditsTitle':'Crédits',
@@ -595,7 +594,7 @@ en:{dir:'ltr',
  'export.errImg':'Couldn\u2019t create the image.','export.errGif':'Couldn\u2019t create the animated GIF.','export.shareUnavailable':'Direct sharing isn\u2019t available here: the file is offered for download instead.','export.dlError':'Download failed here ({err}).',
  'intro.title':'Customize<br>your card','intro.go':"Let's go",
  'perf.line':'screen {hz} Hz · {ms} ms · tier {tier}','perf.stride':' (effect ÷{n})',
- 'settings.title':'Settings','settings.account':'Account','settings.loggedAs':'Signed in as {user}',
+ 'settings.title':'Settings','settings.account':'Account','settings.language':'Language','settings.loggedAs':'Signed in as {user}',
  'settings.privacyTitle':'Privacy policy',
  'settings.privacy':"MyCard runs entirely in your browser. There is no server, and nothing you do here is sent to us or to anyone else.\n\nYour username, your cards, and your settings are stored only on this device, in your browser's local storage. Photos you add to a card stay on this device too and are never uploaded.\n\nThis page loads fonts from Google Fonts; loading them may share your IP address with Google, as with any site that uses Google Fonts.\n\nThere is no analytics, no advertising, and no tracking cookies.\n\nClearing your browser data, or opening the app on a different device or browser, makes your cards inaccessible there — they aren't backed up anywhere else yet.\n\nThis notice will be updated if account sign-in and cloud storage are added later.",
  'settings.creditsTitle':'Credits',
@@ -640,7 +639,7 @@ es:{dir:'ltr',
  'export.errImg':'No se pudo crear la imagen.','export.errGif':'No se pudo crear el GIF animado.','export.shareUnavailable':'No se puede compartir directamente aquí: el archivo se ofrece para descargar.','export.dlError':'Descarga no disponible aquí ({err}).',
  'intro.title':'Personaliza<br>tu carta','intro.go':'Vamos',
  'perf.line':'pantalla {hz} Hz · {ms} ms · nivel {tier}','perf.stride':' (efecto ÷{n})',
- 'settings.title':'Ajustes','settings.account':'Cuenta','settings.loggedAs':'Sesión iniciada como {user}',
+ 'settings.title':'Ajustes','settings.account':'Cuenta','settings.language':'Idioma','settings.loggedAs':'Sesión iniciada como {user}',
  'settings.privacyTitle':'Política de privacidad',
  'settings.privacy':"MyCard funciona totalmente en tu navegador. No hay servidor, y nada de lo que hagas aquí se nos envía a nosotros ni a nadie más.\n\nTu nombre de usuario, tus cartas y tus ajustes se guardan solo en este dispositivo, en el almacenamiento local del navegador. Las fotos que añades a una carta también se quedan en este dispositivo y nunca se suben a ningún sitio.\n\nEsta página carga fuentes desde Google Fonts; esta carga puede compartir tu dirección IP con Google, como ocurre en cualquier sitio que use Google Fonts.\n\nNo hay analítica, ni publicidad, ni cookies de seguimiento.\n\nSi borras los datos del navegador, o abres la app en otro dispositivo o navegador, tus cartas no estarán disponibles allí: todavía no se respaldan en ningún otro sitio.\n\nEste aviso se actualizará si más adelante se añaden el inicio de sesión con cuenta y el almacenamiento en la nube.",
  'settings.creditsTitle':'Créditos',
@@ -685,7 +684,7 @@ de:{dir:'ltr',
  'export.errImg':'Bild konnte nicht erstellt werden.','export.errGif':'Animiertes GIF konnte nicht erstellt werden.','export.shareUnavailable':'Direktes Teilen ist hier nicht verfügbar: die Datei wird stattdessen zum Herunterladen angeboten.','export.dlError':'Download hier nicht möglich ({err}).',
  'intro.title':'Gestalte<br>deine Karte','intro.go':"Los geht's",
  'perf.line':'Bildschirm {hz} Hz · {ms} ms · Stufe {tier}','perf.stride':' (Effekt ÷{n})',
- 'settings.title':'Einstellungen','settings.account':'Konto','settings.loggedAs':'Angemeldet als {user}',
+ 'settings.title':'Einstellungen','settings.account':'Konto','settings.language':'Sprache','settings.loggedAs':'Angemeldet als {user}',
  'settings.privacyTitle':'Datenschutzerklärung',
  'settings.privacy':"MyCard läuft vollständig in deinem Browser. Es gibt keinen Server, und nichts von dem, was du hier tust, wird an uns oder sonst jemanden gesendet.\n\nDein Benutzername, deine Karten und deine Einstellungen werden nur auf diesem Gerät gespeichert, im lokalen Speicher des Browsers. Fotos, die du einer Karte hinzufügst, bleiben ebenfalls auf diesem Gerät und werden nie hochgeladen.\n\nDiese Seite lädt Schriftarten von Google Fonts; dabei kann deine IP-Adresse an Google übermittelt werden, wie bei jeder Website, die Google Fonts nutzt.\n\nEs gibt keine Analyse-Tools, keine Werbung und keine Tracking-Cookies.\n\nWenn du deine Browserdaten löschst oder die App auf einem anderen Gerät oder Browser öffnest, sind deine Karten dort nicht verfügbar: Sie werden bisher nirgendwo anders gesichert.\n\nDieser Hinweis wird aktualisiert, falls später eine Kontoanmeldung und Cloud-Speicherung hinzukommen.",
  'settings.creditsTitle':'Credits',
@@ -730,7 +729,7 @@ ar:{dir:'rtl',
  'export.errImg':'تعذّر إنشاء الصورة.','export.errGif':'تعذّر إنشاء GIF المتحرك.','export.shareUnavailable':'المشاركة المباشرة غير متاحة هنا: الملف متاح للتنزيل بدلًا من ذلك.','export.dlError':'تعذّر التنزيل هنا ({err}).',
  'intro.title':'خصّص<br>بطاقتك','intro.go':'ابدأ',
  'perf.line':'الشاشة {hz} هرتز · {ms} مللي ثانية · المستوى {tier}','perf.stride':' (التأثير ÷{n})',
- 'settings.title':'الإعدادات','settings.account':'الحساب','settings.loggedAs':'مسجّل الدخول باسم {user}',
+ 'settings.title':'الإعدادات','settings.account':'الحساب','settings.language':'اللغة','settings.loggedAs':'مسجّل الدخول باسم {user}',
  'settings.privacyTitle':'سياسة الخصوصية',
  'settings.privacy':"يعمل MyCard بالكامل داخل متصفحك. لا يوجد خادم، ولا يُرسَل أي شيء تفعله هنا إلينا أو إلى أي جهة أخرى.\n\nيُحفظ اسم المستخدم وبطاقاتك وإعداداتك على هذا الجهاز فقط، داخل التخزين المحلي للمتصفح. كما تبقى الصور التي تضيفها إلى بطاقة على هذا الجهاز ولا تُرفع إلى أي مكان.\n\nتُحمّل هذه الصفحة خطوطًا من Google Fonts؛ قد يشارك ذلك عنوان IP الخاص بك مع Google، كما هو الحال في أي موقع يستخدم Google Fonts.\n\nلا توجد أدوات تحليل، ولا إعلانات، ولا ملفات تعريف ارتباط للتتبع.\n\nعند مسح بيانات المتصفح، أو فتح التطبيق على جهاز أو متصفح آخر، لن تكون بطاقاتك متاحة هناك: فهي غير محفوظة بعد في أي مكان آخر.\n\nسيتم تحديث هذا الإشعار إذا أُضيف لاحقًا تسجيل الدخول بحساب والتخزين السحابي.",
  'settings.creditsTitle':'الاعتمادات',
@@ -1551,6 +1550,7 @@ function fillSettings(){
   $('set-loggedas').textContent=tr('settings.loggedAs',{user});
   $('set-privacy').textContent=tr('settings.privacy');
   $('set-credits').textContent=tr('settings.credits');
+  buildSettingsLangGrid();
 }
 function showSettings(){saveNow();fillSettings();$('deck').hidden=true;$('settings').hidden=false;window.scrollTo(0,0)}
 function hideSettings(){$('settings').hidden=true;$('deck').hidden=false;window.scrollTo(0,0)}
@@ -1655,24 +1655,16 @@ function applyI18n(){
   if(user)$('who-n').textContent=tr('deck.hello',{user});
   if(!$('settings').hidden)fillSettings();
   if(!$('exp-modal').hidden)openExpModal(expIntent);
-  document.querySelectorAll('.langbtn span:last-child').forEach(el=>{el.textContent=(LANGS.find(x=>x[0]===lang)||LANGS[0])[2]});
 }
 function setLang(code){
   if(!I18N[code])return;lang=code;try{localStorage.setItem('mycard-lang',code)}catch(e){}
-  applyI18n();[$('lang-menu1'),$('lang-menu2')].forEach(m=>{if(m)m.hidden=true});
+  applyI18n();
 }
-function buildLangMenu(menu){
-  menu.innerHTML=LANGS.map(([code,flag,name])=>`<button type="button" role="menuitemradio" aria-checked="${code===lang}" data-l="${code}"><span aria-hidden="true">${flag}</span> ${name}</button>`).join('');
-  menu.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.l)));
+function buildSettingsLangGrid(){
+  const g=$('set-lgrid');
+  g.innerHTML=LANGS.map(([code,flag,name])=>`<button type="button" data-l="${code}" aria-pressed="${code===lang}"><span class="flag" aria-hidden="true">${flag}</span>${name}</button>`).join('');
+  g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.l)));
 }
-function wireLangMenu(btn,menu){
-  buildLangMenu(menu);
-  btn.addEventListener('click',e=>{e.stopPropagation();const open=menu.hidden;document.querySelectorAll('.lang-menu').forEach(m=>m.hidden=true);if(open){buildLangMenu(menu);const r=btn.getBoundingClientRect();menu.style.top=(r.bottom+6+scrollY)+'px';menu.style.left=Math.max(8,Math.min(innerWidth-186,r.left+scrollX))+'px';menu.hidden=false;btn.setAttribute('aria-expanded','true')}else btn.setAttribute('aria-expanded','false')});
-}
-document.addEventListener('click',e=>{if(!e.target.closest('.lang-menu')&&!e.target.closest('.langbtn')){document.querySelectorAll('.lang-menu').forEach(m=>m.hidden=true)}});
-addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.lang-menu').forEach(m=>m.hidden=true)});
-wireLangMenu($('lang-btn'),$('lang-menu2'));
-wireLangMenu($('who-lang-btn'),$('lang-menu1'));
 
 /* ---- écran de choix de langue (une fois, AVANT le pseudo) ---- */
 $('lgrid').innerHTML=LANGS.map(([code,flag,name])=>`<button type="button" data-l="${code}"><span class="flag" aria-hidden="true">${flag}</span>${name}</button>`).join('');
