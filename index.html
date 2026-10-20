@@ -19,7 +19,16 @@
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
   color-scheme:dark;--field:rgba(255,255,255,.12);--line:rgba(255,255,255,.28);--bg:#0b1a5c;--ink:#fff;--chip:rgba(255,255,255,.14);--chip-on:#fff;--chip-on-ink:#10236b;
+  --acc1:#8fa4ff;--acc2:#3453ee;--acc-rgb:52,83,238;--deep-rgb:10,24,110;--panel-rgb:22,44,160;--shade-rgb:5,12,70;--hello:#bfd3ff;
+  --bg-grad:linear-gradient(180deg,#14309f 0%,#2547cf 30%,#3d63b8 58%,#1f4a4a 82%,#16322c 100%);--b1:#2f55ff;--b2:#9fa8f5;--b3:#1fa7b0;--b4:#1d3a2d;
 }
+:root[data-theme=red]{--bg:#3a0a0e;--chip-on-ink:#5a0f14;--acc1:#ff9a9a;--acc2:#e0212b;--acc-rgb:224,33,43;--deep-rgb:60,8,12;--panel-rgb:110,18,26;--shade-rgb:70,5,10;--hello:#ffc9c9;
+  --bg-grad:linear-gradient(180deg,#5c0f14 0%,#a01822 30%,#b8404a 58%,#4a1e1e 82%,#2a1010 100%);--b1:#ff3b3b;--b2:#f5a0a0;--b3:#b0361f;--b4:#3a1010}
+:root[data-theme=black]{--bg:#050507;--chip-on-ink:#111;--acc1:#d0d0dc;--acc2:#4a4a58;--acc-rgb:90,90,110;--deep-rgb:0,0,0;--panel-rgb:24,24,30;--shade-rgb:0,0,0;--hello:#c8c8d6;
+  --bg-grad:linear-gradient(180deg,#0c0c10 0%,#17171d 30%,#25252d 58%,#14141a 82%,#08080a 100%);--b1:#3a3a48;--b2:#6b6b80;--b3:#222230;--b4:#0e0e14}
+:root[data-theme=white]{color-scheme:light;--bg:#f1f3f9;--ink:#14182e;--field:rgba(20,24,46,.06);--line:rgba(20,24,46,.25);--chip:rgba(20,24,46,.08);--chip-on:#14182e;--chip-on-ink:#fff;
+  --acc1:#8fa4ff;--acc2:#3453ee;--acc-rgb:52,83,238;--deep-rgb:20,24,46;--panel-rgb:30,36,70;--shade-rgb:20,24,46;--hello:#2a3f9e;
+  --bg-grad:linear-gradient(180deg,#ffffff 0%,#eef1fa 30%,#dfe5f5 58%,#e9edf7 82%,#f6f7fb 100%);--b1:#c9d4ff;--b2:#ffd9e6;--b3:#d3f0f5;--b4:#e6e9f2}
 html{margin:0}
 body{margin:0;min-height:100vh;box-sizing:border-box;padding:24px 16px;background:var(--bg);color:var(--ink);font-family:Barlow,system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;overflow-x:hidden}
 .tabs{display:flex;gap:8px}
@@ -74,10 +83,17 @@ body{margin:0;min-height:100vh;box-sizing:border-box;padding:24px 16px;backgroun
 .card{--red:#f80e7b;--yellow:#eedf10;--green:#21e985;--blue:#0dbde9;--violet:#c929f1;--cosmos:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27500%27%20height%3D%27500%27%3E%3Cdefs%3E%0A%3CradialGradient%20id%3D%27a%27%20cx%3D%27.25%27%20cy%3D%27.3%27%20r%3D%27.55%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%237a4cf0%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%237a4cf0%27%20stop-opacity%3D%270%27%2F%3E%3C%2FradialGradient%3E%0A%3CradialGradient%20id%3D%27b%27%20cx%3D%27.75%27%20cy%3D%27.7%27%20r%3D%27.5%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%231fa3d8%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%231fa3d8%27%20stop-opacity%3D%270%27%2F%3E%3C%2FradialGradient%3E%0A%3CradialGradient%20id%3D%27c%27%20cx%3D%27.65%27%20cy%3D%27.2%27%20r%3D%27.4%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23d03fa0%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23d03fa0%27%20stop-opacity%3D%270%27%2F%3E%3C%2FradialGradient%3E%0A%3Cfilter%20id%3D%27n%27%20x%3D%270%27%20y%3D%270%27%20width%3D%27100%25%27%20height%3D%27100%25%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%27.8%27%20numOctaves%3D%272%27%20stitchTiles%3D%27stitch%27%2F%3E%3CfeColorMatrix%20values%3D%270%200%200%200%201%200%200%200%200%201%200%200%200%200%201%200%200%2018%200%20-11%27%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%0A%3Crect%20width%3D%27500%27%20height%3D%27500%27%20fill%3D%27%230a0c2b%27%2F%3E%3Crect%20width%3D%27500%27%20height%3D%27500%27%20fill%3D%27url(%23a)%27%2F%3E%3Crect%20width%3D%27500%27%20height%3D%27500%27%20fill%3D%27url(%23b)%27%2F%3E%3Crect%20width%3D%27500%27%20height%3D%27500%27%20fill%3D%27url(%23c)%27%2F%3E%3Crect%20width%3D%27500%27%20height%3D%27500%27%20filter%3D%27url(%23n)%27%2F%3E%3C%2Fsvg%3E")}
 .shine,.shine::before,.shine::after,.glare2,.glare2::after{position:absolute;inset:0;border-radius:inherit;pointer-events:none;background-size:cover}
 .shine,.glare2{display:none}
-.card:is([data-fx=regular],[data-fx=cosmos],[data-fx=sitereverse],[data-fx=vfull],[data-fx=rainbow],[data-fx=shinyv],[data-fx=amazing],[data-fx=vmax]) :is(.shine,.glare2){display:block}
-.card:is([data-fx=regular],[data-fx=cosmos],[data-fx=sitereverse],[data-fx=vfull],[data-fx=rainbow],[data-fx=shinyv],[data-fx=amazing],[data-fx=vmax]) :is(.holo,.sparkle,.revwrap,.glare){display:none}
+.card:is([data-fx=regular],[data-fx=cosmos],[data-fx=sitereverse],[data-fx=vfull],[data-fx=rainbow],[data-fx=shinyv],[data-fx=amazing],[data-fx=vmax],[data-fx=metal]) :is(.shine,.glare2){display:block}
+.card:is([data-fx=regular],[data-fx=cosmos],[data-fx=sitereverse],[data-fx=vfull],[data-fx=rainbow],[data-fx=shinyv],[data-fx=amazing],[data-fx=vmax],[data-fx=metal]) :is(.holo,.sparkle,.revwrap,.glare){display:none}
 .glare2{background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsla(0,0%,100%,.8) 10%,hsla(0,0%,100%,.65) 20%,hsla(0,0%,0%,.5) 90%);mix-blend-mode:overlay;opacity:calc(var(--card-opacity)*var(--k))}
 .card[data-fx=regular] .shine,.card[data-fx=cosmos] .shine{opacity:var(--k);clip-path:inset(2.6% 3.4% 2.4% 3.4% round 4%)}
+/* MÉTALLIQUE (acier brossé) */
+.card[data-fx=metal] .shine{opacity:var(--k);clip-path:inset(2.6% 3.4% 2.4% 3.4% round 4%);mix-blend-mode:overlay;
+  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0,rgba(255,255,255,.07) 1px,rgba(0,0,0,.07) 1px,rgba(0,0,0,.07) 2px),linear-gradient(115deg,#202226 0%,#f4f6fa 12%,#4a4e58 24%,#ffffff 36%,#30333b 48%,#e9ecf2 60%,#555a66 72%,#fbfcfe 84%,#262830 100%);
+  background-size:3px 100%,260% 260%;background-position:0 0,var(--background-x) var(--background-y);
+  filter:contrast(2) saturate(0)}
+.card[data-fx=metal] .shine::after{content:"";background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),rgba(255,255,255,.95) 0%,rgba(235,240,250,.4) 24%,transparent 58%);mix-blend-mode:soft-light;opacity:calc(var(--card-opacity)*var(--k))}
+.card[data-fx=metal] .glare2{background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsla(0,0%,100%,.9) 6%,hsla(0,0%,70%,.25) 30%,hsla(0,0%,0%,.5) 95%);mix-blend-mode:soft-light;filter:contrast(1.3) saturate(0)}
 /* HOLO RÉGULIER */
 .card[data-fx=regular] .shine{background-image:repeating-linear-gradient(110deg,var(--violet),var(--blue),var(--green),var(--yellow),var(--red),var(--violet),var(--blue),var(--green),var(--yellow),var(--red),var(--violet),var(--blue),var(--green),var(--yellow),var(--red)),repeating-linear-gradient(90deg,#000 0,#000 2px,#666 2px,#666 4px);
   background-position:calc(((50% - var(--background-x))*2.6) + 50%) calc(((50% - var(--background-y))*3.5) + 50%),center center;background-size:400% 400%,cover;background-blend-mode:overlay;filter:brightness(1.1) contrast(1.1) saturate(1.2);mix-blend-mode:color-dodge}
@@ -212,23 +228,23 @@ body.locked .login{display:flex}
 @media (prefers-reduced-motion:reduce){.card{transition:none}}
 
 /* ---- habillage bleu animé + verre ---- */
-html{background:#0b1a5c}body{background:none}
-.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(180deg,#14309f 0%,#2547cf 30%,#3d63b8 58%,#1f4a4a 82%,#16322c 100%)}
+html{background:var(--bg)}body{background:none}
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:var(--bg-grad)}
 .bg i{position:absolute;display:block;border-radius:50%;will-change:transform;animation:drift 22s ease-in-out infinite alternate}
-.bg i:nth-child(1){width:90vmax;height:90vmax;left:-35vmax;top:-30vmax;background:radial-gradient(circle closest-side,#2f55ff 30%,rgba(47,85,255,0) 100%);opacity:.7}
-.bg i:nth-child(2){width:70vmax;height:70vmax;right:-30vmax;top:5vmax;background:radial-gradient(circle closest-side,#9fa8f5 30%,rgba(159,168,245,0) 100%);opacity:.5;animation-duration:28s;animation-delay:-8s}
-.bg i:nth-child(3){width:75vmax;height:75vmax;left:-20vmax;bottom:-35vmax;background:radial-gradient(circle closest-side,#1fa7b0 30%,rgba(31,167,176,0) 100%);opacity:.45;animation-duration:25s;animation-delay:-14s}
-.bg i:nth-child(4){width:60vmax;height:60vmax;right:-25vmax;bottom:-30vmax;background:radial-gradient(circle closest-side,#1d3a2d 30%,rgba(29,58,45,0) 100%);opacity:.8;animation-duration:30s;animation-delay:-4s}
+.bg i:nth-child(1){width:90vmax;height:90vmax;left:-35vmax;top:-30vmax;background:radial-gradient(circle closest-side,var(--b1) 30%,transparent 100%);opacity:.7}
+.bg i:nth-child(2){width:70vmax;height:70vmax;right:-30vmax;top:5vmax;background:radial-gradient(circle closest-side,var(--b2) 30%,transparent 100%);opacity:.5;animation-duration:28s;animation-delay:-8s}
+.bg i:nth-child(3){width:75vmax;height:75vmax;left:-20vmax;bottom:-35vmax;background:radial-gradient(circle closest-side,var(--b3) 30%,transparent 100%);opacity:.45;animation-duration:25s;animation-delay:-14s}
+.bg i:nth-child(4){width:60vmax;height:60vmax;right:-25vmax;bottom:-30vmax;background:radial-gradient(circle closest-side,var(--b4) 30%,transparent 100%);opacity:.8;animation-duration:30s;animation-delay:-4s}
 @keyframes drift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(8vmax,6vmax) scale(1.08)}66%{transform:translate(-6vmax,10vmax) scale(.95)}100%{transform:translate(5vmax,-6vmax) scale(1.05)}}
 .login{gap:14px;width:min(420px,92vw)}
 .logo{font:italic 700 68px/1 'Barlow Condensed',sans-serif;letter-spacing:.01em;color:#222;background:rgba(255,255,255,.9);padding:14px 40px 14px 36px;border-radius:99px 12px 12px 99px;box-shadow:0 10px 40px rgba(20,40,160,.35);margin-bottom:10px}
-.hello{font:600 15px Barlow,sans-serif;color:#bfd3ff;margin:0}
+.hello{font:600 15px Barlow,sans-serif;color:var(--hello);margin:0}
 .login h1{font:700 36px/1.05 'Barlow Condensed',sans-serif;letter-spacing:.01em}
 .ask{display:flex;align-items:center;width:100%;box-sizing:border-box;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.22);border-radius:99px;padding:6px 6px 6px 20px}
 .ask input{flex:1;min-width:0;background:none!important;border:0!important;text-align:left!important;color:#fff;font:400 16px Barlow,sans-serif;padding:10px 0!important;outline:none}
 .ask input::placeholder{color:rgba(255,255,255,.7)}
 .ask:focus-within{border-color:#fff}
-.send{width:46px;height:46px;border-radius:50%;border:0;background:radial-gradient(circle at 35% 30%,#8fa4ff,#3453ee);display:grid;place-items:center;cursor:pointer;flex:none}
+.send{width:46px;height:46px;border-radius:50%;border:0;background:radial-gradient(circle at 35% 30%,var(--acc1),var(--acc2));display:grid;place-items:center;cursor:pointer;flex:none}
 .send svg{width:22px;height:22px}
 .panel{width:min(420px,92vw);box-sizing:border-box;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);border-radius:26px;padding:14px}
 .panel .editor{width:auto;background:none;padding:10px 2px 2px;border-radius:0}
@@ -246,7 +262,7 @@ html{background:#0b1a5c}body{background:none}
 .dot svg{width:60%;height:60%}
 .fxgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .fxgrid button{font:500 13px/1.2 Barlow,sans-serif;text-align:left;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:10px 12px;cursor:pointer}
-.fxgrid button[aria-pressed=true]{background:#fff;color:#10236b;border-color:#fff}
+.fxgrid button[aria-pressed=true]{background:#fff;color:var(--chip-on-ink);border-color:#fff}
 body.touching .bg i,body.lite .bg i{animation-play-state:paused}
 @media (prefers-reduced-motion:reduce){.bg i{animation:none}}
 
@@ -263,11 +279,11 @@ body.touching .bg i,body.lite .bg i{animation-play-state:paused}
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
 .cardback::before{content:"";position:absolute;inset:3.4%;border:2px solid rgba(255,255,255,.35);border-radius:3%/2.2%}
 .cardback .logo{font-size:min(15vw,50px);padding:10px 28px 10px 24px;margin:0;position:relative}
-.intro{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;box-sizing:border-box;text-align:center;opacity:0;visibility:hidden;pointer-events:none;background:rgba(10,24,110,.28);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);transition:opacity .6s ease,visibility 0s .6s}
+.intro{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;box-sizing:border-box;text-align:center;opacity:0;visibility:hidden;pointer-events:none;background:rgba(var(--deep-rgb),.28);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);transition:opacity .6s ease,visibility 0s .6s}
 body.introshow .intro{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .6s ease}
-.intro h2{margin:0;font:700 clamp(44px,12vw,70px)/1.02 'Barlow Condensed',sans-serif;color:#fff;text-shadow:0 4px 30px rgba(10,24,110,.5);transform:translateY(16px);transition:transform .8s .15s cubic-bezier(.2,.9,.25,1)}
+.intro h2{margin:0;font:700 clamp(44px,12vw,70px)/1.02 'Barlow Condensed',sans-serif;color:#fff;text-shadow:0 4px 30px rgba(var(--deep-rgb),.5);transform:translateY(16px);transition:transform .8s .15s cubic-bezier(.2,.9,.25,1)}
 body.introshow .intro h2{transform:none}
-.lesgo{position:absolute;left:50%;bottom:max(40px,calc(env(safe-area-inset-bottom) + 24px));transform:translate(-50%,24px);opacity:0;border:0;border-radius:99px;padding:16px 60px;cursor:pointer;color:#fff;white-space:nowrap;font:700 22px 'Barlow Condensed',sans-serif;letter-spacing:.08em;background:radial-gradient(circle at 35% 30%,#8fa4ff,#3453ee);box-shadow:0 10px 32px rgba(52,83,238,.6)}
+.lesgo{position:absolute;left:50%;bottom:max(40px,calc(env(safe-area-inset-bottom) + 24px));transform:translate(-50%,24px);opacity:0;border:0;border-radius:99px;padding:16px 60px;cursor:pointer;color:#fff;white-space:nowrap;font:700 22px 'Barlow Condensed',sans-serif;letter-spacing:.08em;background:radial-gradient(circle at 35% 30%,var(--acc1),var(--acc2));box-shadow:0 10px 32px rgba(var(--acc-rgb),.6)}
 body.introshow .lesgo{opacity:1;transform:translate(-50%,0);transition:opacity .6s .35s,transform .8s .35s cubic-bezier(.2,.9,.25,1)}
 .lesgo:focus-visible{outline:3px solid #fff;outline-offset:3px}
 .who,.actions,.hint,#gyro,#gopen,.panel,#e-del{transition:opacity .7s .5s,transform .7s .5s}
@@ -285,15 +301,15 @@ html.introing,body.introing{overflow:hidden}
 body.view-deck .deck{display:flex}
 body.view-deck :is(.who,.stage,.actions,.hint,#gyro,#gopen,.panel,#e-del){display:none!important}
 .dk-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
-.dk-hello{margin:0;font:600 14px Barlow,sans-serif;color:#bfd3ff}
+.dk-hello{margin:0;font:600 14px Barlow,sans-serif;color:var(--hello)}
 .dk-head h1{margin:2px 0;font:700 46px/1 'Barlow Condensed',sans-serif;letter-spacing:.01em}
 .dk-count{margin:0;font:500 14px Barlow,sans-serif;opacity:.7}
-.dk-plus{width:46px;height:46px;border-radius:50%;border:0;color:#fff;font:300 32px/1 Barlow,sans-serif;background:radial-gradient(circle at 35% 30%,#8fa4ff,#3453ee);cursor:pointer;box-shadow:0 8px 24px rgba(52,83,238,.5)}
+.dk-plus{width:46px;height:46px;border-radius:50%;border:0;color:#fff;font:300 32px/1 Barlow,sans-serif;background:radial-gradient(circle at 35% 30%,var(--acc1),var(--acc2));cursor:pointer;box-shadow:0 8px 24px rgba(var(--acc-rgb),.5)}
 .dk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px 14px}
 @media (min-width:560px){.dk-grid{grid-template-columns:repeat(3,1fr)}}
 .tile{display:grid;gap:3px;text-align:left;background:none;border:0;padding:0;color:#fff;cursor:pointer;font-family:Barlow,sans-serif;transition:transform .2s}
 .tile:active{transform:scale(.96)}
-.tile .tcov{display:block;aspect-ratio:63/88;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.1);box-shadow:0 10px 28px rgba(5,15,80,.45)}
+.tile .tcov{display:block;aspect-ratio:63/88;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.1);box-shadow:0 10px 28px rgba(var(--shade-rgb),.45)}
 .tile .tcov img{display:block;width:100%;height:100%;object-fit:cover}
 .tile b{font:600 15px/1.2 Barlow,sans-serif;margin-top:6px}
 .tile small{font:400 13px Barlow,sans-serif;opacity:.65}
@@ -303,7 +319,7 @@ body.view-deck :is(.who,.stage,.actions,.hint,#gyro,#gopen,.panel,#e-del){displa
 .dk-empty{margin:0;text-align:center;font:400 14px Barlow,sans-serif;opacity:.75}
 .dk-fan[hidden],.dk-grid[hidden],.dk-sel[hidden],.dk-empty[hidden]{display:none}
 .linkbtn{background:none;border:0;color:#fff;opacity:.75;text-decoration:underline;font:500 13px Barlow,sans-serif;cursor:pointer;padding:8px}
-.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:rgba(10,24,110,.92);color:#fff;padding:10px 16px;border-radius:99px;font:500 14px Barlow,sans-serif;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:60}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:rgba(var(--deep-rgb),.92);color:#fff;padding:10px 16px;border-radius:99px;font:500 14px Barlow,sans-serif;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:60}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
 /* ---- arrivée par le haut, flou de fond, annulation ---- */
@@ -312,12 +328,12 @@ body.view-deck :is(.who,.stage,.actions,.hint,#gyro,#gopen,.panel,#e-del){displa
 .bg{transition:filter .6s,transform .6s}
 body.view-edit .bg{filter:blur(18px);transform:scale(1.15)}
 body.view-edit .bg i{animation-play-state:paused}
-.dk-back{display:none;position:fixed;left:max(12px,env(safe-area-inset-left));top:max(12px,env(safe-area-inset-top));z-index:25;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.28);border-radius:99px;padding:9px 16px;background:rgba(10,24,110,.55);color:#fff;font:600 15px 'Barlow Condensed',sans-serif;letter-spacing:.04em;cursor:pointer}
+.dk-back{display:none;position:fixed;left:max(12px,env(safe-area-inset-left));top:max(12px,env(safe-area-inset-top));z-index:25;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.28);border-radius:99px;padding:9px 16px;background:rgba(var(--deep-rgb),.55);color:#fff;font:600 15px 'Barlow Condensed',sans-serif;letter-spacing:.04em;cursor:pointer}
 body.view-edit .dk-back{display:inline-flex}
 body.introing .dk-back{opacity:0;pointer-events:none}
-.cfm{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(6,14,70,.5)}
+.cfm{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(var(--shade-rgb),.5)}
 .cfm[hidden]{display:none}
-.cfm-box{width:min(340px,100%);box-sizing:border-box;background:rgba(22,44,160,.94);border:1px solid rgba(255,255,255,.28);border-radius:22px;padding:22px;text-align:center;color:#fff;box-shadow:0 20px 50px rgba(5,12,70,.6)}
+.cfm-box{width:min(340px,100%);box-sizing:border-box;background:rgba(var(--panel-rgb),.94);border:1px solid rgba(255,255,255,.28);border-radius:22px;padding:22px;text-align:center;color:#fff;box-shadow:0 20px 50px rgba(var(--shade-rgb),.6)}
 .cfm-box h3{margin:0 0 8px;font:700 28px/1.05 'Barlow Condensed',sans-serif}
 .cfm-box p{margin:0 0 18px;font:400 15px/1.35 Barlow,sans-serif;opacity:.85}
 .cfm-b{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
@@ -330,14 +346,14 @@ body.introing .dk-back{opacity:0;pointer-events:none}
 .vbar{display:none}
 body.viewing .vbar{display:flex;justify-content:center}
 body.viewing .panel{display:none}
-.gbtn.primary{background:radial-gradient(circle at 35% 30%,#8fa4ff,#3453ee);color:#fff;box-shadow:0 8px 24px rgba(52,83,238,.5)}
+.gbtn.primary{background:radial-gradient(circle at 35% 30%,var(--acc1),var(--acc2));color:#fff;box-shadow:0 8px 24px rgba(var(--acc-rgb),.5)}
 /* ---- gouverneur de fluidité : paliers de qualité (0 = complet) ---- */
 body[data-q]:not([data-q="0"]) .sparkle,body[data-q]:not([data-q="0"]) .rev.spot,body[data-q]:not([data-q="0"]) .shine::before,body[data-q]:not([data-q="0"]) .glare2::after{display:none}
 .dk-tools{position:relative;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
 .dk-sort{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.28);border-radius:99px;padding:8px 14px;background:rgba(255,255,255,.1);color:#fff;font:600 14px 'Barlow Condensed',sans-serif;letter-spacing:.04em;cursor:pointer}
 .dk-sort svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.dk-sort[aria-expanded=true]{background:#fff;color:#10236b}
-.dk-menu{position:absolute;right:0;top:44px;z-index:30;width:210px;box-sizing:border-box;padding:6px;border-radius:18px;background:rgba(22,44,160,.97);border:1px solid rgba(255,255,255,.28);box-shadow:0 16px 40px rgba(5,12,70,.55)}
+.dk-sort[aria-expanded=true]{background:#fff;color:var(--chip-on-ink)}
+.dk-menu{position:absolute;right:0;top:44px;z-index:30;width:210px;box-sizing:border-box;padding:6px;border-radius:18px;background:rgba(var(--panel-rgb),.97);border:1px solid rgba(255,255,255,.28);box-shadow:0 16px 40px rgba(var(--shade-rgb),.55)}
 .dk-menu[hidden]{display:none}
 .dk-menu{max-height:72vh;overflow:auto}
 .dk-menu .hd{padding:10px 12px 4px;font:600 11px Barlow,sans-serif;letter-spacing:.09em;text-transform:uppercase;opacity:.6}
@@ -393,7 +409,30 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
 [dir=rtl] details.set-block>summary.set-h::after{float:left}
 .set-p{margin:10px 0 0;font:400 14px/1.55 Barlow,sans-serif;opacity:.85}
 .set-block .glink{display:inline-block;margin-top:10px}
+
+/* ---- recherche dans le deck ---- */
+.dk-search{margin:2px 0 14px}
+.dk-search input{width:100%;box-sizing:border-box;font:400 16px Barlow,sans-serif;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:99px;padding:11px 18px}
+.dk-search input::placeholder{color:var(--ink);opacity:.55}
+.dk-search input:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+/* ---- pastilles de thème (Paramètres) ---- */
+.tsw{width:22px;height:22px;border-radius:50%;flex:none;border:2px solid rgba(255,255,255,.7)}
+.tsw[data-t=blue]{background:linear-gradient(135deg,#8fa4ff,#2547cf)}
+.tsw[data-t=red]{background:linear-gradient(135deg,#ff9a9a,#c4141f)}
+.tsw[data-t=black]{background:linear-gradient(135deg,#6b6b80,#0a0a0d)}
+.tsw[data-t=white]{background:linear-gradient(135deg,#fff,#d8def0)}
+/* ---- thème blanc : textes et surfaces à l'envers (le reste suit les variables) ---- */
+:root[data-theme=white] :is(.ask input,.tgrid button,.fxgrid button,.tile,.linkbtn,.dk-sort,.exp-opt,.set-block .lgrid button,.lang-pick .lgrid button,.or){color:var(--ink)}
+:root[data-theme=white] :is(.panel,.set-block,.ask,.dk-sort,.fxgrid button,.tgrid button,.exp-opt,.set-block .lgrid button,.lang-pick .lgrid button){background:rgba(20,24,46,.06);border-color:rgba(20,24,46,.2)}
+:root[data-theme=white] :is(.fxgrid button,.tgrid button,.set-block .lgrid button)[aria-pressed=true],:root[data-theme=white] .dk-sort[aria-expanded=true]{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:none}
+:root[data-theme=white] :is(.dk-sort,.fxgrid button,.tgrid button,.set-block .lgrid button):hover{background:rgba(20,24,46,.12)}
+:root[data-theme=white] .ask input::placeholder{color:rgba(20,24,46,.55)}
+:root[data-theme=white] .ask:focus-within{border-color:var(--ink)}
+:root[data-theme=white] .tile .tcov{background:rgba(20,24,46,.08);box-shadow:0 10px 28px rgba(20,24,46,.25)}
+:root[data-theme=white] .tile.new .tcov{border-color:rgba(20,24,46,.35);background:rgba(20,24,46,.05)}
+:root[data-theme=white] .tsw{border-color:rgba(20,24,46,.4)}
 </style>
+<script>try{var __t=localStorage.getItem('mycard-theme');if(__t&&/^(blue|red|black|white)$/.test(__t))document.documentElement.dataset.theme=__t}catch(e){}</script>
 </head>
 <body class="locked">
 <div class="bg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
@@ -418,7 +457,9 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
 <section class="deck" id="deck" aria-label="Mon deck">
   <header class="dk-head"><div><p class="dk-hello" id="dk-hello"></p><h1 data-i18n="deck.title">Mon deck</h1><p class="dk-count" id="dk-count"></p></div>
     <div class="dk-tools"><button type="button" id="dk-sort" class="dk-sort" aria-haspopup="menu" aria-expanded="false" aria-controls="dk-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg><span id="dk-sort-l" data-i18n="deck.sortDefault">Récentes</span></button><div class="dk-menu" id="dk-menu" role="menu" aria-label="Trier les cartes" data-i18n-aria="deck.sortAria" hidden></div><button type="button" id="dk-settings" class="gbtn iconbtn" aria-label="Paramètres"><span aria-hidden="true">⚙️</span></button><button type="button" id="dk-new" class="dk-plus" aria-label="Nouvelle carte">+</button></div></header>
+  <div class="dk-search"><input id="dk-q" type="search" autocomplete="off" enterkeyhint="search" placeholder="Rechercher une carte…" aria-label="Rechercher dans le deck" data-i18n-ph="deck.searchPh" data-i18n-aria="deck.searchAria"></div>
   <div class="dk-grid" id="dk-grid"></div>
+  <p class="dk-empty" id="dk-nores" hidden data-i18n="deck.noResults">Aucune carte ne correspond à ta recherche.</p>
   <p class="dk-empty" id="dk-empty" hidden data-i18n="deck.empty">Ton deck est vide. Touche « Nouvelle carte » pour créer ta première carte.</p>
   <button type="button" id="dk-change" class="linkbtn" data-i18n="deck.changeUser">changer d'utilisateur</button>
 </section>
@@ -432,6 +473,10 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
   <div class="set-block">
     <h2 class="set-h" data-i18n="settings.language">Langue</h2>
     <div class="lgrid" id="set-lgrid"></div>
+  </div>
+  <div class="set-block">
+    <h2 class="set-h" data-i18n="settings.theme">Thème de couleur</h2>
+    <div class="lgrid" id="set-theme"></div>
   </div>
   <details class="set-block">
     <summary class="set-h" data-i18n="settings.privacyTitle">Politique de confidentialité</summary>
@@ -487,7 +532,7 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
   </div>
   <div class="step editor" data-step="effect" hidden>
     <div class="wide en-row"><span data-i18n="panel.effect.label">Effet holographique</span><div class="fxgrid" id="fxgrid"></div></div>
-    <select id="f-fx" hidden><option value="classic">Holo classique (diagonal, style V)</option><option value="reverse">Reverse holo (étoiles à 5 branches)</option><option value="regular">Holo régulier</option><option value="cosmos">Cosmos / galaxie</option><option value="sitereverse">Reverse holo foil</option><option value="vfull">V pleine illustration</option><option value="rainbow">Rainbow / secret</option><option value="shinyv">Shiny V</option><option value="amazing">Amazing Rare</option><option value="vmax">VMax</option></select>
+    <select id="f-fx" hidden><option value="classic">Holo classique (diagonal, style V)</option><option value="reverse">Reverse holo (étoiles à 5 branches)</option><option value="regular">Holo régulier</option><option value="cosmos">Cosmos / galaxie</option><option value="sitereverse">Reverse holo foil</option><option value="metal">Métallique (acier brossé)</option><option value="vfull">V pleine illustration</option><option value="rainbow">Rainbow / secret</option><option value="shinyv">Shiny V</option><option value="amazing">Amazing Rare</option><option value="vmax">VMax</option></select>
     <label class="wide"><span data-i18n="panel.effect.intensity">Intensité de l'effet :</span> <output id="kv">100%</output><input type="range" id="f-k" min="0" max="2" step="0.05" value="1"></label>
   </div>
   <div class="nav"><button type="button" id="s-prev" class="gbtn" data-i18n="panel.prev">← Précédent</button><button type="button" id="s-next" class="gbtn" data-i18n="panel.next">Suivant →</button></div>
@@ -549,6 +594,8 @@ fr:{dir:'ltr',
  'export.errImg':"Impossible de créer l'image.",'export.errGif':'Impossible de créer le GIF animé.','export.shareUnavailable':"Le partage direct n'est pas disponible ici : le fichier est proposé en téléchargement.",'export.dlError':'Téléchargement impossible ici ({err}).',
  'intro.title':'Personnalise<br>ta carte','intro.go':"C'est parti",
  'perf.line':'écran {hz} Hz · {ms} ms · palier {tier}','perf.stride':' (effet ÷{n})',
+ 'deck.searchPh':'Rechercher une carte…','deck.searchAria':'Rechercher dans le deck','deck.noResults':'Aucune carte ne correspond à ta recherche.','fx.metal':'Métallique (acier brossé)',
+ 'settings.theme':'Thème de couleur','theme.blue':'Bleu','theme.red':'Rouge','theme.black':'Noir','theme.white':'Blanc',
  'settings.title':'Paramètres','settings.account':'Compte','settings.language':'Langue','settings.loggedAs':'Connecté en tant que {user}',
  'settings.privacyTitle':'Politique de confidentialité',
  'settings.privacy':"MyCard fonctionne entièrement dans ton navigateur. Il n'y a pas de serveur, et rien de ce que tu fais ici ne nous est envoyé, ni à personne d'autre.\n\nTon pseudo, tes cartes et tes réglages sont stockés uniquement sur cet appareil, dans le navigateur. Les photos que tu ajoutes à une carte restent aussi sur cet appareil et ne sont jamais envoyées ailleurs.\n\nCette page charge des polices depuis Google Fonts ; ce chargement peut partager ton adresse IP avec Google, comme pour tout site qui utilise Google Fonts.\n\nIl n'y a ni outil de mesure d'audience, ni publicité, ni cookie de suivi.\n\nSi tu effaces les données de ton navigateur, ou si tu ouvres l'appli sur un autre appareil ou un autre navigateur, tes cartes n'y seront pas accessibles : elles ne sont pas encore sauvegardées ailleurs.\n\nCette note sera mise à jour si la connexion par compte et le stockage en ligne sont ajoutés plus tard.",
@@ -594,6 +641,8 @@ en:{dir:'ltr',
  'export.errImg':'Couldn\u2019t create the image.','export.errGif':'Couldn\u2019t create the animated GIF.','export.shareUnavailable':'Direct sharing isn\u2019t available here: the file is offered for download instead.','export.dlError':'Download failed here ({err}).',
  'intro.title':'Customize<br>your card','intro.go':"Let's go",
  'perf.line':'screen {hz} Hz · {ms} ms · tier {tier}','perf.stride':' (effect ÷{n})',
+ 'deck.searchPh':'Search cards…','deck.searchAria':'Search your deck','deck.noResults':'No card matches your search.','fx.metal':'Metallic (brushed steel)',
+ 'settings.theme':'Color theme','theme.blue':'Blue','theme.red':'Red','theme.black':'Black','theme.white':'White',
  'settings.title':'Settings','settings.account':'Account','settings.language':'Language','settings.loggedAs':'Signed in as {user}',
  'settings.privacyTitle':'Privacy policy',
  'settings.privacy':"MyCard runs entirely in your browser. There is no server, and nothing you do here is sent to us or to anyone else.\n\nYour username, your cards, and your settings are stored only on this device, in your browser's local storage. Photos you add to a card stay on this device too and are never uploaded.\n\nThis page loads fonts from Google Fonts; loading them may share your IP address with Google, as with any site that uses Google Fonts.\n\nThere is no analytics, no advertising, and no tracking cookies.\n\nClearing your browser data, or opening the app on a different device or browser, makes your cards inaccessible there — they aren't backed up anywhere else yet.\n\nThis notice will be updated if account sign-in and cloud storage are added later.",
@@ -639,6 +688,8 @@ es:{dir:'ltr',
  'export.errImg':'No se pudo crear la imagen.','export.errGif':'No se pudo crear el GIF animado.','export.shareUnavailable':'No se puede compartir directamente aquí: el archivo se ofrece para descargar.','export.dlError':'Descarga no disponible aquí ({err}).',
  'intro.title':'Personaliza<br>tu carta','intro.go':'Vamos',
  'perf.line':'pantalla {hz} Hz · {ms} ms · nivel {tier}','perf.stride':' (efecto ÷{n})',
+ 'deck.searchPh':'Buscar una carta…','deck.searchAria':'Buscar en el mazo','deck.noResults':'Ninguna carta coincide con tu búsqueda.','fx.metal':'Metálico (acero cepillado)',
+ 'settings.theme':'Tema de color','theme.blue':'Azul','theme.red':'Rojo','theme.black':'Negro','theme.white':'Blanco',
  'settings.title':'Ajustes','settings.account':'Cuenta','settings.language':'Idioma','settings.loggedAs':'Sesión iniciada como {user}',
  'settings.privacyTitle':'Política de privacidad',
  'settings.privacy':"MyCard funciona totalmente en tu navegador. No hay servidor, y nada de lo que hagas aquí se nos envía a nosotros ni a nadie más.\n\nTu nombre de usuario, tus cartas y tus ajustes se guardan solo en este dispositivo, en el almacenamiento local del navegador. Las fotos que añades a una carta también se quedan en este dispositivo y nunca se suben a ningún sitio.\n\nEsta página carga fuentes desde Google Fonts; esta carga puede compartir tu dirección IP con Google, como ocurre en cualquier sitio que use Google Fonts.\n\nNo hay analítica, ni publicidad, ni cookies de seguimiento.\n\nSi borras los datos del navegador, o abres la app en otro dispositivo o navegador, tus cartas no estarán disponibles allí: todavía no se respaldan en ningún otro sitio.\n\nEste aviso se actualizará si más adelante se añaden el inicio de sesión con cuenta y el almacenamiento en la nube.",
@@ -684,6 +735,8 @@ de:{dir:'ltr',
  'export.errImg':'Bild konnte nicht erstellt werden.','export.errGif':'Animiertes GIF konnte nicht erstellt werden.','export.shareUnavailable':'Direktes Teilen ist hier nicht verfügbar: die Datei wird stattdessen zum Herunterladen angeboten.','export.dlError':'Download hier nicht möglich ({err}).',
  'intro.title':'Gestalte<br>deine Karte','intro.go':"Los geht's",
  'perf.line':'Bildschirm {hz} Hz · {ms} ms · Stufe {tier}','perf.stride':' (Effekt ÷{n})',
+ 'deck.searchPh':'Karte suchen…','deck.searchAria':'Im Deck suchen','deck.noResults':'Keine Karte passt zu deiner Suche.','fx.metal':'Metallisch (gebürsteter Stahl)',
+ 'settings.theme':'Farbthema','theme.blue':'Blau','theme.red':'Rot','theme.black':'Schwarz','theme.white':'Weiß',
  'settings.title':'Einstellungen','settings.account':'Konto','settings.language':'Sprache','settings.loggedAs':'Angemeldet als {user}',
  'settings.privacyTitle':'Datenschutzerklärung',
  'settings.privacy':"MyCard läuft vollständig in deinem Browser. Es gibt keinen Server, und nichts von dem, was du hier tust, wird an uns oder sonst jemanden gesendet.\n\nDein Benutzername, deine Karten und deine Einstellungen werden nur auf diesem Gerät gespeichert, im lokalen Speicher des Browsers. Fotos, die du einer Karte hinzufügst, bleiben ebenfalls auf diesem Gerät und werden nie hochgeladen.\n\nDiese Seite lädt Schriftarten von Google Fonts; dabei kann deine IP-Adresse an Google übermittelt werden, wie bei jeder Website, die Google Fonts nutzt.\n\nEs gibt keine Analyse-Tools, keine Werbung und keine Tracking-Cookies.\n\nWenn du deine Browserdaten löschst oder die App auf einem anderen Gerät oder Browser öffnest, sind deine Karten dort nicht verfügbar: Sie werden bisher nirgendwo anders gesichert.\n\nDieser Hinweis wird aktualisiert, falls später eine Kontoanmeldung und Cloud-Speicherung hinzukommen.",
@@ -729,6 +782,8 @@ ar:{dir:'rtl',
  'export.errImg':'تعذّر إنشاء الصورة.','export.errGif':'تعذّر إنشاء GIF المتحرك.','export.shareUnavailable':'المشاركة المباشرة غير متاحة هنا: الملف متاح للتنزيل بدلًا من ذلك.','export.dlError':'تعذّر التنزيل هنا ({err}).',
  'intro.title':'خصّص<br>بطاقتك','intro.go':'ابدأ',
  'perf.line':'الشاشة {hz} هرتز · {ms} مللي ثانية · المستوى {tier}','perf.stride':' (التأثير ÷{n})',
+ 'deck.searchPh':'ابحث عن بطاقة…','deck.searchAria':'ابحث في المجموعة','deck.noResults':'لا توجد بطاقة تطابق بحثك.','fx.metal':'معدني (فولاذ مصقول)',
+ 'settings.theme':'سمة الألوان','theme.blue':'أزرق','theme.red':'أحمر','theme.black':'أسود','theme.white':'أبيض',
  'settings.title':'الإعدادات','settings.account':'الحساب','settings.language':'اللغة','settings.loggedAs':'مسجّل الدخول باسم {user}',
  'settings.privacyTitle':'سياسة الخصوصية',
  'settings.privacy':"يعمل MyCard بالكامل داخل متصفحك. لا يوجد خادم، ولا يُرسَل أي شيء تفعله هنا إلينا أو إلى أي جهة أخرى.\n\nيُحفظ اسم المستخدم وبطاقاتك وإعداداتك على هذا الجهاز فقط، داخل التخزين المحلي للمتصفح. كما تبقى الصور التي تضيفها إلى بطاقة على هذا الجهاز ولا تُرفع إلى أي مكان.\n\nتُحمّل هذه الصفحة خطوطًا من Google Fonts؛ قد يشارك ذلك عنوان IP الخاص بك مع Google، كما هو الحال في أي موقع يستخدم Google Fonts.\n\nلا توجد أدوات تحليل، ولا إعلانات، ولا ملفات تعريف ارتباط للتتبع.\n\nعند مسح بيانات المتصفح، أو فتح التطبيق على جهاز أو متصفح آخر، لن تكون بطاقاتك متاحة هناك: فهي غير محفوظة بعد في أي مكان آخر.\n\nسيتم تحديث هذا الإشعار إذا أُضيف لاحقًا تسجيل الدخول بحساب والتخزين السحابي.",
@@ -1078,6 +1133,7 @@ async function drawCard(c0,op){
     rainbow:{an:150,sz:4,st:ev([...Array(3)].flatMap(()=>['hsl(0,70%,48%)','hsl(40,70%,48%)','hsl(90,70%,42%)','hsl(180,70%,42%)','hsl(210,70%,48%)','hsl(280,65%,42%)'])),sheen:0,glit:2,al:.55,gn:1800},
     amazing:{an:133,sz:3,st:ev(['hsl(2,100%,73%)','hsl(53,100%,69%)','hsl(93,100%,69%)','hsl(176,100%,76%)','hsl(228,100%,74%)','hsl(283,100%,73%)','hsl(2,100%,73%)']),sheen:0,glit:2,al:.3,gn:1200},
     vmax:{an:-33,sz:3,st:ev(['hsl(2,70%,47%)','hsl(228,60%,64%)','hsl(176,55%,39%)','hsl(123,68%,35%)','hsl(283,75%,57%)','hsl(2,70%,47%)','hsl(228,60%,64%)','hsl(176,55%,39%)','hsl(123,68%,35%)','hsl(283,75%,57%)','hsl(2,70%,47%)']),sheen:1,glit:0,al:.5,gn:0},
+    metal:{an:115,sz:3,st:[['#4a4d55',0],['#e6e9f0',.15],['#7b808b',.3],['#fafbfd',.45],['#5a5f6b',.6],['#d5d9e2',.75],['#868b97',.9],['#4a4d55',1]],sheen:1,glit:0,al:.55,gn:0},
     cosmos:{an:82,sz:4,st:ev(['hsl(53,65%,60%)','hsl(93,56%,50%)','hsl(176,54%,49%)','hsl(228,59%,55%)','hsl(283,60%,55%)','hsl(326,59%,51%)','hsl(326,59%,51%)','hsl(283,60%,55%)','hsl(228,59%,55%)','hsl(176,54%,49%)','hsl(93,56%,50%)','hsl(53,65%,60%)']),sheen:0,glit:2,al:.5,gn:1500}};
   CFG.shinyv=CFG.vfull;const C=CFG[fxm]||CFG.classic;
   const an=C.an*Math.PI/180,dx=Math.sin(an),dy=-Math.cos(an),hq=document.createElement('canvas');hq.width=W;hq.height=H;
@@ -1490,13 +1546,18 @@ document.addEventListener('click',e=>{                                   /* appu
   e.stopPropagation();e.preventDefault();toggleMenu(false);
 },true);
 document.addEventListener('keydown',e=>{if(e.key==='Escape')toggleMenu(false)});
+/* recherche : insensible à la casse et aux accents, sur le nom, le type, l'évolution, le talent et les attaques */
+const normQ=s=>String(s==null?'':s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+const hayOf=c=>[c.name,typeName(c.type),c.evo,c.special,c.hp,c.ab&&c.ab.n,...(c.mv||[]).map(m=>m.n)].filter(Boolean).join(' ');
 function renderDeck(){
   $('dk-hello').textContent=tr('deck.hello',{user});
-  $('dk-count').textContent=deck.length+' '+(deck.length>1?tr('deck.cardsMany'):tr('deck.cardsOne'));
+  const q=normQ($('dk-q').value),shown=q?sortedDeck().filter(c=>normQ(hayOf(c)).includes(q)):sortedDeck();
+  $('dk-count').textContent=(q?shown.length+' / ':'')+deck.length+' '+(deck.length>1?tr('deck.cardsMany'):tr('deck.cardsOne'));
   $('dk-empty').hidden=deck.length>0;
+  $('dk-nores').hidden=!(q&&deck.length&&!shown.length);
   const meta=c=>esc(typeName(c.type))+' · '+esc(c.hp)+' '+tr('panel.card.hp');
   $('dk-grid').innerHTML=`<button type="button" class="tile new" data-act="new"><span class="tcov"><i>+</i></span><b>${tr('deck.newTitle')}</b><small>${tr('deck.newDesc')}</small></button>`+
-    sortedDeck().map(c=>`<button type="button" class="tile" data-id="${c.id}"><span class="tcov"><img alt="" data-thumb="${c.id}"></span><b>${esc(c.name)}</b><small>${meta(c)}</small></button>`).join('');
+    shown.map(c=>`<button type="button" class="tile" data-id="${c.id}"><span class="tcov"><img alt="" data-thumb="${c.id}"></span><b>${esc(c.name)}</b><small>${meta(c)}</small></button>`).join('');
   fillThumbs();
 }
 async function fillThumbs(){
@@ -1526,6 +1587,7 @@ $('dk-grid').addEventListener('click',e=>{
 $('v-edit').addEventListener('click',startEdit);
 $('e-del').addEventListener('click',()=>{const b=$('e-del');if(!b.dataset.arm){b.dataset.arm=1;b.textContent=tr('panel.confirmDelete');clearTimeout(delT);delT=setTimeout(()=>{delete b.dataset.arm;b.textContent=tr('panel.deleteCard')},3000);return}deleteCard(cur.id)});
 $('dk-new').addEventListener('click',newCard);
+$('dk-q').addEventListener('input',renderDeck);
 function ask(title,text,yes){
   return new Promise(res=>{
     const m=$('cfm');$('cfm-t').textContent=title;$('cfm-p').textContent=text;$('cfm-yes').textContent=yes;m.hidden=false;$('cfm-no').focus();
@@ -1546,11 +1608,24 @@ $('e-back').addEventListener('click',async()=>{
 });
 $('dk-change').addEventListener('click',()=>$('u-change').click());
 /* ---- écran Paramètres : confidentialité, crédits, changer de pseudo ---- */
+/* ---- thèmes de couleur : bleu (défaut), rouge, noir, blanc ---- */
+const THEMES=['blue','red','black','white'];
+let theme='blue';try{const v=localStorage.getItem('mycard-theme');if(THEMES.includes(v))theme=v}catch(e){}
+function applyTheme(code){
+  if(!THEMES.includes(code))return;
+  theme=code;document.documentElement.dataset.theme=code;try{localStorage.setItem('mycard-theme',code)}catch(e){}
+  buildThemeGrid();
+}
+function buildThemeGrid(){
+  const g=$('set-theme');
+  g.innerHTML=THEMES.map(c=>`<button type="button" data-t="${c}" aria-pressed="${c===theme}"><span class="tsw" data-t="${c}" aria-hidden="true"></span>${tr('theme.'+c)}</button>`).join('');
+  g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>applyTheme(b.dataset.t)));
+}
 function fillSettings(){
   $('set-loggedas').textContent=tr('settings.loggedAs',{user});
   $('set-privacy').textContent=tr('settings.privacy');
   $('set-credits').textContent=tr('settings.credits');
-  buildSettingsLangGrid();
+  buildSettingsLangGrid();buildThemeGrid();
 }
 function showSettings(){saveNow();fillSettings();$('deck').hidden=true;$('settings').hidden=false;window.scrollTo(0,0)}
 function hideSettings(){$('settings').hidden=true;$('deck').hidden=false;window.scrollTo(0,0)}
