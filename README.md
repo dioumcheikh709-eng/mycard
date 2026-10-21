@@ -21,7 +21,7 @@ personnaliser et collectionner des cartes holographiques, pensée pour télépho
 
 - **Recherche** dans le deck (nom, type, évolution, talent, attaques), sans tenir compte des accents ni de la casse.
 - **Thèmes de couleur** (bleu, rouge, noir, blanc), au choix dans les Paramètres.
-- **Concours hebdomadaire** et **coffre du jour** avec un **deck universel** (voir plus bas).
+- **Concours hebdomadaire** et **booster du jour** avec un **deck universel** (voir plus bas).
 
 ## Lancer
 Ouvrir `index.html` dans un navigateur, ou :
@@ -43,37 +43,42 @@ Tout reste **dans le navigateur** ; rien n'est envoyé à un serveur.
 | IndexedDB `mycard-media` | `img:<nom>:<id>`, `th:<nom>:<id>` | image importée, miniature |
 | `localStorage` | `mycard-user`, `mycard-sort`, `mycard-q` | dernier nom, tri choisi, palier de qualité |
 | `localStorage` | `mycard-theme`, `mycard-lang`, `mycard-mod` | thème, langue, mode modérateur (démo) |
-| `localStorage` | `mycard-drop:<nom>` | jour du dernier coffre ouvert |
+| `localStorage` | `mycard-drop:<nom>` | jour du dernier booster ouvert |
 | `localStorage` / IndexedDB | `mycard-cloud:*`, `ent:<id>`, `ext:<id>` | concours (démo) : participations, votes, résultats, images |
 
 Chaque nom d'utilisateur a sa bibliothèque propre **sur cet appareil**. Les anciennes sauvegardes (clé `mycard-deck:<nom>`) sont converties au lancement.
 
-## Concours hebdomadaire, coffre du jour et deck universel
-Deux boutons sous la barre de recherche du deck : **Concours** et **Coffre du jour**.
+## Concours hebdomadaire, booster du jour et deck universel
+Deux boutons sous la barre de recherche du deck : **Concours** et **Booster du jour**.
 
 **Concours.** Chaque semaine (du lundi au dimanche), un joueur inscrit une de ses cartes et vote pour celle d'un autre (un seul vote par semaine, pas pour sa propre carte).
 À la fin de la semaine, la carte la plus votée est désignée n°1 et attend la **validation du modérateur**. Si elle est validée, le modérateur choisit sa rareté
 et elle **rejoint le deck universel**.
 
-**Deck universel.** Les cartes créées par l'auteur du projet, à débloquer dans les coffres. Elles sont décrites dans **`universal-cards.js`** (même format qu'une carte du deck, plus `rarity`).
+**Deck universel.** Les cartes créées par l'auteur du projet, à débloquer dans les boosters. Elles sont décrites dans **`universal-cards.js`** (même format qu'une carte du deck, plus `rarity`).
 Les cartes `exemple-…` sont des exemples à remplacer. Une carte débloquée est copiée dans le deck du joueur (non modifiable) ; un doublon est signalé.
 
-**Coffre du jour.** Un coffre par jour (il se recharge à minuit, heure locale). Le tirage est pondéré par rareté :
+**Booster du jour.** Un booster par jour (il se recharge à minuit, heure locale), de **5 cartes avec au plus 1 légendaire**.
+Chaque carte est tirée selon sa rareté ; dès qu'une légendaire sort, les cartes suivantes du booster ne peuvent plus l'être. Une carte n'apparaît pas deux fois dans le même booster tant que sa rareté a assez de cartes.
 
-| Rareté | Chance |
+| Rareté | Chance par carte |
 |---|---|
 | Commune | 60 % |
 | Peu commune | 25 % |
 | Rare | 10 % |
 | Épique | 4 % |
-| Légendaire | 1 % |
+| Légendaire | 1 % (≈ 4,9 % d'avoir une légendaire dans un booster) |
 
-Les pourcentages se règlent dans `index.html` (`const RARITIES`). Une rareté qui n'a aucune carte est retirée du tirage et ses chances sont redistribuées ; le tableau « Tes chances » du coffre affiche les chances réelles.
+Les pourcentages se règlent dans `index.html` (`const RARITIES`). Une rareté qui n'a aucune carte est retirée du tirage et ses chances sont redistribuées ; le tableau « Tes chances » affiche les chances réelles.
+
+*L'ouverture* : le bouton « Invoquer le booster » fait apparaître le pack dans un portail de lumière (façon invocation). On **tape pour l'ouvrir** (le haut se déchire), puis **chaque appui sort une carte, de la moins rare à la plus rare**,
+avec un éclat de la couleur de sa rareté (secousse d'écran pour les épiques et les légendaires). Un récapitulatif des 5 cartes termine l'ouverture ; « Tout révéler » permet de le sauter.
+**La couleur de l'invocation indique la chance du pack** : gris (que des communes), vert, bleu, violet, puis or dès qu'il contient une légendaire. Les cartes sont ajoutées au deck dès le tirage, même si on ferme l'animation avant la fin.
 
 **Mode démo (état actuel).** Il n'y a pas de serveur : participations, votes, résultats et validations sont stockés dans le navigateur (`mycard-cloud:*`), donc **rien n'est partagé entre joueurs ni entre appareils**.
-Tout passe par un seul objet `cloud` dans `index.html` : pour un vrai concours en ligne, il suffit de le remplacer par un client serveur (mêmes méthodes). Côté serveur, il faudra aussi faire le tirage du coffre,
+Tout passe par un seul objet `cloud` dans `index.html` : pour un vrai concours en ligne, il suffit de le remplacer par un client serveur (mêmes méthodes). Côté serveur, il faudra aussi faire le tirage du booster,
 désigner le n°1 de la semaine et gérer le rôle de modérateur (aujourd'hui une simple case dans les Paramètres, ouverte à tous). Des « Outils démo » permettent d'ajouter des participants fictifs,
-de simuler la fin de la semaine et de réactiver le coffre.
+de simuler la fin de la semaine et de réactiver le booster.
 
 ## Paramètres
 Accessible depuis la bibliothèque (icône ⚙️) : pseudo actuel avec bouton pour en changer, langue, **thème de couleur**, mode modérateur (démo), **politique de confidentialité** et **crédits** (chacun dans un volet repliable), traduits dans les 5 langues.
