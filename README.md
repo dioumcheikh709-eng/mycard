@@ -7,8 +7,8 @@ personnaliser et collectionner des cartes holographiques, pensée pour télépho
 
 ## Fonctions
 - **Connexion par nom d'utilisateur.** Les boutons « Se connecter avec Google / Apple » sont présents mais **pas encore branchés** (voir « À faire »).
-- **Bibliothèque** (« Mon deck ») : grille de cartes avec miniatures, sauvegarde automatique, tri en 9 critères
-  (date d'ajout, dernière modification, nom A→Z / Z→A, PV, type).
+- **Bibliothèque** (« Mon deck ») : grille de cartes avec miniatures, sauvegarde automatique, tri en 11 critères
+  (date d'ajout, dernière modification, nom A→Z / Z→A, **rareté** plus rares / moins rares d'abord, PV, type ; les cartes sans rareté, créées par le joueur, restent à la fin).
 - **Affichage en grand** d'une carte (voile irisé à l'ouverture), puis **personnalisation en 6 étapes** :
   Image · Carte · Talent · Attaque · Règle · Effet.
 - **19 types** avec icônes (18 types + incolore), image importée recadrable (zoom, position).
