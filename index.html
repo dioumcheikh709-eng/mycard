@@ -434,10 +434,6 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
 :root[data-theme=white] .tsw{border-color:rgba(20,24,46,.4)}
 
 /* ---- concours hebdomadaire + booster du jour ---- */
-.dk-nav{display:flex;gap:10px;margin:-4px 0 14px}
-.dk-nav .gbtn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 12px;position:relative}
-.dk-nav i{position:absolute;top:6px;right:12px;width:10px;height:10px;border-radius:50%;background:#ff4d4d;box-shadow:0 0 0 2px rgba(255,255,255,.55)}
-.dk-nav i[hidden]{display:none}
 .demo-note{margin:0;padding:10px 14px;border-radius:12px;border:1px dashed var(--line);font:500 13px/1.45 Barlow,sans-serif;opacity:.85}
 .ct-sub{margin:2px 0 0;font:500 14px Barlow,sans-serif;opacity:.7}
 .ct-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
@@ -600,6 +596,31 @@ body.uni-card #v-edit{display:none}
 @keyframes pkpop{from{opacity:0;transform:translateY(22px) scale(.6)}to{opacity:1;transform:none}}
 @keyframes pkscreen{0%,100%{transform:none}10%{transform:translate(-9px,5px)}25%{transform:translate(8px,-6px)}40%{transform:translate(-7px,-4px)}55%{transform:translate(6px,6px)}70%{transform:translate(-4px,2px)}85%{transform:translate(3px,-2px)}}
 @media (prefers-reduced-motion:reduce){.pk *,.pk{animation-duration:.01s!important;animation-delay:0s!important;transition-duration:.01s!important}.pk-rays,.pk-bob,.pk-foil,.pk-hint,.pk-portal::after,.bst-mini{animation:none!important}.pk-tilt{transform:none!important}}
+
+/* ---- barre d'onglets du bas (Bibliothèque · Concours · Booster) ---- */
+.ico{display:inline-grid;place-items:center;line-height:0}
+.ico svg,.ico img{width:22px;height:22px;display:block;object-fit:contain}
+.exp-ico svg,.exp-ico img{width:34px;height:34px}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:none;justify-content:center;box-sizing:border-box;
+  padding:0 max(8px,env(safe-area-inset-left,0px)) env(safe-area-inset-bottom,0px) max(8px,env(safe-area-inset-right,0px));
+  background:linear-gradient(180deg,rgba(var(--deep-rgb),.35),rgba(var(--panel-rgb),.96) 32%);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-top:1px solid rgba(255,255,255,.2);box-shadow:0 -10px 30px rgba(var(--shade-rgb),.45)}
+body.view-deck .tabbar{display:flex}
+.tabbar-in{display:flex;width:min(520px,100%);gap:4px}
+.tab{position:relative;flex:1;min-width:0;display:grid;justify-items:center;gap:2px;padding:14px 4px 10px;border:0;background:none;color:#fff;cursor:pointer;opacity:.6;
+  font:700 12px 'Barlow Condensed',sans-serif;letter-spacing:.1em;text-transform:uppercase;transition:opacity .2s}
+.tab-ico{display:grid;place-items:center;width:34px;height:34px;transition:transform .3s cubic-bezier(.2,1.4,.4,1),filter .3s}
+.tab-ico svg,.tab-ico img{width:32px;height:32px;display:block;object-fit:contain}
+.tab[aria-current=page]{opacity:1}
+.tab[aria-current=page] .tab-ico{transform:translateY(-5px) scale(1.2);filter:drop-shadow(0 0 9px rgba(var(--acc-rgb),1)) drop-shadow(0 0 2px rgba(255,255,255,.7))}
+.tab[aria-current=page]::before{content:"";position:absolute;top:-1px;left:24%;right:24%;height:3px;border-radius:0 0 4px 4px;background:linear-gradient(90deg,var(--acc1),#fff,var(--acc1));box-shadow:0 0 12px rgba(var(--acc-rgb),1)}
+.tab:focus-visible{outline:2px solid #fff;outline-offset:-4px;border-radius:12px}
+.tab i{position:absolute;top:8px;left:calc(50% + 9px);width:10px;height:10px;border-radius:50%;background:#ff4d4d;box-shadow:0 0 0 2px rgba(255,255,255,.6)}
+.tab i[hidden]{display:none}
+body.view-deck{padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+.dk-sort{white-space:nowrap}
+.dk-head h1{font-size:clamp(34px,9.6vw,46px)}
+body.view-deck .toast{bottom:calc(104px + env(safe-area-inset-bottom,0px))}
 </style>
 <script>try{var __t=localStorage.getItem('mycard-theme');if(__t&&/^(blue|red|black|white)$/.test(__t))document.documentElement.dataset.theme=__t}catch(e){}</script>
 </head>
@@ -623,18 +644,17 @@ body.uni-card #v-edit{display:none}
   <p class="hello" data-i18n="lang.subtitle">Tu pourras la changer plus tard.</p>
   <div class="lgrid" id="lgrid"></div>
 </section>
-<section class="deck" id="deck" aria-label="Mon deck">
-  <header class="dk-head"><div><p class="dk-hello" id="dk-hello"></p><h1 data-i18n="deck.title">Mon deck</h1><p class="dk-count" id="dk-count"></p></div>
-    <div class="dk-tools"><button type="button" id="dk-sort" class="dk-sort" aria-haspopup="menu" aria-expanded="false" aria-controls="dk-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg><span id="dk-sort-l" data-i18n="deck.sortDefault">Récentes</span></button><div class="dk-menu" id="dk-menu" role="menu" aria-label="Trier les cartes" data-i18n-aria="deck.sortAria" hidden></div><button type="button" id="dk-settings" class="gbtn iconbtn" aria-label="Paramètres"><span aria-hidden="true">⚙️</span></button><button type="button" id="dk-new" class="dk-plus" aria-label="Nouvelle carte">+</button></div></header>
-  <div class="dk-search"><input id="dk-q" type="search" autocomplete="off" enterkeyhint="search" placeholder="Rechercher une carte…" aria-label="Rechercher dans le deck" data-i18n-ph="deck.searchPh" data-i18n-aria="deck.searchAria"></div>
-  <div class="dk-nav"><button type="button" id="dk-contest" class="gbtn"><span aria-hidden="true">🏆</span><span data-i18n="contest.nav">Concours</span></button><button type="button" id="dk-drop" class="gbtn"><span aria-hidden="true">🃏</span><span data-i18n="drop.nav">Booster du jour</span><i id="drop-dot" hidden></i></button></div>
+<section class="deck" id="deck" aria-label="Ma bibliothèque">
+  <header class="dk-head"><div><p class="dk-hello" id="dk-hello"></p><h1 data-i18n="deck.title">Ma bibliothèque</h1><p class="dk-count" id="dk-count"></p></div>
+    <div class="dk-tools"><button type="button" id="dk-sort" class="dk-sort" aria-haspopup="menu" aria-expanded="false" aria-controls="dk-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg><span id="dk-sort-l" data-i18n="deck.sortDefault">Récentes</span></button><div class="dk-menu" id="dk-menu" role="menu" aria-label="Trier les cartes" data-i18n-aria="deck.sortAria" hidden></div><button type="button" id="dk-settings" class="gbtn iconbtn" aria-label="Paramètres"><span class="ico" data-ico="gear"></span></button><button type="button" id="dk-new" class="dk-plus" aria-label="Nouvelle carte">+</button></div></header>
+  <div class="dk-search"><input id="dk-q" type="search" autocomplete="off" enterkeyhint="search" placeholder="Rechercher une carte…" aria-label="Rechercher dans la bibliothèque" data-i18n-ph="deck.searchPh" data-i18n-aria="deck.searchAria"></div>
   <div class="dk-grid" id="dk-grid"></div>
   <p class="dk-empty" id="dk-nores" hidden data-i18n="deck.noResults">Aucune carte ne correspond à ta recherche.</p>
-  <p class="dk-empty" id="dk-empty" hidden data-i18n="deck.empty">Ton deck est vide. Touche « Nouvelle carte » pour créer ta première carte.</p>
+  <p class="dk-empty" id="dk-empty" hidden data-i18n="deck.empty">Ta bibliothèque est vide. Touche « Nouvelle carte » pour créer ta première carte.</p>
   <button type="button" id="dk-change" class="linkbtn" data-i18n="deck.changeUser">changer d'utilisateur</button>
 </section>
 <section id="settings" class="deck" hidden>
-  <header class="dk-head"><div><button type="button" id="set-back" class="linkbtn" data-i18n="stage.back" style="padding:0;margin-bottom:6px">‹ Deck</button><h1 data-i18n="settings.title">Paramètres</h1></div></header>
+  <header class="dk-head"><div><button type="button" id="set-back" class="linkbtn" data-i18n="stage.back" style="padding:0;margin-bottom:6px">‹ Bibliothèque</button><h1 data-i18n="settings.title">Paramètres</h1></div></header>
   <div class="set-block">
     <h2 class="set-h" data-i18n="settings.account">Compte</h2>
     <p class="set-p" id="set-loggedas"></p>
@@ -664,7 +684,7 @@ body.uni-card #v-edit{display:none}
   </details>
 </section>
 <section id="contest" class="deck" hidden>
-  <header class="dk-head"><div><button type="button" id="ct-back" class="linkbtn" data-i18n="stage.back" style="padding:0;margin-bottom:6px">‹ Deck</button><h1 data-i18n="contest.title">Concours de la semaine</h1><p class="ct-sub" id="ct-week"></p></div></header>
+  <header class="dk-head"><div><h1 data-i18n="contest.title">Concours de la semaine</h1><p class="ct-sub" id="ct-week"></p></div></header>
   <p class="demo-note" data-i18n="contest.demo">Mode démo : les participations et les votes restent sur cet appareil. Le vrai vote en ligne viendra avec un serveur.</p>
   <div class="set-block" id="ct-mine"></div>
   <div class="set-block"><h2 class="set-h" data-i18n="contest.entries">Cartes en lice</h2><p class="set-p" id="ct-noent" hidden data-i18n="contest.noEntries">Personne n’a encore participé cette semaine.</p><div class="dk-grid" id="ct-grid" style="margin-top:14px"></div></div>
@@ -676,7 +696,7 @@ body.uni-card #v-edit{display:none}
   </details>
 </section>
 <section id="booster" class="deck" hidden>
-  <header class="dk-head"><div><button type="button" id="bst-back" class="linkbtn" data-i18n="stage.back" style="padding:0;margin-bottom:6px">‹ Deck</button><h1 data-i18n="drop.title">Booster du jour</h1></div><button type="button" id="bst-info" class="gbtn info-btn" aria-label="Chances et couleurs" data-i18n-aria="info.btn">i</button></header>
+  <header class="dk-head"><div><h1 data-i18n="drop.title">Booster du jour</h1></div><button type="button" id="bst-info" class="gbtn info-btn" aria-label="Chances et couleurs" data-i18n-aria="info.btn">i</button></header>
   <p class="demo-note" data-i18n="drop.demo">Mode démo : le booster se recharge chaque jour sur cet appareil.</p>
   <div class="bst-stage">
     <div id="bst-pack"></div>
@@ -755,10 +775,15 @@ body.uni-card #v-edit{display:none}
   <p class="pk-hint" id="pk-hint" role="status"></p>
   <div class="pk-final" id="pk-final" hidden>
     <h2 id="pk-fin-t"></h2><div class="pk-fin-grid" id="pk-fin-grid"></div><p class="pk-fin-msg" id="pk-fin-msg"></p>
-    <div class="pk-fin-btns"><button type="button" class="gbtn primary" id="pk-see" data-i18n="drop.see">Voir mon deck</button><button type="button" class="gbtn" id="pk-done" data-i18n="drop.close">Fermer</button></div>
+    <div class="pk-fin-btns"><button type="button" class="gbtn primary" id="pk-see" data-i18n="drop.see">Voir ma bibliothèque</button><button type="button" class="gbtn" id="pk-done" data-i18n="drop.close">Fermer</button></div>
   </div>
 </div>
 <div class="cfm" id="odds-modal" hidden><div class="info-box" role="dialog" aria-modal="true" aria-labelledby="info-t"><button type="button" class="info-x" id="info-x" aria-label="Fermer" data-i18n-aria="drop.close">✕</button><h3 id="info-t" data-i18n="info.title">Chances et couleurs</h3><div id="info-body"></div></div></div>
+<nav class="tabbar" id="tabbar" aria-label="Navigation" data-i18n-aria="tab.nav"><div class="tabbar-in">
+  <button type="button" class="tab" data-tab="library" aria-current="page"><span class="tab-ico" data-ico="library"></span><span data-i18n="tab.library">Bibliothèque</span></button>
+  <button type="button" class="tab" data-tab="contest" aria-current="false"><span class="tab-ico" data-ico="contest"></span><span data-i18n="tab.contest">Concours</span></button>
+  <button type="button" class="tab" data-tab="booster" aria-current="false"><span class="tab-ico" data-ico="booster"></span><span data-i18n="tab.booster">Booster</span><i id="drop-dot" hidden></i></button>
+</div></nav>
 <div class="toast" id="toast" role="status"></div>
 <div class="cfm" id="cfm" hidden><div class="cfm-box" role="alertdialog" aria-modal="true" aria-labelledby="cfm-t" aria-describedby="cfm-p"><h3 id="cfm-t"></h3><p id="cfm-p"></p><div class="cfm-b"><button type="button" id="cfm-no" class="gbtn" data-i18n="confirm.continue">Continuer</button><button type="button" id="cfm-yes" class="gbtn primary"></button></div></div></div>
 <div class="cfm" id="exp-modal" hidden>
@@ -766,8 +791,8 @@ body.uni-card #v-edit{display:none}
     <h3 id="exp-t" data-i18n="export.downloadTitle">Télécharger ma carte</h3>
     <p id="exp-desc" style="margin:0 0 4px;font:400 14px/1.4 Barlow,sans-serif;opacity:.8" data-i18n="export.downloadDesc">Choisis le format :</p>
     <div class="exp-opts">
-      <button type="button" id="exp-opt-png" class="exp-opt"><span class="exp-ico">📸</span><strong data-i18n="export.pngTitle">Image fixe</strong><small data-i18n-html="export.pngDesc">PNG haute résolution<br>840 × 1 174 px</small></button>
-      <button type="button" id="exp-opt-gif" class="exp-opt hi"><span class="exp-ico">✨</span><strong data-i18n="export.gifTitle">Animation holo</strong><small data-i18n-html="export.gifDesc">GIF animé en boucle<br>reflets holographiques</small></button>
+      <button type="button" id="exp-opt-png" class="exp-opt"><span class="exp-ico ico" data-ico="camera"></span><strong data-i18n="export.pngTitle">Image fixe</strong><small data-i18n-html="export.pngDesc">PNG haute résolution<br>840 × 1 174 px</small></button>
+      <button type="button" id="exp-opt-gif" class="exp-opt hi"><span class="exp-ico ico" data-ico="sparkle"></span><strong data-i18n="export.gifTitle">Animation holo</strong><small data-i18n-html="export.gifDesc">GIF animé en boucle<br>reflets holographiques</small></button>
     </div>
     <div id="exp-prog" class="exp-prog" hidden><div class="exp-track"><div id="exp-fill" class="exp-fill"></div></div><p id="exp-lbl" class="exp-lbl"></p></div>
     <div class="cfm-b"><button type="button" id="exp-close" class="gbtn" data-i18n="export.close">Fermer</button></div>
@@ -783,15 +808,15 @@ fr:{dir:'ltr',
  'login.googleBtn':'Se connecter avec Google','login.googleAria':'Se connecter avec Google (bientôt disponible)','login.appleBtn':'Se connecter avec Apple','login.appleAria':'Se connecter avec Apple (bientôt disponible)','login.soon':'bientôt',
  'login.errNeedName':"Entre un nom d'utilisateur pour continuer.",'login.errProviderNotReady':"La connexion avec {provider} n'est pas encore activée. Continue avec ton nom d'utilisateur pour le moment.",'login.uniqueNote':"L'unicité du pseudo sera vérifiée une fois la connexion Google activée.",'deck.hello':'Bonjour, {user} :)',
  'lang.title':'Choisis ta langue','lang.subtitle':'Tu pourras la changer plus tard.',
- 'deck.title':'Mon deck','deck.newTitle':'Nouvelle carte','deck.newDesc':'Crée une carte','deck.empty':'Ton deck est vide. Touche « Nouvelle carte » pour créer ta première carte.','deck.changeUser':"changer d'utilisateur",
+ 'deck.title':'Ma bibliothèque','deck.newTitle':'Nouvelle carte','deck.newDesc':'Crée une carte','deck.empty':'Ta bibliothèque est vide. Touche « Nouvelle carte » pour créer ta première carte.','deck.changeUser':"changer d'utilisateur",
  'deck.sortDefault':'Récentes','deck.sortAria':'Trier les cartes','deck.cardsOne':'carte','deck.cardsMany':'cartes','deck.changeLang':'langue',
- 'deck.sort.rarD':'Plus rares d’abord','deck.sort.rarDShort':'Rareté ↓','deck.sort.rarA':'Moins rares d’abord','deck.sort.rarAShort':'Rareté ↑','deck.group.rarity':'Rareté',
- 'deck.sort.added':'Plus récemment ajoutées','deck.sort.addedShort':'Ajout récent','deck.sort.first':'Ajoutées en premier','deck.sort.firstShort':'Ajout ancien',
- 'deck.sort.recent':'Plus récemment modifiées','deck.sort.recentShort':'Modif. récente','deck.sort.old':'Modifiées il y a longtemps','deck.sort.oldShort':'Modif. ancienne',
- 'deck.sort.az':'Nom A → Z','deck.sort.azShort':'A → Z','deck.sort.za':'Nom Z → A','deck.sort.zaShort':'Z → A',
- 'deck.sort.pvd':'PV décroissants','deck.sort.pvdShort':'PV ↓','deck.sort.pva':'PV croissants','deck.sort.pvaShort':'PV ↑','deck.sort.type':'Par type','deck.sort.typeShort':'Type',
- 'deck.group.added':"Date d'ajout",'deck.group.modified':'Dernière modification','deck.group.name':'Nom','deck.group.other':'Autres',
- 'stage.back':'‹ Deck','stage.change':'changer','stage.download':'Télécharger en image','stage.share':'Partager','stage.personalize':'Personnaliser','stage.hintDefault':'Bouge la souris ou le doigt sur la carte',
+ 'deck.sort.rarD':'Plus rares d’abord','deck.sort.rarDShort':'Rareté ↓',
+ 'deck.sort.added':'Plus récemment ajoutées','deck.sort.addedShort':'Ajout récent',
+ 
+ 'deck.sort.az':'Nom A → Z','deck.sort.azShort':'A → Z',
+ 'deck.sort.pvd':'PV décroissants','deck.sort.pvdShort':'PV ↓','deck.sort.type':'Par type','deck.sort.typeShort':'Type',
+ 
+ 'stage.back':'‹ Bibliothèque','stage.change':'changer','stage.download':'Télécharger en image','stage.share':'Partager','stage.personalize':'Personnaliser','stage.hintDefault':'Bouge la souris ou le doigt sur la carte',
  'stage.gyroActivate':'Activer le gyroscope','stage.gyroActive':'Gyroscope actif','stage.gyroOpenAlone':'Ouvrir la page seule dans le navigateur',
  'gyro.sensorActive':'Capteur actif : β {b}° γ {g}°','gyro.noMotion':'Aucun mouvement reçu.','gyro.httpsNeeded':' La page doit être en HTTPS pour accéder au capteur.',
  'gyro.framed':" La page est affichée dans un cadre (l'app ou le site) qui bloque le capteur : ouvre-la seule dans ton navigateur avec le lien ci-dessous.",
@@ -817,7 +842,7 @@ fr:{dir:'ltr',
  'export.errImg':"Impossible de créer l'image.",'export.errGif':'Impossible de créer le GIF animé.','export.shareUnavailable':"Le partage direct n'est pas disponible ici : le fichier est proposé en téléchargement.",'export.dlError':'Téléchargement impossible ici ({err}).',
  'intro.title':'Personnalise<br>ta carte','intro.go':"C'est parti",
  'perf.line':'écran {hz} Hz · {ms} ms · palier {tier}','perf.stride':' (effet ÷{n})',
- 'deck.searchPh':'Rechercher une carte…','deck.searchAria':'Rechercher dans le deck','deck.noResults':'Aucune carte ne correspond à ta recherche.','fx.metal':'Métallique (acier brossé)',
+ 'deck.searchPh':'Rechercher une carte…','deck.searchAria':'Rechercher dans la bibliothèque','deck.noResults':'Aucune carte ne correspond à ta recherche.','fx.metal':'Métallique (acier brossé)',
  'settings.theme':'Thème de couleur','theme.blue':'Bleu','theme.red':'Rouge','theme.black':'Noir','theme.white':'Blanc',
  'contest.nav':'Concours',
  'contest.title':'Concours de la semaine',
@@ -841,7 +866,7 @@ fr:{dir:'ltr',
  'contest.noResults':'Aucun résultat pour le moment.',
  'contest.weekN':'Semaine {n}',
  'contest.status.pending':'En attente du modérateur',
- 'contest.status.approved':'Entrée au deck universel ({r})',
+ 'contest.status.approved':'Entrée dans la bibliothèque universelle ({r})',
  'contest.status.rejected':'Refusée par le modérateur',
  'contest.status.none':'Aucun vote cette semaine',
  'contest.mod':'Validation du modérateur',
@@ -851,7 +876,7 @@ fr:{dir:'ltr',
  'contest.rarityFor':'Rareté',
  'contest.toastSubmitted':'Carte inscrite au concours !',
  'contest.toastWithdrawn':'Participation retirée.',
- 'contest.toastApproved':'Carte validée : elle rejoint le deck universel.',
+ 'contest.toastApproved':'Carte validée : elle rejoint la bibliothèque universelle.',
  'contest.toastRejected':'Carte refusée.',
  'demo.tools':'Outils démo',
  'demo.seed':'Ajouter 3 participants de démo',
@@ -884,11 +909,11 @@ fr:{dir:'ltr',
  'drop.new':'Nouvelle',
  'drop.dup':'Doublon ×{n}',
  'drop.pack':'Ton booster',
- 'drop.added':'{n} / {t} nouvelles cartes ajoutées à ton deck.',
- 'drop.see':'Voir mon deck',
+ 'drop.added':'{n} / {t} nouvelles cartes ajoutées à ta bibliothèque.',
+ 'drop.see':'Voir ma bibliothèque',
  'drop.cardsOne':'{n} carte',
  'drop.cardsMany':'{n} cartes',
- 'drop.empty':'Le deck universel est vide pour le moment.',
+ 'drop.empty':'La bibliothèque universelle est vide pour le moment.',
  'demo.resetDrop':'Réactiver le booster du jour',
  'info.btn':'Voir les chances et les couleurs',
  'info.title':'Chances et couleurs',
@@ -903,7 +928,7 @@ fr:{dir:'ltr',
  'info.colOdds':'Par carte',
  'info.colPack':'Par booster',
  'info.dRar':'Le niveau de la carte.',
- 'info.dCards':'Combien de cartes de cette rareté existent dans le deck universel.',
+ 'info.dCards':'Combien de cartes de cette rareté existent dans la bibliothèque universelle.',
  'info.dOdds':'La chance que chacune des 5 cartes de ton booster ait cette rareté.',
  'info.dPack':'La chance d’avoir au moins une carte de cette rareté (ou d’une rareté plus haute) dans ton booster.',
  'info.noCards':'Une rareté sans carte est retirée du tirage et ses chances sont redistribuées aux autres.',
@@ -915,6 +940,7 @@ fr:{dir:'ltr',
  'info.lk2':'Bleu : au mieux une rare',
  'info.lk3':'Violet : au mieux une épique',
  'info.lk4':'Or : une légendaire !',
+ 'tab.library':'Bibliothèque','tab.contest':'Concours','tab.booster':'Booster','tab.nav':'Navigation',
  'settings.title':'Paramètres','settings.account':'Compte','settings.language':'Langue','settings.loggedAs':'Connecté en tant que {user}',
  'settings.privacyTitle':'Politique de confidentialité',
  'settings.privacy':"MyCard fonctionne entièrement dans ton navigateur. Il n'y a pas de serveur, et rien de ce que tu fais ici ne nous est envoyé, ni à personne d'autre.\n\nTon pseudo, tes cartes et tes réglages sont stockés uniquement sur cet appareil, dans le navigateur. Les photos que tu ajoutes à une carte restent aussi sur cet appareil et ne sont jamais envoyées ailleurs.\n\nCette page charge des polices depuis Google Fonts ; ce chargement peut partager ton adresse IP avec Google, comme pour tout site qui utilise Google Fonts.\n\nIl n'y a ni outil de mesure d'audience, ni publicité, ni cookie de suivi.\n\nSi tu effaces les données de ton navigateur, ou si tu ouvres l'appli sur un autre appareil ou un autre navigateur, tes cartes n'y seront pas accessibles : elles ne sont pas encore sauvegardées ailleurs.\n\nCette note sera mise à jour si la connexion par compte et le stockage en ligne sont ajoutés plus tard.",
@@ -927,15 +953,15 @@ en:{dir:'ltr',
  'login.googleBtn':'Sign in with Google','login.googleAria':'Sign in with Google (coming soon)','login.appleBtn':'Sign in with Apple','login.appleAria':'Sign in with Apple (coming soon)','login.soon':'soon',
  'login.errNeedName':'Enter a username to continue.','login.errProviderNotReady':'Signing in with {provider} isn\u2019t active yet. Continue with your username for now.','login.uniqueNote':'Username uniqueness will be checked once Google sign-in is active.','deck.hello':'Hi, {user} :)',
  'lang.title':'Choose your language','lang.subtitle':'You can change it later.',
- 'deck.title':'My deck','deck.newTitle':'New card','deck.newDesc':'Create a card','deck.empty':'Your deck is empty. Tap "New card" to create your first card.','deck.changeUser':'switch user',
+ 'deck.title':'My library','deck.newTitle':'New card','deck.newDesc':'Create a card','deck.empty':'Your library is empty. Tap "New card" to create your first card.','deck.changeUser':'switch user',
  'deck.sortDefault':'Recent','deck.sortAria':'Sort cards','deck.cardsOne':'card','deck.cardsMany':'cards','deck.changeLang':'language',
- 'deck.sort.rarD':'Rarest first','deck.sort.rarDShort':'Rarity ↓','deck.sort.rarA':'Least rare first','deck.sort.rarAShort':'Rarity ↑','deck.group.rarity':'Rarity',
- 'deck.sort.added':'Most recently added','deck.sort.addedShort':'Newly added','deck.sort.first':'Added first','deck.sort.firstShort':'Oldest added',
- 'deck.sort.recent':'Most recently edited','deck.sort.recentShort':'Recently edited','deck.sort.old':'Edited long ago','deck.sort.oldShort':'Oldest edit',
- 'deck.sort.az':'Name A → Z','deck.sort.azShort':'A → Z','deck.sort.za':'Name Z → A','deck.sort.zaShort':'Z → A',
- 'deck.sort.pvd':'HP descending','deck.sort.pvdShort':'HP ↓','deck.sort.pva':'HP ascending','deck.sort.pvaShort':'HP ↑','deck.sort.type':'By type','deck.sort.typeShort':'Type',
- 'deck.group.added':'Date added','deck.group.modified':'Last edited','deck.group.name':'Name','deck.group.other':'Other',
- 'stage.back':'‹ Deck','stage.change':'switch','stage.download':'Download image','stage.share':'Share','stage.personalize':'Customize','stage.hintDefault':'Move your mouse or finger over the card',
+ 'deck.sort.rarD':'Rarest first','deck.sort.rarDShort':'Rarity ↓',
+ 'deck.sort.added':'Most recently added','deck.sort.addedShort':'Newly added',
+ 
+ 'deck.sort.az':'Name A → Z','deck.sort.azShort':'A → Z',
+ 'deck.sort.pvd':'HP descending','deck.sort.pvdShort':'HP ↓','deck.sort.type':'By type','deck.sort.typeShort':'Type',
+ 
+ 'stage.back':'‹ Library','stage.change':'switch','stage.download':'Download image','stage.share':'Share','stage.personalize':'Customize','stage.hintDefault':'Move your mouse or finger over the card',
  'stage.gyroActivate':'Enable gyroscope','stage.gyroActive':'Gyroscope on','stage.gyroOpenAlone':'Open the page on its own in your browser',
  'gyro.sensorActive':'Sensor active: β {b}° γ {g}°','gyro.noMotion':'No motion received.','gyro.httpsNeeded':' The page must be served over HTTPS to access the sensor.',
  'gyro.framed':' The page is shown inside a frame (the app or site) that blocks the sensor: open it on its own in your browser using the link below.',
@@ -961,7 +987,7 @@ en:{dir:'ltr',
  'export.errImg':'Couldn\u2019t create the image.','export.errGif':'Couldn\u2019t create the animated GIF.','export.shareUnavailable':'Direct sharing isn\u2019t available here: the file is offered for download instead.','export.dlError':'Download failed here ({err}).',
  'intro.title':'Customize<br>your card','intro.go':"Let's go",
  'perf.line':'screen {hz} Hz · {ms} ms · tier {tier}','perf.stride':' (effect ÷{n})',
- 'deck.searchPh':'Search cards…','deck.searchAria':'Search your deck','deck.noResults':'No card matches your search.','fx.metal':'Metallic (brushed steel)',
+ 'deck.searchPh':'Search cards…','deck.searchAria':'Search your library','deck.noResults':'No card matches your search.','fx.metal':'Metallic (brushed steel)',
  'settings.theme':'Color theme','theme.blue':'Blue','theme.red':'Red','theme.black':'Black','theme.white':'White',
  'contest.nav':'Contest',
  'contest.title':'Contest of the week',
@@ -985,7 +1011,7 @@ en:{dir:'ltr',
  'contest.noResults':'No results yet.',
  'contest.weekN':'Week {n}',
  'contest.status.pending':'Waiting for the moderator',
- 'contest.status.approved':'Added to the universal deck ({r})',
+ 'contest.status.approved':'Added to the universal library ({r})',
  'contest.status.rejected':'Rejected by the moderator',
  'contest.status.none':'No votes this week',
  'contest.mod':'Moderator review',
@@ -995,7 +1021,7 @@ en:{dir:'ltr',
  'contest.rarityFor':'Rarity',
  'contest.toastSubmitted':'Card entered in the contest!',
  'contest.toastWithdrawn':'Entry withdrawn.',
- 'contest.toastApproved':'Card approved: it joins the universal deck.',
+ 'contest.toastApproved':'Card approved: it joins the universal library.',
  'contest.toastRejected':'Card rejected.',
  'demo.tools':'Demo tools',
  'demo.seed':'Add 3 demo entrants',
@@ -1028,11 +1054,11 @@ en:{dir:'ltr',
  'drop.new':'New',
  'drop.dup':'Duplicate ×{n}',
  'drop.pack':'Your booster',
- 'drop.added':'{n} / {t} new cards added to your deck.',
- 'drop.see':'See my deck',
+ 'drop.added':'{n} / {t} new cards added to your library.',
+ 'drop.see':'See my library',
  'drop.cardsOne':'{n} card',
  'drop.cardsMany':'{n} cards',
- 'drop.empty':'The universal deck is empty for now.',
+ 'drop.empty':'The universal library is empty for now.',
  'demo.resetDrop':'Reset today’s booster',
  'info.btn':'See the odds and colors',
  'info.title':'Odds and colors',
@@ -1047,7 +1073,7 @@ en:{dir:'ltr',
  'info.colOdds':'Per card',
  'info.colPack':'Per booster',
  'info.dRar':'The level of the card.',
- 'info.dCards':'How many cards of this rarity exist in the universal deck.',
+ 'info.dCards':'How many cards of this rarity exist in the universal library.',
  'info.dOdds':'The chance that each of the 5 cards in your booster has this rarity.',
  'info.dPack':'The chance of getting at least one card of this rarity (or a higher one) in your booster.',
  'info.noCards':'A rarity with no cards is removed from the draw and its odds are redistributed to the others.',
@@ -1059,6 +1085,7 @@ en:{dir:'ltr',
  'info.lk2':'Blue: a rare at best',
  'info.lk3':'Purple: an epic at best',
  'info.lk4':'Gold: a legendary!',
+ 'tab.library':'Library','tab.contest':'Contest','tab.booster':'Booster','tab.nav':'Navigation',
  'settings.title':'Settings','settings.account':'Account','settings.language':'Language','settings.loggedAs':'Signed in as {user}',
  'settings.privacyTitle':'Privacy policy',
  'settings.privacy':"MyCard runs entirely in your browser. There is no server, and nothing you do here is sent to us or to anyone else.\n\nYour username, your cards, and your settings are stored only on this device, in your browser's local storage. Photos you add to a card stay on this device too and are never uploaded.\n\nThis page loads fonts from Google Fonts; loading them may share your IP address with Google, as with any site that uses Google Fonts.\n\nThere is no analytics, no advertising, and no tracking cookies.\n\nClearing your browser data, or opening the app on a different device or browser, makes your cards inaccessible there — they aren't backed up anywhere else yet.\n\nThis notice will be updated if account sign-in and cloud storage are added later.",
@@ -1071,15 +1098,15 @@ es:{dir:'ltr',
  'login.googleBtn':'Iniciar sesión con Google','login.googleAria':'Iniciar sesión con Google (próximamente)','login.appleBtn':'Iniciar sesión con Apple','login.appleAria':'Iniciar sesión con Apple (próximamente)','login.soon':'pronto',
  'login.errNeedName':'Escribe un nombre de usuario para continuar.','login.errProviderNotReady':'El inicio de sesión con {provider} todavía no está activo. Continúa con tu nombre de usuario por ahora.','login.uniqueNote':'La unicidad del nombre se comprobará cuando se active el inicio de sesión con Google.','deck.hello':'Hola, {user} :)',
  'lang.title':'Elige tu idioma','lang.subtitle':'Podrás cambiarlo más tarde.',
- 'deck.title':'Mi mazo','deck.newTitle':'Nueva carta','deck.newDesc':'Crea una carta','deck.empty':'Tu mazo está vacío. Toca «Nueva carta» para crear tu primera carta.','deck.changeUser':'cambiar de usuario',
+ 'deck.title':'Mi biblioteca','deck.newTitle':'Nueva carta','deck.newDesc':'Crea una carta','deck.empty':'Tu biblioteca está vacía. Toca «Nueva carta» para crear tu primera carta.','deck.changeUser':'cambiar de usuario',
  'deck.sortDefault':'Recientes','deck.sortAria':'Ordenar cartas','deck.cardsOne':'carta','deck.cardsMany':'cartas','deck.changeLang':'idioma',
- 'deck.sort.rarD':'Más raras primero','deck.sort.rarDShort':'Rareza ↓','deck.sort.rarA':'Menos raras primero','deck.sort.rarAShort':'Rareza ↑','deck.group.rarity':'Rareza',
- 'deck.sort.added':'Añadidas más recientemente','deck.sort.addedShort':'Añadida reciente','deck.sort.first':'Añadidas primero','deck.sort.firstShort':'Añadida antigua',
- 'deck.sort.recent':'Editadas más recientemente','deck.sort.recentShort':'Edición reciente','deck.sort.old':'Editadas hace tiempo','deck.sort.oldShort':'Edición antigua',
- 'deck.sort.az':'Nombre A → Z','deck.sort.azShort':'A → Z','deck.sort.za':'Nombre Z → A','deck.sort.zaShort':'Z → A',
- 'deck.sort.pvd':'PS descendente','deck.sort.pvdShort':'PS ↓','deck.sort.pva':'PS ascendente','deck.sort.pvaShort':'PS ↑','deck.sort.type':'Por tipo','deck.sort.typeShort':'Tipo',
- 'deck.group.added':'Fecha de creación','deck.group.modified':'Última edición','deck.group.name':'Nombre','deck.group.other':'Otros',
- 'stage.back':'‹ Mazo','stage.change':'cambiar','stage.download':'Descargar imagen','stage.share':'Compartir','stage.personalize':'Personalizar','stage.hintDefault':'Mueve el ratón o el dedo sobre la carta',
+ 'deck.sort.rarD':'Más raras primero','deck.sort.rarDShort':'Rareza ↓',
+ 'deck.sort.added':'Añadidas más recientemente','deck.sort.addedShort':'Añadida reciente',
+ 
+ 'deck.sort.az':'Nombre A → Z','deck.sort.azShort':'A → Z',
+ 'deck.sort.pvd':'PS descendente','deck.sort.pvdShort':'PS ↓','deck.sort.type':'Por tipo','deck.sort.typeShort':'Tipo',
+ 
+ 'stage.back':'‹ Biblioteca','stage.change':'cambiar','stage.download':'Descargar imagen','stage.share':'Compartir','stage.personalize':'Personalizar','stage.hintDefault':'Mueve el ratón o el dedo sobre la carta',
  'stage.gyroActivate':'Activar giroscopio','stage.gyroActive':'Giroscopio activo','stage.gyroOpenAlone':'Abrir la página sola en el navegador',
  'gyro.sensorActive':'Sensor activo: β {b}° γ {g}°','gyro.noMotion':'No se ha recibido movimiento.','gyro.httpsNeeded':' La página debe estar en HTTPS para acceder al sensor.',
  'gyro.framed':' La página se muestra dentro de un marco (la app o el sitio) que bloquea el sensor: ábrela sola en tu navegador con el enlace de abajo.',
@@ -1105,7 +1132,7 @@ es:{dir:'ltr',
  'export.errImg':'No se pudo crear la imagen.','export.errGif':'No se pudo crear el GIF animado.','export.shareUnavailable':'No se puede compartir directamente aquí: el archivo se ofrece para descargar.','export.dlError':'Descarga no disponible aquí ({err}).',
  'intro.title':'Personaliza<br>tu carta','intro.go':'Vamos',
  'perf.line':'pantalla {hz} Hz · {ms} ms · nivel {tier}','perf.stride':' (efecto ÷{n})',
- 'deck.searchPh':'Buscar una carta…','deck.searchAria':'Buscar en el mazo','deck.noResults':'Ninguna carta coincide con tu búsqueda.','fx.metal':'Metálico (acero cepillado)',
+ 'deck.searchPh':'Buscar una carta…','deck.searchAria':'Buscar en la biblioteca','deck.noResults':'Ninguna carta coincide con tu búsqueda.','fx.metal':'Metálico (acero cepillado)',
  'settings.theme':'Tema de color','theme.blue':'Azul','theme.red':'Rojo','theme.black':'Negro','theme.white':'Blanco',
  'contest.nav':'Concurso',
  'contest.title':'Concurso de la semana',
@@ -1129,7 +1156,7 @@ es:{dir:'ltr',
  'contest.noResults':'Aún no hay resultados.',
  'contest.weekN':'Semana {n}',
  'contest.status.pending':'A la espera del moderador',
- 'contest.status.approved':'Añadida al mazo universal ({r})',
+ 'contest.status.approved':'Añadida a la biblioteca universal ({r})',
  'contest.status.rejected':'Rechazada por el moderador',
  'contest.status.none':'Sin votos esta semana',
  'contest.mod':'Validación del moderador',
@@ -1139,7 +1166,7 @@ es:{dir:'ltr',
  'contest.rarityFor':'Rareza',
  'contest.toastSubmitted':'¡Carta inscrita en el concurso!',
  'contest.toastWithdrawn':'Participación retirada.',
- 'contest.toastApproved':'Carta validada: entra en el mazo universal.',
+ 'contest.toastApproved':'Carta validada: entra en la biblioteca universal.',
  'contest.toastRejected':'Carta rechazada.',
  'demo.tools':'Herramientas demo',
  'demo.seed':'Añadir 3 participantes de demo',
@@ -1172,11 +1199,11 @@ es:{dir:'ltr',
  'drop.new':'Nueva',
  'drop.dup':'Repetida ×{n}',
  'drop.pack':'Tu sobre',
- 'drop.added':'{n} / {t} cartas nuevas añadidas a tu mazo.',
- 'drop.see':'Ver mi mazo',
+ 'drop.added':'{n} / {t} cartas nuevas añadidas a tu biblioteca.',
+ 'drop.see':'Ver mi biblioteca',
  'drop.cardsOne':'{n} carta',
  'drop.cardsMany':'{n} cartas',
- 'drop.empty':'El mazo universal está vacío por ahora.',
+ 'drop.empty':'La biblioteca universal está vacía por ahora.',
  'demo.resetDrop':'Reactivar el sobre del día',
  'info.btn':'Ver las probabilidades y los colores',
  'info.title':'Probabilidades y colores',
@@ -1191,7 +1218,7 @@ es:{dir:'ltr',
  'info.colOdds':'Por carta',
  'info.colPack':'Por sobre',
  'info.dRar':'El nivel de la carta.',
- 'info.dCards':'Cuántas cartas de esta rareza existen en el mazo universal.',
+ 'info.dCards':'Cuántas cartas de esta rareza existen en la biblioteca universal.',
  'info.dOdds':'La probabilidad de que cada una de las 5 cartas de tu sobre tenga esta rareza.',
  'info.dPack':'La probabilidad de obtener al menos una carta de esta rareza (o superior) en tu sobre.',
  'info.noCards':'Una rareza sin cartas se retira del sorteo y sus probabilidades se redistribuyen entre las demás.',
@@ -1203,6 +1230,7 @@ es:{dir:'ltr',
  'info.lk2':'Azul: como mucho una rara',
  'info.lk3':'Violeta: como mucho una épica',
  'info.lk4':'Oro: ¡una legendaria!',
+ 'tab.library':'Biblioteca','tab.contest':'Concurso','tab.booster':'Sobre','tab.nav':'Navegación',
  'settings.title':'Ajustes','settings.account':'Cuenta','settings.language':'Idioma','settings.loggedAs':'Sesión iniciada como {user}',
  'settings.privacyTitle':'Política de privacidad',
  'settings.privacy':"MyCard funciona totalmente en tu navegador. No hay servidor, y nada de lo que hagas aquí se nos envía a nosotros ni a nadie más.\n\nTu nombre de usuario, tus cartas y tus ajustes se guardan solo en este dispositivo, en el almacenamiento local del navegador. Las fotos que añades a una carta también se quedan en este dispositivo y nunca se suben a ningún sitio.\n\nEsta página carga fuentes desde Google Fonts; esta carga puede compartir tu dirección IP con Google, como ocurre en cualquier sitio que use Google Fonts.\n\nNo hay analítica, ni publicidad, ni cookies de seguimiento.\n\nSi borras los datos del navegador, o abres la app en otro dispositivo o navegador, tus cartas no estarán disponibles allí: todavía no se respaldan en ningún otro sitio.\n\nEste aviso se actualizará si más adelante se añaden el inicio de sesión con cuenta y el almacenamiento en la nube.",
@@ -1215,15 +1243,15 @@ de:{dir:'ltr',
  'login.googleBtn':'Mit Google anmelden','login.googleAria':'Mit Google anmelden (bald verfügbar)','login.appleBtn':'Mit Apple anmelden','login.appleAria':'Mit Apple anmelden (bald verfügbar)','login.soon':'bald',
  'login.errNeedName':'Gib einen Benutzernamen ein, um fortzufahren.','login.errProviderNotReady':'Die Anmeldung mit {provider} ist noch nicht aktiv. Mach vorerst mit deinem Benutzernamen weiter.','login.uniqueNote':'Die Eindeutigkeit des Namens wird geprüft, sobald die Google-Anmeldung aktiv ist.','deck.hello':'Hallo, {user} :)',
  'lang.title':'Wähle deine Sprache','lang.subtitle':'Du kannst sie später ändern.',
- 'deck.title':'Mein Deck','deck.newTitle':'Neue Karte','deck.newDesc':'Karte erstellen','deck.empty':'Dein Deck ist leer. Tippe auf „Neue Karte“, um deine erste Karte zu erstellen.','deck.changeUser':'Benutzer wechseln',
+ 'deck.title':'Meine Bibliothek','deck.newTitle':'Neue Karte','deck.newDesc':'Karte erstellen','deck.empty':'Deine Bibliothek ist leer. Tippe auf „Neue Karte“, um deine erste Karte zu erstellen.','deck.changeUser':'Benutzer wechseln',
  'deck.sortDefault':'Neueste','deck.sortAria':'Karten sortieren','deck.cardsOne':'Karte','deck.cardsMany':'Karten','deck.changeLang':'Sprache',
- 'deck.sort.rarD':'Seltenste zuerst','deck.sort.rarDShort':'Seltenheit ↓','deck.sort.rarA':'Am wenigsten seltene zuerst','deck.sort.rarAShort':'Seltenheit ↑','deck.group.rarity':'Seltenheit',
- 'deck.sort.added':'Zuletzt hinzugefügt','deck.sort.addedShort':'Neu hinzugefügt','deck.sort.first':'Zuerst hinzugefügt','deck.sort.firstShort':'Älteste zuerst',
- 'deck.sort.recent':'Zuletzt bearbeitet','deck.sort.recentShort':'Kürzlich bearbeitet','deck.sort.old':'Lange nicht bearbeitet','deck.sort.oldShort':'Älteste Bearbeitung',
- 'deck.sort.az':'Name A → Z','deck.sort.azShort':'A → Z','deck.sort.za':'Name Z → A','deck.sort.zaShort':'Z → A',
- 'deck.sort.pvd':'KP absteigend','deck.sort.pvdShort':'KP ↓','deck.sort.pva':'KP aufsteigend','deck.sort.pvaShort':'KP ↑','deck.sort.type':'Nach Typ','deck.sort.typeShort':'Typ',
- 'deck.group.added':'Hinzugefügt am','deck.group.modified':'Zuletzt bearbeitet','deck.group.name':'Name','deck.group.other':'Weitere',
- 'stage.back':'‹ Deck','stage.change':'wechseln','stage.download':'Als Bild herunterladen','stage.share':'Teilen','stage.personalize':'Anpassen','stage.hintDefault':'Bewege Maus oder Finger über die Karte',
+ 'deck.sort.rarD':'Seltenste zuerst','deck.sort.rarDShort':'Seltenheit ↓',
+ 'deck.sort.added':'Zuletzt hinzugefügt','deck.sort.addedShort':'Neu hinzugefügt',
+ 
+ 'deck.sort.az':'Name A → Z','deck.sort.azShort':'A → Z',
+ 'deck.sort.pvd':'KP absteigend','deck.sort.pvdShort':'KP ↓','deck.sort.type':'Nach Typ','deck.sort.typeShort':'Typ',
+ 
+ 'stage.back':'‹ Bibliothek','stage.change':'wechseln','stage.download':'Als Bild herunterladen','stage.share':'Teilen','stage.personalize':'Anpassen','stage.hintDefault':'Bewege Maus oder Finger über die Karte',
  'stage.gyroActivate':'Gyroskop aktivieren','stage.gyroActive':'Gyroskop aktiv','stage.gyroOpenAlone':'Seite allein im Browser öffnen',
  'gyro.sensorActive':'Sensor aktiv: β {b}° γ {g}°','gyro.noMotion':'Keine Bewegung erkannt.','gyro.httpsNeeded':' Die Seite muss über HTTPS aufgerufen werden, um auf den Sensor zuzugreifen.',
  'gyro.framed':' Die Seite wird in einem Rahmen (App oder Website) angezeigt, der den Sensor blockiert: öffne sie über den Link unten allein im Browser.',
@@ -1249,7 +1277,7 @@ de:{dir:'ltr',
  'export.errImg':'Bild konnte nicht erstellt werden.','export.errGif':'Animiertes GIF konnte nicht erstellt werden.','export.shareUnavailable':'Direktes Teilen ist hier nicht verfügbar: die Datei wird stattdessen zum Herunterladen angeboten.','export.dlError':'Download hier nicht möglich ({err}).',
  'intro.title':'Gestalte<br>deine Karte','intro.go':"Los geht's",
  'perf.line':'Bildschirm {hz} Hz · {ms} ms · Stufe {tier}','perf.stride':' (Effekt ÷{n})',
- 'deck.searchPh':'Karte suchen…','deck.searchAria':'Im Deck suchen','deck.noResults':'Keine Karte passt zu deiner Suche.','fx.metal':'Metallisch (gebürsteter Stahl)',
+ 'deck.searchPh':'Karte suchen…','deck.searchAria':'In der Bibliothek suchen','deck.noResults':'Keine Karte passt zu deiner Suche.','fx.metal':'Metallisch (gebürsteter Stahl)',
  'settings.theme':'Farbthema','theme.blue':'Blau','theme.red':'Rot','theme.black':'Schwarz','theme.white':'Weiß',
  'contest.nav':'Wettbewerb',
  'contest.title':'Wettbewerb der Woche',
@@ -1273,7 +1301,7 @@ de:{dir:'ltr',
  'contest.noResults':'Noch keine Ergebnisse.',
  'contest.weekN':'Woche {n}',
  'contest.status.pending':'Wartet auf den Moderator',
- 'contest.status.approved':'Ins Universal-Deck aufgenommen ({r})',
+ 'contest.status.approved':'In die Universal-Bibliothek aufgenommen ({r})',
  'contest.status.rejected':'Vom Moderator abgelehnt',
  'contest.status.none':'Keine Stimmen diese Woche',
  'contest.mod':'Prüfung durch den Moderator',
@@ -1283,7 +1311,7 @@ de:{dir:'ltr',
  'contest.rarityFor':'Seltenheit',
  'contest.toastSubmitted':'Karte für den Wettbewerb angemeldet!',
  'contest.toastWithdrawn':'Teilnahme zurückgezogen.',
- 'contest.toastApproved':'Karte freigegeben: Sie kommt ins Universal-Deck.',
+ 'contest.toastApproved':'Karte freigegeben: Sie kommt in die Universal-Bibliothek.',
  'contest.toastRejected':'Karte abgelehnt.',
  'demo.tools':'Demo-Werkzeuge',
  'demo.seed':'3 Demo-Teilnehmer hinzufügen',
@@ -1316,11 +1344,11 @@ de:{dir:'ltr',
  'drop.new':'Neu',
  'drop.dup':'Duplikat ×{n}',
  'drop.pack':'Dein Booster',
- 'drop.added':'{n} / {t} neue Karten zu deinem Deck hinzugefügt.',
- 'drop.see':'Mein Deck ansehen',
+ 'drop.added':'{n} / {t} neue Karten zu deiner Bibliothek hinzugefügt.',
+ 'drop.see':'Meine Bibliothek ansehen',
  'drop.cardsOne':'{n} Karte',
  'drop.cardsMany':'{n} Karten',
- 'drop.empty':'Das Universal-Deck ist im Moment leer.',
+ 'drop.empty':'Die Universal-Bibliothek ist im Moment leer.',
  'demo.resetDrop':'Tages-Booster zurücksetzen',
  'info.btn':'Chancen und Farben ansehen',
  'info.title':'Chancen und Farben',
@@ -1335,7 +1363,7 @@ de:{dir:'ltr',
  'info.colOdds':'Pro Karte',
  'info.colPack':'Pro Booster',
  'info.dRar':'Die Stufe der Karte.',
- 'info.dCards':'Wie viele Karten dieser Seltenheit es im Universal-Deck gibt.',
+ 'info.dCards':'Wie viele Karten dieser Seltenheit es in der Universal-Bibliothek gibt.',
  'info.dOdds':'Die Chance, dass jede der 5 Karten deines Boosters diese Seltenheit hat.',
  'info.dPack':'Die Chance, in deinem Booster mindestens eine Karte dieser (oder einer höheren) Seltenheit zu bekommen.',
  'info.noCards':'Eine Seltenheit ohne Karten wird aus der Ziehung genommen, ihre Chancen werden auf die anderen verteilt.',
@@ -1347,6 +1375,7 @@ de:{dir:'ltr',
  'info.lk2':'Blau: höchstens eine Seltene',
  'info.lk3':'Violett: höchstens eine Epische',
  'info.lk4':'Gold: eine Legendäre!',
+ 'tab.library':'Bibliothek','tab.contest':'Wettbewerb','tab.booster':'Booster','tab.nav':'Navigation',
  'settings.title':'Einstellungen','settings.account':'Konto','settings.language':'Sprache','settings.loggedAs':'Angemeldet als {user}',
  'settings.privacyTitle':'Datenschutzerklärung',
  'settings.privacy':"MyCard läuft vollständig in deinem Browser. Es gibt keinen Server, und nichts von dem, was du hier tust, wird an uns oder sonst jemanden gesendet.\n\nDein Benutzername, deine Karten und deine Einstellungen werden nur auf diesem Gerät gespeichert, im lokalen Speicher des Browsers. Fotos, die du einer Karte hinzufügst, bleiben ebenfalls auf diesem Gerät und werden nie hochgeladen.\n\nDiese Seite lädt Schriftarten von Google Fonts; dabei kann deine IP-Adresse an Google übermittelt werden, wie bei jeder Website, die Google Fonts nutzt.\n\nEs gibt keine Analyse-Tools, keine Werbung und keine Tracking-Cookies.\n\nWenn du deine Browserdaten löschst oder die App auf einem anderen Gerät oder Browser öffnest, sind deine Karten dort nicht verfügbar: Sie werden bisher nirgendwo anders gesichert.\n\nDieser Hinweis wird aktualisiert, falls später eine Kontoanmeldung und Cloud-Speicherung hinzukommen.",
@@ -1359,15 +1388,15 @@ ar:{dir:'rtl',
  'login.googleBtn':'تسجيل الدخول عبر Google','login.googleAria':'تسجيل الدخول عبر Google (قريبًا)','login.appleBtn':'تسجيل الدخول عبر Apple','login.appleAria':'تسجيل الدخول عبر Apple (قريبًا)','login.soon':'قريبًا',
  'login.errNeedName':'أدخل اسم مستخدم للمتابعة.','login.errProviderNotReady':'تسجيل الدخول عبر {provider} غير مفعّل بعد. تابع باسم المستخدم في الوقت الحالي.','login.uniqueNote':'سيتم التحقق من تفرّد الاسم عند تفعيل تسجيل الدخول عبر Google.','deck.hello':'أهلًا، {user} :)',
  'lang.title':'اختر لغتك','lang.subtitle':'يمكنك تغييرها لاحقًا.',
- 'deck.title':'مجموعتي','deck.newTitle':'بطاقة جديدة','deck.newDesc':'أنشئ بطاقة','deck.empty':'مجموعتك فارغة. اضغط على «بطاقة جديدة» لإنشاء أول بطاقة.','deck.changeUser':'تغيير المستخدم',
+ 'deck.title':'مكتبتي','deck.newTitle':'بطاقة جديدة','deck.newDesc':'أنشئ بطاقة','deck.empty':'مكتبتك فارغة. اضغط على «بطاقة جديدة» لإنشاء أول بطاقة.','deck.changeUser':'تغيير المستخدم',
  'deck.sortDefault':'الأحدث','deck.sortAria':'ترتيب البطاقات','deck.cardsOne':'بطاقة','deck.cardsMany':'بطاقات','deck.changeLang':'اللغة',
- 'deck.sort.rarD':'الأكثر ندرة أولًا','deck.sort.rarDShort':'الندرة ↓','deck.sort.rarA':'الأقل ندرة أولًا','deck.sort.rarAShort':'الندرة ↑','deck.group.rarity':'الندرة',
- 'deck.sort.added':'الأحدث إضافةً','deck.sort.addedShort':'إضافة حديثة','deck.sort.first':'الأقدم إضافةً','deck.sort.firstShort':'إضافة قديمة',
- 'deck.sort.recent':'الأحدث تعديلًا','deck.sort.recentShort':'تعديل حديث','deck.sort.old':'الأقدم تعديلًا','deck.sort.oldShort':'تعديل قديم',
- 'deck.sort.az':'الاسم أ ← ي','deck.sort.azShort':'أ ← ي','deck.sort.za':'الاسم ي ← أ','deck.sort.zaShort':'ي ← أ',
- 'deck.sort.pvd':'نقاط الحياة تنازليًا','deck.sort.pvdShort':'الحياة ↓','deck.sort.pva':'نقاط الحياة تصاعديًا','deck.sort.pvaShort':'الحياة ↑','deck.sort.type':'حسب النوع','deck.sort.typeShort':'النوع',
- 'deck.group.added':'تاريخ الإضافة','deck.group.modified':'آخر تعديل','deck.group.name':'الاسم','deck.group.other':'أخرى',
- 'stage.back':'› المجموعة','stage.change':'تغيير','stage.download':'تنزيل كصورة','stage.share':'مشاركة','stage.personalize':'تخصيص','stage.hintDefault':'حرّك الفأرة أو إصبعك فوق البطاقة',
+ 'deck.sort.rarD':'الأكثر ندرة أولًا','deck.sort.rarDShort':'الندرة ↓',
+ 'deck.sort.added':'الأحدث إضافةً','deck.sort.addedShort':'إضافة حديثة',
+ 
+ 'deck.sort.az':'الاسم أ ← ي','deck.sort.azShort':'أ ← ي',
+ 'deck.sort.pvd':'نقاط الحياة تنازليًا','deck.sort.pvdShort':'الحياة ↓','deck.sort.type':'حسب النوع','deck.sort.typeShort':'النوع',
+ 
+ 'stage.back':'› المكتبة','stage.change':'تغيير','stage.download':'تنزيل كصورة','stage.share':'مشاركة','stage.personalize':'تخصيص','stage.hintDefault':'حرّك الفأرة أو إصبعك فوق البطاقة',
  'stage.gyroActivate':'تفعيل الجيروسكوب','stage.gyroActive':'الجيروسكوب مفعّل','stage.gyroOpenAlone':'افتح الصفحة وحدها في المتصفح',
  'gyro.sensorActive':'المستشعر نشط: β {b}° γ {g}°','gyro.noMotion':'لم تُستقبل أي حركة.','gyro.httpsNeeded':' يجب أن تكون الصفحة عبر HTTPS للوصول إلى المستشعر.',
  'gyro.framed':' تُعرض الصفحة داخل إطار (تطبيق أو موقع) يمنع المستشعر: افتحها وحدها في متصفحك عبر الرابط أدناه.',
@@ -1393,7 +1422,7 @@ ar:{dir:'rtl',
  'export.errImg':'تعذّر إنشاء الصورة.','export.errGif':'تعذّر إنشاء GIF المتحرك.','export.shareUnavailable':'المشاركة المباشرة غير متاحة هنا: الملف متاح للتنزيل بدلًا من ذلك.','export.dlError':'تعذّر التنزيل هنا ({err}).',
  'intro.title':'خصّص<br>بطاقتك','intro.go':'ابدأ',
  'perf.line':'الشاشة {hz} هرتز · {ms} مللي ثانية · المستوى {tier}','perf.stride':' (التأثير ÷{n})',
- 'deck.searchPh':'ابحث عن بطاقة…','deck.searchAria':'ابحث في المجموعة','deck.noResults':'لا توجد بطاقة تطابق بحثك.','fx.metal':'معدني (فولاذ مصقول)',
+ 'deck.searchPh':'ابحث عن بطاقة…','deck.searchAria':'ابحث في المكتبة','deck.noResults':'لا توجد بطاقة تطابق بحثك.','fx.metal':'معدني (فولاذ مصقول)',
  'settings.theme':'سمة الألوان','theme.blue':'أزرق','theme.red':'أحمر','theme.black':'أسود','theme.white':'أبيض',
  'contest.nav':'المسابقة',
  'contest.title':'مسابقة الأسبوع',
@@ -1417,7 +1446,7 @@ ar:{dir:'rtl',
  'contest.noResults':'لا توجد نتائج بعد.',
  'contest.weekN':'الأسبوع {n}',
  'contest.status.pending':'بانتظار المشرف',
- 'contest.status.approved':'أُضيفت إلى المجموعة العامة ({r})',
+ 'contest.status.approved':'أُضيفت إلى المكتبة العامة ({r})',
  'contest.status.rejected':'رفضها المشرف',
  'contest.status.none':'لا أصوات هذا الأسبوع',
  'contest.mod':'مراجعة المشرف',
@@ -1427,7 +1456,7 @@ ar:{dir:'rtl',
  'contest.rarityFor':'الندرة',
  'contest.toastSubmitted':'تم تسجيل البطاقة في المسابقة!',
  'contest.toastWithdrawn':'تم سحب المشاركة.',
- 'contest.toastApproved':'تم اعتماد البطاقة: انضمت إلى المجموعة العامة.',
+ 'contest.toastApproved':'تم اعتماد البطاقة: انضمت إلى المكتبة العامة.',
  'contest.toastRejected':'تم رفض البطاقة.',
  'demo.tools':'أدوات تجريبية',
  'demo.seed':'إضافة 3 مشاركين تجريبيين',
@@ -1460,11 +1489,11 @@ ar:{dir:'rtl',
  'drop.new':'جديدة',
  'drop.dup':'مكررة ×{n}',
  'drop.pack':'حزمتك',
- 'drop.added':'أُضيفت {n} / {t} بطاقات جديدة إلى مجموعتك.',
- 'drop.see':'عرض مجموعتي',
+ 'drop.added':'أُضيفت {n} / {t} بطاقات جديدة إلى مكتبتك.',
+ 'drop.see':'عرض مكتبتي',
  'drop.cardsOne':'{n} بطاقة',
  'drop.cardsMany':'{n} بطاقات',
- 'drop.empty':'المجموعة العامة فارغة حاليًا.',
+ 'drop.empty':'المكتبة العامة فارغة حاليًا.',
  'demo.resetDrop':'إعادة تفعيل حزمة اليوم',
  'info.btn':'عرض الفرص والألوان',
  'info.title':'الفرص والألوان',
@@ -1479,7 +1508,7 @@ ar:{dir:'rtl',
  'info.colOdds':'لكل بطاقة',
  'info.colPack':'لكل حزمة',
  'info.dRar':'مستوى البطاقة.',
- 'info.dCards':'كم بطاقة من هذه الندرة موجودة في المجموعة العامة.',
+ 'info.dCards':'كم بطاقة من هذه الندرة موجودة في المكتبة العامة.',
  'info.dOdds':'فرصة أن تكون كل بطاقة من بطاقات حزمتك الخمس من هذه الندرة.',
  'info.dPack':'فرصة الحصول على بطاقة واحدة على الأقل من هذه الندرة (أو أعلى) في حزمتك.',
  'info.noCards':'تُحذف الندرة التي لا تحتوي على بطاقات من السحب وتُوزَّع فرصها على البقية.',
@@ -1491,6 +1520,7 @@ ar:{dir:'rtl',
  'info.lk2':'أزرق: نادرة على الأكثر',
  'info.lk3':'بنفسجي: ملحمية على الأكثر',
  'info.lk4':'ذهبي: أسطورية!',
+ 'tab.library':'المكتبة','tab.contest':'المسابقة','tab.booster':'الحزمة','tab.nav':'التنقل',
  'settings.title':'الإعدادات','settings.account':'الحساب','settings.language':'اللغة','settings.loggedAs':'مسجّل الدخول باسم {user}',
  'settings.privacyTitle':'سياسة الخصوصية',
  'settings.privacy':"يعمل MyCard بالكامل داخل متصفحك. لا يوجد خادم، ولا يُرسَل أي شيء تفعله هنا إلينا أو إلى أي جهة أخرى.\n\nيُحفظ اسم المستخدم وبطاقاتك وإعداداتك على هذا الجهاز فقط، داخل التخزين المحلي للمتصفح. كما تبقى الصور التي تضيفها إلى بطاقة على هذا الجهاز ولا تُرفع إلى أي مكان.\n\nتُحمّل هذه الصفحة خطوطًا من Google Fonts؛ قد يشارك ذلك عنوان IP الخاص بك مع Google، كما هو الحال في أي موقع يستخدم Google Fonts.\n\nلا توجد أدوات تحليل، ولا إعلانات، ولا ملفات تعريف ارتباط للتتبع.\n\nعند مسح بيانات المتصفح، أو فتح التطبيق على جهاز أو متصفح آخر، لن تكون بطاقاتك متاحة هناك: فهي غير محفوظة بعد في أي مكان آخر.\n\nسيتم تحديث هذا الإشعار إذا أُضيف لاحقًا تسجيل الدخول بحساب والتخزين السحابي.",
@@ -2200,7 +2230,7 @@ function startDeck(){
 function showDeck(){
   saveNow();clearTimeout(introT);
   editing=false;Bd.classList.remove('locked','introing','introshow','view-edit','viewing','uni-card');Bd.classList.add('view-deck');document.documentElement.classList.remove('introing');
-  selId=null;renderDeck();window.scrollTo(0,0);
+  selId=null;openSub('deck');renderDeck();window.scrollTo(0,0);
 }
 function newCard(){
   const c=JSON.parse(JSON.stringify(TEMPLATE));
@@ -2226,15 +2256,15 @@ function quickOpen(){
   fl.classList.remove('back','flipping');st.classList.remove('flipping','settle','rise','dropin');void st.offsetWidth;st.classList.add('dropin','settle');window.scrollTo(0,0);
 }
 function deleteCard(id){removeCard(id);showDeck();toast(tr('toast.deleted'))}
-const SORTS=[['added','added'],['first','added'],['recent','modified'],['old','modified'],['az','name'],['za','name'],['rarD','rarity'],['rarA','rarity'],['pvd','other'],['pva','other'],['type','other']];
-let sortKey='recent';try{sortKey=localStorage.getItem('mycard-sort')||'recent'}catch(e){}
-if(!SORTS.some(x=>x[0]===sortKey))sortKey='recent';
+const SORTS=[['added',''],['rarD',''],['az',''],['pvd',''],['type','']];
+let sortKey='added';try{sortKey=localStorage.getItem('mycard-sort')||'added'}catch(e){}
+if(!SORTS.some(x=>x[0]===sortKey))sortKey='added';
 const nmOf=c=>String(c.name||''),coll=(a,b)=>a.localeCompare(b,'fr',{sensitivity:'base',numeric:true});
 /* date d'ajout : champ c ; pour les anciennes cartes, déduite de leur identifiant (horodatage encodé), sinon de la dernière modification */
 const createdOf=c=>{if(c.c)return c.c;const m=/^c([0-9a-z]{7,9})[0-9a-z]{3}$/.exec(String(c.id||''));if(m){const v=parseInt(m[1],36);if(v>1e12&&v<4e12)return v}return c.t||0};
-const CMP={added:(a,b)=>createdOf(b)-createdOf(a),first:(a,b)=>createdOf(a)-createdOf(b),recent:(a,b)=>b.t-a.t,old:(a,b)=>a.t-b.t,az:(a,b)=>coll(nmOf(a),nmOf(b)),za:(a,b)=>coll(nmOf(b),nmOf(a)),
-  rarD:(a,b)=>rarRank(b)-rarRank(a),rarA:(a,b)=>(rarRank(a)<0)-(rarRank(b)<0)||rarRank(a)-rarRank(b),   /* sans rareté (cartes perso) : toujours à la fin */
-  pvd:(a,b)=>(parseInt(b.hp)||0)-(parseInt(a.hp)||0),pva:(a,b)=>(parseInt(a.hp)||0)-(parseInt(b.hp)||0),type:(a,b)=>coll(typeName(a.type),typeName(b.type))};
+const CMP={added:(a,b)=>createdOf(b)-createdOf(a),az:(a,b)=>coll(nmOf(a),nmOf(b)),
+  rarD:(a,b)=>rarRank(b)-rarRank(a),                                      /* cartes sans rareté (créées par le joueur) : à la fin */
+  pvd:(a,b)=>(parseInt(b.hp)||0)-(parseInt(a.hp)||0),type:(a,b)=>coll(typeName(a.type),typeName(b.type))};
 const rarRank=c=>c.uni?rarIdx(c.rar):-1;
 const sortedDeck=()=>[...deck].sort((a,b)=>CMP[sortKey](a,b)||coll(nmOf(a),nmOf(b))||b.t-a.t);
 function renderSortMenu(){
@@ -2338,8 +2368,8 @@ function fillSettings(){
   buildSettingsLangGrid();buildThemeGrid();
   $('set-mod').checked=typeof isMod==='function'&&isMod();
 }
-function showSettings(){saveNow();fillSettings();$('deck').hidden=true;$('settings').hidden=false;window.scrollTo(0,0)}
-function hideSettings(){$('settings').hidden=true;$('deck').hidden=false;window.scrollTo(0,0)}
+function showSettings(){fillSettings();openSub('settings')}
+function hideSettings(){backToDeck()}
 $('dk-settings').addEventListener('click',showSettings);
 $('set-back').addEventListener('click',hideSettings);
 $('set-change').addEventListener('click',()=>{hideSettings();$('u-change').click()});
@@ -2467,7 +2497,9 @@ function thumbUrl(key,c,img){
   thumbQ=p;return p;
 }
 function paintThumbs(root,list){root.querySelectorAll('img[data-i]').forEach(im=>{const t=list[+im.dataset.i];if(t)Promise.resolve(t.img()).then(img=>thumbUrl(t.key,t.card,img)).then(u=>{if(u)im.src=u})})}
-const openSub=id=>{saveNow();['deck','settings','contest','booster'].forEach(s=>$(s).hidden=s!==id);clearInterval(bstTick);window.scrollTo(0,0)};
+const TAB_OF={deck:'library',settings:'library',contest:'contest',booster:'booster'};
+const openSub=id=>{saveNow();['deck','settings','contest','booster'].forEach(s=>$(s).hidden=s!==id);clearInterval(bstTick);window.scrollTo(0,0);
+  document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-current',t.dataset.tab===TAB_OF[id]?'page':'false'))};
 function backToDeck(){openSub('deck');renderDeck()}
 
 /* -- concours -- */
@@ -2546,8 +2578,6 @@ $('contest').addEventListener('click',async e=>{
   if(b.id==='dm-back'){try{localStorage.setItem('mycard-demo-off',0)}catch(_){}return renderContest()}
   if(b.id==='dm-clear'){const all=await cloud.allEntries();Object.values(all).flat().forEach(x=>media.del('ent:'+x.id));await cloud.clear();return renderContest()}
 });
-$('dk-contest').addEventListener('click',()=>{openSub('contest');renderContest()});
-$('ct-back').addEventListener('click',backToDeck);
 
 /* -- booster du jour : 5 cartes, au plus 1 légendaire -- */
 const dayKey=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
@@ -2816,11 +2846,30 @@ async function renderBooster(){
   if(bstEmpty)$('bst-msg').textContent=tr('drop.empty');
   bstMsg();updateDropDot();
 }
-$('dk-drop').addEventListener('click',()=>{openSub('booster');renderBooster();bstTick=setInterval(bstMsg,1000)});
-$('bst-back').addEventListener('click',backToDeck);
 $('bst-open').addEventListener('click',openBooster);
 $('dm-drop').addEventListener('click',()=>{try{localStorage.removeItem(dropKey())}catch(e){}renderBooster()});
 $('set-mod').addEventListener('change',e=>{try{localStorage.setItem('mycard-mod',e.target.checked?'1':'0')}catch(_){}renderContest()});
+
+/* ---- icônes : dessinées ici en SVG (trait = couleur du texte). Pour utiliser vos propres fichiers, renseigner ICON_ASSETS
+   (ex. ICON_ASSETS.library='assets/icons/library.png') : l'image remplace alors le dessin. ---- */
+const ICONS={
+  library:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.6" y="7" width="10" height="13" rx="2" transform="rotate(-12 8.6 13.5)" opacity=".5"/><rect x="10.4" y="7" width="10" height="13" rx="2" transform="rotate(12 15.4 13.5)" opacity=".5"/><rect x="7" y="4.2" width="10" height="14.6" rx="2" fill="currentColor" fill-opacity=".16"/><path d="M12 8.6l.95 1.95 2.15.3-1.55 1.5.35 2.15L12 13.45 10.1 14.5l.35-2.15L8.9 10.85l2.15-.3z" fill="currentColor" stroke="none"/></svg>',
+  contest:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8v5.2a4 4 0 0 1-8 0z" fill="currentColor" fill-opacity=".16"/><path d="M8 5.6H5.2c0 2.9 1 4.4 3 4.8M16 5.6h2.8c0 2.9-1 4.4-3 4.8"/><path d="M12 13.2V16.6M9 20h6M9.8 16.6h4.4l.7 3.4H9.1z"/></svg>',
+  booster:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 5.4l1 -1.2 l1 1.2 l1 -1.2 l1 1.2 l1 -1.2 l1 1.2 l1 -1.2 l1 1.2 l1 -1.2 l1 1.2 l1 -1.2 l1 1.2V18.6l-1 1.2 l-1 -1.2 l-1 1.2 l-1 -1.2 l-1 1.2 l-1 -1.2 l-1 1.2 l-1 -1.2 l-1 1.2 l-1 -1.2 l-1 1.2 l-1 -1.2z" fill="currentColor" fill-opacity=".16"/><path d="M12 9.2l.95 2.1 2.1.95-2.1.95-.95 2.1-.95-2.1-2.1-.95 2.1-.95z" fill="currentColor" stroke="none"/></svg>',
+  gear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.11 4.95L10.50 2.52L13.50 2.52L13.89 4.95L15.65 5.68L17.64 4.23L19.77 6.36L18.32 8.35L19.05 10.11L21.48 10.50L21.48 13.50L19.05 13.89L18.32 15.65L19.77 17.64L17.64 19.77L15.65 18.32L13.89 19.05L13.50 21.48L10.50 21.48L10.11 19.05L8.35 18.32L6.36 19.77L4.23 17.64L5.68 15.65L4.95 13.89L2.52 13.50L2.52 10.50L4.95 10.11L5.68 8.35L4.23 6.36L6.36 4.23L8.35 5.68z" fill="currentColor" fill-opacity=".16"/><circle cx="12" cy="12" r="3.1"/></svg>',
+  camera:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.3l1.1-1.6A1.5 1.5 0 0 1 10.1 4h3.8a1.5 1.5 0 0 1 1.2.4L16.2 6h1.3A2.5 2.5 0 0 1 20 8.5v8a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z" fill="currentColor" fill-opacity=".16"/><circle cx="12" cy="12.5" r="3.4"/></svg>',
+  sparkle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4l1.6 4.4L16 10l-4.4 1.6L10 16l-1.6-4.4L4 10l4.4-1.6z" fill="currentColor" fill-opacity=".16"/><path d="M18 14l.8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8z"/></svg>'
+};
+const ICON_ASSETS={library:'',contest:'',booster:'',gear:'',camera:'',sparkle:''};
+const iconHTML=n=>ICON_ASSETS[n]?`<img src="${ICON_ASSETS[n]}" alt="">`:(ICONS[n]||'');
+document.querySelectorAll('[data-ico]').forEach(el=>{el.innerHTML=iconHTML(el.dataset.ico)});
+/* ---- barre d'onglets du bas ---- */
+function goTab(t){
+  if(t==='library')backToDeck();
+  else if(t==='contest'){openSub('contest');renderContest()}
+  else{openSub('booster');renderBooster();bstTick=setInterval(bstMsg,1000)}
+}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>goTab(b.dataset.tab)));
 
 /* ---- application de la langue : texte statique (data-i18n*), reconstructions dynamiques, RTL ---- */
 function applyI18n(){

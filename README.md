@@ -7,8 +7,8 @@ personnaliser et collectionner des cartes holographiques, pensée pour télépho
 
 ## Fonctions
 - **Connexion par nom d'utilisateur.** Les boutons « Se connecter avec Google / Apple » sont présents mais **pas encore branchés** (voir « À faire »).
-- **Bibliothèque** (« Mon deck ») : grille de cartes avec miniatures, sauvegarde automatique, tri en 11 critères
-  (date d'ajout, dernière modification, nom A→Z / Z→A, **rareté** plus rares / moins rares d'abord, PV, type ; les cartes sans rareté, créées par le joueur, restent à la fin).
+- **Bibliothèque** (« Ma bibliothèque ») : grille de cartes avec miniatures, sauvegarde automatique, tri en 5 critères
+  (ajout récent, **rareté** (les plus rares d'abord), nom A→Z, PV, type ; les cartes sans rareté, créées par le joueur, restent à la fin).
 - **Affichage en grand** d'une carte (voile irisé à l'ouverture), puis **personnalisation en 6 étapes** :
   Image · Carte · Talent · Attaque · Règle · Effet.
 - **19 types** avec icônes (18 types + incolore), image importée recadrable (zoom, position).
@@ -19,9 +19,10 @@ personnaliser et collectionner des cartes holographiques, pensée pour télépho
 - **Fluidité adaptative** : l'effet par défaut est composé de calques pré-dessinés simplement déplacés ;
   un gouverneur mesure le rythme de l'écran (120 / 90 / 60 Hz) et simplifie l'effet par paliers si besoin.
 
-- **Recherche** dans le deck (nom, type, évolution, talent, attaques), sans tenir compte des accents ni de la casse.
+- **Recherche** dans la bibliothèque (nom, type, évolution, talent, attaques), sans tenir compte des accents ni de la casse.
 - **Thèmes de couleur** (bleu, rouge, noir, blanc), au choix dans les Paramètres.
-- **Concours hebdomadaire** et **booster du jour** avec un **deck universel** (voir plus bas).
+- **Concours hebdomadaire** et **booster du jour** avec une **bibliothèque universelle** (voir plus bas).
+- **Barre d'onglets en bas** (Bibliothèque · Concours · Booster), icônes dessinées en SVG (voir « Icônes »).
 
 ## Lancer
 Ouvrir `index.html` dans un navigateur, ou :
@@ -48,15 +49,15 @@ Tout reste **dans le navigateur** ; rien n'est envoyé à un serveur.
 
 Chaque nom d'utilisateur a sa bibliothèque propre **sur cet appareil**. Les anciennes sauvegardes (clé `mycard-deck:<nom>`) sont converties au lancement.
 
-## Concours hebdomadaire, booster du jour et deck universel
-Deux boutons sous la barre de recherche du deck : **Concours** et **Booster du jour**.
+## Concours hebdomadaire, booster du jour et bibliothèque universelle
+Accessibles par les onglets du bas : **Concours** et **Booster**.
 
 **Concours.** Chaque semaine (du lundi au dimanche), un joueur inscrit une de ses cartes et vote pour celle d'un autre (un seul vote par semaine, pas pour sa propre carte).
 À la fin de la semaine, la carte la plus votée est désignée n°1 et attend la **validation du modérateur**. Si elle est validée, le modérateur choisit sa rareté
-et elle **rejoint le deck universel**.
+et elle **rejoint la bibliothèque universelle**.
 
-**Deck universel.** Les cartes créées par l'auteur du projet, à débloquer dans les boosters. Elles sont décrites dans **`universal-cards.js`** (même format qu'une carte du deck, plus `rarity`).
-Les cartes `exemple-…` sont des exemples à remplacer. Une carte débloquée est copiée dans le deck du joueur (non modifiable) ; un doublon est signalé.
+**Bibliothèque universelle.** Les cartes créées par l'auteur du projet, à débloquer dans les boosters. Elles sont décrites dans **`universal-cards.js`** (même format qu'une carte de la bibliothèque, plus `rarity`).
+Les cartes `exemple-…` sont des exemples à remplacer. Une carte débloquée est copiée dans la bibliothèque du joueur (non modifiable) ; un doublon est signalé.
 
 **Booster du jour.** Un booster par jour (il se recharge à minuit, heure locale), de **5 cartes avec au plus 1 légendaire**.
 Chaque carte est tirée selon sa rareté ; dès qu'une légendaire sort, les cartes suivantes du booster ne peuvent plus l'être. Une carte n'apparaît pas deux fois dans le même booster tant que sa rareté a assez de cartes.
@@ -81,12 +82,16 @@ de l'une des **4 façons** tirées au hasard (sortie du pack, retournement, chut
 Un récapitulatif des 5 cartes termine l'ouverture ; « Tout révéler » permet de le sauter.
 
 **La couleur de l'invocation ne change pas les chances : elle les révèle.** Le booster est tiré avant l'animation ; sa couleur dit ce qu'il contient : gris (que des communes), vert, bleu, violet, puis or dès qu'il contient une légendaire.
-La meilleure carte compte le plus, les autres font glisser la couleur un peu plus loin. Les cartes sont ajoutées au deck dès le tirage, même si on ferme l'animation avant la fin.
+La meilleure carte compte le plus, les autres font glisser la couleur un peu plus loin. Les cartes sont ajoutées à la bibliothèque dès le tirage, même si on ferme l'animation avant la fin.
 
 **Mode démo (état actuel).** Il n'y a pas de serveur : participations, votes, résultats et validations sont stockés dans le navigateur (`mycard-cloud:*`), donc **rien n'est partagé entre joueurs ni entre appareils**.
 Tout passe par un seul objet `cloud` dans `index.html` : pour un vrai concours en ligne, il suffit de le remplacer par un client serveur (mêmes méthodes). Côté serveur, il faudra aussi faire le tirage du booster,
 désigner le n°1 de la semaine et gérer le rôle de modérateur (aujourd'hui une simple case dans les Paramètres, ouverte à tous). Des « Outils démo » permettent d'ajouter des participants fictifs,
 de simuler la fin de la semaine et de réactiver le booster.
+
+## Icônes
+Les icônes (onglets du bas, engrenage des Paramètres, fenêtre d'export) sont **dessinées en SVG** dans `index.html` (objet `ICONS`), sans emoji. Pour utiliser vos propres images,
+renseigner `ICON_ASSETS` (par exemple `ICON_ASSETS.library='assets/icons/library.png'`) : l'image remplace alors le dessin. Noms disponibles : `library`, `contest`, `booster`, `gear`, `camera`, `sparkle`.
 
 ## Paramètres
 Accessible depuis la bibliothèque (icône ⚙️) : pseudo actuel avec bouton pour en changer, langue, **thème de couleur**, mode modérateur (démo), **politique de confidentialité** et **crédits** (chacun dans un volet repliable), traduits dans les 5 langues.
@@ -103,7 +108,7 @@ Seul le **holo classique** est entièrement composé de calques déplacés (le p
 Les autres effets sont redessinés à chaque image et sont plus lourds sur téléphone.
 
 ## Performance
-- Appuyer **5 fois vite** sur « Bonjour, … » dans le deck affiche un encart : fréquence d'écran détectée, durée des images, palier.
+- Appuyer **5 fois vite** sur « Bonjour, … » dans la bibliothèque affiche un encart : fréquence d'écran détectée, durée des images, palier.
 - Paliers : 0 complet · 1 couches secondaires retirées · 2 effet une image sur deux · 3 une image sur trois.
   L'inclinaison de la carte reste toujours à la cadence de l'écran.
 

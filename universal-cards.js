@@ -1,6 +1,6 @@
-/* Deck universel : les cartes à débloquer dans les boosters du jour.
+/* Bibliothèque universelle : les cartes à débloquer dans les boosters du jour.
 
-   Chaque carte a le même format qu'une carte du deck, plus « rarity » :
+   Chaque carte a le même format qu'une carte de la bibliothèque, plus « rarity » :
      common (60 %) · uncommon (25 %) · rare (10 %) · epic (4 %) · legendary (1 %)
    Les pourcentages se règlent dans index.html (const RARITIES).
    Un booster contient 5 cartes, avec au plus 1 légendaire.
