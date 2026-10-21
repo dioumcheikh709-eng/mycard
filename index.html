@@ -432,6 +432,51 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
 :root[data-theme=white] .tile .tcov{background:rgba(20,24,46,.08);box-shadow:0 10px 28px rgba(20,24,46,.25)}
 :root[data-theme=white] .tile.new .tcov{border-color:rgba(20,24,46,.35);background:rgba(20,24,46,.05)}
 :root[data-theme=white] .tsw{border-color:rgba(20,24,46,.4)}
+
+/* ---- concours hebdomadaire + coffre du jour ---- */
+.dk-nav{display:flex;gap:10px;margin:-4px 0 14px}
+.dk-nav .gbtn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 12px;position:relative}
+.dk-nav i{position:absolute;top:6px;right:12px;width:10px;height:10px;border-radius:50%;background:#ff4d4d;box-shadow:0 0 0 2px rgba(255,255,255,.55)}
+.dk-nav i[hidden]{display:none}
+.demo-note{margin:0;padding:10px 14px;border-radius:12px;border:1px dashed var(--line);font:500 13px/1.45 Barlow,sans-serif;opacity:.85}
+.ct-sub{margin:2px 0 0;font:500 14px Barlow,sans-serif;opacity:.7}
+.ct-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.ct-row select{flex:1;min-width:0;font:400 15px Barlow,sans-serif;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.ct-row select option{color:#111}
+.tile.ent{cursor:default}
+.tile.ent:active{transform:none}
+.tile.ent .gbtn{margin-top:8px;padding:8px 12px;width:100%}
+.tile.ent .gbtn:disabled{opacity:.5;cursor:default}
+.rk{position:absolute;left:8px;top:8px;min-width:26px;height:26px;padding:0 8px;box-sizing:border-box;border-radius:99px;display:grid;place-items:center;background:#ffc233;color:#111;font:700 14px 'Barlow Condensed',sans-serif}
+.res{padding:9px 0;border-top:1px solid var(--line);font:500 14px/1.4 Barlow,sans-serif}
+.res:first-of-type{border-top:0}
+.res small{display:block;opacity:.7;font:400 13px Barlow,sans-serif}
+.rar{display:inline-block;padding:2px 10px;border-radius:99px;background:var(--rc,#9aa4b5);color:#111;font:700 12px 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.mod-item{display:grid;grid-template-columns:84px 1fr;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.mod-item img{width:84px;border-radius:8px;display:block}
+.mod-item .ct-row{margin-top:6px}
+.chk-row{display:flex;gap:10px;align-items:center;margin-top:10px;font:500 15px Barlow,sans-serif}
+.tile.uni .tcov{box-shadow:0 0 0 2px var(--rc),0 10px 28px rgba(var(--shade-rgb),.45)}
+body.uni-card #v-edit{display:none}
+.chest-stage{display:grid;justify-items:center;gap:12px;padding:6px 0}
+.chest{border:0;background:none;cursor:pointer;padding:0;width:min(230px,62vw);filter:drop-shadow(0 18px 22px rgba(0,0,0,.35));transition:filter .4s}
+.chest svg{display:block;width:100%;height:auto;overflow:visible}
+.chest .lid{transform-box:fill-box;transform-origin:0 100%;transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
+.chest.open .lid{transform:rotate(-24deg)}
+.chest.open{filter:drop-shadow(0 0 34px var(--rc,#ffd24a))}
+.chest.shake{animation:chshake .65s ease}
+.chest:disabled:not(.open){cursor:default;filter:grayscale(.8) drop-shadow(0 12px 16px rgba(0,0,0,.3))}
+.chest:focus-visible{outline:3px solid currentColor;outline-offset:6px;border-radius:14px}
+@keyframes chshake{0%,100%{transform:none}15%{transform:rotate(-5deg) translateY(-3px)}30%{transform:rotate(5deg)}45%{transform:rotate(-4deg) translateY(-2px)}60%{transform:rotate(4deg)}80%{transform:rotate(-2deg)}}
+.ch-msg{margin:0;font:600 17px Barlow,sans-serif;text-align:center;min-height:1.4em}
+.reveal{display:grid;justify-items:center;gap:10px;text-align:center}
+.reveal[hidden]{display:none}
+.reveal img{width:min(260px,70vw);aspect-ratio:63/88;object-fit:cover;border-radius:14px;box-shadow:0 0 0 3px var(--rc),0 0 40px var(--rc)}
+.reveal h2{margin:0;font:700 30px/1.05 'Barlow Condensed',sans-serif}
+.odds{width:100%;border-collapse:collapse;margin-top:8px;font:500 14px Barlow,sans-serif}
+.odds td{padding:7px 4px;border-top:1px solid var(--line)}
+.odds td:not(:first-child){text-align:right;opacity:.85}
+@media (prefers-reduced-motion:reduce){.chest.shake{animation:none}.chest .lid{transition:none}}
 </style>
 <script>try{var __t=localStorage.getItem('mycard-theme');if(__t&&/^(blue|red|black|white)$/.test(__t))document.documentElement.dataset.theme=__t}catch(e){}</script>
 </head>
@@ -459,6 +504,7 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
   <header class="dk-head"><div><p class="dk-hello" id="dk-hello"></p><h1 data-i18n="deck.title">Mon deck</h1><p class="dk-count" id="dk-count"></p></div>
     <div class="dk-tools"><button type="button" id="dk-sort" class="dk-sort" aria-haspopup="menu" aria-expanded="false" aria-controls="dk-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg><span id="dk-sort-l" data-i18n="deck.sortDefault">Récentes</span></button><div class="dk-menu" id="dk-menu" role="menu" aria-label="Trier les cartes" data-i18n-aria="deck.sortAria" hidden></div><button type="button" id="dk-settings" class="gbtn iconbtn" aria-label="Paramètres"><span aria-hidden="true">⚙️</span></button><button type="button" id="dk-new" class="dk-plus" aria-label="Nouvelle carte">+</button></div></header>
   <div class="dk-search"><input id="dk-q" type="search" autocomplete="off" enterkeyhint="search" placeholder="Rechercher une carte…" aria-label="Rechercher dans le deck" data-i18n-ph="deck.searchPh" data-i18n-aria="deck.searchAria"></div>
+  <div class="dk-nav"><button type="button" id="dk-contest" class="gbtn"><span aria-hidden="true">🏆</span><span data-i18n="contest.nav">Concours</span></button><button type="button" id="dk-drop" class="gbtn"><span aria-hidden="true">🎁</span><span data-i18n="drop.nav">Coffre du jour</span><i id="drop-dot" hidden></i></button></div>
   <div class="dk-grid" id="dk-grid"></div>
   <p class="dk-empty" id="dk-nores" hidden data-i18n="deck.noResults">Aucune carte ne correspond à ta recherche.</p>
   <p class="dk-empty" id="dk-empty" hidden data-i18n="deck.empty">Ton deck est vide. Touche « Nouvelle carte » pour créer ta première carte.</p>
@@ -479,6 +525,11 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
     <h2 class="set-h" data-i18n="settings.theme">Thème de couleur</h2>
     <div class="lgrid" id="set-theme"></div>
   </div>
+  <div class="set-block">
+    <h2 class="set-h" data-i18n="settings.mod">Modérateur</h2>
+    <label class="chk-row"><input type="checkbox" id="set-mod"><span data-i18n="settings.modOn">Activer le mode modérateur (démo)</span></label>
+    <p class="set-p" data-i18n="settings.modNote">Sans serveur, ce mode est réservé à la démo : n’importe qui peut l’activer. Avec un vrai serveur, le rôle viendra du compte.</p>
+  </div>
   <details class="set-block">
     <summary class="set-h" data-i18n="settings.privacyTitle">Politique de confidentialité</summary>
     <p class="set-p" id="set-privacy" style="white-space:pre-line"></p>
@@ -487,6 +538,36 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
     <summary class="set-h" data-i18n="settings.creditsTitle">Crédits</summary>
     <p class="set-p" id="set-credits" style="white-space:pre-line"></p>
     <a id="set-creditslink" href="https://github.com/simeydotme/pokemon-cards-css" target="_blank" rel="noopener" class="glink" data-i18n="settings.creditsLink">pokemon-cards-css sur GitHub</a>
+  </details>
+</section>
+<section id="contest" class="deck" hidden>
+  <header class="dk-head"><div><button type="button" id="ct-back" class="linkbtn" data-i18n="stage.back" style="padding:0;margin-bottom:6px">‹ Deck</button><h1 data-i18n="contest.title">Concours de la semaine</h1><p class="ct-sub" id="ct-week"></p></div></header>
+  <p class="demo-note" data-i18n="contest.demo">Mode démo : les participations et les votes restent sur cet appareil. Le vrai vote en ligne viendra avec un serveur.</p>
+  <div class="set-block" id="ct-mine"></div>
+  <div class="set-block"><h2 class="set-h" data-i18n="contest.entries">Cartes en lice</h2><p class="set-p" id="ct-noent" hidden data-i18n="contest.noEntries">Personne n’a encore participé cette semaine.</p><div class="dk-grid" id="ct-grid" style="margin-top:14px"></div></div>
+  <div class="set-block"><h2 class="set-h" data-i18n="contest.results">Résultats des semaines passées</h2><div id="ct-res"></div></div>
+  <div class="set-block" id="ct-mod" hidden><h2 class="set-h" data-i18n="contest.mod">Validation du modérateur</h2><div id="ct-modlist"></div></div>
+  <details class="set-block">
+    <summary class="set-h" data-i18n="demo.tools">Outils démo</summary>
+    <div class="ct-row"><button type="button" class="gbtn" id="dm-seed" data-i18n="demo.seed">Ajouter 3 participants de démo</button><button type="button" class="gbtn" id="dm-end" data-i18n="demo.endWeek">Simuler la fin de la semaine</button><button type="button" class="gbtn" id="dm-back" data-i18n="demo.backWeek">Revenir à la semaine réelle</button><button type="button" class="gbtn" id="dm-clear" data-i18n="demo.clear">Effacer les données du concours</button></div>
+  </details>
+</section>
+<section id="chest" class="deck" hidden>
+  <header class="dk-head"><div><button type="button" id="ch-back" class="linkbtn" data-i18n="stage.back" style="padding:0;margin-bottom:6px">‹ Deck</button><h1 data-i18n="drop.title">Coffre du jour</h1></div></header>
+  <p class="demo-note" data-i18n="drop.demo">Mode démo : le coffre se recharge chaque jour sur cet appareil.</p>
+  <div class="chest-stage">
+    <button type="button" id="ch-box" class="chest" aria-label="Ouvrir le coffre" data-i18n-aria="drop.open"><svg viewBox="0 0 120 100" aria-hidden="true"><rect x="12" y="52" width="96" height="44" rx="6" fill="#8a5a2b"/><rect x="12" y="52" width="96" height="9" fill="#6f4520"/><rect x="26" y="52" width="8" height="44" fill="#f2c14e"/><rect x="86" y="52" width="8" height="44" fill="#f2c14e"/><rect x="53" y="60" width="14" height="18" rx="3" fill="#f2c14e"/><circle cx="60" cy="68" r="2.6" fill="#6f4520"/><g class="lid"><path d="M12 52V36a24 24 0 0 1 24-24h48a24 24 0 0 1 24 24v16Z" fill="#a8703a"/><rect x="26" y="14" width="8" height="38" fill="#f2c14e"/><rect x="86" y="14" width="8" height="38" fill="#f2c14e"/><rect x="12" y="44" width="96" height="8" fill="#f2c14e"/></g></svg></button>
+    <p class="ch-msg" id="ch-msg" role="status"></p>
+    <button type="button" id="ch-open" class="gbtn primary" data-i18n="drop.open">Ouvrir le coffre</button>
+  </div>
+  <div class="reveal" id="ch-reveal" hidden>
+    <img id="ch-r-img" alt=""><span class="rar" id="ch-r-rar"></span><h2 id="ch-r-name"></h2><p class="set-p" id="ch-r-msg" style="margin:0"></p>
+    <button type="button" id="ch-see" class="gbtn" data-i18n="drop.see">Voir mon deck</button>
+  </div>
+  <div class="set-block"><h2 class="set-h" data-i18n="drop.odds">Tes chances</h2><table class="odds" id="ch-odds"></table><p class="set-p" data-i18n="drop.oddsNote">Une rareté sans carte est retirée et ses chances sont redistribuées.</p></div>
+  <details class="set-block">
+    <summary class="set-h" data-i18n="demo.tools">Outils démo</summary>
+    <div class="ct-row"><button type="button" class="gbtn" id="dm-drop" data-i18n="demo.resetDrop">Réactiver le coffre du jour</button></div>
   </details>
 </section>
 <div class="who"><span id="who-n"></span> · <button type="button" id="u-change" data-i18n="stage.change">changer</button></div>
@@ -555,6 +636,7 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
 </div>
 <div class="intro" id="intro"><h2 data-i18n-html="intro.title">Personnalise<br>ta carte</h2><button type="button" id="lesgo" class="lesgo" data-i18n="intro.go">Let's go</button></div>
 
+<script src="universal-cards.js"></script>
 <script>
 const I18N={
 fr:{dir:'ltr',
@@ -597,6 +679,71 @@ fr:{dir:'ltr',
  'perf.line':'écran {hz} Hz · {ms} ms · palier {tier}','perf.stride':' (effet ÷{n})',
  'deck.searchPh':'Rechercher une carte…','deck.searchAria':'Rechercher dans le deck','deck.noResults':'Aucune carte ne correspond à ta recherche.','fx.metal':'Métallique (acier brossé)',
  'settings.theme':'Thème de couleur','theme.blue':'Bleu','theme.red':'Rouge','theme.black':'Noir','theme.white':'Blanc',
+ 'contest.nav':'Concours',
+ 'drop.nav':'Coffre du jour',
+ 'contest.title':'Concours de la semaine',
+ 'contest.week':'Semaine {n} · se termine dans {t}',
+ 'contest.demo':'Mode démo : les participations et les votes restent sur cet appareil. Le vrai vote en ligne viendra avec un serveur.',
+ 'contest.mine':'Ma participation',
+ 'contest.noOwn':'Crée une carte pour participer au concours.',
+ 'contest.pick':'Choisis une de tes cartes',
+ 'contest.submit':'Participer',
+ 'contest.submitted':'Ta carte « {name} » participe cette semaine.',
+ 'contest.withdraw':'Retirer ma carte',
+ 'contest.entries':'Cartes en lice',
+ 'contest.noEntries':'Personne n’a encore participé cette semaine.',
+ 'contest.by':'par {a}',
+ 'contest.votesOne':'{n} vote',
+ 'contest.votesMany':'{n} votes',
+ 'contest.vote':'Voter',
+ 'contest.voted':'Voté ✓',
+ 'contest.yours':'Ta carte',
+ 'contest.results':'Résultats des semaines passées',
+ 'contest.noResults':'Aucun résultat pour le moment.',
+ 'contest.weekN':'Semaine {n}',
+ 'contest.status.pending':'En attente du modérateur',
+ 'contest.status.approved':'Entrée au deck universel ({r})',
+ 'contest.status.rejected':'Refusée par le modérateur',
+ 'contest.status.none':'Aucun vote cette semaine',
+ 'contest.mod':'Validation du modérateur',
+ 'contest.modNone':'Aucune carte à valider.',
+ 'contest.approve':'Valider',
+ 'contest.reject':'Refuser',
+ 'contest.rarityFor':'Rareté',
+ 'contest.toastSubmitted':'Carte inscrite au concours !',
+ 'contest.toastWithdrawn':'Participation retirée.',
+ 'contest.toastApproved':'Carte validée : elle rejoint le deck universel.',
+ 'contest.toastRejected':'Carte refusée.',
+ 'demo.tools':'Outils démo',
+ 'demo.seed':'Ajouter 3 participants de démo',
+ 'demo.endWeek':'Simuler la fin de la semaine',
+ 'demo.backWeek':'Revenir à la semaine réelle',
+ 'demo.clear':'Effacer les données du concours',
+ 'demo.resetDrop':'Réactiver le coffre du jour',
+ 'drop.title':'Coffre du jour',
+ 'drop.demo':'Mode démo : le coffre se recharge chaque jour sur cet appareil.',
+ 'drop.ready':'Ton coffre est prêt !',
+ 'drop.wait':'Prochain coffre dans {t}',
+ 'drop.open':'Ouvrir le coffre',
+ 'drop.new':'Nouvelle carte ajoutée à ton deck !',
+ 'drop.dup':'Tu l’avais déjà : doublon (×{n}).',
+ 'drop.see':'Voir mon deck',
+ 'drop.odds':'Tes chances',
+ 'drop.oddsNote':'Une rareté sans carte est retirée et ses chances sont redistribuées.',
+ 'drop.cardsOne':'{n} carte',
+ 'drop.cardsMany':'{n} cartes',
+ 'drop.empty':'Le deck universel est vide pour le moment.',
+ 'rarity.common':'Commune',
+ 'rarity.uncommon':'Peu commune',
+ 'rarity.rare':'Rare',
+ 'rarity.epic':'Épique',
+ 'rarity.legendary':'Légendaire',
+ 'settings.mod':'Modérateur',
+ 'settings.modOn':'Activer le mode modérateur (démo)',
+ 'settings.modNote':'Sans serveur, ce mode est réservé à la démo : n’importe qui peut l’activer. Avec un vrai serveur, le rôle viendra du compte.',
+ 'time.d':'j',
+ 'time.h':'h',
+ 'time.m':'min',
  'settings.title':'Paramètres','settings.account':'Compte','settings.language':'Langue','settings.loggedAs':'Connecté en tant que {user}',
  'settings.privacyTitle':'Politique de confidentialité',
  'settings.privacy':"MyCard fonctionne entièrement dans ton navigateur. Il n'y a pas de serveur, et rien de ce que tu fais ici ne nous est envoyé, ni à personne d'autre.\n\nTon pseudo, tes cartes et tes réglages sont stockés uniquement sur cet appareil, dans le navigateur. Les photos que tu ajoutes à une carte restent aussi sur cet appareil et ne sont jamais envoyées ailleurs.\n\nCette page charge des polices depuis Google Fonts ; ce chargement peut partager ton adresse IP avec Google, comme pour tout site qui utilise Google Fonts.\n\nIl n'y a ni outil de mesure d'audience, ni publicité, ni cookie de suivi.\n\nSi tu effaces les données de ton navigateur, ou si tu ouvres l'appli sur un autre appareil ou un autre navigateur, tes cartes n'y seront pas accessibles : elles ne sont pas encore sauvegardées ailleurs.\n\nCette note sera mise à jour si la connexion par compte et le stockage en ligne sont ajoutés plus tard.",
@@ -644,6 +791,71 @@ en:{dir:'ltr',
  'perf.line':'screen {hz} Hz · {ms} ms · tier {tier}','perf.stride':' (effect ÷{n})',
  'deck.searchPh':'Search cards…','deck.searchAria':'Search your deck','deck.noResults':'No card matches your search.','fx.metal':'Metallic (brushed steel)',
  'settings.theme':'Color theme','theme.blue':'Blue','theme.red':'Red','theme.black':'Black','theme.white':'White',
+ 'contest.nav':'Contest',
+ 'drop.nav':'Daily chest',
+ 'contest.title':'Contest of the week',
+ 'contest.week':'Week {n} · ends in {t}',
+ 'contest.demo':'Demo mode: entries and votes stay on this device. Real online voting will come with a server.',
+ 'contest.mine':'My entry',
+ 'contest.noOwn':'Create a card to enter the contest.',
+ 'contest.pick':'Pick one of your cards',
+ 'contest.submit':'Enter',
+ 'contest.submitted':'Your card “{name}” is entered this week.',
+ 'contest.withdraw':'Withdraw my card',
+ 'contest.entries':'Cards in the running',
+ 'contest.noEntries':'Nobody has entered this week yet.',
+ 'contest.by':'by {a}',
+ 'contest.votesOne':'{n} vote',
+ 'contest.votesMany':'{n} votes',
+ 'contest.vote':'Vote',
+ 'contest.voted':'Voted ✓',
+ 'contest.yours':'Your card',
+ 'contest.results':'Results of past weeks',
+ 'contest.noResults':'No results yet.',
+ 'contest.weekN':'Week {n}',
+ 'contest.status.pending':'Waiting for the moderator',
+ 'contest.status.approved':'Added to the universal deck ({r})',
+ 'contest.status.rejected':'Rejected by the moderator',
+ 'contest.status.none':'No votes this week',
+ 'contest.mod':'Moderator review',
+ 'contest.modNone':'No card to review.',
+ 'contest.approve':'Approve',
+ 'contest.reject':'Reject',
+ 'contest.rarityFor':'Rarity',
+ 'contest.toastSubmitted':'Card entered in the contest!',
+ 'contest.toastWithdrawn':'Entry withdrawn.',
+ 'contest.toastApproved':'Card approved: it joins the universal deck.',
+ 'contest.toastRejected':'Card rejected.',
+ 'demo.tools':'Demo tools',
+ 'demo.seed':'Add 3 demo entrants',
+ 'demo.endWeek':'Simulate the end of the week',
+ 'demo.backWeek':'Back to the real week',
+ 'demo.clear':'Erase contest data',
+ 'demo.resetDrop':'Reset today’s chest',
+ 'drop.title':'Daily chest',
+ 'drop.demo':'Demo mode: the chest refills every day on this device.',
+ 'drop.ready':'Your chest is ready!',
+ 'drop.wait':'Next chest in {t}',
+ 'drop.open':'Open the chest',
+ 'drop.new':'New card added to your deck!',
+ 'drop.dup':'You already had it: duplicate (×{n}).',
+ 'drop.see':'See my deck',
+ 'drop.odds':'Your odds',
+ 'drop.oddsNote':'A rarity with no cards is removed and its odds are redistributed.',
+ 'drop.cardsOne':'{n} card',
+ 'drop.cardsMany':'{n} cards',
+ 'drop.empty':'The universal deck is empty for now.',
+ 'rarity.common':'Common',
+ 'rarity.uncommon':'Uncommon',
+ 'rarity.rare':'Rare',
+ 'rarity.epic':'Epic',
+ 'rarity.legendary':'Legendary',
+ 'settings.mod':'Moderator',
+ 'settings.modOn':'Turn on moderator mode (demo)',
+ 'settings.modNote':'Without a server, this mode is for the demo only: anyone can turn it on. With a real server, the role will come from the account.',
+ 'time.d':'d',
+ 'time.h':'h',
+ 'time.m':'min',
  'settings.title':'Settings','settings.account':'Account','settings.language':'Language','settings.loggedAs':'Signed in as {user}',
  'settings.privacyTitle':'Privacy policy',
  'settings.privacy':"MyCard runs entirely in your browser. There is no server, and nothing you do here is sent to us or to anyone else.\n\nYour username, your cards, and your settings are stored only on this device, in your browser's local storage. Photos you add to a card stay on this device too and are never uploaded.\n\nThis page loads fonts from Google Fonts; loading them may share your IP address with Google, as with any site that uses Google Fonts.\n\nThere is no analytics, no advertising, and no tracking cookies.\n\nClearing your browser data, or opening the app on a different device or browser, makes your cards inaccessible there — they aren't backed up anywhere else yet.\n\nThis notice will be updated if account sign-in and cloud storage are added later.",
@@ -691,6 +903,71 @@ es:{dir:'ltr',
  'perf.line':'pantalla {hz} Hz · {ms} ms · nivel {tier}','perf.stride':' (efecto ÷{n})',
  'deck.searchPh':'Buscar una carta…','deck.searchAria':'Buscar en el mazo','deck.noResults':'Ninguna carta coincide con tu búsqueda.','fx.metal':'Metálico (acero cepillado)',
  'settings.theme':'Tema de color','theme.blue':'Azul','theme.red':'Rojo','theme.black':'Negro','theme.white':'Blanco',
+ 'contest.nav':'Concurso',
+ 'drop.nav':'Cofre del día',
+ 'contest.title':'Concurso de la semana',
+ 'contest.week':'Semana {n} · termina en {t}',
+ 'contest.demo':'Modo demo: las participaciones y los votos se quedan en este dispositivo. El voto real en línea llegará con un servidor.',
+ 'contest.mine':'Mi participación',
+ 'contest.noOwn':'Crea una carta para participar en el concurso.',
+ 'contest.pick':'Elige una de tus cartas',
+ 'contest.submit':'Participar',
+ 'contest.submitted':'Tu carta «{name}» participa esta semana.',
+ 'contest.withdraw':'Retirar mi carta',
+ 'contest.entries':'Cartas en competición',
+ 'contest.noEntries':'Nadie ha participado todavía esta semana.',
+ 'contest.by':'por {a}',
+ 'contest.votesOne':'{n} voto',
+ 'contest.votesMany':'{n} votos',
+ 'contest.vote':'Votar',
+ 'contest.voted':'Votado ✓',
+ 'contest.yours':'Tu carta',
+ 'contest.results':'Resultados de semanas anteriores',
+ 'contest.noResults':'Aún no hay resultados.',
+ 'contest.weekN':'Semana {n}',
+ 'contest.status.pending':'A la espera del moderador',
+ 'contest.status.approved':'Añadida al mazo universal ({r})',
+ 'contest.status.rejected':'Rechazada por el moderador',
+ 'contest.status.none':'Sin votos esta semana',
+ 'contest.mod':'Validación del moderador',
+ 'contest.modNone':'Ninguna carta por validar.',
+ 'contest.approve':'Validar',
+ 'contest.reject':'Rechazar',
+ 'contest.rarityFor':'Rareza',
+ 'contest.toastSubmitted':'¡Carta inscrita en el concurso!',
+ 'contest.toastWithdrawn':'Participación retirada.',
+ 'contest.toastApproved':'Carta validada: entra en el mazo universal.',
+ 'contest.toastRejected':'Carta rechazada.',
+ 'demo.tools':'Herramientas demo',
+ 'demo.seed':'Añadir 3 participantes de demo',
+ 'demo.endWeek':'Simular el fin de la semana',
+ 'demo.backWeek':'Volver a la semana real',
+ 'demo.clear':'Borrar los datos del concurso',
+ 'demo.resetDrop':'Reactivar el cofre del día',
+ 'drop.title':'Cofre del día',
+ 'drop.demo':'Modo demo: el cofre se recarga cada día en este dispositivo.',
+ 'drop.ready':'¡Tu cofre está listo!',
+ 'drop.wait':'Próximo cofre en {t}',
+ 'drop.open':'Abrir el cofre',
+ 'drop.new':'¡Nueva carta añadida a tu mazo!',
+ 'drop.dup':'Ya la tenías: duplicada (×{n}).',
+ 'drop.see':'Ver mi mazo',
+ 'drop.odds':'Tus probabilidades',
+ 'drop.oddsNote':'Una rareza sin cartas se retira y sus probabilidades se redistribuyen.',
+ 'drop.cardsOne':'{n} carta',
+ 'drop.cardsMany':'{n} cartas',
+ 'drop.empty':'El mazo universal está vacío por ahora.',
+ 'rarity.common':'Común',
+ 'rarity.uncommon':'Poco común',
+ 'rarity.rare':'Rara',
+ 'rarity.epic':'Épica',
+ 'rarity.legendary':'Legendaria',
+ 'settings.mod':'Moderador',
+ 'settings.modOn':'Activar el modo moderador (demo)',
+ 'settings.modNote':'Sin servidor, este modo es solo para la demo: cualquiera puede activarlo. Con un servidor real, el rol vendrá de la cuenta.',
+ 'time.d':'d',
+ 'time.h':'h',
+ 'time.m':'min',
  'settings.title':'Ajustes','settings.account':'Cuenta','settings.language':'Idioma','settings.loggedAs':'Sesión iniciada como {user}',
  'settings.privacyTitle':'Política de privacidad',
  'settings.privacy':"MyCard funciona totalmente en tu navegador. No hay servidor, y nada de lo que hagas aquí se nos envía a nosotros ni a nadie más.\n\nTu nombre de usuario, tus cartas y tus ajustes se guardan solo en este dispositivo, en el almacenamiento local del navegador. Las fotos que añades a una carta también se quedan en este dispositivo y nunca se suben a ningún sitio.\n\nEsta página carga fuentes desde Google Fonts; esta carga puede compartir tu dirección IP con Google, como ocurre en cualquier sitio que use Google Fonts.\n\nNo hay analítica, ni publicidad, ni cookies de seguimiento.\n\nSi borras los datos del navegador, o abres la app en otro dispositivo o navegador, tus cartas no estarán disponibles allí: todavía no se respaldan en ningún otro sitio.\n\nEste aviso se actualizará si más adelante se añaden el inicio de sesión con cuenta y el almacenamiento en la nube.",
@@ -738,6 +1015,71 @@ de:{dir:'ltr',
  'perf.line':'Bildschirm {hz} Hz · {ms} ms · Stufe {tier}','perf.stride':' (Effekt ÷{n})',
  'deck.searchPh':'Karte suchen…','deck.searchAria':'Im Deck suchen','deck.noResults':'Keine Karte passt zu deiner Suche.','fx.metal':'Metallisch (gebürsteter Stahl)',
  'settings.theme':'Farbthema','theme.blue':'Blau','theme.red':'Rot','theme.black':'Schwarz','theme.white':'Weiß',
+ 'contest.nav':'Wettbewerb',
+ 'drop.nav':'Tageskiste',
+ 'contest.title':'Wettbewerb der Woche',
+ 'contest.week':'Woche {n} · endet in {t}',
+ 'contest.demo':'Demo-Modus: Teilnahmen und Stimmen bleiben auf diesem Gerät. Echtes Online-Voting kommt mit einem Server.',
+ 'contest.mine':'Meine Teilnahme',
+ 'contest.noOwn':'Erstelle eine Karte, um am Wettbewerb teilzunehmen.',
+ 'contest.pick':'Wähle eine deiner Karten',
+ 'contest.submit':'Teilnehmen',
+ 'contest.submitted':'Deine Karte „{name}“ nimmt diese Woche teil.',
+ 'contest.withdraw':'Meine Karte zurückziehen',
+ 'contest.entries':'Karten im Rennen',
+ 'contest.noEntries':'Diese Woche hat noch niemand teilgenommen.',
+ 'contest.by':'von {a}',
+ 'contest.votesOne':'{n} Stimme',
+ 'contest.votesMany':'{n} Stimmen',
+ 'contest.vote':'Abstimmen',
+ 'contest.voted':'Abgestimmt ✓',
+ 'contest.yours':'Deine Karte',
+ 'contest.results':'Ergebnisse vergangener Wochen',
+ 'contest.noResults':'Noch keine Ergebnisse.',
+ 'contest.weekN':'Woche {n}',
+ 'contest.status.pending':'Wartet auf den Moderator',
+ 'contest.status.approved':'Ins Universal-Deck aufgenommen ({r})',
+ 'contest.status.rejected':'Vom Moderator abgelehnt',
+ 'contest.status.none':'Keine Stimmen diese Woche',
+ 'contest.mod':'Prüfung durch den Moderator',
+ 'contest.modNone':'Keine Karte zu prüfen.',
+ 'contest.approve':'Freigeben',
+ 'contest.reject':'Ablehnen',
+ 'contest.rarityFor':'Seltenheit',
+ 'contest.toastSubmitted':'Karte für den Wettbewerb angemeldet!',
+ 'contest.toastWithdrawn':'Teilnahme zurückgezogen.',
+ 'contest.toastApproved':'Karte freigegeben: Sie kommt ins Universal-Deck.',
+ 'contest.toastRejected':'Karte abgelehnt.',
+ 'demo.tools':'Demo-Werkzeuge',
+ 'demo.seed':'3 Demo-Teilnehmer hinzufügen',
+ 'demo.endWeek':'Ende der Woche simulieren',
+ 'demo.backWeek':'Zurück zur echten Woche',
+ 'demo.clear':'Wettbewerbsdaten löschen',
+ 'demo.resetDrop':'Tageskiste zurücksetzen',
+ 'drop.title':'Tageskiste',
+ 'drop.demo':'Demo-Modus: Die Kiste füllt sich jeden Tag auf diesem Gerät neu.',
+ 'drop.ready':'Deine Kiste ist bereit!',
+ 'drop.wait':'Nächste Kiste in {t}',
+ 'drop.open':'Kiste öffnen',
+ 'drop.new':'Neue Karte zu deinem Deck hinzugefügt!',
+ 'drop.dup':'Die hattest du schon: Duplikat (×{n}).',
+ 'drop.see':'Mein Deck ansehen',
+ 'drop.odds':'Deine Chancen',
+ 'drop.oddsNote':'Eine Seltenheit ohne Karten entfällt, ihre Chancen werden verteilt.',
+ 'drop.cardsOne':'{n} Karte',
+ 'drop.cardsMany':'{n} Karten',
+ 'drop.empty':'Das Universal-Deck ist im Moment leer.',
+ 'rarity.common':'Gewöhnlich',
+ 'rarity.uncommon':'Ungewöhnlich',
+ 'rarity.rare':'Selten',
+ 'rarity.epic':'Episch',
+ 'rarity.legendary':'Legendär',
+ 'settings.mod':'Moderator',
+ 'settings.modOn':'Moderator-Modus aktivieren (Demo)',
+ 'settings.modNote':'Ohne Server ist dieser Modus nur für die Demo: Jeder kann ihn aktivieren. Mit einem echten Server kommt die Rolle vom Konto.',
+ 'time.d':'T',
+ 'time.h':'Std',
+ 'time.m':'Min',
  'settings.title':'Einstellungen','settings.account':'Konto','settings.language':'Sprache','settings.loggedAs':'Angemeldet als {user}',
  'settings.privacyTitle':'Datenschutzerklärung',
  'settings.privacy':"MyCard läuft vollständig in deinem Browser. Es gibt keinen Server, und nichts von dem, was du hier tust, wird an uns oder sonst jemanden gesendet.\n\nDein Benutzername, deine Karten und deine Einstellungen werden nur auf diesem Gerät gespeichert, im lokalen Speicher des Browsers. Fotos, die du einer Karte hinzufügst, bleiben ebenfalls auf diesem Gerät und werden nie hochgeladen.\n\nDiese Seite lädt Schriftarten von Google Fonts; dabei kann deine IP-Adresse an Google übermittelt werden, wie bei jeder Website, die Google Fonts nutzt.\n\nEs gibt keine Analyse-Tools, keine Werbung und keine Tracking-Cookies.\n\nWenn du deine Browserdaten löschst oder die App auf einem anderen Gerät oder Browser öffnest, sind deine Karten dort nicht verfügbar: Sie werden bisher nirgendwo anders gesichert.\n\nDieser Hinweis wird aktualisiert, falls später eine Kontoanmeldung und Cloud-Speicherung hinzukommen.",
@@ -785,6 +1127,71 @@ ar:{dir:'rtl',
  'perf.line':'الشاشة {hz} هرتز · {ms} مللي ثانية · المستوى {tier}','perf.stride':' (التأثير ÷{n})',
  'deck.searchPh':'ابحث عن بطاقة…','deck.searchAria':'ابحث في المجموعة','deck.noResults':'لا توجد بطاقة تطابق بحثك.','fx.metal':'معدني (فولاذ مصقول)',
  'settings.theme':'سمة الألوان','theme.blue':'أزرق','theme.red':'أحمر','theme.black':'أسود','theme.white':'أبيض',
+ 'contest.nav':'المسابقة',
+ 'drop.nav':'صندوق اليوم',
+ 'contest.title':'مسابقة الأسبوع',
+ 'contest.week':'الأسبوع {n} · ينتهي بعد {t}',
+ 'contest.demo':'وضع تجريبي: تبقى المشاركات والأصوات على هذا الجهاز. سيأتي التصويت الحقيقي عبر الإنترنت مع الخادم.',
+ 'contest.mine':'مشاركتي',
+ 'contest.noOwn':'أنشئ بطاقة للمشاركة في المسابقة.',
+ 'contest.pick':'اختر إحدى بطاقاتك',
+ 'contest.submit':'شارك',
+ 'contest.submitted':'بطاقتك «{name}» تشارك هذا الأسبوع.',
+ 'contest.withdraw':'سحب بطاقتي',
+ 'contest.entries':'البطاقات المتنافسة',
+ 'contest.noEntries':'لم يشارك أحد بعد هذا الأسبوع.',
+ 'contest.by':'بواسطة {a}',
+ 'contest.votesOne':'{n} صوت',
+ 'contest.votesMany':'{n} أصوات',
+ 'contest.vote':'صوّت',
+ 'contest.voted':'تم التصويت ✓',
+ 'contest.yours':'بطاقتك',
+ 'contest.results':'نتائج الأسابيع السابقة',
+ 'contest.noResults':'لا توجد نتائج بعد.',
+ 'contest.weekN':'الأسبوع {n}',
+ 'contest.status.pending':'بانتظار المشرف',
+ 'contest.status.approved':'أُضيفت إلى المجموعة العامة ({r})',
+ 'contest.status.rejected':'رفضها المشرف',
+ 'contest.status.none':'لا أصوات هذا الأسبوع',
+ 'contest.mod':'مراجعة المشرف',
+ 'contest.modNone':'لا توجد بطاقة للمراجعة.',
+ 'contest.approve':'اعتماد',
+ 'contest.reject':'رفض',
+ 'contest.rarityFor':'الندرة',
+ 'contest.toastSubmitted':'تم تسجيل البطاقة في المسابقة!',
+ 'contest.toastWithdrawn':'تم سحب المشاركة.',
+ 'contest.toastApproved':'تم اعتماد البطاقة: انضمت إلى المجموعة العامة.',
+ 'contest.toastRejected':'تم رفض البطاقة.',
+ 'demo.tools':'أدوات تجريبية',
+ 'demo.seed':'إضافة 3 مشاركين تجريبيين',
+ 'demo.endWeek':'محاكاة نهاية الأسبوع',
+ 'demo.backWeek':'العودة إلى الأسبوع الفعلي',
+ 'demo.clear':'مسح بيانات المسابقة',
+ 'demo.resetDrop':'إعادة تفعيل صندوق اليوم',
+ 'drop.title':'صندوق اليوم',
+ 'drop.demo':'وضع تجريبي: يتجدد الصندوق كل يوم على هذا الجهاز.',
+ 'drop.ready':'صندوقك جاهز!',
+ 'drop.wait':'الصندوق التالي بعد {t}',
+ 'drop.open':'افتح الصندوق',
+ 'drop.new':'أُضيفت بطاقة جديدة إلى مجموعتك!',
+ 'drop.dup':'كانت لديك من قبل: نسخة مكررة (×{n}).',
+ 'drop.see':'عرض مجموعتي',
+ 'drop.odds':'فرصك',
+ 'drop.oddsNote':'تُحذف الندرة التي لا تحتوي على بطاقات وتُوزَّع فرصها على البقية.',
+ 'drop.cardsOne':'{n} بطاقة',
+ 'drop.cardsMany':'{n} بطاقات',
+ 'drop.empty':'المجموعة العامة فارغة حاليًا.',
+ 'rarity.common':'عادية',
+ 'rarity.uncommon':'غير شائعة',
+ 'rarity.rare':'نادرة',
+ 'rarity.epic':'ملحمية',
+ 'rarity.legendary':'أسطورية',
+ 'settings.mod':'المشرف',
+ 'settings.modOn':'تفعيل وضع المشرف (تجريبي)',
+ 'settings.modNote':'بدون خادم، هذا الوضع للتجربة فقط: يمكن لأي شخص تفعيله. مع خادم حقيقي سيأتي الدور من الحساب.',
+ 'time.d':'ي',
+ 'time.h':'س',
+ 'time.m':'د',
  'settings.title':'الإعدادات','settings.account':'الحساب','settings.language':'اللغة','settings.loggedAs':'مسجّل الدخول باسم {user}',
  'settings.privacyTitle':'سياسة الخصوصية',
  'settings.privacy':"يعمل MyCard بالكامل داخل متصفحك. لا يوجد خادم، ولا يُرسَل أي شيء تفعله هنا إلينا أو إلى أي جهة أخرى.\n\nيُحفظ اسم المستخدم وبطاقاتك وإعداداتك على هذا الجهاز فقط، داخل التخزين المحلي للمتصفح. كما تبقى الصور التي تضيفها إلى بطاقة على هذا الجهاز ولا تُرفع إلى أي مكان.\n\nتُحمّل هذه الصفحة خطوطًا من Google Fonts؛ قد يشارك ذلك عنوان IP الخاص بك مع Google، كما هو الحال في أي موقع يستخدم Google Fonts.\n\nلا توجد أدوات تحليل، ولا إعلانات، ولا ملفات تعريف ارتباط للتتبع.\n\nعند مسح بيانات المتصفح، أو فتح التطبيق على جهاز أو متصفح آخر، لن تكون بطاقاتك متاحة هناك: فهي غير محفوظة بعد في أي مكان آخر.\n\nسيتم تحديث هذا الإشعار إذا أُضيف لاحقًا تسجيل الدخول بحساب والتخزين السحابي.",
@@ -1493,7 +1900,7 @@ function startDeck(){
 }
 function showDeck(){
   saveNow();clearTimeout(introT);
-  editing=false;Bd.classList.remove('locked','introing','introshow','view-edit','viewing');Bd.classList.add('view-deck');document.documentElement.classList.remove('introing');
+  editing=false;Bd.classList.remove('locked','introing','introshow','view-edit','viewing','uni-card');Bd.classList.add('view-deck');document.documentElement.classList.remove('introing');
   selId=null;renderDeck();window.scrollTo(0,0);
 }
 function newCard(){
@@ -1508,7 +1915,7 @@ function openEditor(c,isNew){               /* personnalisation (panneau visible
   if(isNew)playIntro();else quickOpen();
 }
 function openCard(c){                        /* affichage en grand, sans le panneau */
-  Bd.classList.remove('view-deck');Bd.classList.add('view-edit','viewing');
+  Bd.classList.remove('view-deck');Bd.classList.add('view-edit','viewing');Bd.classList.toggle('uni-card',!!c.uni);
   editing=false;render(c);fill(c);goStep(0);editNew=false;editSnap=null;
   const d=$('e-del');delete d.dataset.arm;d.textContent=tr('panel.deleteCard');
   quickOpen();
@@ -1556,10 +1963,11 @@ function renderDeck(){
   $('dk-count').textContent=(q?shown.length+' / ':'')+deck.length+' '+(deck.length>1?tr('deck.cardsMany'):tr('deck.cardsOne'));
   $('dk-empty').hidden=deck.length>0;
   $('dk-nores').hidden=!(q&&deck.length&&!shown.length);
-  const meta=c=>esc(typeName(c.type))+' · '+esc(c.hp)+' '+tr('panel.card.hp');
+  const meta=c=>esc(typeName(c.type))+' · '+esc(c.hp)+' '+tr('panel.card.hp')+(c.uni?' · '+rarName(c.rar):'');
   $('dk-grid').innerHTML=`<button type="button" class="tile new" data-act="new"><span class="tcov"><i>+</i></span><b>${tr('deck.newTitle')}</b><small>${tr('deck.newDesc')}</small></button>`+
-    shown.map(c=>`<button type="button" class="tile" data-id="${c.id}"><span class="tcov"><img alt="" data-thumb="${c.id}"></span><b>${esc(c.name)}</b><small>${meta(c)}</small></button>`).join('');
+    shown.map(c=>`<button type="button" class="tile${c.uni?' uni':''}"${c.uni?` style="--rc:${rarOf(c.rar).c}"`:''} data-id="${c.id}"><span class="tcov"><img alt="" data-thumb="${c.id}"></span><b>${esc(c.name)}</b><small>${meta(c)}</small></button>`).join('');
   fillThumbs();
+  if(typeof updateDropDot==='function')updateDropDot();
 }
 async function fillThumbs(){
   const paint=()=>deck.forEach(c=>{const th=thumbs[c.id];if(th)document.querySelectorAll('img[data-thumb="'+c.id+'"]').forEach(im=>{if(im.getAttribute('src')!==th.url)im.src=th.url})});
@@ -1627,6 +2035,7 @@ function fillSettings(){
   $('set-privacy').textContent=tr('settings.privacy');
   $('set-credits').textContent=tr('settings.credits');
   buildSettingsLangGrid();buildThemeGrid();
+  $('set-mod').checked=typeof isMod==='function'&&isMod();
 }
 function showSettings(){saveNow();fillSettings();$('deck').hidden=true;$('settings').hidden=false;window.scrollTo(0,0)}
 function hideSettings(){$('settings').hidden=true;$('deck').hidden=false;window.scrollTo(0,0)}
@@ -1712,6 +2121,192 @@ setInterval(()=>{if(perfEl)perfEl.textContent='écran '+gov.hz+' Hz · '+gov.ema
   }
 })(t0);
 
+/* ---- concours hebdomadaire + deck universel (coffre du jour) ----
+   Tout ce qui est partagé passe par `cloud`. Ici c'est une version locale (démo) : rien n'est envoyé ni partagé.
+   Pour un vrai concours en ligne, remplacer `cloud` par un client serveur (mêmes méthodes). Côté serveur il faudra aussi
+   le tirage du coffre, le calcul du n°1 de la semaine et le rôle de modérateur : ils ne doivent pas dépendre du navigateur. */
+const RARITIES=[{k:'common',w:60,c:'#9aa4b5'},{k:'uncommon',w:25,c:'#4fd08a'},{k:'rare',w:10,c:'#4aa3ff'},{k:'epic',w:4,c:'#b06bff'},{k:'legendary',w:1,c:'#ffc233'}];
+const rarOf=k=>RARITIES.find(r=>r.k===k)||RARITIES[0],rarName=k=>tr('rarity.'+rarOf(k).k);
+const UNIVERSAL=Array.isArray(window.UNIVERSAL_CARDS)?window.UNIVERSAL_CARDS:[];
+const demoOff=()=>{try{return +localStorage.getItem('mycard-demo-off')||0}catch(e){return 0}};
+const nowD=()=>new Date(Date.now()+demoOff()*6048e5);                     /* « maintenant », décalé de semaines en démo */
+const weekId=()=>{const d=nowD(),t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())),day=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-day);
+  const y=t.getUTCFullYear();return y+'-W'+String(Math.ceil(((t-Date.UTC(y,0,1))/864e5+1)/7)).padStart(2,'0')};
+const weekEnd=()=>{const d=nowD(),e=new Date(d.getFullYear(),d.getMonth(),d.getDate());e.setDate(e.getDate()+(8-(e.getDay()||7)));return e};   /* prochain lundi 00:00 */
+const fmtLeft=ms=>{const m=Math.max(0,Math.floor(ms/6e4)),d=Math.floor(m/1440),h=Math.floor(m%1440/60);return d?`${d} ${tr('time.d')} ${h} ${tr('time.h')}`:`${h} ${tr('time.h')} ${m%60} ${tr('time.m')}`};
+const isMod=()=>{try{return localStorage.getItem('mycard-mod')==='1'}catch(e){return false}};
+const cloud=(()=>{
+  const rd=(k,d)=>{try{const v=JSON.parse(localStorage.getItem('mycard-cloud:'+k));return v==null?d:v}catch(e){return d}};
+  const wr=(k,v)=>lsSet('mycard-cloud:'+k,JSON.stringify(v));
+  return {
+    async allEntries(){return rd('entries',{})},
+    async entries(wk){return rd('entries',{})[wk]||[]},
+    async submit(wk,e){const a=rd('entries',{});a[wk]=(a[wk]||[]).filter(x=>x.uk!==e.uk).concat(e);wr('entries',a)},
+    async withdraw(wk,u){const a=rd('entries',{}),v=rd('votes',{}),gone=(a[wk]||[]).filter(x=>x.uk===u);
+      a[wk]=(a[wk]||[]).filter(x=>x.uk!==u);for(const k in (v[wk]||{}))if(gone.some(g=>g.id===v[wk][k]))delete v[wk][k];wr('entries',a);wr('votes',v);return gone},
+    async votes(wk){return rd('votes',{})[wk]||{}},
+    async vote(wk,voter,id){const a=rd('entries',{}),v=rd('votes',{}),e=(a[wk]||[]).find(x=>x.id===id);
+      if(!e||e.uk===voter)return false;v[wk]=v[wk]||{};if(v[wk][voter]===id)delete v[wk][voter];else v[wk][voter]=id;wr('votes',v);return true},
+    async results(){return rd('results',{})},
+    async setResult(wk,r){const a=rd('results',{});a[wk]=r;wr('results',a)},
+    async extras(){return rd('extras',[])},
+    async addExtra(c){const a=rd('extras',[]).filter(x=>x.id!==c.id);a.push(c);wr('extras',a)},
+    async clear(){const ks=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('mycard-cloud:'))ks.push(k)}ks.forEach(k=>localStorage.removeItem(k))}
+  };
+})();
+const catalog=async()=>[...UNIVERSAL,...await cloud.extras()].map(c=>({...c,rarity:RARITIES.some(r=>r.k===c.rarity)?c.rarity:'common'}));
+const catImg=async c=>c.img||(c.hasImg?await media.get('ext:'+c.id):null);
+const wait=ms=>new Promise(r=>setTimeout(r,calm?0:ms));
+/* miniatures : une à la fois (le dessin d'une carte est coûteux), avec mémoire */
+const thumbMem=new Map();let thumbQ=Promise.resolve();
+function thumbUrl(key,c,img){
+  if(thumbMem.has(key))return Promise.resolve(thumbMem.get(key));
+  const p=thumbQ.then(async()=>{const cv=await drawCard({...c,img:img||undefined},{W:340,fx:c.fx||'classic',k:c.k!=null?c.k:1,state:{mx:55,my:30,rx:0,ry:0,o:.7}});
+    const u=cv.toDataURL('image/jpeg',.82);thumbMem.set(key,u);return u}).catch(()=>'');
+  thumbQ=p;return p;
+}
+function paintThumbs(root,list){root.querySelectorAll('img[data-i]').forEach(im=>{const t=list[+im.dataset.i];if(t)Promise.resolve(t.img()).then(img=>thumbUrl(t.key,t.card,img)).then(u=>{if(u)im.src=u})})}
+const openSub=id=>{saveNow();['deck','settings','contest','chest'].forEach(s=>$(s).hidden=s!==id);clearInterval(chestTick);window.scrollTo(0,0)};
+function backToDeck(){openSub('deck');renderDeck()}
+
+/* -- concours -- */
+async function settleWeeks(){                      /* une semaine terminée désigne son n°1 (côté serveur dans la vraie version) */
+  const cur=weekId(),all=await cloud.allEntries(),res=await cloud.results();
+  for(const wk of Object.keys(all)){
+    if(wk>=cur||res[wk])continue;
+    const cnt={};Object.values(await cloud.votes(wk)).forEach(id=>cnt[id]=(cnt[id]||0)+1);
+    const w=[...all[wk]].sort((a,b)=>(cnt[b.id]||0)-(cnt[a.id]||0)||a.t-b.t)[0];
+    await cloud.setResult(wk,w&&cnt[w.id]?{entryId:w.id,votes:cnt[w.id],status:'pending'}:{status:'none'});
+  }
+}
+const votesText=n=>tr(n===1?'contest.votesOne':'contest.votesMany',{n});
+async function renderContest(){
+  if($('contest').hidden)return;
+  await settleWeeks();
+  const wk=weekId(),[ents,votes,res,all]=await Promise.all([cloud.entries(wk),cloud.votes(wk),cloud.results(),cloud.allEntries()]),me=uk(),mine=ents.find(e=>e.uk===me),my=votes[me],thumbs=[];
+  $('ct-week').textContent=tr('contest.week',{n:+wk.split('-W')[1],t:fmtLeft(weekEnd()-nowD())});
+  const own=deck.filter(c=>!c.uni);
+  $('ct-mine').innerHTML=`<h2 class="set-h">${tr('contest.mine')}</h2>`+(mine
+    ?`<p class="set-p">${tr('contest.submitted',{name:esc(mine.card.name)})}</p><div class="ct-row"><button type="button" class="gbtn" id="ct-withdraw">${tr('contest.withdraw')}</button></div>`
+    :own.length?`<div class="ct-row"><select id="ct-pick" aria-label="${tr('contest.pick')}">${own.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select><button type="button" class="gbtn primary" id="ct-submit">${tr('contest.submit')}</button></div>`
+    :`<p class="set-p">${tr('contest.noOwn')}</p>`);
+  const cnt={};Object.values(votes).forEach(id=>cnt[id]=(cnt[id]||0)+1);
+  const ranked=[...ents].sort((a,b)=>(cnt[b.id]||0)-(cnt[a.id]||0)||a.t-b.t);
+  $('ct-noent').hidden=ents.length>0;
+  $('ct-grid').innerHTML=ranked.map((e,i)=>{thumbs.push({key:'e:'+e.id+':'+(e.card.t||0),card:e.card,img:()=>e.hasImg?media.get('ent:'+e.id):null});
+    const n=cnt[e.id]||0,lab=e.uk===me?tr('contest.yours'):my===e.id?tr('contest.voted'):tr('contest.vote');
+    return `<div class="tile ent"><span class="tcov"><img data-i="${thumbs.length-1}" alt="">${n&&i<3?`<span class="rk">${i+1}</span>`:''}</span><b>${esc(e.card.name)}</b><small>${tr('contest.by',{a:esc(e.author)})} · ${votesText(n)}</small><button type="button" class="gbtn vote" data-id="${e.id}" aria-pressed="${my===e.id}"${e.uk===me?' disabled':''}>${lab}</button></div>`}).join('');
+  paintThumbs($('ct-grid'),thumbs.splice(0));
+  const past=Object.keys(res).sort().reverse().slice(0,6),entOf=(w,r)=>((all[w]||[]).find(x=>x.id===r.entryId));
+  $('ct-res').innerHTML=past.length?past.map(w=>{const r=res[w],e=entOf(w,r),st=r.status==='approved'?tr('contest.status.approved',{r:rarName(r.rarity)}):tr('contest.status.'+r.status);
+    return `<div class="res"><b>${tr('contest.weekN',{n:+w.split('-W')[1]})}</b>${e?` · ${esc(e.card.name)} ${tr('contest.by',{a:esc(e.author)})} · ${votesText(r.votes)}`:''}<small>${st}</small></div>`}).join(''):`<p class="set-p">${tr('contest.noResults')}</p>`;
+  const pend=Object.keys(res).filter(w=>res[w].status==='pending').sort();
+  $('ct-mod').hidden=!isMod();
+  if(isMod()){
+    const t2=[];
+    $('ct-modlist').innerHTML=pend.length?pend.map(w=>{const e=entOf(w,res[w]);if(!e)return '';t2.push({key:'e:'+e.id+':'+(e.card.t||0),card:e.card,img:()=>e.hasImg?media.get('ent:'+e.id):null});
+      return `<div class="mod-item"><img data-i="${t2.length-1}" alt=""><div><b>${esc(e.card.name)}</b> ${tr('contest.by',{a:esc(e.author)})}<br><small>${tr('contest.weekN',{n:+w.split('-W')[1]})} · ${votesText(res[w].votes)}</small>
+        <div class="ct-row"><select id="ct-r-${w}" aria-label="${tr('contest.rarityFor')}">${RARITIES.map(r=>`<option value="${r.k}"${r.k==='rare'?' selected':''}>${rarName(r.k)}</option>`).join('')}</select></div>
+        <div class="ct-row"><button type="button" class="gbtn primary" data-mod="ok" data-wk="${w}">${tr('contest.approve')}</button><button type="button" class="gbtn" data-mod="no" data-wk="${w}">${tr('contest.reject')}</button></div></div></div>`}).join(''):`<p class="set-p">${tr('contest.modNone')}</p>`;
+    paintThumbs($('ct-modlist'),t2);
+  }
+}
+async function submitMine(){
+  const c=deck.find(x=>x.id===$('ct-pick').value);if(!c||c.uni)return;
+  await hydrated;const img=c.img||(c.hasImg?await media.get('img:'+uk()+':'+c.id):null);
+  const e={id:'e'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),uk:uk(),author:user,t:Date.now(),card:JSON.parse(JSON.stringify({...c,img:undefined,hasImg:!!img})),hasImg:!!img};
+  if(img)await media.put('ent:'+e.id,img);
+  await cloud.submit(weekId(),e);toast(tr('contest.toastSubmitted'));renderContest();
+}
+async function moderate(wk,ok,rarity){
+  const r=(await cloud.results())[wk];if(!r||r.status!=='pending')return;
+  if(ok){
+    const e=(await cloud.entries(wk)).find(x=>x.id===r.entryId);if(!e)return;
+    const id='w-'+wk+'-'+e.id,c={...e.card,id,rarity,ill:e.author,hasImg:!!e.hasImg};delete c.img;delete c.uni;delete c.rar;
+    if(e.hasImg){const im=await media.get('ent:'+e.id);if(im)await media.put('ext:'+id,im);else c.hasImg=false}
+    await cloud.addExtra(c);
+  }
+  await cloud.setResult(wk,{...r,status:ok?'approved':'rejected',rarity:ok?rarity:undefined});
+  toast(tr(ok?'contest.toastApproved':'contest.toastRejected'));renderContest();
+}
+$('contest').addEventListener('click',async e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.classList.contains('vote')){await cloud.vote(weekId(),uk(),b.dataset.id);return renderContest()}
+  if(b.id==='ct-submit')return submitMine();
+  if(b.id==='ct-withdraw'){(await cloud.withdraw(weekId(),uk())).forEach(g=>media.del('ent:'+g.id));toast(tr('contest.toastWithdrawn'));return renderContest()}
+  if(b.dataset.mod)return moderate(b.dataset.wk,b.dataset.mod==='ok',($('ct-r-'+b.dataset.wk)||{}).value||'rare');
+  if(b.id==='dm-seed'){                                                  /* outils démo */
+    const wk=weekId(),P=[['Aurora','Léa','L','cosmos'],['Tempête','Sam','W','regular'],['Mirage','Noor','P','vmax']];
+    for(const [i,[nm,au,ty,fx]] of P.entries()){const c=JSON.parse(JSON.stringify(TEMPLATE));Object.assign(c,{id:'demo-'+au,name:nm,type:ty,fx,pal:PALS[i%PALS.length],hp:150+i*60,t:Date.now()});
+      await cloud.submit(wk,{id:'e-demo-'+au.toLowerCase(),uk:'demo:'+au.toLowerCase(),author:'Démo '+au,t:Date.now()-i*1000,card:c,hasImg:false})}
+    return renderContest();
+  }
+  if(b.id==='dm-end'){try{localStorage.setItem('mycard-demo-off',demoOff()+1)}catch(_){}return renderContest()}
+  if(b.id==='dm-back'){try{localStorage.setItem('mycard-demo-off',0)}catch(_){}return renderContest()}
+  if(b.id==='dm-clear'){const all=await cloud.allEntries();Object.values(all).flat().forEach(x=>media.del('ent:'+x.id));await cloud.clear();return renderContest()}
+});
+$('dk-contest').addEventListener('click',()=>{openSub('contest');renderContest()});
+$('ct-back').addEventListener('click',backToDeck);
+
+/* -- coffre du jour -- */
+const dayKey=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
+const dropKey=()=>'mycard-drop:'+uk();
+const dropReady=()=>{try{return localStorage.getItem(dropKey())!==dayKey()}catch(e){return true}};
+const clock=ms=>{const s=Math.max(0,Math.floor(ms/1e3));return [Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(v=>String(v).padStart(2,'0')).join(':')};
+let chestTick=0,chestBusy=false,chestEmpty=false;
+function updateDropDot(){const d=$('drop-dot');if(d)d.hidden=!user||!dropReady()}
+function rollRarity(keys){                         /* tirage pondéré parmi les raretés qui ont au moins une carte */
+  const pool=RARITIES.filter(r=>keys.includes(r.k));let x=Math.random()*pool.reduce((a,r)=>a+r.w,0);
+  for(const r of pool)if((x-=r.w)<0)return r.k;
+  return pool[pool.length-1].k;
+}
+async function unlockUniversal(cat,rk){
+  const id='u-'+cat.id,have=deck.find(c=>c.id===id);
+  if(have){have.dup=(have.dup||0)+1;saveCard(have);return {isNew:false,n:have.dup+1}}
+  const c=JSON.parse(JSON.stringify(cat));delete c.rarity;delete c.img;delete c.hasImg;
+  Object.assign(c,{id,uni:true,rar:rk,t:Date.now(),pal:c.pal||PALS[0],fx:c.fx||'classic',k:c.k!=null?c.k:1});c.c=c.t;
+  const img=await catImg(cat);if(img)c.img=img;
+  deck.push(c);saveIdx();saveCard(c);return {isNew:true,n:1};
+}
+function chestMsg(){
+  if($('chest').hidden||chestBusy||chestEmpty)return;
+  const ready=dropReady(),box=$('ch-box');
+  $('ch-msg').textContent=ready?tr('drop.ready'):tr('drop.wait',{t:clock((()=>{const d=new Date();d.setHours(24,0,0,0);return d-new Date()})())});
+  if(ready===box.disabled){box.classList.remove('open');if(ready)$('ch-reveal').hidden=true;renderChest()}   /* minuit passé (ou autre onglet) : on remet à jour */
+}
+async function renderChest(){
+  if($('chest').hidden)return;
+  const cat=await catalog(),ready=dropReady(),off=!ready||!cat.length||chestBusy;
+  chestEmpty=!cat.length;$('ch-box').disabled=off;$('ch-open').disabled=off;
+  if(chestEmpty)$('ch-msg').textContent=tr('drop.empty');
+  const n={};cat.forEach(c=>n[c.rarity]=(n[c.rarity]||0)+1);const tot=RARITIES.filter(r=>n[r.k]).reduce((a,r)=>a+r.w,0);
+  $('ch-odds').innerHTML=RARITIES.map(r=>`<tr style="--rc:${r.c}"><td><span class="rar">${rarName(r.k)}</span></td><td>${n[r.k]?tr(n[r.k]>1?'drop.cardsMany':'drop.cardsOne',{n:n[r.k]}):'—'}</td><td>${n[r.k]?(r.w/tot*100).toLocaleString(lang,{maximumFractionDigits:1})+' %':'—'}</td></tr>`).join('');
+  chestMsg();updateDropDot();
+}
+async function openChest(){
+  if(chestBusy||!dropReady())return;
+  const cat=await catalog();if(!cat.length)return renderChest();
+  chestBusy=true;$('ch-box').disabled=$('ch-open').disabled=true;$('ch-msg').textContent='';
+  const by={};cat.forEach(c=>(by[c.rarity]=by[c.rarity]||[]).push(c));
+  const rk=rollRarity(Object.keys(by)),pick=by[rk][Math.floor(Math.random()*by[rk].length)];
+  try{localStorage.setItem(dropKey(),dayKey())}catch(e){}              /* le coffre est consommé dès le tirage */
+  updateDropDot();
+  const box=$('ch-box');box.style.setProperty('--rc',rarOf(rk).c);box.classList.add('shake');await wait(650);box.classList.remove('shake');box.classList.add('open');await wait(600);
+  const r=await unlockUniversal(pick,rk),url=await thumbUrl('cat:'+pick.id,pick,await catImg(pick));
+  const rv=$('ch-reveal');rv.style.setProperty('--rc',rarOf(rk).c);$('ch-r-img').src=url;$('ch-r-rar').textContent=rarName(rk);$('ch-r-name').textContent=pick.name;
+  $('ch-r-msg').textContent=r.isNew?tr('drop.new'):tr('drop.dup',{n:r.n});rv.hidden=false;rv.scrollIntoView({behavior:calm?'auto':'smooth',block:'nearest'});
+  chestBusy=false;renderChest();
+}
+$('dk-drop').addEventListener('click',()=>{
+  openSub('chest');$('ch-box').classList.remove('open','shake');$('ch-reveal').hidden=true;renderChest();
+  chestTick=setInterval(chestMsg,1000);
+});
+$('ch-back').addEventListener('click',backToDeck);
+$('ch-see').addEventListener('click',backToDeck);
+$('ch-box').addEventListener('click',openChest);$('ch-open').addEventListener('click',openChest);
+$('dm-drop').addEventListener('click',()=>{try{localStorage.removeItem(dropKey())}catch(e){}$('ch-box').classList.remove('open');$('ch-reveal').hidden=true;renderChest()});
+$('set-mod').addEventListener('change',e=>{try{localStorage.setItem('mycard-mod',e.target.checked?'1':'0')}catch(_){}renderContest()});
+
 /* ---- application de la langue : texte statique (data-i18n*), reconstructions dynamiques, RTL ---- */
 function applyI18n(){
   document.documentElement.lang=lang;document.documentElement.dir=(I18N[lang]||I18N.fr).dir;
@@ -1730,6 +2325,8 @@ function applyI18n(){
   if(Bd.classList.contains('view-deck')&&typeof renderDeck==='function')renderDeck();
   if(user)$('who-n').textContent=tr('deck.hello',{user});
   if(!$('settings').hidden)fillSettings();
+  if(typeof renderContest==='function')renderContest();
+  if(typeof renderChest==='function')renderChest();
   if(!$('exp-modal').hidden)openExpModal(expIntent);
 }
 function setLang(code){

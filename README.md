@@ -12,12 +12,16 @@ personnaliser et collectionner des cartes holographiques, pensée pour télépho
 - **Affichage en grand** d'une carte (voile irisé à l'ouverture), puis **personnalisation en 6 étapes** :
   Image · Carte · Talent · Attaque · Règle · Effet.
 - **19 types** avec icônes (18 types + incolore), image importée recadrable (zoom, position).
-- **10 effets holographiques**, effet à l'inclinaison au doigt ou à la souris, **gyroscope** (iPhone : autorisation demandée).
+- **11 effets holographiques** (dont le **métallique**), effet à l'inclinaison au doigt ou à la souris, **gyroscope** (iPhone : autorisation demandée).
 - **Export en image** (PNG 840 × 1174, bouton « Télécharger en image »).
 - **Fenêtre d'export unifiée** : les boutons « Télécharger en image » et « Partager » ouvrent la même fenêtre, avec le choix entre **Image fixe** (PNG) et **Animation holo** (GIF), une vraie barre de progression pendant la génération du GIF, puis le partage natif du navigateur si disponible, sinon le téléchargement.
 - **GIF animé** : un petit encodeur GIF89a écrit pour ce projet (quantification median-cut, LZW, sans dépendance ni worker) génère une boucle de 11 images montrant l'effet holo choisi en mouvement. Peut prendre plusieurs secondes sur téléphone.
 - **Fluidité adaptative** : l'effet par défaut est composé de calques pré-dessinés simplement déplacés ;
   un gouverneur mesure le rythme de l'écran (120 / 90 / 60 Hz) et simplifie l'effet par paliers si besoin.
+
+- **Recherche** dans le deck (nom, type, évolution, talent, attaques), sans tenir compte des accents ni de la casse.
+- **Thèmes de couleur** (bleu, rouge, noir, blanc), au choix dans les Paramètres.
+- **Concours hebdomadaire** et **coffre du jour** avec un **deck universel** (voir plus bas).
 
 ## Lancer
 Ouvrir `index.html` dans un navigateur, ou :
@@ -38,11 +42,41 @@ Tout reste **dans le navigateur** ; rien n'est envoyé à un serveur.
 | `localStorage` | `mycard-c:<nom>:<id>` | une carte (sans son image) |
 | IndexedDB `mycard-media` | `img:<nom>:<id>`, `th:<nom>:<id>` | image importée, miniature |
 | `localStorage` | `mycard-user`, `mycard-sort`, `mycard-q` | dernier nom, tri choisi, palier de qualité |
+| `localStorage` | `mycard-theme`, `mycard-lang`, `mycard-mod` | thème, langue, mode modérateur (démo) |
+| `localStorage` | `mycard-drop:<nom>` | jour du dernier coffre ouvert |
+| `localStorage` / IndexedDB | `mycard-cloud:*`, `ent:<id>`, `ext:<id>` | concours (démo) : participations, votes, résultats, images |
 
 Chaque nom d'utilisateur a sa bibliothèque propre **sur cet appareil**. Les anciennes sauvegardes (clé `mycard-deck:<nom>`) sont converties au lancement.
 
+## Concours hebdomadaire, coffre du jour et deck universel
+Deux boutons sous la barre de recherche du deck : **Concours** et **Coffre du jour**.
+
+**Concours.** Chaque semaine (du lundi au dimanche), un joueur inscrit une de ses cartes et vote pour celle d'un autre (un seul vote par semaine, pas pour sa propre carte).
+À la fin de la semaine, la carte la plus votée est désignée n°1 et attend la **validation du modérateur**. Si elle est validée, le modérateur choisit sa rareté
+et elle **rejoint le deck universel**.
+
+**Deck universel.** Les cartes créées par l'auteur du projet, à débloquer dans les coffres. Elles sont décrites dans **`universal-cards.js`** (même format qu'une carte du deck, plus `rarity`).
+Les cartes `exemple-…` sont des exemples à remplacer. Une carte débloquée est copiée dans le deck du joueur (non modifiable) ; un doublon est signalé.
+
+**Coffre du jour.** Un coffre par jour (il se recharge à minuit, heure locale). Le tirage est pondéré par rareté :
+
+| Rareté | Chance |
+|---|---|
+| Commune | 60 % |
+| Peu commune | 25 % |
+| Rare | 10 % |
+| Épique | 4 % |
+| Légendaire | 1 % |
+
+Les pourcentages se règlent dans `index.html` (`const RARITIES`). Une rareté qui n'a aucune carte est retirée du tirage et ses chances sont redistribuées ; le tableau « Tes chances » du coffre affiche les chances réelles.
+
+**Mode démo (état actuel).** Il n'y a pas de serveur : participations, votes, résultats et validations sont stockés dans le navigateur (`mycard-cloud:*`), donc **rien n'est partagé entre joueurs ni entre appareils**.
+Tout passe par un seul objet `cloud` dans `index.html` : pour un vrai concours en ligne, il suffit de le remplacer par un client serveur (mêmes méthodes). Côté serveur, il faudra aussi faire le tirage du coffre,
+désigner le n°1 de la semaine et gérer le rôle de modérateur (aujourd'hui une simple case dans les Paramètres, ouverte à tous). Des « Outils démo » permettent d'ajouter des participants fictifs,
+de simuler la fin de la semaine et de réactiver le coffre.
+
 ## Paramètres
-Accessible depuis la bibliothèque (icône ⚙️) : pseudo actuel avec bouton pour en changer, **politique de confidentialité** et **crédits** (chacun dans un volet repliable), traduits dans les 5 langues.
+Accessible depuis la bibliothèque (icône ⚙️) : pseudo actuel avec bouton pour en changer, langue, **thème de couleur**, mode modérateur (démo), **politique de confidentialité** et **crédits** (chacun dans un volet repliable), traduits dans les 5 langues.
 
 ## Langues
 Interface en **français, anglais, espagnol, allemand et arabe** (RTL pris en charge). Après le pseudo, un écran propose de choisir la langue une seule fois ; elle reste modifiable ensuite via le bouton 🌐 (bibliothèque et fiche de carte). Le texte imprimé *sur* la carte (HP, Ability, weakness/resistance/retreat…) reste volontairement en anglais, comme une vraie carte à collectionner.
@@ -50,7 +84,7 @@ Interface en **français, anglais, espagnol, allemand et arabe** (RTL pris en ch
 Limites connues : les chiffres de dimension du PNG peuvent s'afficher dans un ordre inhabituel en arabe (effet bidi standard, pas un bug) ; l'accord du pluriel arabe du compteur de cartes est simplifié (pas de forme duelle).
 
 ## Effets
-Holo classique · Reverse à étoiles · Holo régulier · Cosmos · Reverse holo foil · V pleine illustration · Rainbow · Shiny V · Amazing Rare · VMax.
+Holo classique · Reverse à étoiles · Holo régulier · Cosmos · Reverse holo foil · Métallique (acier brossé) · V pleine illustration · Rainbow · Shiny V · Amazing Rare · VMax.
 
 Seul le **holo classique** est entièrement composé de calques déplacés (le plus fluide).
 Les autres effets sont redessinés à chaque image et sont plus lourds sur téléphone.
