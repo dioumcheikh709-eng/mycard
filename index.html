@@ -625,6 +625,14 @@ body.view-deck .toast{bottom:calc(104px + env(safe-area-inset-bottom,0px))}
 .uni-ta{width:100%;box-sizing:border-box;margin-top:12px;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.35);color:#fff;font:12px/1.4 ui-monospace,Menlo,Consolas,monospace;resize:vertical}
 #uni-modal select,#uni-modal input{font:400 15px Barlow,sans-serif;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);border-radius:10px;padding:9px 12px;box-sizing:border-box}
 #uni-modal select option{color:#111}
+.mod-form{display:grid;gap:10px;margin-top:10px}
+.mod-form[hidden],.v-uni[hidden]{display:none}
+.mod-form input{font:400 16px Barlow,sans-serif;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:10px;padding:11px 14px;box-sizing:border-box;width:100%}
+.mod-form .gbtn{justify-self:start}
+.v-uni{display:grid;gap:8px;justify-items:center;margin-top:10px}
+.v-uni select{font:500 15px Barlow,sans-serif;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:8px 12px}
+.v-uni select option{color:#111}
+body.viewing .vbar{flex-direction:column;align-items:center}
 </style>
 <script>try{var __t=localStorage.getItem('mycard-theme');if(__t&&/^(blue|red|black|white)$/.test(__t))document.documentElement.dataset.theme=__t}catch(e){}</script>
 </head>
@@ -674,8 +682,14 @@ body.view-deck .toast{bottom:calc(104px + env(safe-area-inset-bottom,0px))}
   </div>
   <div class="set-block">
     <h2 class="set-h" data-i18n="settings.mod">Modérateur</h2>
-    <label class="chk-row"><input type="checkbox" id="set-mod"><span data-i18n="settings.modOn">Activer le mode modérateur (démo)</span></label>
-    <p class="set-p" data-i18n="settings.modNote">Sans serveur, ce mode est réservé à la démo : n’importe qui peut l’activer. Avec un vrai serveur, le rôle viendra du compte.</p>
+    <form id="mod-in" class="mod-form" autocomplete="off">
+      <input id="mod-user" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Identifiant modérateur" aria-label="Identifiant modérateur" data-i18n-ph="mod.user" data-i18n-aria="mod.user">
+      <input id="mod-code" type="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Code" aria-label="Code" data-i18n-ph="mod.code" data-i18n-aria="mod.code">
+      <button type="submit" id="mod-login" class="gbtn primary" data-i18n="mod.login">Se connecter</button>
+      <p class="set-p" id="mod-err" role="status"></p>
+    </form>
+    <div id="mod-out" hidden><p class="set-p" data-i18n="mod.on">Mode modérateur actif sur cet appareil.</p><button type="button" id="mod-logout" class="gbtn" data-i18n="mod.logout">Se déconnecter</button></div>
+    <p class="set-p" data-i18n="settings.modNote">Protection légère, côté navigateur.</p>
   </div>
   <details class="set-block">
     <summary class="set-h" data-i18n="settings.privacyTitle">Politique de confidentialité</summary>
@@ -715,7 +729,7 @@ body.view-deck .toast{bottom:calc(104px + env(safe-area-inset-bottom,0px))}
 <div class="who"><span id="who-n"></span> · <button type="button" id="u-change" data-i18n="stage.change">changer</button></div>
 <div class="stage" id="stage"><div class="shadow" id="shadow"></div><div class="glow" id="glow"></div><div class="flipper" id="flipper"><div class="card" id="card"></div><div class="cardback"><div class="logo">MyCard</div></div></div></div>
 <div class="actions"><button type="button" id="dl" class="gbtn" data-i18n="stage.download">Télécharger en image</button><button type="button" id="sh" class="gbtn" data-i18n="stage.share">Partager</button></div>
-<div class="vbar"><button type="button" id="v-edit" class="gbtn primary" data-i18n="stage.personalize">Personnaliser</button><button type="button" id="v-uni" class="gbtn" hidden data-i18n="uni.export">Exporter pour la bibliothèque universelle</button></div>
+<div class="vbar"><button type="button" id="v-edit" class="gbtn primary" data-i18n="stage.personalize">Personnaliser</button><div class="v-uni" id="v-uni-box" hidden><select id="v-uni-rar" aria-label="Rareté" data-i18n-aria="uni.rarity"></select><button type="button" id="v-uni" class="gbtn primary" data-i18n="uni.add">Ajouter à la bibliothèque universelle</button><button type="button" id="v-uni-file" class="linkbtn" data-i18n="uni.fileBtn">Copier pour le fichier</button></div></div>
 <div class="hint" id="hint" data-i18n="stage.hintDefault">Bouge la souris ou le doigt sur la carte</div>
 <button type="button" id="gyro" class="gbtn" hidden aria-pressed="false" data-i18n="stage.gyroActivate">Activer le gyroscope</button>
 <a id="gopen" class="glink" hidden target="_blank" rel="noopener" data-i18n="stage.gyroOpenAlone">Ouvrir la page seule dans le navigateur</a>
@@ -897,8 +911,8 @@ fr:{dir:'ltr',
  'rarity.epic':'Épique',
  'rarity.legendary':'Légendaire',
  'settings.mod':'Modérateur',
- 'settings.modOn':'Activer le mode modérateur (démo)',
- 'settings.modNote':'Sans serveur, ce mode est réservé à la démo : n’importe qui peut l’activer. Avec un vrai serveur, le rôle viendra du compte.',
+ 
+ 'settings.modNote':'Protection légère, côté navigateur : sans serveur, elle ne protège que cet appareil. Les cartes ajoutées à la bibliothèque universelle ne sont, pour l’instant, visibles que sur cet appareil.',
  'time.d':'j',
  'time.h':'h',
  'time.m':'min',
@@ -958,6 +972,19 @@ fr:{dir:'ltr',
  'uni.copied':'Copié !',
  'uni.size':'Taille : {n} Ko',
  'uni.big':'Image lourde : pour alléger le fichier, héberge-la et mets son adresse dans « img ».',
+ 'mod.user':'Identifiant modérateur',
+ 'mod.code':'Code',
+ 'mod.login':'Se connecter',
+ 'mod.logout':'Se déconnecter',
+ 'mod.on':'Mode modérateur actif sur cet appareil.',
+ 'mod.bad':'Identifiant ou code incorrect.',
+ 'mod.wait':'Trop d’essais : réessaie dans {s} s.',
+ 'mod.busy':'Vérification…',
+ 'mod.nocrypto':'Ce navigateur ne permet pas la vérification.',
+ 'uni.add':'Ajouter à la bibliothèque universelle',
+ 'uni.added':'Ajoutée à la bibliothèque universelle ({r}).',
+ 'uni.updated':'Mise à jour dans la bibliothèque universelle ({r}).',
+ 'uni.fileBtn':'Copier pour le fichier',
  'settings.title':'Paramètres','settings.account':'Compte','settings.language':'Langue','settings.loggedAs':'Connecté en tant que {user}',
  'settings.privacyTitle':'Politique de confidentialité',
  'settings.privacy':"MyCard fonctionne entièrement dans ton navigateur. Il n'y a pas de serveur, et rien de ce que tu fais ici ne nous est envoyé, ni à personne d'autre.\n\nTon pseudo, tes cartes et tes réglages sont stockés uniquement sur cet appareil, dans le navigateur. Les photos que tu ajoutes à une carte restent aussi sur cet appareil et ne sont jamais envoyées ailleurs.\n\nCette page charge des polices depuis Google Fonts ; ce chargement peut partager ton adresse IP avec Google, comme pour tout site qui utilise Google Fonts.\n\nIl n'y a ni outil de mesure d'audience, ni publicité, ni cookie de suivi.\n\nSi tu effaces les données de ton navigateur, ou si tu ouvres l'appli sur un autre appareil ou un autre navigateur, tes cartes n'y seront pas accessibles : elles ne sont pas encore sauvegardées ailleurs.\n\nCette note sera mise à jour si la connexion par compte et le stockage en ligne sont ajoutés plus tard.",
@@ -1051,8 +1078,8 @@ en:{dir:'ltr',
  'rarity.epic':'Epic',
  'rarity.legendary':'Legendary',
  'settings.mod':'Moderator',
- 'settings.modOn':'Turn on moderator mode (demo)',
- 'settings.modNote':'Without a server, this mode is for the demo only: anyone can turn it on. With a real server, the role will come from the account.',
+ 
+ 'settings.modNote':'Light protection, in the browser: without a server, it only protects this device. Cards added to the universal library are, for now, only visible on this device.',
  'time.d':'d',
  'time.h':'h',
  'time.m':'min',
@@ -1112,6 +1139,19 @@ en:{dir:'ltr',
  'uni.copied':'Copied!',
  'uni.size':'Size: {n} KB',
  'uni.big':'Heavy image: to keep the file light, host it and put its address in "img".',
+ 'mod.user':'Moderator username',
+ 'mod.code':'Code',
+ 'mod.login':'Sign in',
+ 'mod.logout':'Sign out',
+ 'mod.on':'Moderator mode is on for this device.',
+ 'mod.bad':'Wrong username or code.',
+ 'mod.wait':'Too many tries: try again in {s} s.',
+ 'mod.busy':'Checking…',
+ 'mod.nocrypto':'This browser cannot do the check.',
+ 'uni.add':'Add to the universal library',
+ 'uni.added':'Added to the universal library ({r}).',
+ 'uni.updated':'Updated in the universal library ({r}).',
+ 'uni.fileBtn':'Copy for the file',
  'settings.title':'Settings','settings.account':'Account','settings.language':'Language','settings.loggedAs':'Signed in as {user}',
  'settings.privacyTitle':'Privacy policy',
  'settings.privacy':"MyCard runs entirely in your browser. There is no server, and nothing you do here is sent to us or to anyone else.\n\nYour username, your cards, and your settings are stored only on this device, in your browser's local storage. Photos you add to a card stay on this device too and are never uploaded.\n\nThis page loads fonts from Google Fonts; loading them may share your IP address with Google, as with any site that uses Google Fonts.\n\nThere is no analytics, no advertising, and no tracking cookies.\n\nClearing your browser data, or opening the app on a different device or browser, makes your cards inaccessible there — they aren't backed up anywhere else yet.\n\nThis notice will be updated if account sign-in and cloud storage are added later.",
@@ -1205,8 +1245,8 @@ es:{dir:'ltr',
  'rarity.epic':'Épica',
  'rarity.legendary':'Legendaria',
  'settings.mod':'Moderador',
- 'settings.modOn':'Activar el modo moderador (demo)',
- 'settings.modNote':'Sin servidor, este modo es solo para la demo: cualquiera puede activarlo. Con un servidor real, el rol vendrá de la cuenta.',
+ 
+ 'settings.modNote':'Protección ligera, en el navegador: sin servidor, solo protege este dispositivo. Las cartas añadidas a la biblioteca universal, por ahora, solo se ven en este dispositivo.',
  'time.d':'d',
  'time.h':'h',
  'time.m':'min',
@@ -1266,6 +1306,19 @@ es:{dir:'ltr',
  'uni.copied':'¡Copiado!',
  'uni.size':'Tamaño: {n} KB',
  'uni.big':'Imagen pesada: para aligerar el archivo, alójala y pon su dirección en «img».',
+ 'mod.user':'Usuario de moderador',
+ 'mod.code':'Código',
+ 'mod.login':'Iniciar sesión',
+ 'mod.logout':'Cerrar sesión',
+ 'mod.on':'Modo moderador activo en este dispositivo.',
+ 'mod.bad':'Usuario o código incorrecto.',
+ 'mod.wait':'Demasiados intentos: vuelve a intentarlo en {s} s.',
+ 'mod.busy':'Comprobando…',
+ 'mod.nocrypto':'Este navegador no puede hacer la comprobación.',
+ 'uni.add':'Añadir a la biblioteca universal',
+ 'uni.added':'Añadida a la biblioteca universal ({r}).',
+ 'uni.updated':'Actualizada en la biblioteca universal ({r}).',
+ 'uni.fileBtn':'Copiar para el archivo',
  'settings.title':'Ajustes','settings.account':'Cuenta','settings.language':'Idioma','settings.loggedAs':'Sesión iniciada como {user}',
  'settings.privacyTitle':'Política de privacidad',
  'settings.privacy':"MyCard funciona totalmente en tu navegador. No hay servidor, y nada de lo que hagas aquí se nos envía a nosotros ni a nadie más.\n\nTu nombre de usuario, tus cartas y tus ajustes se guardan solo en este dispositivo, en el almacenamiento local del navegador. Las fotos que añades a una carta también se quedan en este dispositivo y nunca se suben a ningún sitio.\n\nEsta página carga fuentes desde Google Fonts; esta carga puede compartir tu dirección IP con Google, como ocurre en cualquier sitio que use Google Fonts.\n\nNo hay analítica, ni publicidad, ni cookies de seguimiento.\n\nSi borras los datos del navegador, o abres la app en otro dispositivo o navegador, tus cartas no estarán disponibles allí: todavía no se respaldan en ningún otro sitio.\n\nEste aviso se actualizará si más adelante se añaden el inicio de sesión con cuenta y el almacenamiento en la nube.",
@@ -1359,8 +1412,8 @@ de:{dir:'ltr',
  'rarity.epic':'Episch',
  'rarity.legendary':'Legendär',
  'settings.mod':'Moderator',
- 'settings.modOn':'Moderator-Modus aktivieren (Demo)',
- 'settings.modNote':'Ohne Server ist dieser Modus nur für die Demo: Jeder kann ihn aktivieren. Mit einem echten Server kommt die Rolle vom Konto.',
+ 
+ 'settings.modNote':'Leichter Schutz im Browser: Ohne Server schützt er nur dieses Gerät. Karten in der Universal-Bibliothek sind vorerst nur auf diesem Gerät sichtbar.',
  'time.d':'T',
  'time.h':'Std',
  'time.m':'Min',
@@ -1420,6 +1473,19 @@ de:{dir:'ltr',
  'uni.copied':'Kopiert!',
  'uni.size':'Größe: {n} KB',
  'uni.big':'Großes Bild: Um die Datei klein zu halten, lade es hoch und trage seine Adresse bei „img“ ein.',
+ 'mod.user':'Moderator-Kennung',
+ 'mod.code':'Code',
+ 'mod.login':'Anmelden',
+ 'mod.logout':'Abmelden',
+ 'mod.on':'Moderator-Modus ist auf diesem Gerät aktiv.',
+ 'mod.bad':'Kennung oder Code falsch.',
+ 'mod.wait':'Zu viele Versuche: Versuche es in {s} s erneut.',
+ 'mod.busy':'Prüfung…',
+ 'mod.nocrypto':'Dieser Browser kann die Prüfung nicht durchführen.',
+ 'uni.add':'Zur Universal-Bibliothek hinzufügen',
+ 'uni.added':'Zur Universal-Bibliothek hinzugefügt ({r}).',
+ 'uni.updated':'In der Universal-Bibliothek aktualisiert ({r}).',
+ 'uni.fileBtn':'Für die Datei kopieren',
  'settings.title':'Einstellungen','settings.account':'Konto','settings.language':'Sprache','settings.loggedAs':'Angemeldet als {user}',
  'settings.privacyTitle':'Datenschutzerklärung',
  'settings.privacy':"MyCard läuft vollständig in deinem Browser. Es gibt keinen Server, und nichts von dem, was du hier tust, wird an uns oder sonst jemanden gesendet.\n\nDein Benutzername, deine Karten und deine Einstellungen werden nur auf diesem Gerät gespeichert, im lokalen Speicher des Browsers. Fotos, die du einer Karte hinzufügst, bleiben ebenfalls auf diesem Gerät und werden nie hochgeladen.\n\nDiese Seite lädt Schriftarten von Google Fonts; dabei kann deine IP-Adresse an Google übermittelt werden, wie bei jeder Website, die Google Fonts nutzt.\n\nEs gibt keine Analyse-Tools, keine Werbung und keine Tracking-Cookies.\n\nWenn du deine Browserdaten löschst oder die App auf einem anderen Gerät oder Browser öffnest, sind deine Karten dort nicht verfügbar: Sie werden bisher nirgendwo anders gesichert.\n\nDieser Hinweis wird aktualisiert, falls später eine Kontoanmeldung und Cloud-Speicherung hinzukommen.",
@@ -1513,8 +1579,8 @@ ar:{dir:'rtl',
  'rarity.epic':'ملحمية',
  'rarity.legendary':'أسطورية',
  'settings.mod':'المشرف',
- 'settings.modOn':'تفعيل وضع المشرف (تجريبي)',
- 'settings.modNote':'بدون خادم، هذا الوضع للتجربة فقط: يمكن لأي شخص تفعيله. مع خادم حقيقي سيأتي الدور من الحساب.',
+ 
+ 'settings.modNote':'حماية خفيفة داخل المتصفح: بدون خادم، تحمي هذا الجهاز فقط. البطاقات المضافة إلى المكتبة العامة تظهر حاليًا على هذا الجهاز فقط.',
  'time.d':'ي',
  'time.h':'س',
  'time.m':'د',
@@ -1574,6 +1640,19 @@ ar:{dir:'rtl',
  'uni.copied':'تم النسخ!',
  'uni.size':'الحجم: {n} ك.ب',
  'uni.big':'صورة ثقيلة: لتخفيف الملف، استضفها وضع عنوانها في «img».',
+ 'mod.user':'معرّف المشرف',
+ 'mod.code':'الرمز',
+ 'mod.login':'تسجيل الدخول',
+ 'mod.logout':'تسجيل الخروج',
+ 'mod.on':'وضع المشرف مفعّل على هذا الجهاز.',
+ 'mod.bad':'المعرّف أو الرمز غير صحيح.',
+ 'mod.wait':'محاولات كثيرة: حاول مجددًا بعد {s} ث.',
+ 'mod.busy':'جارٍ التحقق…',
+ 'mod.nocrypto':'لا يدعم هذا المتصفح التحقق.',
+ 'uni.add':'إضافة إلى المكتبة العامة',
+ 'uni.added':'أُضيفت إلى المكتبة العامة ({r}).',
+ 'uni.updated':'تم التحديث في المكتبة العامة ({r}).',
+ 'uni.fileBtn':'نسخ للملف',
  'settings.title':'الإعدادات','settings.account':'الحساب','settings.language':'اللغة','settings.loggedAs':'مسجّل الدخول باسم {user}',
  'settings.privacyTitle':'سياسة الخصوصية',
  'settings.privacy':"يعمل MyCard بالكامل داخل متصفحك. لا يوجد خادم، ولا يُرسَل أي شيء تفعله هنا إلينا أو إلى أي جهة أخرى.\n\nيُحفظ اسم المستخدم وبطاقاتك وإعداداتك على هذا الجهاز فقط، داخل التخزين المحلي للمتصفح. كما تبقى الصور التي تضيفها إلى بطاقة على هذا الجهاز ولا تُرفع إلى أي مكان.\n\nتُحمّل هذه الصفحة خطوطًا من Google Fonts؛ قد يشارك ذلك عنوان IP الخاص بك مع Google، كما هو الحال في أي موقع يستخدم Google Fonts.\n\nلا توجد أدوات تحليل، ولا إعلانات، ولا ملفات تعريف ارتباط للتتبع.\n\nعند مسح بيانات المتصفح، أو فتح التطبيق على جهاز أو متصفح آخر، لن تكون بطاقاتك متاحة هناك: فهي غير محفوظة بعد في أي مكان آخر.\n\nسيتم تحديث هذا الإشعار إذا أُضيف لاحقًا تسجيل الدخول بحساب والتخزين السحابي.",
@@ -2297,7 +2376,7 @@ function openEditor(c,isNew){               /* personnalisation (panneau visible
   if(isNew)playIntro();else quickOpen();
 }
 function openCard(c){                        /* affichage en grand, sans le panneau */
-  Bd.classList.remove('view-deck');Bd.classList.add('view-edit','viewing');Bd.classList.toggle('uni-card',!!c.uni);$('v-uni').hidden=!(isMod()&&!c.uni);
+  Bd.classList.remove('view-deck');Bd.classList.add('view-edit','viewing');Bd.classList.toggle('uni-card',!!c.uni);$('v-uni-box').hidden=!(isMod()&&!c.uni);if(!$('v-uni-rar').options.length){$('v-uni-rar').innerHTML=RARITIES.map(r=>`<option value="${r.k}">${rarName(r.k)}</option>`).join('')}try{$('v-uni-rar').value=localStorage.getItem('mycard-uni-rar')||'rare'}catch(e){}
   editing=false;render(c);fill(c);goStep(0);editNew=false;editSnap=null;
   const d=$('e-del');delete d.dataset.arm;d.textContent=tr('panel.deleteCard');
   quickOpen();
@@ -2419,7 +2498,7 @@ function fillSettings(){
   $('set-privacy').textContent=tr('settings.privacy');
   $('set-credits').textContent=tr('settings.credits');
   buildSettingsLangGrid();buildThemeGrid();
-  $('set-mod').checked=typeof isMod==='function'&&isMod();
+  if(typeof refreshMod==='function')refreshMod();
 }
 function showSettings(){fillSettings();openSub('settings')}
 function hideSettings(){backToDeck()}
@@ -2518,7 +2597,15 @@ const weekId=()=>{const d=nowD(),t=new Date(Date.UTC(d.getFullYear(),d.getMonth(
   const y=t.getUTCFullYear();return y+'-W'+String(Math.ceil(((t-Date.UTC(y,0,1))/864e5+1)/7)).padStart(2,'0')};
 const weekEnd=()=>{const d=nowD(),e=new Date(d.getFullYear(),d.getMonth(),d.getDate());e.setDate(e.getDate()+(8-(e.getDay()||7)));return e};   /* prochain lundi 00:00 */
 const fmtLeft=ms=>{const m=Math.max(0,Math.floor(ms/6e4)),d=Math.floor(m/1440),h=Math.floor(m%1440/60);return d?`${d} ${tr('time.d')} ${h} ${tr('time.h')}`:`${h} ${tr('time.h')} ${m%60} ${tr('time.m')}`};
-const isMod=()=>{try{return localStorage.getItem('mycard-mod')==='1'}catch(e){return false}};
+/* Mode modérateur : identifiant + code. Seule l'empreinte (PBKDF2) est dans le code. Protection légère, côté navigateur : sans serveur,
+   elle ne protège que cet appareil (les cartes ajoutées à la bibliothèque universelle n'y sont visibles que sur cet appareil). */
+const MOD_SALT='dd9e081f7bc3776603c8f5faadf4c6ab',MOD_HASH='e21a3e70d4100e3da15949d13875acbd35827edac31f74df596f6a82e8171604',MOD_ITER=210000;
+const isMod=()=>{try{return localStorage.getItem('mycard-mod')===MOD_HASH}catch(e){return false}};
+async function modHash(user,code){
+  const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(user+'\n'+code),'PBKDF2',false,['deriveBits']);
+  const b=await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:new Uint8Array(MOD_SALT.match(/../g).map(x=>parseInt(x,16))),iterations:MOD_ITER},k,256);
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
 const cloud=(()=>{
   const rd=(k,d)=>{try{const v=JSON.parse(localStorage.getItem('mycard-cloud:'+k));return v==null?d:v}catch(e){return d}};
   const wr=(k,v)=>lsSet('mycard-cloud:'+k,JSON.stringify(v));
@@ -2671,7 +2758,7 @@ const pickOf=(list,not)=>{const l=list.filter(x=>x!==not);return l[Math.floor(Ma
 async function unlockUniversal(cat,rk){
   const id='u-'+cat.id,have=deck.find(c=>c.id===id);
   if(have){have.dup=(have.dup||0)+1;saveCard(have);return {isNew:false,n:have.dup+1}}
-  const c=JSON.parse(JSON.stringify(cat));delete c.rarity;delete c.img;delete c.hasImg;
+  const c=JSON.parse(JSON.stringify(cat));delete c.rarity;delete c.img;delete c.hasImg;delete c.upd;
   Object.assign(c,{id,uni:true,rar:rk,t:Date.now(),pal:c.pal||PALS[0],fx:c.fx||'classic',k:c.k!=null?c.k:1});c.c=c.t;
   const img=await catImg(cat);if(img)c.img=img;
   deck.push(c);saveIdx();saveCard(c);return {isNew:true,n:1};
@@ -2764,7 +2851,7 @@ async function openBooster(){
   try{localStorage.setItem(dropKey(),dayKey())}catch(e){}                  /* le booster est consommé et les cartes ajoutées dès le tirage */
   updateDropDot();
   const res=[];for(const c of cards)res.push(await unlockUniversal(c,c.rarity));
-  const urls=cards.map(c=>catImg(c).then(img=>thumbUrl('cat:'+c.id,c,img)));
+  const urls=cards.map(c=>catImg(c).then(img=>thumbUrl('cat:'+c.id+':'+(c.upd||0),c,img)));
   const luck=packLuck(cards),rgb=luckRGB(luck);
   Object.assign(pk,{on:true,stage:'summon',idx:0,cards,res,urls,luck,rgb,cur:null,until:Date.now()+1e9});
   const P=$('pk');P.hidden=false;P.classList.remove('on','legend');
@@ -2901,7 +2988,6 @@ async function renderBooster(){
 }
 $('bst-open').addEventListener('click',openBooster);
 $('dm-drop').addEventListener('click',()=>{try{localStorage.removeItem(dropKey())}catch(e){}renderBooster()});
-$('set-mod').addEventListener('change',e=>{try{localStorage.setItem('mycard-mod',e.target.checked?'1':'0')}catch(_){}renderContest()});
 
 /* ---- icônes : dessinées ici en SVG (trait = couleur du texte). Pour utiliser vos propres fichiers, renseigner ICON_ASSETS
    (ex. ICON_ASSETS.library='assets/icons/library.png') : l'image remplace alors le dessin. ---- */
@@ -2939,7 +3025,31 @@ async function openUni(c){
   $('uni-rar').innerHTML=RARITIES.map(r=>`<option value="${r.k}"${r.k==='rare'?' selected':''}>${rarName(r.k)}</option>`).join('');
   $('uni-id').value=id;$('uni-copy').textContent=tr('uni.copy');$('uni-modal').hidden=false;await uniSnippet();
 }
-$('v-uni').addEventListener('click',()=>{if(cur)openUni(cur)});
+$('v-uni-file').addEventListener('click',()=>{if(cur)openUni(cur)});
+async function addToUniversal(c){                       /* l'ajout est immédiat : la carte entre dans les boosters de cet appareil */
+  const rar=$('v-uni-rar').value;try{localStorage.setItem('mycard-uni-rar',rar)}catch(e){}
+  await hydrated;const img=c.img||(c.hasImg?await media.get('img:'+uk()+':'+c.id):null);
+  const id='x-'+c.id,existed=(await cloud.extras()).some(x=>x.id===id);
+  const o=JSON.parse(JSON.stringify({...c,img:undefined}));['t','c','dup','uni','rar','hasImg','id'].forEach(k=>delete o[k]);
+  Object.assign(o,{id,rarity:rar,hasImg:!!img,upd:Date.now()});
+  if(img)await media.put('ext:'+id,img);else await media.del('ext:'+id);
+  await cloud.addExtra(o);toast(tr(existed?'uni.updated':'uni.added',{r:rarName(rar)}));
+}
+$('v-uni').addEventListener('click',()=>{if(cur)addToUniversal(cur)});
+/* -- connexion modérateur -- */
+let modFails=0,modLockUntil=0;
+function refreshMod(){const on=isMod();$('mod-in').hidden=on;$('mod-out').hidden=!on;$('mod-err').textContent=''}
+$('mod-in').addEventListener('submit',async e=>{
+  e.preventDefault();const err=$('mod-err'),btn=$('mod-login');
+  if(Date.now()<modLockUntil){err.textContent=tr('mod.wait',{s:Math.ceil((modLockUntil-Date.now())/1e3)});return}
+  if(!(window.crypto&&crypto.subtle)){err.textContent=tr('mod.nocrypto');return}
+  btn.disabled=true;err.textContent=tr('mod.busy');
+  let good=false;try{good=(await modHash($('mod-user').value.trim(),$('mod-code').value))===MOD_HASH}catch(_){}
+  btn.disabled=false;$('mod-code').value='';
+  if(good){modFails=0;try{localStorage.setItem('mycard-mod',MOD_HASH)}catch(_){}$('mod-user').value='';refreshMod();renderContest()}
+  else{modFails++;if(modFails>=5){modLockUntil=Date.now()+6e4;modFails=0;err.textContent=tr('mod.wait',{s:60})}else err.textContent=tr('mod.bad')}
+});
+$('mod-logout').addEventListener('click',()=>{try{localStorage.removeItem('mycard-mod')}catch(_){}refreshMod();renderContest()});
 $('uni-x').addEventListener('click',()=>{$('uni-modal').hidden=true});
 $('uni-modal').addEventListener('click',e=>{if(e.target===$('uni-modal'))$('uni-modal').hidden=true});
 $('uni-rar').addEventListener('change',uniSnippet);$('uni-id').addEventListener('input',uniSnippet);

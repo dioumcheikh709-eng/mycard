@@ -43,7 +43,7 @@ Tout reste **dans le navigateur** ; rien n'est envoyé à un serveur.
 | `localStorage` | `mycard-c:<nom>:<id>` | une carte (sans son image) |
 | IndexedDB `mycard-media` | `img:<nom>:<id>`, `th:<nom>:<id>` | image importée, miniature |
 | `localStorage` | `mycard-user`, `mycard-sort`, `mycard-q` | dernier nom, tri choisi, palier de qualité |
-| `localStorage` | `mycard-theme`, `mycard-lang`, `mycard-mod` | thème, langue, mode modérateur (démo) |
+| `localStorage` | `mycard-theme`, `mycard-lang`, `mycard-mod` | thème, langue, mode modérateur (empreinte de la connexion) |
 | `localStorage` | `mycard-drop:<nom>` | jour du dernier booster ouvert |
 | `localStorage` / IndexedDB | `mycard-cloud:*`, `ent:<id>`, `ext:<id>` | concours (démo) : participations, votes, résultats, images |
 
@@ -61,10 +61,13 @@ Les cartes `exemple-…` sont des exemples à remplacer. Une carte débloquée e
 
 **Créer les cartes de la bibliothèque universelle.**
 1. Crée la carte dans l'application comme n'importe quelle carte (bouton « + », personnalisation en 6 étapes : image, texte, attaques, effet…).
-2. Dans les **Paramètres**, coche « Activer le mode modérateur (démo) ».
-3. Ouvre ta carte depuis la bibliothèque : un bouton **« Exporter pour la bibliothèque universelle »** apparaît sous « Personnaliser ».
-4. Choisis la **rareté** (et l'identifiant si besoin), puis **Copier**.
-5. Ouvre `universal-cards.js` et colle la ligne copiée **juste avant la ligne `];`** (chaque carte est sur sa ligne, terminée par une virgule). Enregistre : la carte est dans les boosters.
+2. Dans les **Paramètres → Modérateur**, saisis ton **identifiant** et ton **code** (voir ci-dessous) puis « Se connecter ».
+3. Ouvre ta carte depuis la bibliothèque : sous « Personnaliser » apparaissent un sélecteur de **rareté** et le bouton **« Ajouter à la bibliothèque universelle »**.
+4. Appuie dessus : la carte entre **immédiatement** dans les boosters (re-appuyer avec une autre rareté la met à jour, sans doublon). Rien à copier.
+5. Pour que **tous les joueurs** la reçoivent (sans serveur, l'ajout direct n'est visible que sur cet appareil), clique sur « Copier pour le fichier » et colle la ligne **juste avant la ligne `];`** de `universal-cards.js` (chaque carte est sur sa ligne, terminée par une virgule).
+
+**Identifiant et code modérateur.** Seule leur empreinte (PBKDF2-SHA256, 210 000 itérations, sel aléatoire : constantes `MOD_SALT` / `MOD_HASH` dans `index.html`) est dans le code, jamais le code lui-même ; 5 essais ratés bloquent le formulaire 60 s.
+Pour en changer : calcule la nouvelle empreinte de `identifiant + "\n" + code` avec la même fonction (`modHash`) et remplace les deux constantes. C'est une protection **légère, côté navigateur** : sans serveur, elle empêche un joueur de tomber dessus par hasard, pas un attaquant déterminé (il peut modifier le code de la page chez lui — ce qui n'affecte que son propre appareil).
 
 L'image est incluse dans l'extrait (en `data:` URL). Si elle alourdit trop le fichier (l'application prévient au-delà de 300 Ko), héberge-la et remplace la valeur de `img` par son adresse.
 
@@ -95,7 +98,7 @@ La meilleure carte compte le plus, les autres font glisser la couleur un peu plu
 
 **Mode démo (état actuel).** Il n'y a pas de serveur : participations, votes, résultats et validations sont stockés dans le navigateur (`mycard-cloud:*`), donc **rien n'est partagé entre joueurs ni entre appareils**.
 Tout passe par un seul objet `cloud` dans `index.html` : pour un vrai concours en ligne, il suffit de le remplacer par un client serveur (mêmes méthodes). Côté serveur, il faudra aussi faire le tirage du booster,
-désigner le n°1 de la semaine et gérer le rôle de modérateur (aujourd'hui une simple case dans les Paramètres, ouverte à tous). Des « Outils démo » permettent d'ajouter des participants fictifs,
+désigner le n°1 de la semaine et gérer le rôle de modérateur (aujourd'hui une connexion identifiant + code vérifiée dans le navigateur). Des « Outils démo » permettent d'ajouter des participants fictifs,
 de simuler la fin de la semaine et de réactiver le booster.
 
 ## Icônes
@@ -103,7 +106,7 @@ Les icônes (onglets du bas, engrenage des Paramètres, fenêtre d'export) sont 
 renseigner `ICON_ASSETS` (par exemple `ICON_ASSETS.library='assets/icons/library.png'`) : l'image remplace alors le dessin. Noms disponibles : `library`, `contest`, `booster`, `gear`, `camera`, `sparkle`.
 
 ## Paramètres
-Accessible depuis la bibliothèque (icône ⚙️) : pseudo actuel avec bouton pour en changer, langue, **thème de couleur**, mode modérateur (démo), **politique de confidentialité** et **crédits** (chacun dans un volet repliable), traduits dans les 5 langues.
+Accessible depuis la bibliothèque (icône ⚙️) : pseudo actuel avec bouton pour en changer, langue, **thème de couleur**, connexion **modérateur**, **politique de confidentialité** et **crédits** (chacun dans un volet repliable), traduits dans les 5 langues.
 
 ## Langues
 Interface en **français, anglais, espagnol, allemand et arabe** (RTL pris en charge). Après le pseudo, un écran propose de choisir la langue une seule fois ; elle reste modifiable ensuite via le bouton 🌐 (bibliothèque et fiche de carte). Le texte imprimé *sur* la carte (HP, Ability, weakness/resistance/retreat…) reste volontairement en anglais, comme une vraie carte à collectionner.
