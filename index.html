@@ -19,7 +19,16 @@
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
   color-scheme:dark;--field:rgba(255,255,255,.12);--line:rgba(255,255,255,.28);--bg:#0b1a5c;--ink:#fff;--chip:rgba(255,255,255,.14);--chip-on:#fff;--chip-on-ink:#10236b;
+  --acc1:#8fa4ff;--acc2:#3453ee;--acc-rgb:52,83,238;--deep-rgb:10,24,110;--panel-rgb:22,44,160;--shade-rgb:5,12,70;--hello:#bfd3ff;
+  --bg-grad:linear-gradient(180deg,#14309f 0%,#2547cf 30%,#3d63b8 58%,#1f4a4a 82%,#16322c 100%);--b1:#2f55ff;--b2:#9fa8f5;--b3:#1fa7b0;--b4:#1d3a2d;
 }
+:root[data-theme=red]{--bg:#3a0a0e;--chip-on-ink:#5a0f14;--acc1:#ff9a9a;--acc2:#e0212b;--acc-rgb:224,33,43;--deep-rgb:60,8,12;--panel-rgb:110,18,26;--shade-rgb:70,5,10;--hello:#ffc9c9;
+  --bg-grad:linear-gradient(180deg,#5c0f14 0%,#a01822 30%,#b8404a 58%,#4a1e1e 82%,#2a1010 100%);--b1:#ff3b3b;--b2:#f5a0a0;--b3:#b0361f;--b4:#3a1010}
+:root[data-theme=black]{--bg:#050507;--chip-on-ink:#111;--acc1:#d0d0dc;--acc2:#4a4a58;--acc-rgb:90,90,110;--deep-rgb:0,0,0;--panel-rgb:24,24,30;--shade-rgb:0,0,0;--hello:#c8c8d6;
+  --bg-grad:linear-gradient(180deg,#0c0c10 0%,#17171d 30%,#25252d 58%,#14141a 82%,#08080a 100%);--b1:#3a3a48;--b2:#6b6b80;--b3:#222230;--b4:#0e0e14}
+:root[data-theme=white]{color-scheme:light;--bg:#f1f3f9;--ink:#14182e;--field:rgba(20,24,46,.06);--line:rgba(20,24,46,.25);--chip:rgba(20,24,46,.08);--chip-on:#14182e;--chip-on-ink:#fff;
+  --acc1:#8fa4ff;--acc2:#3453ee;--acc-rgb:52,83,238;--deep-rgb:20,24,46;--panel-rgb:30,36,70;--shade-rgb:20,24,46;--hello:#2a3f9e;
+  --bg-grad:linear-gradient(180deg,#ffffff 0%,#eef1fa 30%,#dfe5f5 58%,#e9edf7 82%,#f6f7fb 100%);--b1:#c9d4ff;--b2:#ffd9e6;--b3:#d3f0f5;--b4:#e6e9f2}
 html{margin:0}
 body{margin:0;min-height:100vh;box-sizing:border-box;padding:24px 16px;background:var(--bg);color:var(--ink);font-family:Barlow,system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;overflow-x:hidden}
 .tabs{display:flex;gap:8px}
@@ -74,10 +83,17 @@ body{margin:0;min-height:100vh;box-sizing:border-box;padding:24px 16px;backgroun
 .card{--red:#f80e7b;--yellow:#eedf10;--green:#21e985;--blue:#0dbde9;--violet:#c929f1;--cosmos:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27500%27%20height%3D%27500%27%3E%3Cdefs%3E%0A%3CradialGradient%20id%3D%27a%27%20cx%3D%27.25%27%20cy%3D%27.3%27%20r%3D%27.55%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%237a4cf0%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%237a4cf0%27%20stop-opacity%3D%270%27%2F%3E%3C%2FradialGradient%3E%0A%3CradialGradient%20id%3D%27b%27%20cx%3D%27.75%27%20cy%3D%27.7%27%20r%3D%27.5%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%231fa3d8%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%231fa3d8%27%20stop-opacity%3D%270%27%2F%3E%3C%2FradialGradient%3E%0A%3CradialGradient%20id%3D%27c%27%20cx%3D%27.65%27%20cy%3D%27.2%27%20r%3D%27.4%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23d03fa0%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23d03fa0%27%20stop-opacity%3D%270%27%2F%3E%3C%2FradialGradient%3E%0A%3Cfilter%20id%3D%27n%27%20x%3D%270%27%20y%3D%270%27%20width%3D%27100%25%27%20height%3D%27100%25%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%27.8%27%20numOctaves%3D%272%27%20stitchTiles%3D%27stitch%27%2F%3E%3CfeColorMatrix%20values%3D%270%200%200%200%201%200%200%200%200%201%200%200%200%200%201%200%200%2018%200%20-11%27%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%0A%3Crect%20width%3D%27500%27%20height%3D%27500%27%20fill%3D%27%230a0c2b%27%2F%3E%3Crect%20width%3D%27500%27%20height%3D%27500%27%20fill%3D%27url(%23a)%27%2F%3E%3Crect%20width%3D%27500%27%20height%3D%27500%27%20fill%3D%27url(%23b)%27%2F%3E%3Crect%20width%3D%27500%27%20height%3D%27500%27%20fill%3D%27url(%23c)%27%2F%3E%3Crect%20width%3D%27500%27%20height%3D%27500%27%20filter%3D%27url(%23n)%27%2F%3E%3C%2Fsvg%3E")}
 .shine,.shine::before,.shine::after,.glare2,.glare2::after{position:absolute;inset:0;border-radius:inherit;pointer-events:none;background-size:cover}
 .shine,.glare2{display:none}
-.card:is([data-fx=regular],[data-fx=cosmos],[data-fx=sitereverse],[data-fx=vfull],[data-fx=rainbow],[data-fx=shinyv],[data-fx=amazing],[data-fx=vmax]) :is(.shine,.glare2){display:block}
-.card:is([data-fx=regular],[data-fx=cosmos],[data-fx=sitereverse],[data-fx=vfull],[data-fx=rainbow],[data-fx=shinyv],[data-fx=amazing],[data-fx=vmax]) :is(.holo,.sparkle,.revwrap,.glare){display:none}
+.card:is([data-fx=regular],[data-fx=cosmos],[data-fx=sitereverse],[data-fx=vfull],[data-fx=rainbow],[data-fx=shinyv],[data-fx=amazing],[data-fx=vmax],[data-fx=metal]) :is(.shine,.glare2){display:block}
+.card:is([data-fx=regular],[data-fx=cosmos],[data-fx=sitereverse],[data-fx=vfull],[data-fx=rainbow],[data-fx=shinyv],[data-fx=amazing],[data-fx=vmax],[data-fx=metal]) :is(.holo,.sparkle,.revwrap,.glare){display:none}
 .glare2{background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsla(0,0%,100%,.8) 10%,hsla(0,0%,100%,.65) 20%,hsla(0,0%,0%,.5) 90%);mix-blend-mode:overlay;opacity:calc(var(--card-opacity)*var(--k))}
 .card[data-fx=regular] .shine,.card[data-fx=cosmos] .shine{opacity:var(--k);clip-path:inset(2.6% 3.4% 2.4% 3.4% round 4%)}
+/* MÉTALLIQUE (acier brossé) */
+.card[data-fx=metal] .shine{opacity:var(--k);clip-path:inset(2.6% 3.4% 2.4% 3.4% round 4%);mix-blend-mode:overlay;
+  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0,rgba(255,255,255,.07) 1px,rgba(0,0,0,.07) 1px,rgba(0,0,0,.07) 2px),linear-gradient(115deg,#202226 0%,#f4f6fa 12%,#4a4e58 24%,#ffffff 36%,#30333b 48%,#e9ecf2 60%,#555a66 72%,#fbfcfe 84%,#262830 100%);
+  background-size:3px 100%,260% 260%;background-position:0 0,var(--background-x) var(--background-y);
+  filter:contrast(2) saturate(0)}
+.card[data-fx=metal] .shine::after{content:"";background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),rgba(255,255,255,.95) 0%,rgba(235,240,250,.4) 24%,transparent 58%);mix-blend-mode:soft-light;opacity:calc(var(--card-opacity)*var(--k))}
+.card[data-fx=metal] .glare2{background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsla(0,0%,100%,.9) 6%,hsla(0,0%,70%,.25) 30%,hsla(0,0%,0%,.5) 95%);mix-blend-mode:soft-light;filter:contrast(1.3) saturate(0)}
 /* HOLO RÉGULIER */
 .card[data-fx=regular] .shine{background-image:repeating-linear-gradient(110deg,var(--violet),var(--blue),var(--green),var(--yellow),var(--red),var(--violet),var(--blue),var(--green),var(--yellow),var(--red),var(--violet),var(--blue),var(--green),var(--yellow),var(--red)),repeating-linear-gradient(90deg,#000 0,#000 2px,#666 2px,#666 4px);
   background-position:calc(((50% - var(--background-x))*2.6) + 50%) calc(((50% - var(--background-y))*3.5) + 50%),center center;background-size:400% 400%,cover;background-blend-mode:overlay;filter:brightness(1.1) contrast(1.1) saturate(1.2);mix-blend-mode:color-dodge}
@@ -212,23 +228,23 @@ body.locked .login{display:flex}
 @media (prefers-reduced-motion:reduce){.card{transition:none}}
 
 /* ---- habillage bleu animé + verre ---- */
-html{background:#0b1a5c}body{background:none}
-.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(180deg,#14309f 0%,#2547cf 30%,#3d63b8 58%,#1f4a4a 82%,#16322c 100%)}
+html{background:var(--bg)}body{background:none}
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:var(--bg-grad)}
 .bg i{position:absolute;display:block;border-radius:50%;will-change:transform;animation:drift 22s ease-in-out infinite alternate}
-.bg i:nth-child(1){width:90vmax;height:90vmax;left:-35vmax;top:-30vmax;background:radial-gradient(circle closest-side,#2f55ff 30%,rgba(47,85,255,0) 100%);opacity:.7}
-.bg i:nth-child(2){width:70vmax;height:70vmax;right:-30vmax;top:5vmax;background:radial-gradient(circle closest-side,#9fa8f5 30%,rgba(159,168,245,0) 100%);opacity:.5;animation-duration:28s;animation-delay:-8s}
-.bg i:nth-child(3){width:75vmax;height:75vmax;left:-20vmax;bottom:-35vmax;background:radial-gradient(circle closest-side,#1fa7b0 30%,rgba(31,167,176,0) 100%);opacity:.45;animation-duration:25s;animation-delay:-14s}
-.bg i:nth-child(4){width:60vmax;height:60vmax;right:-25vmax;bottom:-30vmax;background:radial-gradient(circle closest-side,#1d3a2d 30%,rgba(29,58,45,0) 100%);opacity:.8;animation-duration:30s;animation-delay:-4s}
+.bg i:nth-child(1){width:90vmax;height:90vmax;left:-35vmax;top:-30vmax;background:radial-gradient(circle closest-side,var(--b1) 30%,transparent 100%);opacity:.7}
+.bg i:nth-child(2){width:70vmax;height:70vmax;right:-30vmax;top:5vmax;background:radial-gradient(circle closest-side,var(--b2) 30%,transparent 100%);opacity:.5;animation-duration:28s;animation-delay:-8s}
+.bg i:nth-child(3){width:75vmax;height:75vmax;left:-20vmax;bottom:-35vmax;background:radial-gradient(circle closest-side,var(--b3) 30%,transparent 100%);opacity:.45;animation-duration:25s;animation-delay:-14s}
+.bg i:nth-child(4){width:60vmax;height:60vmax;right:-25vmax;bottom:-30vmax;background:radial-gradient(circle closest-side,var(--b4) 30%,transparent 100%);opacity:.8;animation-duration:30s;animation-delay:-4s}
 @keyframes drift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(8vmax,6vmax) scale(1.08)}66%{transform:translate(-6vmax,10vmax) scale(.95)}100%{transform:translate(5vmax,-6vmax) scale(1.05)}}
 .login{gap:14px;width:min(420px,92vw)}
 .logo{font:italic 700 68px/1 'Barlow Condensed',sans-serif;letter-spacing:.01em;color:#222;background:rgba(255,255,255,.9);padding:14px 40px 14px 36px;border-radius:99px 12px 12px 99px;box-shadow:0 10px 40px rgba(20,40,160,.35);margin-bottom:10px}
-.hello{font:600 15px Barlow,sans-serif;color:#bfd3ff;margin:0}
+.hello{font:600 15px Barlow,sans-serif;color:var(--hello);margin:0}
 .login h1{font:700 36px/1.05 'Barlow Condensed',sans-serif;letter-spacing:.01em}
 .ask{display:flex;align-items:center;width:100%;box-sizing:border-box;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.22);border-radius:99px;padding:6px 6px 6px 20px}
 .ask input{flex:1;min-width:0;background:none!important;border:0!important;text-align:left!important;color:#fff;font:400 16px Barlow,sans-serif;padding:10px 0!important;outline:none}
 .ask input::placeholder{color:rgba(255,255,255,.7)}
 .ask:focus-within{border-color:#fff}
-.send{width:46px;height:46px;border-radius:50%;border:0;background:radial-gradient(circle at 35% 30%,#8fa4ff,#3453ee);display:grid;place-items:center;cursor:pointer;flex:none}
+.send{width:46px;height:46px;border-radius:50%;border:0;background:radial-gradient(circle at 35% 30%,var(--acc1),var(--acc2));display:grid;place-items:center;cursor:pointer;flex:none}
 .send svg{width:22px;height:22px}
 .panel{width:min(420px,92vw);box-sizing:border-box;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);border-radius:26px;padding:14px}
 .panel .editor{width:auto;background:none;padding:10px 2px 2px;border-radius:0}
@@ -246,7 +262,7 @@ html{background:#0b1a5c}body{background:none}
 .dot svg{width:60%;height:60%}
 .fxgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .fxgrid button{font:500 13px/1.2 Barlow,sans-serif;text-align:left;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:10px 12px;cursor:pointer}
-.fxgrid button[aria-pressed=true]{background:#fff;color:#10236b;border-color:#fff}
+.fxgrid button[aria-pressed=true]{background:#fff;color:var(--chip-on-ink);border-color:#fff}
 body.touching .bg i,body.lite .bg i{animation-play-state:paused}
 @media (prefers-reduced-motion:reduce){.bg i{animation:none}}
 
@@ -263,11 +279,11 @@ body.touching .bg i,body.lite .bg i{animation-play-state:paused}
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
 .cardback::before{content:"";position:absolute;inset:3.4%;border:2px solid rgba(255,255,255,.35);border-radius:3%/2.2%}
 .cardback .logo{font-size:min(15vw,50px);padding:10px 28px 10px 24px;margin:0;position:relative}
-.intro{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;box-sizing:border-box;text-align:center;opacity:0;visibility:hidden;pointer-events:none;background:rgba(10,24,110,.28);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);transition:opacity .6s ease,visibility 0s .6s}
+.intro{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;box-sizing:border-box;text-align:center;opacity:0;visibility:hidden;pointer-events:none;background:rgba(var(--deep-rgb),.28);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);transition:opacity .6s ease,visibility 0s .6s}
 body.introshow .intro{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .6s ease}
-.intro h2{margin:0;font:700 clamp(44px,12vw,70px)/1.02 'Barlow Condensed',sans-serif;color:#fff;text-shadow:0 4px 30px rgba(10,24,110,.5);transform:translateY(16px);transition:transform .8s .15s cubic-bezier(.2,.9,.25,1)}
+.intro h2{margin:0;font:700 clamp(44px,12vw,70px)/1.02 'Barlow Condensed',sans-serif;color:#fff;text-shadow:0 4px 30px rgba(var(--deep-rgb),.5);transform:translateY(16px);transition:transform .8s .15s cubic-bezier(.2,.9,.25,1)}
 body.introshow .intro h2{transform:none}
-.lesgo{position:absolute;left:50%;bottom:max(40px,calc(env(safe-area-inset-bottom) + 24px));transform:translate(-50%,24px);opacity:0;border:0;border-radius:99px;padding:16px 60px;cursor:pointer;color:#fff;white-space:nowrap;font:700 22px 'Barlow Condensed',sans-serif;letter-spacing:.08em;background:radial-gradient(circle at 35% 30%,#8fa4ff,#3453ee);box-shadow:0 10px 32px rgba(52,83,238,.6)}
+.lesgo{position:absolute;left:50%;bottom:max(40px,calc(env(safe-area-inset-bottom) + 24px));transform:translate(-50%,24px);opacity:0;border:0;border-radius:99px;padding:16px 60px;cursor:pointer;color:#fff;white-space:nowrap;font:700 22px 'Barlow Condensed',sans-serif;letter-spacing:.08em;background:radial-gradient(circle at 35% 30%,var(--acc1),var(--acc2));box-shadow:0 10px 32px rgba(var(--acc-rgb),.6)}
 body.introshow .lesgo{opacity:1;transform:translate(-50%,0);transition:opacity .6s .35s,transform .8s .35s cubic-bezier(.2,.9,.25,1)}
 .lesgo:focus-visible{outline:3px solid #fff;outline-offset:3px}
 .who,.actions,.hint,#gyro,#gopen,.panel,#e-del{transition:opacity .7s .5s,transform .7s .5s}
@@ -285,15 +301,15 @@ html.introing,body.introing{overflow:hidden}
 body.view-deck .deck{display:flex}
 body.view-deck :is(.who,.stage,.actions,.hint,#gyro,#gopen,.panel,#e-del){display:none!important}
 .dk-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
-.dk-hello{margin:0;font:600 14px Barlow,sans-serif;color:#bfd3ff}
+.dk-hello{margin:0;font:600 14px Barlow,sans-serif;color:var(--hello)}
 .dk-head h1{margin:2px 0;font:700 46px/1 'Barlow Condensed',sans-serif;letter-spacing:.01em}
 .dk-count{margin:0;font:500 14px Barlow,sans-serif;opacity:.7}
-.dk-plus{width:46px;height:46px;border-radius:50%;border:0;color:#fff;font:300 32px/1 Barlow,sans-serif;background:radial-gradient(circle at 35% 30%,#8fa4ff,#3453ee);cursor:pointer;box-shadow:0 8px 24px rgba(52,83,238,.5)}
+.dk-plus{width:46px;height:46px;border-radius:50%;border:0;color:#fff;font:300 32px/1 Barlow,sans-serif;background:radial-gradient(circle at 35% 30%,var(--acc1),var(--acc2));cursor:pointer;box-shadow:0 8px 24px rgba(var(--acc-rgb),.5)}
 .dk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px 14px}
 @media (min-width:560px){.dk-grid{grid-template-columns:repeat(3,1fr)}}
 .tile{display:grid;gap:3px;text-align:left;background:none;border:0;padding:0;color:#fff;cursor:pointer;font-family:Barlow,sans-serif;transition:transform .2s}
 .tile:active{transform:scale(.96)}
-.tile .tcov{display:block;aspect-ratio:63/88;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.1);box-shadow:0 10px 28px rgba(5,15,80,.45)}
+.tile .tcov{display:block;aspect-ratio:63/88;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.1);box-shadow:0 10px 28px rgba(var(--shade-rgb),.45)}
 .tile .tcov img{display:block;width:100%;height:100%;object-fit:cover}
 .tile b{font:600 15px/1.2 Barlow,sans-serif;margin-top:6px}
 .tile small{font:400 13px Barlow,sans-serif;opacity:.65}
@@ -303,7 +319,7 @@ body.view-deck :is(.who,.stage,.actions,.hint,#gyro,#gopen,.panel,#e-del){displa
 .dk-empty{margin:0;text-align:center;font:400 14px Barlow,sans-serif;opacity:.75}
 .dk-fan[hidden],.dk-grid[hidden],.dk-sel[hidden],.dk-empty[hidden]{display:none}
 .linkbtn{background:none;border:0;color:#fff;opacity:.75;text-decoration:underline;font:500 13px Barlow,sans-serif;cursor:pointer;padding:8px}
-.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:rgba(10,24,110,.92);color:#fff;padding:10px 16px;border-radius:99px;font:500 14px Barlow,sans-serif;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:60}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:rgba(var(--deep-rgb),.92);color:#fff;padding:10px 16px;border-radius:99px;font:500 14px Barlow,sans-serif;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:60}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
 /* ---- arrivée par le haut, flou de fond, annulation ---- */
@@ -312,15 +328,16 @@ body.view-deck :is(.who,.stage,.actions,.hint,#gyro,#gopen,.panel,#e-del){displa
 .bg{transition:filter .6s,transform .6s}
 body.view-edit .bg{filter:blur(18px);transform:scale(1.15)}
 body.view-edit .bg i{animation-play-state:paused}
-.dk-back{display:none;position:fixed;left:max(12px,env(safe-area-inset-left));top:max(12px,env(safe-area-inset-top));z-index:25;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.28);border-radius:99px;padding:9px 16px;background:rgba(10,24,110,.55);color:#fff;font:600 15px 'Barlow Condensed',sans-serif;letter-spacing:.04em;cursor:pointer}
+.dk-back{display:none;position:fixed;left:max(12px,env(safe-area-inset-left));top:max(12px,env(safe-area-inset-top));z-index:25;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.28);border-radius:99px;padding:9px 16px;background:rgba(var(--deep-rgb),.55);color:#fff;font:600 15px 'Barlow Condensed',sans-serif;letter-spacing:.04em;cursor:pointer}
 body.view-edit .dk-back{display:inline-flex}
 body.introing .dk-back{opacity:0;pointer-events:none}
-.cfm{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(6,14,70,.5)}
+.cfm{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(var(--shade-rgb),.5)}
 .cfm[hidden]{display:none}
-.cfm-box{width:min(340px,100%);box-sizing:border-box;background:rgba(22,44,160,.94);border:1px solid rgba(255,255,255,.28);border-radius:22px;padding:22px;text-align:center;color:#fff;box-shadow:0 20px 50px rgba(5,12,70,.6)}
+.cfm-box{width:min(340px,100%);box-sizing:border-box;background:rgba(var(--panel-rgb),.94);border:1px solid rgba(255,255,255,.28);border-radius:22px;padding:22px;text-align:center;color:#fff;box-shadow:0 20px 50px rgba(var(--shade-rgb),.6)}
 .cfm-box h3{margin:0 0 8px;font:700 28px/1.05 'Barlow Condensed',sans-serif}
 .cfm-box p{margin:0 0 18px;font:400 15px/1.35 Barlow,sans-serif;opacity:.85}
 .cfm-b{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+#cfm-yes{background:radial-gradient(circle at 35% 30%,#ff8a8a,#d92b2b);color:#fff;box-shadow:0 8px 24px rgba(217,43,43,.5)}
 
 /* ---- bibliothèque en grille : voile irisé avant l'ouverture ---- */
 .tile .tcov{position:relative;transition:transform .5s cubic-bezier(.2,.9,.25,1)}
@@ -330,14 +347,14 @@ body.introing .dk-back{opacity:0;pointer-events:none}
 .vbar{display:none}
 body.viewing .vbar{display:flex;justify-content:center}
 body.viewing .panel{display:none}
-.gbtn.primary{background:radial-gradient(circle at 35% 30%,#8fa4ff,#3453ee);color:#fff;box-shadow:0 8px 24px rgba(52,83,238,.5)}
+.gbtn.primary{background:radial-gradient(circle at 35% 30%,var(--acc1),var(--acc2));color:#fff;box-shadow:0 8px 24px rgba(var(--acc-rgb),.5)}
 /* ---- gouverneur de fluidité : paliers de qualité (0 = complet) ---- */
 body[data-q]:not([data-q="0"]) .sparkle,body[data-q]:not([data-q="0"]) .rev.spot,body[data-q]:not([data-q="0"]) .shine::before,body[data-q]:not([data-q="0"]) .glare2::after{display:none}
 .dk-tools{position:relative;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
 .dk-sort{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.28);border-radius:99px;padding:8px 14px;background:rgba(255,255,255,.1);color:#fff;font:600 14px 'Barlow Condensed',sans-serif;letter-spacing:.04em;cursor:pointer}
 .dk-sort svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.dk-sort[aria-expanded=true]{background:#fff;color:#10236b}
-.dk-menu{position:absolute;right:0;top:44px;z-index:30;width:210px;box-sizing:border-box;padding:6px;border-radius:18px;background:rgba(22,44,160,.97);border:1px solid rgba(255,255,255,.28);box-shadow:0 16px 40px rgba(5,12,70,.55)}
+.dk-sort[aria-expanded=true]{background:#fff;color:var(--chip-on-ink)}
+.dk-menu{position:absolute;right:0;top:44px;z-index:30;width:210px;box-sizing:border-box;padding:6px;border-radius:18px;background:rgba(var(--panel-rgb),.97);border:1px solid rgba(255,255,255,.28);box-shadow:0 16px 40px rgba(var(--shade-rgb),.55)}
 .dk-menu[hidden]{display:none}
 .dk-menu{max-height:72vh;overflow:auto}
 .dk-menu .hd{padding:10px 12px 4px;font:600 11px Barlow,sans-serif;letter-spacing:.09em;text-transform:uppercase;opacity:.6}
@@ -393,7 +410,234 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
 [dir=rtl] details.set-block>summary.set-h::after{float:left}
 .set-p{margin:10px 0 0;font:400 14px/1.55 Barlow,sans-serif;opacity:.85}
 .set-block .glink{display:inline-block;margin-top:10px}
+
+/* ---- recherche dans le deck ---- */
+.dk-search{margin:2px 0 14px}
+.dk-search input{width:100%;box-sizing:border-box;font:400 16px Barlow,sans-serif;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:99px;padding:11px 18px}
+.dk-search input::placeholder{color:var(--ink);opacity:.55}
+.dk-search input:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+/* ---- pastilles de thème (Paramètres) ---- */
+.tsw{width:22px;height:22px;border-radius:50%;flex:none;border:2px solid rgba(255,255,255,.7)}
+.tsw[data-t=blue]{background:linear-gradient(135deg,#8fa4ff,#2547cf)}
+.tsw[data-t=red]{background:linear-gradient(135deg,#ff9a9a,#c4141f)}
+.tsw[data-t=black]{background:linear-gradient(135deg,#6b6b80,#0a0a0d)}
+.tsw[data-t=white]{background:linear-gradient(135deg,#fff,#d8def0)}
+/* ---- thème blanc : textes et surfaces à l'envers (le reste suit les variables) ---- */
+:root[data-theme=white] :is(.ask input,.tgrid button,.fxgrid button,.tile,.linkbtn,.dk-sort,.exp-opt,.set-block .lgrid button,.lang-pick .lgrid button,.or){color:var(--ink)}
+:root[data-theme=white] :is(.panel,.set-block,.ask,.dk-sort,.fxgrid button,.tgrid button,.exp-opt,.set-block .lgrid button,.lang-pick .lgrid button){background:rgba(20,24,46,.06);border-color:rgba(20,24,46,.2)}
+:root[data-theme=white] :is(.fxgrid button,.tgrid button,.set-block .lgrid button)[aria-pressed=true],:root[data-theme=white] .dk-sort[aria-expanded=true]{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:none}
+:root[data-theme=white] :is(.dk-sort,.fxgrid button,.tgrid button,.set-block .lgrid button):hover{background:rgba(20,24,46,.12)}
+:root[data-theme=white] .ask input::placeholder{color:rgba(20,24,46,.55)}
+:root[data-theme=white] .ask:focus-within{border-color:var(--ink)}
+:root[data-theme=white] .tile .tcov{background:rgba(20,24,46,.08);box-shadow:0 10px 28px rgba(20,24,46,.25)}
+:root[data-theme=white] .tile.new .tcov{border-color:rgba(20,24,46,.35);background:rgba(20,24,46,.05)}
+:root[data-theme=white] .tsw{border-color:rgba(20,24,46,.4)}
+
+/* ---- concours hebdomadaire + booster du jour ---- */
+.demo-note{margin:0;padding:10px 14px;border-radius:12px;border:1px dashed var(--line);font:500 13px/1.45 Barlow,sans-serif;opacity:.85}
+.ct-sub{margin:2px 0 0;font:500 14px Barlow,sans-serif;opacity:.7}
+.ct-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.ct-row select{flex:1;min-width:0;font:400 15px Barlow,sans-serif;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.ct-row select option{color:#111}
+.tile.ent{cursor:default}
+.tile.ent:active{transform:none}
+.tile.ent .gbtn{margin-top:8px;padding:8px 12px;width:100%}
+.tile.ent .gbtn:disabled{opacity:.5;cursor:default}
+.rk{position:absolute;left:8px;top:8px;min-width:26px;height:26px;padding:0 8px;box-sizing:border-box;border-radius:99px;display:grid;place-items:center;background:#ffc233;color:#111;font:700 14px 'Barlow Condensed',sans-serif}
+.res{padding:9px 0;border-top:1px solid var(--line);font:500 14px/1.4 Barlow,sans-serif}
+.res:first-of-type{border-top:0}
+.res small{display:block;opacity:.7;font:400 13px Barlow,sans-serif}
+.rar{display:inline-block;padding:2px 10px;border-radius:99px;background:var(--rc,#9aa4b5);color:#111;font:700 12px 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.mod-item{display:grid;grid-template-columns:84px 1fr;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.mod-item img{width:84px;border-radius:8px;display:block}
+.mod-item .ct-row{margin-top:6px}
+.chk-row{display:flex;gap:10px;align-items:center;margin-top:10px;font:500 15px Barlow,sans-serif}
+.tile.uni .tcov{box-shadow:0 0 0 2px var(--rc),0 10px 28px rgba(var(--shade-rgb),.45)}
+body.uni-card #v-edit{display:none}
+.bst-stage{display:grid;justify-items:center;gap:14px;padding:8px 0}
+.bst-msg{margin:0;font:600 17px Barlow,sans-serif;text-align:center;min-height:1.4em}
+.bst-mini{margin:6px 0;animation:pkfloat 3.6s ease-in-out infinite}
+.bst-mini.off{filter:grayscale(.9) brightness(.65) drop-shadow(0 12px 14px rgba(0,0,0,.4));animation:none}
+.info-btn{width:38px;height:38px;border-radius:50%;padding:0;display:grid;place-items:center;flex:none;font:italic 700 21px Georgia,'Times New Roman',serif}
+.odds{width:100%;border-collapse:collapse;margin-top:8px;font:500 14px Barlow,sans-serif}
+.odds td,.odds th{padding:7px 4px;border-top:1px solid var(--line)}
+.odds thead th{border-top:0;font:600 11px Barlow,sans-serif;text-transform:uppercase;letter-spacing:.06em;opacity:.7;text-align:right}
+.odds thead th:first-child{text-align:left}
+.odds td:not(:first-child){text-align:right;opacity:.9}
+#odds-modal{z-index:90}
+.info-box{position:relative;width:min(460px,100%);max-height:88vh;overflow:auto;box-sizing:border-box;background:rgba(var(--panel-rgb),.98);border:1px solid rgba(255,255,255,.28);border-radius:22px;padding:20px 18px 22px;color:#fff;text-align:left;box-shadow:0 20px 50px rgba(var(--shade-rgb),.6)}
+.info-box h3{margin:0 40px 6px 0;font:700 28px/1.05 'Barlow Condensed',sans-serif}
+.info-box h4{margin:20px 0 6px;font:700 19px 'Barlow Condensed',sans-serif;letter-spacing:.04em;text-transform:uppercase;opacity:.9}
+.info-box p,.info-box li,.info-box dd{font:400 14.5px/1.5 Barlow,sans-serif}
+.info-box p{margin:6px 0}
+.info-box ul{margin:6px 0;padding-left:20px}
+.info-box dl{margin:10px 0}
+.info-box dt{font:700 13px Barlow,sans-serif;letter-spacing:.05em;text-transform:uppercase;margin-top:8px;opacity:.85}
+.info-box dd{margin:2px 0 0;opacity:.9}
+.info-box .odds td,.info-box .odds th{color:#fff}
+.info-x{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:16px;cursor:pointer}
+.lk-bar{height:12px;border-radius:99px;margin:12px 0 12px;box-shadow:0 0 14px rgba(255,255,255,.2)}
+.lk-list{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.lk-list li{display:flex;gap:10px;align-items:center}
+.lk-list i{width:14px;height:14px;border-radius:50%;flex:none;background:var(--c);box-shadow:0 0 10px var(--c)}
+
+/* ---- le pack : emballage métallisé scellé aux deux bouts, silhouette en oreiller ---- */
+.pk-pack{position:relative;width:min(220px,58vw);aspect-ratio:5/9;filter:drop-shadow(0 22px 26px rgba(0,0,0,.55)) drop-shadow(0 3px 5px rgba(0,0,0,.4))}
+.pk-shaker{position:absolute;inset:0}
+.pk-layer{position:absolute;inset:0;will-change:transform}
+.pk-layer.top{clip-path:var(--clip-top)}
+.pk-layer.main{clip-path:var(--clip-main)}
+.pk-art{position:absolute;inset:0;overflow:hidden;color:#fff;clip-path:var(--art-clip);
+  background:radial-gradient(130% 70% at 28% 8%,rgba(255,255,255,.24),transparent 60%),radial-gradient(100% 70% at 50% 108%,rgba(var(--lc-rgb,140,170,255),.5),transparent 70%),linear-gradient(165deg,#4660ea 0%,#1d2da6 42%,#0a1252 100%)}
+.pk-art>*{position:absolute;pointer-events:none}
+.pk-fan{left:16%;right:16%;top:15%;height:31%}
+.pk-fan i,.pk-fan b{position:absolute}
+.pk-fan i{left:50%;bottom:0;width:46%;aspect-ratio:63/88;border-radius:5px;transform-origin:50% 100%;background:linear-gradient(155deg,rgba(var(--lc-rgb,170,200,255),1),rgba(16,26,110,.96) 72%);border:1.5px solid rgba(255,255,255,.8);box-shadow:0 5px 12px rgba(0,0,0,.45),inset 0 0 12px rgba(255,255,255,.28)}
+.pk-fan i:nth-child(1){transform:translateX(-50%) rotate(-19deg)}
+.pk-fan i:nth-child(2){transform:translateX(-50%) rotate(19deg)}
+.pk-fan i:nth-child(3){transform:translateX(-50%)}
+.pk-fan b{left:50%;top:26%;transform:translateX(-50%);font-size:min(30px,7.6vw);line-height:1;color:#fff;text-shadow:0 0 14px rgba(var(--lc-rgb,200,220,255),1),0 0 4px #fff}
+.pk-logo{left:50%;top:50%;transform:translateX(-50%);white-space:nowrap;font:italic 700 min(36px,9vw)/1 'Barlow Condensed',sans-serif;color:#1d1d2b;background:linear-gradient(180deg,#fff,#dfe3f3);padding:.18em .7em .18em .6em;border-radius:99px 8px 8px 99px;box-shadow:0 6px 16px rgba(0,0,0,.4),inset 0 -2px 0 rgba(0,0,0,.12)}
+.pk-sub{left:0;right:0;top:64%;text-align:center;font:700 min(21px,5.4vw) 'Barlow Condensed',sans-serif;letter-spacing:.32em;text-indent:.32em;text-shadow:0 2px 8px rgba(0,0,0,.55)}
+.pk-five{left:0;right:0;bottom:12.5%;text-align:center;font:600 min(13px,3.4vw) Barlow,sans-serif;letter-spacing:.22em;opacity:.8}
+.pk-foil{inset:0;background:linear-gradient(115deg,transparent 28%,rgba(var(--lc-rgb,200,220,255),.35) 43%,rgba(255,255,255,.55) 50%,rgba(var(--lc-rgb,200,220,255),.35) 57%,transparent 72%);background-size:260% 100%;mix-blend-mode:screen;animation:pkfoil 3.6s ease-in-out infinite}
+.pk-noise{inset:0;background-image:var(--noise);background-size:128px;mix-blend-mode:overlay;opacity:.34}
+.pk-crease{inset:0;background:var(--crease) center/100% 100% no-repeat;mix-blend-mode:soft-light;opacity:.95}
+.pk-vol{inset:0;background:linear-gradient(90deg,rgba(0,0,0,.6) 0,rgba(0,0,0,.08) 11%,rgba(255,255,255,.14) 37%,rgba(255,255,255,.04) 55%,rgba(0,0,0,.2) 88%,rgba(0,0,0,.65) 100%),linear-gradient(180deg,rgba(0,0,0,.4) 0,transparent 12%,transparent 88%,rgba(0,0,0,.45) 100%)}
+.pk-spec{inset:0;background:linear-gradient(105deg,transparent calc(var(--sx,50)*1% - 16%),rgba(255,255,255,.55) calc(var(--sx,50)*1%),transparent calc(var(--sx,50)*1% + 16%));mix-blend-mode:soft-light}
+.pk-crimp{left:0;right:0;top:0;height:7%;background:repeating-linear-gradient(90deg,rgba(255,255,255,.6) 0 1.4px,rgba(20,30,90,.5) 1.4px 3px),linear-gradient(#e6ebff,#8089bb 55%,#566096);box-shadow:0 3px 5px rgba(0,0,0,.5)}
+.pk-crimp.b{top:auto;bottom:0;box-shadow:0 -3px 5px rgba(0,0,0,.5)}
+.pk-burst{position:absolute;left:-35%;right:-35%;top:calc(var(--cy,15%) - 18px);height:36px;pointer-events:none;opacity:0;filter:blur(6px);background:radial-gradient(ellipse at center,#fff 0,rgba(var(--lc-rgb,255,255,255),.95) 28%,transparent 70%)}
+.pk-pack.torn .pk-burst{animation:pkburst .9s ease-out}
+.pk-edge{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;filter:drop-shadow(0 0 5px rgba(var(--lc-rgb,255,255,255),1));transition:opacity .25s}
+.pk-edge.go{opacity:1}
+.pk-slash{position:absolute;left:0;width:104%;top:calc(22% - 1.5px);height:3px;border-radius:3px;background:#fff;transform-origin:left center;pointer-events:none;z-index:5;box-shadow:0 0 14px 3px rgba(var(--lc-rgb,255,255,255),1),0 0 32px 8px rgba(255,255,255,.8)}
+.pk-pack{transition:opacity .6s,transform .7s}
+.pk-pack.spent{opacity:0;transform:translateY(22%) scale(.86)}
+
+/* ---- l'invocation (plein écran) ---- */
+.pk{--lc-rgb:140,170,255;position:fixed;inset:0;z-index:70;overflow:hidden;opacity:0;transition:opacity .45s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;outline:none;
+  background:radial-gradient(120% 90% at 50% 62%,rgba(var(--lc-rgb),.26),#04060f 62%),#04060f}
+.pk[hidden]{display:none}
+.pk.on{opacity:1}
+.pk-fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+.pk-rays{position:absolute;left:50%;top:50%;width:150vmax;height:150vmax;margin:-75vmax 0 0 -75vmax;pointer-events:none;opacity:0;transition:opacity 1.2s .3s;
+  background:repeating-conic-gradient(from 0deg,rgba(var(--lc-rgb),.32) 0 5deg,transparent 5deg 15deg);-webkit-mask:radial-gradient(circle,#000 0,transparent 42%);mask:radial-gradient(circle,#000 0,transparent 42%);animation:pkspin 28s linear infinite}
+.pk.on .pk-rays{opacity:.95}
+.pk.legend .pk-rays{animation-duration:9s}
+.pk-flash{position:absolute;inset:0;z-index:8;pointer-events:none;opacity:0;background:var(--fc,#fff)}
+.pk-flash.go{animation:pkflash .6s ease-out}
+.pk-world{position:absolute;inset:0;z-index:3;display:grid;place-items:center;padding-bottom:12vh;box-sizing:border-box}
+.pk-world.shake{animation:pkscreen .55s linear}
+.pk-tilt{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .16s ease-out;transform-style:preserve-3d}
+.pk-bob{animation:pkfloat 3.4s ease-in-out infinite}
+.pk-stage{position:relative;width:min(220px,58vw);aspect-ratio:5/9}
+.pk-portal{position:absolute;left:50%;bottom:-7%;width:190%;height:24%;transform:translateX(-50%) scale(0);opacity:0;border-radius:50%;pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(var(--lc-rgb),.95) 0,rgba(var(--lc-rgb),.4) 38%,transparent 72%);box-shadow:0 0 70px 12px rgba(var(--lc-rgb),.55)}
+.pk-portal::before,.pk-portal::after{content:"";position:absolute;inset:6%;border-radius:50%;border:3px solid rgba(var(--lc-rgb),.95);box-shadow:0 0 22px rgba(var(--lc-rgb),.9),inset 0 0 22px rgba(var(--lc-rgb),.6)}
+.pk-portal::after{inset:20%;border-width:2px;opacity:.7;animation:pkring 2.2s ease-in-out infinite}
+.pk-beam{position:absolute;left:50%;bottom:2%;width:150%;height:330%;transform:translateX(-50%) scaleY(0);transform-origin:50% 100%;opacity:0;pointer-events:none;filter:blur(3px);
+  background:linear-gradient(to top,rgba(var(--lc-rgb),.9),rgba(var(--lc-rgb),.28) 42%,transparent 85%);-webkit-mask:linear-gradient(90deg,transparent,#000 32%,#000 68%,transparent);mask:linear-gradient(90deg,transparent,#000 32%,#000 68%,transparent)}
+.pk-spill{position:absolute;left:50%;top:var(--cy,15%);width:150%;height:250%;transform:translate(-50%,-100%);opacity:0;pointer-events:none;filter:blur(7px);
+  background:linear-gradient(to top,rgba(var(--lc-rgb),.9),rgba(var(--lc-rgb),.25) 45%,transparent 90%);clip-path:polygon(34% 100%,66% 100%,100% 0,0 0)}
+.pk.on .pk-portal{animation:pkportal 1.1s cubic-bezier(.2,.9,.25,1) both}
+.pk.on .pk-beam{animation:pkbeam 1.6s ease-out .25s both}
+.pk.on .pk-pack{animation:pkarrive 1.4s cubic-bezier(.2,.9,.25,1) .95s backwards}
+.pk-stage .pk-pack{position:absolute;inset:0;width:auto;z-index:3}
+.pk-cardwrap{position:absolute;inset:0;pointer-events:none;perspective:1100px}
+.pk-card{--rc:#9aa4b5;position:absolute;left:50%;top:50%;width:min(300px,76vw,44vh);aspect-ratio:63/88;z-index:1;transform:translate(-50%,-50%) scale(.45);border-radius:4.5%/3.2%;transform-style:preserve-3d;will-change:transform}
+.pk-card img{display:block;width:100%;height:100%;border-radius:inherit;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 0 0 2px var(--rc),0 0 34px 2px var(--rc),0 14px 36px rgba(0,0,0,.5)}
+.pk-card .bk{position:absolute;inset:0;border-radius:inherit;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);display:grid;place-items:center;
+  background:radial-gradient(circle at 28% 18%,rgba(143,170,255,.95) 0,rgba(143,170,255,0) 55%),repeating-linear-gradient(45deg,rgba(255,255,255,.06) 0 2px,transparent 2px 16px),linear-gradient(160deg,#2a4fe0,#14309f 62%,#0e2377);box-shadow:0 0 0 2px var(--rc),0 0 30px var(--rc)}
+.pk-card .bk b{font:italic 700 34px 'Barlow Condensed',sans-serif;color:#222;background:rgba(255,255,255,.92);padding:6px 20px;border-radius:99px 8px 8px 99px}
+.pk-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;mix-blend-mode:screen;opacity:0;backface-visibility:hidden;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.65) 48%,transparent 66%);background-size:260% 100%}
+.pk-card.front{z-index:6;transform:translate(-50%,-58%) scale(1)}
+.pk-card.front::after{opacity:1;animation:pkfoil 1.6s ease-out .3s 2}
+.pk-card.leave{z-index:6;animation:pkleave .5s ease-in forwards}
+.pk-tag{position:absolute;left:8px;top:8px;z-index:2;padding:3px 10px;border-radius:99px;background:#fff;color:#111;font:700 13px 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;opacity:0;transform:scale(.6);transition:.4s .35s;backface-visibility:hidden}
+.pk-card.front .pk-tag{opacity:1;transform:none}
+.pk-card.legend img{box-shadow:0 0 0 3px var(--rc),0 0 60px 8px var(--rc),0 14px 36px rgba(0,0,0,.5)}
+.pk-rar{position:absolute;left:0;right:0;bottom:calc(max(36px,env(safe-area-inset-bottom,0px)) + 100px);display:grid;justify-items:center;gap:6px;pointer-events:none;opacity:0;z-index:7}
+.pk-rar.go{animation:pkpop .45s cubic-bezier(.2,1.2,.3,1) both}
+.pk-rar .rar{font-size:15px;padding:4px 14px}
+.pk-rar.legend .rar{font-size:20px;padding:6px 20px;box-shadow:0 0 30px var(--rc)}
+.pk-count{font:600 13px Barlow,sans-serif;opacity:.7;letter-spacing:.08em}
+.pk-row{position:absolute;left:0;right:0;bottom:calc(max(36px,env(safe-area-inset-bottom,0px)) + 48px);display:flex;justify-content:center;gap:7px;pointer-events:none;z-index:7}
+.pk-row img{width:30px;aspect-ratio:63/88;object-fit:cover;border-radius:4px;box-shadow:0 0 0 1.5px var(--rc);animation:pkpop .4s both}
+.pk-hint{position:absolute;left:0;right:0;bottom:calc(max(36px,env(safe-area-inset-bottom,0px)) + 6px);text-align:center;margin:0;font:600 19px 'Barlow Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#fff;text-shadow:0 0 14px rgba(var(--lc-rgb),.9);animation:pkpulse 1.6s ease-in-out infinite;pointer-events:none;z-index:7}
+.pk-close,.pk-skip,.pk-info{position:absolute;top:max(14px,env(safe-area-inset-top,0px));z-index:10;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.35);color:#fff;border-radius:99px;font:600 15px 'Barlow Condensed',sans-serif;letter-spacing:.05em;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.pk-close,.pk-info{width:40px;height:40px}
+.pk-close{right:max(14px,env(safe-area-inset-right,0px));font-size:18px}
+.pk-info{right:calc(max(14px,env(safe-area-inset-right,0px)) + 50px);font:italic 700 21px Georgia,'Times New Roman',serif}
+.pk-skip{left:max(14px,env(safe-area-inset-left,0px));padding:9px 16px}
+.pk-skip[hidden]{display:none}
+.pk-final{position:absolute;inset:0;z-index:7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:70px 16px 24px;box-sizing:border-box;overflow:auto;background:rgba(4,6,15,.55)}
+.pk-final[hidden]{display:none}
+.pk-final h2{margin:0;font:700 38px/1 'Barlow Condensed',sans-serif;text-shadow:0 0 24px rgba(var(--lc-rgb),.9)}
+.pk-fin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:min(420px,92vw)}
+.pk-fin-grid figure{margin:0;display:grid;gap:5px;justify-items:center;text-align:center;animation:pkpop .5s both}
+.pk-fin-grid img{width:100%;aspect-ratio:63/88;object-fit:cover;border-radius:7px;box-shadow:0 0 0 2px var(--rc),0 0 22px var(--rc)}
+.pk-fin-grid .rar{font-size:10px;padding:2px 8px}
+.pk-fin-grid small{font:600 11px Barlow,sans-serif;opacity:.85;color:#fff}
+.pk-fin-msg{margin:0;font:500 14px Barlow,sans-serif;opacity:.85;text-align:center;color:#fff}
+.pk-fin-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.pk-final .gbtn{color:#fff}
+@keyframes pkspin{to{transform:rotate(360deg)}}
+@keyframes pkportal{0%{opacity:0;transform:translateX(-50%) scale(0)}60%{opacity:1;transform:translateX(-50%) scale(1.15)}100%{opacity:.95;transform:translateX(-50%) scale(1)}}
+@keyframes pkring{0%,100%{transform:scale(.9);opacity:.4}50%{transform:scale(1.08);opacity:.9}}
+@keyframes pkbeam{0%{opacity:0;transform:translateX(-50%) scaleY(0)}35%{opacity:1}60%{transform:translateX(-50%) scaleY(1)}100%{opacity:.4;transform:translateX(-50%) scaleY(1)}}
+@keyframes pkarrive{0%{opacity:0;transform:translateY(34%) scale(.2) rotateY(-720deg);filter:brightness(4) blur(6px)}55%{opacity:1;filter:brightness(2.2) blur(0)}100%{opacity:1;transform:none;filter:brightness(1)}}
+@keyframes pkfloat{0%,100%{transform:translateY(0) rotate(-.6deg)}50%{transform:translateY(-12px) rotate(.8deg)}}
+@keyframes pkburst{0%{opacity:1;transform:scale(.6,.2)}100%{opacity:0;transform:scale(1.5,7)}}
+@keyframes pkflash{0%{opacity:var(--fo,.5)}100%{opacity:0}}
+@keyframes pkpulse{0%,100%{opacity:.55;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+@keyframes pkfoil{0%{background-position:150% 0}100%{background-position:-50% 0}}
+@keyframes pkleave{0%{transform:translate(-50%,-58%) scale(1);opacity:1}100%{transform:translate(-50%,38vh) rotate(16deg) scale(.22);opacity:0}}
+@keyframes pkpop{from{opacity:0;transform:translateY(22px) scale(.6)}to{opacity:1;transform:none}}
+@keyframes pkscreen{0%,100%{transform:none}10%{transform:translate(-9px,5px)}25%{transform:translate(8px,-6px)}40%{transform:translate(-7px,-4px)}55%{transform:translate(6px,6px)}70%{transform:translate(-4px,2px)}85%{transform:translate(3px,-2px)}}
+@media (prefers-reduced-motion:reduce){.pk *,.pk{animation-duration:.01s!important;animation-delay:0s!important;transition-duration:.01s!important}.pk-rays,.pk-bob,.pk-foil,.pk-hint,.pk-portal::after,.bst-mini{animation:none!important}.pk-tilt{transform:none!important}}
+
+/* ---- barre d'onglets du bas (Bibliothèque · Concours · Booster) ---- */
+.ico{display:inline-grid;place-items:center;line-height:0}
+.ico svg,.ico img{width:22px;height:22px;display:block;object-fit:contain}
+.exp-ico svg,.exp-ico img{width:34px;height:34px}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:none;justify-content:center;box-sizing:border-box;
+  padding:0 max(8px,env(safe-area-inset-left,0px)) env(safe-area-inset-bottom,0px) max(8px,env(safe-area-inset-right,0px));
+  background:linear-gradient(180deg,rgba(var(--deep-rgb),.35),rgba(var(--panel-rgb),.96) 32%);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-top:1px solid rgba(255,255,255,.2);box-shadow:0 -10px 30px rgba(var(--shade-rgb),.45)}
+body.view-deck .tabbar{display:flex}
+.tabbar-in{display:flex;width:min(520px,100%);gap:4px}
+.tab{position:relative;flex:1;min-width:0;display:grid;justify-items:center;gap:2px;padding:14px 4px 10px;border:0;background:none;color:#fff;cursor:pointer;opacity:.6;
+  font:700 12px 'Barlow Condensed',sans-serif;letter-spacing:.1em;text-transform:uppercase;transition:opacity .2s}
+.tab-ico{display:grid;place-items:center;width:34px;height:34px;transition:transform .3s cubic-bezier(.2,1.4,.4,1),filter .3s}
+.tab-ico svg,.tab-ico img{width:32px;height:32px;display:block;object-fit:contain}
+.tab[aria-current=page]{opacity:1}
+.tab[aria-current=page] .tab-ico{transform:translateY(-5px) scale(1.2);filter:drop-shadow(0 0 9px rgba(var(--acc-rgb),1)) drop-shadow(0 0 2px rgba(255,255,255,.7))}
+.tab[aria-current=page]::before{content:"";position:absolute;top:-1px;left:24%;right:24%;height:3px;border-radius:0 0 4px 4px;background:linear-gradient(90deg,var(--acc1),#fff,var(--acc1));box-shadow:0 0 12px rgba(var(--acc-rgb),1)}
+.tab:focus-visible{outline:2px solid #fff;outline-offset:-4px;border-radius:12px}
+.tab i{position:absolute;top:8px;left:calc(50% + 9px);width:10px;height:10px;border-radius:50%;background:#ff4d4d;box-shadow:0 0 0 2px rgba(255,255,255,.6)}
+.tab i[hidden]{display:none}
+body.view-deck{padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+.dk-sort{white-space:nowrap}
+.dk-head h1{font-size:clamp(34px,9.6vw,46px)}
+body.view-deck .toast{bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+#uni-modal{z-index:90}
+.uni-ta{width:100%;box-sizing:border-box;margin-top:12px;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.35);color:#fff;font:12px/1.4 ui-monospace,Menlo,Consolas,monospace;resize:vertical}
+#uni-modal select,#uni-modal input{font:400 15px Barlow,sans-serif;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);border-radius:10px;padding:9px 12px;box-sizing:border-box}
+#uni-modal select option{color:#111}
+.mod-form{display:grid;gap:10px;margin-top:10px}
+.mod-form[hidden],.v-uni[hidden]{display:none}
+.mod-actions{display:grid;gap:8px;justify-items:start;margin-top:8px}
+.mod-actions [hidden]{display:none}
+.mod-form [hidden]{display:none}
+.mod-form input{font:400 16px Barlow,sans-serif;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:10px;padding:11px 14px;box-sizing:border-box;width:100%}
+.mod-form .gbtn{justify-self:start}
+.v-uni{display:grid;gap:8px;justify-items:center;margin-top:10px}
+.v-uni select{font:500 15px Barlow,sans-serif;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:8px 12px}
+.v-uni select option{color:#111}
+body.viewing .vbar{flex-direction:column;align-items:center}
 </style>
+<script>try{var __t=localStorage.getItem('mycard-theme');if(__t&&/^(blue|red|black|white)$/.test(__t))document.documentElement.dataset.theme=__t}catch(e){}</script>
 </head>
 <body class="locked">
 <div class="bg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
@@ -415,15 +659,17 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
   <p class="hello" data-i18n="lang.subtitle">Tu pourras la changer plus tard.</p>
   <div class="lgrid" id="lgrid"></div>
 </section>
-<section class="deck" id="deck" aria-label="Mon deck">
-  <header class="dk-head"><div><p class="dk-hello" id="dk-hello"></p><h1 data-i18n="deck.title">Mon deck</h1><p class="dk-count" id="dk-count"></p></div>
-    <div class="dk-tools"><button type="button" id="dk-sort" class="dk-sort" aria-haspopup="menu" aria-expanded="false" aria-controls="dk-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg><span id="dk-sort-l" data-i18n="deck.sortDefault">Récentes</span></button><div class="dk-menu" id="dk-menu" role="menu" aria-label="Trier les cartes" data-i18n-aria="deck.sortAria" hidden></div><button type="button" id="dk-settings" class="gbtn iconbtn" aria-label="Paramètres"><span aria-hidden="true">⚙️</span></button><button type="button" id="dk-new" class="dk-plus" aria-label="Nouvelle carte">+</button></div></header>
+<section class="deck" id="deck" aria-label="Ma bibliothèque">
+  <header class="dk-head"><div><p class="dk-hello" id="dk-hello"></p><h1 data-i18n="deck.title">Ma bibliothèque</h1><p class="dk-count" id="dk-count"></p></div>
+    <div class="dk-tools"><button type="button" id="dk-sort" class="dk-sort" aria-haspopup="menu" aria-expanded="false" aria-controls="dk-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg><span id="dk-sort-l" data-i18n="deck.sortDefault">Récentes</span></button><div class="dk-menu" id="dk-menu" role="menu" aria-label="Trier les cartes" data-i18n-aria="deck.sortAria" hidden></div><button type="button" id="dk-settings" class="gbtn iconbtn" aria-label="Paramètres"><span class="ico" data-ico="gear"></span></button><button type="button" id="dk-new" class="dk-plus" aria-label="Nouvelle carte">+</button></div></header>
+  <div class="dk-search"><input id="dk-q" type="search" autocomplete="off" enterkeyhint="search" placeholder="Rechercher une carte…" aria-label="Rechercher dans la bibliothèque" data-i18n-ph="deck.searchPh" data-i18n-aria="deck.searchAria"></div>
   <div class="dk-grid" id="dk-grid"></div>
-  <p class="dk-empty" id="dk-empty" hidden data-i18n="deck.empty">Ton deck est vide. Touche « Nouvelle carte » pour créer ta première carte.</p>
+  <p class="dk-empty" id="dk-nores" hidden data-i18n="deck.noResults">Aucune carte ne correspond à ta recherche.</p>
+  <p class="dk-empty" id="dk-empty" hidden data-i18n="deck.empty">Ta bibliothèque est vide. Touche « Nouvelle carte » pour créer ta première carte.</p>
   <button type="button" id="dk-change" class="linkbtn" data-i18n="deck.changeUser">changer d'utilisateur</button>
 </section>
 <section id="settings" class="deck" hidden>
-  <header class="dk-head"><div><button type="button" id="set-back" class="linkbtn" data-i18n="stage.back" style="padding:0;margin-bottom:6px">‹ Deck</button><h1 data-i18n="settings.title">Paramètres</h1></div></header>
+  <header class="dk-head"><div><button type="button" id="set-back" class="linkbtn" data-i18n="stage.back" style="padding:0;margin-bottom:6px">‹ Bibliothèque</button><h1 data-i18n="settings.title">Paramètres</h1></div></header>
   <div class="set-block">
     <h2 class="set-h" data-i18n="settings.account">Compte</h2>
     <p class="set-p" id="set-loggedas"></p>
@@ -432,6 +678,22 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
   <div class="set-block">
     <h2 class="set-h" data-i18n="settings.language">Langue</h2>
     <div class="lgrid" id="set-lgrid"></div>
+  </div>
+  <div class="set-block">
+    <h2 class="set-h" data-i18n="settings.theme">Thème de couleur</h2>
+    <div class="lgrid" id="set-theme"></div>
+  </div>
+  <div class="set-block">
+    <h2 class="set-h" data-i18n="settings.mod">Modérateur</h2>
+    <form id="mod-in" class="mod-form" autocomplete="off">
+      <input id="mod-user" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Identifiant modérateur" aria-label="Identifiant modérateur" data-i18n-ph="mod.user" data-i18n-aria="mod.user">
+      <input id="mod-code" type="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Code" aria-label="Code" data-i18n-ph="mod.code" data-i18n-aria="mod.code">
+      <button type="submit" id="mod-login" class="gbtn primary" data-i18n="mod.login">Se connecter</button>
+      <button type="button" id="mod-bio-login" class="gbtn" hidden data-i18n="mod.bioLogin">Se connecter avec Touch ID / Face ID</button>
+      <p class="set-p" id="mod-err" role="status"></p>
+    </form>
+    <div id="mod-out" hidden><p class="set-p" data-i18n="mod.on">Mode modérateur actif sur cet appareil.</p><div class="mod-actions"><button type="button" id="mod-bio-on" class="gbtn" data-i18n="mod.bioOn">Activer Touch ID / Face ID sur cet appareil</button><button type="button" id="mod-bio-off" class="gbtn" hidden data-i18n="mod.bioOff">Désactiver Touch ID / Face ID</button><button type="button" id="mod-logout" class="gbtn" data-i18n="mod.logout">Se déconnecter</button></div><p class="set-p" id="mod-bio-msg" role="status"></p></div>
+    <p class="set-p" data-i18n="settings.modNote">Protection légère, côté navigateur.</p>
   </div>
   <details class="set-block">
     <summary class="set-h" data-i18n="settings.privacyTitle">Politique de confidentialité</summary>
@@ -443,10 +705,35 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
     <a id="set-creditslink" href="https://github.com/simeydotme/pokemon-cards-css" target="_blank" rel="noopener" class="glink" data-i18n="settings.creditsLink">pokemon-cards-css sur GitHub</a>
   </details>
 </section>
+<section id="contest" class="deck" hidden>
+  <header class="dk-head"><div><h1 data-i18n="contest.title">Concours de la semaine</h1><p class="ct-sub" id="ct-week"></p></div></header>
+  <p class="demo-note" data-i18n="contest.demo">Mode démo : les participations et les votes restent sur cet appareil. Le vrai vote en ligne viendra avec un serveur.</p>
+  <div class="set-block" id="ct-mine"></div>
+  <div class="set-block"><h2 class="set-h" data-i18n="contest.entries">Cartes en lice</h2><p class="set-p" id="ct-noent" hidden data-i18n="contest.noEntries">Personne n’a encore participé cette semaine.</p><div class="dk-grid" id="ct-grid" style="margin-top:14px"></div></div>
+  <div class="set-block"><h2 class="set-h" data-i18n="contest.results">Résultats des semaines passées</h2><div id="ct-res"></div></div>
+  <div class="set-block" id="ct-mod" hidden><h2 class="set-h" data-i18n="contest.mod">Validation du modérateur</h2><div id="ct-modlist"></div></div>
+  <details class="set-block">
+    <summary class="set-h" data-i18n="demo.tools">Outils démo</summary>
+    <div class="ct-row"><button type="button" class="gbtn" id="dm-seed" data-i18n="demo.seed">Ajouter 3 participants de démo</button><button type="button" class="gbtn" id="dm-end" data-i18n="demo.endWeek">Simuler la fin de la semaine</button><button type="button" class="gbtn" id="dm-back" data-i18n="demo.backWeek">Revenir à la semaine réelle</button><button type="button" class="gbtn" id="dm-clear" data-i18n="demo.clear">Effacer les données du concours</button></div>
+  </details>
+</section>
+<section id="booster" class="deck" hidden>
+  <header class="dk-head"><div><h1 data-i18n="drop.title">Booster du jour</h1></div><button type="button" id="bst-info" class="gbtn info-btn" aria-label="Chances et couleurs" data-i18n-aria="info.btn">i</button></header>
+  <p class="demo-note" data-i18n="drop.demo">Mode démo : le booster se recharge chaque jour sur cet appareil.</p>
+  <div class="bst-stage">
+    <div id="bst-pack"></div>
+    <p class="bst-msg" id="bst-msg" role="status"></p>
+    <button type="button" id="bst-open" class="gbtn primary" data-i18n="drop.open">Invoquer le booster</button>
+  </div>
+  <details class="set-block">
+    <summary class="set-h" data-i18n="demo.tools">Outils démo</summary>
+    <div class="ct-row"><button type="button" class="gbtn" id="dm-drop" data-i18n="demo.resetDrop">Réactiver le booster du jour</button></div>
+  </details>
+</section>
 <div class="who"><span id="who-n"></span> · <button type="button" id="u-change" data-i18n="stage.change">changer</button></div>
 <div class="stage" id="stage"><div class="shadow" id="shadow"></div><div class="glow" id="glow"></div><div class="flipper" id="flipper"><div class="card" id="card"></div><div class="cardback"><div class="logo">MyCard</div></div></div></div>
 <div class="actions"><button type="button" id="dl" class="gbtn" data-i18n="stage.download">Télécharger en image</button><button type="button" id="sh" class="gbtn" data-i18n="stage.share">Partager</button></div>
-<div class="vbar"><button type="button" id="v-edit" class="gbtn primary" data-i18n="stage.personalize">Personnaliser</button></div>
+<div class="vbar"><button type="button" id="v-edit" class="gbtn primary" data-i18n="stage.personalize">Personnaliser</button><div class="v-uni" id="v-uni-box" hidden><select id="v-uni-rar" aria-label="Rareté" data-i18n-aria="uni.rarity"></select><button type="button" id="v-uni" class="gbtn primary" data-i18n="uni.add">Ajouter à la bibliothèque universelle</button><button type="button" id="v-uni-file" class="linkbtn" data-i18n="uni.fileBtn">Copier pour le fichier</button></div></div>
 <div class="hint" id="hint" data-i18n="stage.hintDefault">Bouge la souris ou le doigt sur la carte</div>
 <button type="button" id="gyro" class="gbtn" hidden aria-pressed="false" data-i18n="stage.gyroActivate">Activer le gyroscope</button>
 <a id="gopen" class="glink" hidden target="_blank" rel="noopener" data-i18n="stage.gyroOpenAlone">Ouvrir la page seule dans le navigateur</a>
@@ -487,12 +774,42 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
   </div>
   <div class="step editor" data-step="effect" hidden>
     <div class="wide en-row"><span data-i18n="panel.effect.label">Effet holographique</span><div class="fxgrid" id="fxgrid"></div></div>
-    <select id="f-fx" hidden><option value="classic">Holo classique (diagonal, style V)</option><option value="reverse">Reverse holo (étoiles à 5 branches)</option><option value="regular">Holo régulier</option><option value="cosmos">Cosmos / galaxie</option><option value="sitereverse">Reverse holo foil</option><option value="vfull">V pleine illustration</option><option value="rainbow">Rainbow / secret</option><option value="shinyv">Shiny V</option><option value="amazing">Amazing Rare</option><option value="vmax">VMax</option></select>
+    <select id="f-fx" hidden><option value="classic">Holo classique (diagonal, style V)</option><option value="reverse">Reverse holo (étoiles à 5 branches)</option><option value="regular">Holo régulier</option><option value="cosmos">Cosmos / galaxie</option><option value="sitereverse">Reverse holo foil</option><option value="metal">Métallique (acier brossé)</option><option value="vfull">V pleine illustration</option><option value="rainbow">Rainbow / secret</option><option value="shinyv">Shiny V</option><option value="amazing">Amazing Rare</option><option value="vmax">VMax</option></select>
     <label class="wide"><span data-i18n="panel.effect.intensity">Intensité de l'effet :</span> <output id="kv">100%</output><input type="range" id="f-k" min="0" max="2" step="0.05" value="1"></label>
   </div>
   <div class="nav"><button type="button" id="s-prev" class="gbtn" data-i18n="panel.prev">← Précédent</button><button type="button" id="s-next" class="gbtn" data-i18n="panel.next">Suivant →</button></div>
 </section>
 <button type="button" id="e-del" class="linkbtn" data-i18n="panel.deleteCard">Supprimer cette carte</button>
+<div class="pk" id="pk" hidden role="dialog" aria-modal="true" aria-label="Booster" data-i18n-aria="drop.pack" tabindex="-1">
+  <div class="pk-rays"></div>
+  <div class="pk-flash" id="pk-flash"></div>
+  <canvas class="pk-fx" id="pk-fx"></canvas>
+  <button type="button" class="pk-skip" id="pk-skip" hidden data-i18n="drop.skip">Tout révéler</button>
+  <button type="button" class="pk-info" id="pk-info" aria-label="Chances et couleurs" data-i18n-aria="info.btn">i</button>
+  <button type="button" class="pk-close" id="pk-close" aria-label="Fermer" data-i18n-aria="drop.close">✕</button>
+  <div class="pk-world" id="pk-world"><div class="pk-tilt"><div class="pk-bob"><div class="pk-stage" id="pk-stage">
+    <div class="pk-portal"></div><div class="pk-beam"></div><i class="pk-spill" id="pk-spill"></i>
+    <div class="pk-cardwrap" id="pk-cardwrap"></div>
+    <div class="pk-pack" id="pk-pack"></div>
+  </div></div></div></div>
+  <div class="pk-rar" id="pk-rar"><span class="rar" id="pk-rar-n"></span><span class="pk-count" id="pk-count"></span></div>
+  <div class="pk-row" id="pk-row"></div>
+  <p class="pk-hint" id="pk-hint" role="status"></p>
+  <div class="pk-final" id="pk-final" hidden>
+    <h2 id="pk-fin-t"></h2><div class="pk-fin-grid" id="pk-fin-grid"></div><p class="pk-fin-msg" id="pk-fin-msg"></p>
+    <div class="pk-fin-btns"><button type="button" class="gbtn primary" id="pk-see" data-i18n="drop.see">Voir ma bibliothèque</button><button type="button" class="gbtn" id="pk-done" data-i18n="drop.close">Fermer</button></div>
+  </div>
+</div>
+<div class="cfm" id="uni-modal" hidden><div class="info-box" role="dialog" aria-modal="true" aria-labelledby="uni-t"><button type="button" class="info-x" id="uni-x" aria-label="Fermer" data-i18n-aria="drop.close">✕</button><h3 id="uni-t" data-i18n="uni.title">Ajouter à la bibliothèque universelle</h3>
+  <div class="ct-row"><label style="flex:1;min-width:0"><span class="set-p" data-i18n="uni.rarity">Rareté</span><select id="uni-rar" style="width:100%"></select></label><label style="flex:1;min-width:0"><span class="set-p" data-i18n="uni.id">Identifiant</span><input id="uni-id" type="text" autocomplete="off" style="width:100%"></label></div>
+  <textarea id="uni-ta" class="uni-ta" readonly rows="8" spellcheck="false"></textarea><p class="set-p" id="uni-size"></p><p class="set-p" data-i18n="uni.help">Copie ce texte et colle-le dans universal-cards.js, juste avant la ligne « ]; ».</p>
+  <div class="ct-row"><button type="button" class="gbtn primary" id="uni-copy" data-i18n="uni.copy">Copier</button></div></div></div>
+<div class="cfm" id="odds-modal" hidden><div class="info-box" role="dialog" aria-modal="true" aria-labelledby="info-t"><button type="button" class="info-x" id="info-x" aria-label="Fermer" data-i18n-aria="drop.close">✕</button><h3 id="info-t" data-i18n="info.title">Chances et couleurs</h3><div id="info-body"></div></div></div>
+<nav class="tabbar" id="tabbar" aria-label="Navigation" data-i18n-aria="tab.nav"><div class="tabbar-in">
+  <button type="button" class="tab" data-tab="library" aria-current="page"><span class="tab-ico" data-ico="library"></span><span data-i18n="tab.library">Bibliothèque</span></button>
+  <button type="button" class="tab" data-tab="contest" aria-current="false"><span class="tab-ico" data-ico="contest"></span><span data-i18n="tab.contest">Concours</span></button>
+  <button type="button" class="tab" data-tab="booster" aria-current="false"><span class="tab-ico" data-ico="booster"></span><span data-i18n="tab.booster">Booster</span><i id="drop-dot" hidden></i></button>
+</div></nav>
 <div class="toast" id="toast" role="status"></div>
 <div class="cfm" id="cfm" hidden><div class="cfm-box" role="alertdialog" aria-modal="true" aria-labelledby="cfm-t" aria-describedby="cfm-p"><h3 id="cfm-t"></h3><p id="cfm-p"></p><div class="cfm-b"><button type="button" id="cfm-no" class="gbtn" data-i18n="confirm.continue">Continuer</button><button type="button" id="cfm-yes" class="gbtn primary"></button></div></div></div>
 <div class="cfm" id="exp-modal" hidden>
@@ -500,8 +817,8 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
     <h3 id="exp-t" data-i18n="export.downloadTitle">Télécharger ma carte</h3>
     <p id="exp-desc" style="margin:0 0 4px;font:400 14px/1.4 Barlow,sans-serif;opacity:.8" data-i18n="export.downloadDesc">Choisis le format :</p>
     <div class="exp-opts">
-      <button type="button" id="exp-opt-png" class="exp-opt"><span class="exp-ico">📸</span><strong data-i18n="export.pngTitle">Image fixe</strong><small data-i18n-html="export.pngDesc">PNG haute résolution<br>840 × 1 174 px</small></button>
-      <button type="button" id="exp-opt-gif" class="exp-opt hi"><span class="exp-ico">✨</span><strong data-i18n="export.gifTitle">Animation holo</strong><small data-i18n-html="export.gifDesc">GIF animé en boucle<br>reflets holographiques</small></button>
+      <button type="button" id="exp-opt-png" class="exp-opt"><span class="exp-ico ico" data-ico="camera"></span><strong data-i18n="export.pngTitle">Image fixe</strong><small data-i18n-html="export.pngDesc">PNG haute résolution<br>840 × 1 174 px</small></button>
+      <button type="button" id="exp-opt-gif" class="exp-opt hi"><span class="exp-ico ico" data-ico="sparkle"></span><strong data-i18n="export.gifTitle">Animation holo</strong><small data-i18n-html="export.gifDesc">GIF animé en boucle<br>reflets holographiques</small></button>
     </div>
     <div id="exp-prog" class="exp-prog" hidden><div class="exp-track"><div id="exp-fill" class="exp-fill"></div></div><p id="exp-lbl" class="exp-lbl"></p></div>
     <div class="cfm-b"><button type="button" id="exp-close" class="gbtn" data-i18n="export.close">Fermer</button></div>
@@ -509,6 +826,7 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
 </div>
 <div class="intro" id="intro"><h2 data-i18n-html="intro.title">Personnalise<br>ta carte</h2><button type="button" id="lesgo" class="lesgo" data-i18n="intro.go">Let's go</button></div>
 
+<script src="universal-cards.js"></script>
 <script>
 const I18N={
 fr:{dir:'ltr',
@@ -516,14 +834,15 @@ fr:{dir:'ltr',
  'login.googleBtn':'Se connecter avec Google','login.googleAria':'Se connecter avec Google (bientôt disponible)','login.appleBtn':'Se connecter avec Apple','login.appleAria':'Se connecter avec Apple (bientôt disponible)','login.soon':'bientôt',
  'login.errNeedName':"Entre un nom d'utilisateur pour continuer.",'login.errProviderNotReady':"La connexion avec {provider} n'est pas encore activée. Continue avec ton nom d'utilisateur pour le moment.",'login.uniqueNote':"L'unicité du pseudo sera vérifiée une fois la connexion Google activée.",'deck.hello':'Bonjour, {user} :)',
  'lang.title':'Choisis ta langue','lang.subtitle':'Tu pourras la changer plus tard.',
- 'deck.title':'Mon deck','deck.newTitle':'Nouvelle carte','deck.newDesc':'Crée une carte','deck.empty':'Ton deck est vide. Touche « Nouvelle carte » pour créer ta première carte.','deck.changeUser':"changer d'utilisateur",
+ 'deck.title':'Ma bibliothèque','deck.newTitle':'Nouvelle carte','deck.newDesc':'Crée une carte','deck.empty':'Ta bibliothèque est vide. Touche « Nouvelle carte » pour créer ta première carte.','deck.changeUser':"changer d'utilisateur",
  'deck.sortDefault':'Récentes','deck.sortAria':'Trier les cartes','deck.cardsOne':'carte','deck.cardsMany':'cartes','deck.changeLang':'langue',
- 'deck.sort.added':'Plus récemment ajoutées','deck.sort.addedShort':'Ajout récent','deck.sort.first':'Ajoutées en premier','deck.sort.firstShort':'Ajout ancien',
- 'deck.sort.recent':'Plus récemment modifiées','deck.sort.recentShort':'Modif. récente','deck.sort.old':'Modifiées il y a longtemps','deck.sort.oldShort':'Modif. ancienne',
- 'deck.sort.az':'Nom A → Z','deck.sort.azShort':'A → Z','deck.sort.za':'Nom Z → A','deck.sort.zaShort':'Z → A',
- 'deck.sort.pvd':'PV décroissants','deck.sort.pvdShort':'PV ↓','deck.sort.pva':'PV croissants','deck.sort.pvaShort':'PV ↑','deck.sort.type':'Par type','deck.sort.typeShort':'Type',
- 'deck.group.added':"Date d'ajout",'deck.group.modified':'Dernière modification','deck.group.name':'Nom','deck.group.other':'Autres',
- 'stage.back':'‹ Deck','stage.change':'changer','stage.download':'Télécharger en image','stage.share':'Partager','stage.personalize':'Personnaliser','stage.hintDefault':'Bouge la souris ou le doigt sur la carte',
+ 'deck.sort.rarD':'Plus rares d’abord','deck.sort.rarDShort':'Rareté ↓',
+ 'deck.sort.added':'Plus récemment ajoutées','deck.sort.addedShort':'Ajout récent',
+ 
+ 'deck.sort.az':'Nom A → Z','deck.sort.azShort':'A → Z',
+ 'deck.sort.pvd':'PV décroissants','deck.sort.pvdShort':'PV ↓','deck.sort.type':'Par type','deck.sort.typeShort':'Type',
+ 
+ 'stage.back':'‹ Bibliothèque','stage.change':'changer','stage.download':'Télécharger en image','stage.share':'Partager','stage.personalize':'Personnaliser','stage.hintDefault':'Bouge la souris ou le doigt sur la carte',
  'stage.gyroActivate':'Activer le gyroscope','stage.gyroActive':'Gyroscope actif','stage.gyroOpenAlone':'Ouvrir la page seule dans le navigateur',
  'gyro.sensorActive':'Capteur actif : β {b}° γ {g}°','gyro.noMotion':'Aucun mouvement reçu.','gyro.httpsNeeded':' La page doit être en HTTPS pour accéder au capteur.',
  'gyro.framed':" La page est affichée dans un cadre (l'app ou le site) qui bloque le capteur : ouvre-la seule dans ton navigateur avec le lien ci-dessous.",
@@ -549,6 +868,133 @@ fr:{dir:'ltr',
  'export.errImg':"Impossible de créer l'image.",'export.errGif':'Impossible de créer le GIF animé.','export.shareUnavailable':"Le partage direct n'est pas disponible ici : le fichier est proposé en téléchargement.",'export.dlError':'Téléchargement impossible ici ({err}).',
  'intro.title':'Personnalise<br>ta carte','intro.go':"C'est parti",
  'perf.line':'écran {hz} Hz · {ms} ms · palier {tier}','perf.stride':' (effet ÷{n})',
+ 'deck.searchPh':'Rechercher une carte…','deck.searchAria':'Rechercher dans la bibliothèque','deck.noResults':'Aucune carte ne correspond à ta recherche.','fx.metal':'Métallique (acier brossé)',
+ 'settings.theme':'Thème de couleur','theme.blue':'Bleu','theme.red':'Rouge','theme.black':'Noir','theme.white':'Blanc',
+ 'contest.nav':'Concours',
+ 'contest.title':'Concours de la semaine',
+ 'contest.week':'Semaine {n} · se termine dans {t}',
+ 'contest.demo':'Mode démo : les participations et les votes restent sur cet appareil. Le vrai vote en ligne viendra avec un serveur.',
+ 'contest.mine':'Ma participation',
+ 'contest.noOwn':'Crée une carte pour participer au concours.',
+ 'contest.pick':'Choisis une de tes cartes',
+ 'contest.submit':'Participer',
+ 'contest.submitted':'Ta carte « {name} » participe cette semaine.',
+ 'contest.withdraw':'Retirer ma carte',
+ 'contest.entries':'Cartes en lice',
+ 'contest.noEntries':'Personne n’a encore participé cette semaine.',
+ 'contest.by':'par {a}',
+ 'contest.votesOne':'{n} vote',
+ 'contest.votesMany':'{n} votes',
+ 'contest.vote':'Voter',
+ 'contest.voted':'Voté ✓',
+ 'contest.yours':'Ta carte',
+ 'contest.results':'Résultats des semaines passées',
+ 'contest.noResults':'Aucun résultat pour le moment.',
+ 'contest.weekN':'Semaine {n}',
+ 'contest.status.pending':'En attente du modérateur',
+ 'contest.status.approved':'Entrée dans la bibliothèque universelle ({r})',
+ 'contest.status.rejected':'Refusée par le modérateur',
+ 'contest.status.none':'Aucun vote cette semaine',
+ 'contest.mod':'Validation du modérateur',
+ 'contest.modNone':'Aucune carte à valider.',
+ 'contest.approve':'Valider',
+ 'contest.reject':'Refuser',
+ 'contest.rarityFor':'Rareté',
+ 'contest.toastSubmitted':'Carte inscrite au concours !',
+ 'contest.toastWithdrawn':'Participation retirée.',
+ 'contest.toastApproved':'Carte validée : elle rejoint la bibliothèque universelle.',
+ 'contest.toastRejected':'Carte refusée.',
+ 'demo.tools':'Outils démo',
+ 'demo.seed':'Ajouter 3 participants de démo',
+ 'demo.endWeek':'Simuler la fin de la semaine',
+ 'demo.backWeek':'Revenir à la semaine réelle',
+ 'demo.clear':'Effacer les données du concours',
+ 'rarity.common':'Commune',
+ 'rarity.uncommon':'Peu commune',
+ 'rarity.rare':'Rare',
+ 'rarity.epic':'Épique',
+ 'rarity.legendary':'Légendaire',
+ 'settings.mod':'Modérateur',
+ 
+ 'settings.modNote':'Protection légère, côté navigateur : sans serveur, elle ne protège que cet appareil. Les cartes ajoutées à la bibliothèque universelle ne sont, pour l’instant, visibles que sur cet appareil.',
+ 'time.d':'j',
+ 'time.h':'h',
+ 'time.m':'min',
+ 'drop.nav':'Booster du jour',
+ 'drop.title':'Booster du jour',
+ 'drop.demo':'Mode démo : le booster se recharge chaque jour sur cet appareil.',
+ 'drop.ready':'Ton booster du jour est prêt !',
+ 'drop.wait':'Prochain booster dans {t}',
+ 'drop.open':'Invoquer le booster',
+ 'drop.tapOpen':'Tape pour ouvrir',
+ 'drop.tapNext':'Tape pour la carte suivante',
+ 'drop.tapEnd':'Tape pour voir ton booster',
+ 'drop.skip':'Tout révéler',
+ 'drop.close':'Fermer',
+ 'drop.cardNo':'Carte {i} / {n}',
+ 'drop.new':'Nouvelle',
+ 'drop.dup':'Doublon ×{n}',
+ 'drop.pack':'Ton booster',
+ 'drop.added':'{n} / {t} nouvelles cartes ajoutées à ta bibliothèque.',
+ 'drop.see':'Voir ma bibliothèque',
+ 'drop.cardsOne':'{n} carte',
+ 'drop.cardsMany':'{n} cartes',
+ 'drop.empty':'La bibliothèque universelle est vide pour le moment.',
+ 'demo.resetDrop':'Réactiver le booster du jour',
+ 'info.btn':'Voir les chances et les couleurs',
+ 'info.title':'Chances et couleurs',
+ 'info.how':'Comment ça marche',
+ 'info.h1':'Un booster contient 5 cartes tirées au hasard.',
+ 'info.h2':'Chaque carte reçoit sa rareté selon les pourcentages du tableau.',
+ 'info.h3':'Il y a au plus 1 légendaire par booster.',
+ 'info.h4':'Les cartes sortent de la moins rare à la plus rare.',
+ 'info.table':'Le tableau',
+ 'info.colRar':'Rareté',
+ 'info.colCards':'Cartes',
+ 'info.colOdds':'Par carte',
+ 'info.colPack':'Par booster',
+ 'info.dRar':'Le niveau de la carte.',
+ 'info.dCards':'Combien de cartes de cette rareté existent dans la bibliothèque universelle.',
+ 'info.dOdds':'La chance que chacune des 5 cartes de ton booster ait cette rareté.',
+ 'info.dPack':'La chance d’avoir au moins une carte de cette rareté (ou d’une rareté plus haute) dans ton booster.',
+ 'info.noCards':'Une rareté sans carte est retirée du tirage et ses chances sont redistribuées aux autres.',
+ 'info.colors':'La couleur du pack',
+ 'info.c1':'Pendant l’invocation, la lumière autour du pack change de couleur. Elle ne modifie pas tes chances : elle les révèle. Le booster est tiré avant l’animation, et sa couleur te montre ce qu’il contient.',
+ 'info.c2':'Plus ton pack contient de cartes rares, plus la couleur se rapproche de l’or des légendaires. Sa meilleure carte compte le plus ; les autres cartes la font glisser un peu plus loin.',
+ 'info.lk0':'Gris : que des communes (ou presque)',
+ 'info.lk1':'Vert : au mieux une peu commune',
+ 'info.lk2':'Bleu : au mieux une rare',
+ 'info.lk3':'Violet : au mieux une épique',
+ 'info.lk4':'Or : une légendaire !',
+ 'tab.library':'Bibliothèque','tab.contest':'Concours','tab.booster':'Booster','tab.nav':'Navigation',
+ 'uni.export':'Exporter pour la bibliothèque universelle',
+ 'uni.title':'Ajouter à la bibliothèque universelle',
+ 'uni.rarity':'Rareté',
+ 'uni.id':'Identifiant',
+ 'uni.help':'Copie ce texte et colle-le dans universal-cards.js, juste avant la ligne « ]; » (après la ligne de la carte précédente).',
+ 'uni.copy':'Copier',
+ 'uni.copied':'Copié !',
+ 'uni.size':'Taille : {n} Ko',
+ 'uni.big':'Image lourde : pour alléger le fichier, héberge-la et mets son adresse dans « img ».',
+ 'mod.user':'Identifiant modérateur',
+ 'mod.code':'Code',
+ 'mod.login':'Se connecter',
+ 'mod.logout':'Se déconnecter',
+ 'mod.on':'Mode modérateur actif sur cet appareil.',
+ 'mod.bad':'Identifiant ou code incorrect.',
+ 'mod.wait':'Trop d’essais : réessaie dans {s} s.',
+ 'mod.busy':'Vérification…',
+ 'mod.nocrypto':'Ce navigateur ne permet pas la vérification.',
+ 'uni.add':'Ajouter à la bibliothèque universelle',
+ 'uni.added':'Ajoutée à la bibliothèque universelle ({r}).',
+ 'uni.updated':'Mise à jour dans la bibliothèque universelle ({r}).',
+ 'uni.fileBtn':'Copier pour le fichier',
+ 'mod.bioLogin':'Se connecter avec Touch ID / Face ID',
+ 'mod.bioOn':'Activer Touch ID / Face ID sur cet appareil',
+ 'mod.bioOff':'Désactiver Touch ID / Face ID',
+ 'mod.bioDone':'Touch ID / Face ID activé : tu pourras te connecter sans taper le code.',
+ 'mod.bioFail':'Vérification biométrique impossible ou annulée.',
+ 'mod.bioNone':'Cet appareil ou ce navigateur ne propose pas Touch ID / Face ID (il faut une adresse https).',
  'settings.title':'Paramètres','settings.account':'Compte','settings.language':'Langue','settings.loggedAs':'Connecté en tant que {user}',
  'settings.privacyTitle':'Politique de confidentialité',
  'settings.privacy':"MyCard fonctionne entièrement dans ton navigateur. Il n'y a pas de serveur, et rien de ce que tu fais ici ne nous est envoyé, ni à personne d'autre.\n\nTon pseudo, tes cartes et tes réglages sont stockés uniquement sur cet appareil, dans le navigateur. Les photos que tu ajoutes à une carte restent aussi sur cet appareil et ne sont jamais envoyées ailleurs.\n\nCette page charge des polices depuis Google Fonts ; ce chargement peut partager ton adresse IP avec Google, comme pour tout site qui utilise Google Fonts.\n\nIl n'y a ni outil de mesure d'audience, ni publicité, ni cookie de suivi.\n\nSi tu effaces les données de ton navigateur, ou si tu ouvres l'appli sur un autre appareil ou un autre navigateur, tes cartes n'y seront pas accessibles : elles ne sont pas encore sauvegardées ailleurs.\n\nCette note sera mise à jour si la connexion par compte et le stockage en ligne sont ajoutés plus tard.",
@@ -561,14 +1007,15 @@ en:{dir:'ltr',
  'login.googleBtn':'Sign in with Google','login.googleAria':'Sign in with Google (coming soon)','login.appleBtn':'Sign in with Apple','login.appleAria':'Sign in with Apple (coming soon)','login.soon':'soon',
  'login.errNeedName':'Enter a username to continue.','login.errProviderNotReady':'Signing in with {provider} isn\u2019t active yet. Continue with your username for now.','login.uniqueNote':'Username uniqueness will be checked once Google sign-in is active.','deck.hello':'Hi, {user} :)',
  'lang.title':'Choose your language','lang.subtitle':'You can change it later.',
- 'deck.title':'My deck','deck.newTitle':'New card','deck.newDesc':'Create a card','deck.empty':'Your deck is empty. Tap "New card" to create your first card.','deck.changeUser':'switch user',
+ 'deck.title':'My library','deck.newTitle':'New card','deck.newDesc':'Create a card','deck.empty':'Your library is empty. Tap "New card" to create your first card.','deck.changeUser':'switch user',
  'deck.sortDefault':'Recent','deck.sortAria':'Sort cards','deck.cardsOne':'card','deck.cardsMany':'cards','deck.changeLang':'language',
- 'deck.sort.added':'Most recently added','deck.sort.addedShort':'Newly added','deck.sort.first':'Added first','deck.sort.firstShort':'Oldest added',
- 'deck.sort.recent':'Most recently edited','deck.sort.recentShort':'Recently edited','deck.sort.old':'Edited long ago','deck.sort.oldShort':'Oldest edit',
- 'deck.sort.az':'Name A → Z','deck.sort.azShort':'A → Z','deck.sort.za':'Name Z → A','deck.sort.zaShort':'Z → A',
- 'deck.sort.pvd':'HP descending','deck.sort.pvdShort':'HP ↓','deck.sort.pva':'HP ascending','deck.sort.pvaShort':'HP ↑','deck.sort.type':'By type','deck.sort.typeShort':'Type',
- 'deck.group.added':'Date added','deck.group.modified':'Last edited','deck.group.name':'Name','deck.group.other':'Other',
- 'stage.back':'‹ Deck','stage.change':'switch','stage.download':'Download image','stage.share':'Share','stage.personalize':'Customize','stage.hintDefault':'Move your mouse or finger over the card',
+ 'deck.sort.rarD':'Rarest first','deck.sort.rarDShort':'Rarity ↓',
+ 'deck.sort.added':'Most recently added','deck.sort.addedShort':'Newly added',
+ 
+ 'deck.sort.az':'Name A → Z','deck.sort.azShort':'A → Z',
+ 'deck.sort.pvd':'HP descending','deck.sort.pvdShort':'HP ↓','deck.sort.type':'By type','deck.sort.typeShort':'Type',
+ 
+ 'stage.back':'‹ Library','stage.change':'switch','stage.download':'Download image','stage.share':'Share','stage.personalize':'Customize','stage.hintDefault':'Move your mouse or finger over the card',
  'stage.gyroActivate':'Enable gyroscope','stage.gyroActive':'Gyroscope on','stage.gyroOpenAlone':'Open the page on its own in your browser',
  'gyro.sensorActive':'Sensor active: β {b}° γ {g}°','gyro.noMotion':'No motion received.','gyro.httpsNeeded':' The page must be served over HTTPS to access the sensor.',
  'gyro.framed':' The page is shown inside a frame (the app or site) that blocks the sensor: open it on its own in your browser using the link below.',
@@ -594,6 +1041,133 @@ en:{dir:'ltr',
  'export.errImg':'Couldn\u2019t create the image.','export.errGif':'Couldn\u2019t create the animated GIF.','export.shareUnavailable':'Direct sharing isn\u2019t available here: the file is offered for download instead.','export.dlError':'Download failed here ({err}).',
  'intro.title':'Customize<br>your card','intro.go':"Let's go",
  'perf.line':'screen {hz} Hz · {ms} ms · tier {tier}','perf.stride':' (effect ÷{n})',
+ 'deck.searchPh':'Search cards…','deck.searchAria':'Search your library','deck.noResults':'No card matches your search.','fx.metal':'Metallic (brushed steel)',
+ 'settings.theme':'Color theme','theme.blue':'Blue','theme.red':'Red','theme.black':'Black','theme.white':'White',
+ 'contest.nav':'Contest',
+ 'contest.title':'Contest of the week',
+ 'contest.week':'Week {n} · ends in {t}',
+ 'contest.demo':'Demo mode: entries and votes stay on this device. Real online voting will come with a server.',
+ 'contest.mine':'My entry',
+ 'contest.noOwn':'Create a card to enter the contest.',
+ 'contest.pick':'Pick one of your cards',
+ 'contest.submit':'Enter',
+ 'contest.submitted':'Your card “{name}” is entered this week.',
+ 'contest.withdraw':'Withdraw my card',
+ 'contest.entries':'Cards in the running',
+ 'contest.noEntries':'Nobody has entered this week yet.',
+ 'contest.by':'by {a}',
+ 'contest.votesOne':'{n} vote',
+ 'contest.votesMany':'{n} votes',
+ 'contest.vote':'Vote',
+ 'contest.voted':'Voted ✓',
+ 'contest.yours':'Your card',
+ 'contest.results':'Results of past weeks',
+ 'contest.noResults':'No results yet.',
+ 'contest.weekN':'Week {n}',
+ 'contest.status.pending':'Waiting for the moderator',
+ 'contest.status.approved':'Added to the universal library ({r})',
+ 'contest.status.rejected':'Rejected by the moderator',
+ 'contest.status.none':'No votes this week',
+ 'contest.mod':'Moderator review',
+ 'contest.modNone':'No card to review.',
+ 'contest.approve':'Approve',
+ 'contest.reject':'Reject',
+ 'contest.rarityFor':'Rarity',
+ 'contest.toastSubmitted':'Card entered in the contest!',
+ 'contest.toastWithdrawn':'Entry withdrawn.',
+ 'contest.toastApproved':'Card approved: it joins the universal library.',
+ 'contest.toastRejected':'Card rejected.',
+ 'demo.tools':'Demo tools',
+ 'demo.seed':'Add 3 demo entrants',
+ 'demo.endWeek':'Simulate the end of the week',
+ 'demo.backWeek':'Back to the real week',
+ 'demo.clear':'Erase contest data',
+ 'rarity.common':'Common',
+ 'rarity.uncommon':'Uncommon',
+ 'rarity.rare':'Rare',
+ 'rarity.epic':'Epic',
+ 'rarity.legendary':'Legendary',
+ 'settings.mod':'Moderator',
+ 
+ 'settings.modNote':'Light protection, in the browser: without a server, it only protects this device. Cards added to the universal library are, for now, only visible on this device.',
+ 'time.d':'d',
+ 'time.h':'h',
+ 'time.m':'min',
+ 'drop.nav':'Daily booster',
+ 'drop.title':'Daily booster',
+ 'drop.demo':'Demo mode: the booster refills every day on this device.',
+ 'drop.ready':'Your daily booster is ready!',
+ 'drop.wait':'Next booster in {t}',
+ 'drop.open':'Summon the booster',
+ 'drop.tapOpen':'Tap to open',
+ 'drop.tapNext':'Tap for the next card',
+ 'drop.tapEnd':'Tap to see your booster',
+ 'drop.skip':'Reveal all',
+ 'drop.close':'Close',
+ 'drop.cardNo':'Card {i} / {n}',
+ 'drop.new':'New',
+ 'drop.dup':'Duplicate ×{n}',
+ 'drop.pack':'Your booster',
+ 'drop.added':'{n} / {t} new cards added to your library.',
+ 'drop.see':'See my library',
+ 'drop.cardsOne':'{n} card',
+ 'drop.cardsMany':'{n} cards',
+ 'drop.empty':'The universal library is empty for now.',
+ 'demo.resetDrop':'Reset today’s booster',
+ 'info.btn':'See the odds and colors',
+ 'info.title':'Odds and colors',
+ 'info.how':'How it works',
+ 'info.h1':'A booster holds 5 randomly drawn cards.',
+ 'info.h2':'Each card gets its rarity from the percentages in the table.',
+ 'info.h3':'There is at most 1 legendary per booster.',
+ 'info.h4':'Cards come out from the least rare to the rarest.',
+ 'info.table':'The table',
+ 'info.colRar':'Rarity',
+ 'info.colCards':'Cards',
+ 'info.colOdds':'Per card',
+ 'info.colPack':'Per booster',
+ 'info.dRar':'The level of the card.',
+ 'info.dCards':'How many cards of this rarity exist in the universal library.',
+ 'info.dOdds':'The chance that each of the 5 cards in your booster has this rarity.',
+ 'info.dPack':'The chance of getting at least one card of this rarity (or a higher one) in your booster.',
+ 'info.noCards':'A rarity with no cards is removed from the draw and its odds are redistributed to the others.',
+ 'info.colors':'The color of the pack',
+ 'info.c1':'During the summoning, the light around the pack changes color. It does not change your odds: it reveals them. The booster is drawn before the animation, and its color shows you what is inside.',
+ 'info.c2':'The more rare cards your pack holds, the closer the color gets to the gold of legendaries. Its best card counts the most; the other cards push the color a little further.',
+ 'info.lk0':'Grey: only commons (or nearly)',
+ 'info.lk1':'Green: an uncommon at best',
+ 'info.lk2':'Blue: a rare at best',
+ 'info.lk3':'Purple: an epic at best',
+ 'info.lk4':'Gold: a legendary!',
+ 'tab.library':'Library','tab.contest':'Contest','tab.booster':'Booster','tab.nav':'Navigation',
+ 'uni.export':'Export for the universal library',
+ 'uni.title':'Add to the universal library',
+ 'uni.rarity':'Rarity',
+ 'uni.id':'Identifier',
+ 'uni.help':'Copy this text and paste it into universal-cards.js, just before the "];" line (after the previous card’s line).',
+ 'uni.copy':'Copy',
+ 'uni.copied':'Copied!',
+ 'uni.size':'Size: {n} KB',
+ 'uni.big':'Heavy image: to keep the file light, host it and put its address in "img".',
+ 'mod.user':'Moderator username',
+ 'mod.code':'Code',
+ 'mod.login':'Sign in',
+ 'mod.logout':'Sign out',
+ 'mod.on':'Moderator mode is on for this device.',
+ 'mod.bad':'Wrong username or code.',
+ 'mod.wait':'Too many tries: try again in {s} s.',
+ 'mod.busy':'Checking…',
+ 'mod.nocrypto':'This browser cannot do the check.',
+ 'uni.add':'Add to the universal library',
+ 'uni.added':'Added to the universal library ({r}).',
+ 'uni.updated':'Updated in the universal library ({r}).',
+ 'uni.fileBtn':'Copy for the file',
+ 'mod.bioLogin':'Sign in with Touch ID / Face ID',
+ 'mod.bioOn':'Enable Touch ID / Face ID on this device',
+ 'mod.bioOff':'Disable Touch ID / Face ID',
+ 'mod.bioDone':'Touch ID / Face ID enabled: you can sign in without typing the code.',
+ 'mod.bioFail':'Biometric check failed or was cancelled.',
+ 'mod.bioNone':'This device or browser does not offer Touch ID / Face ID (an https address is required).',
  'settings.title':'Settings','settings.account':'Account','settings.language':'Language','settings.loggedAs':'Signed in as {user}',
  'settings.privacyTitle':'Privacy policy',
  'settings.privacy':"MyCard runs entirely in your browser. There is no server, and nothing you do here is sent to us or to anyone else.\n\nYour username, your cards, and your settings are stored only on this device, in your browser's local storage. Photos you add to a card stay on this device too and are never uploaded.\n\nThis page loads fonts from Google Fonts; loading them may share your IP address with Google, as with any site that uses Google Fonts.\n\nThere is no analytics, no advertising, and no tracking cookies.\n\nClearing your browser data, or opening the app on a different device or browser, makes your cards inaccessible there — they aren't backed up anywhere else yet.\n\nThis notice will be updated if account sign-in and cloud storage are added later.",
@@ -606,14 +1180,15 @@ es:{dir:'ltr',
  'login.googleBtn':'Iniciar sesión con Google','login.googleAria':'Iniciar sesión con Google (próximamente)','login.appleBtn':'Iniciar sesión con Apple','login.appleAria':'Iniciar sesión con Apple (próximamente)','login.soon':'pronto',
  'login.errNeedName':'Escribe un nombre de usuario para continuar.','login.errProviderNotReady':'El inicio de sesión con {provider} todavía no está activo. Continúa con tu nombre de usuario por ahora.','login.uniqueNote':'La unicidad del nombre se comprobará cuando se active el inicio de sesión con Google.','deck.hello':'Hola, {user} :)',
  'lang.title':'Elige tu idioma','lang.subtitle':'Podrás cambiarlo más tarde.',
- 'deck.title':'Mi mazo','deck.newTitle':'Nueva carta','deck.newDesc':'Crea una carta','deck.empty':'Tu mazo está vacío. Toca «Nueva carta» para crear tu primera carta.','deck.changeUser':'cambiar de usuario',
+ 'deck.title':'Mi biblioteca','deck.newTitle':'Nueva carta','deck.newDesc':'Crea una carta','deck.empty':'Tu biblioteca está vacía. Toca «Nueva carta» para crear tu primera carta.','deck.changeUser':'cambiar de usuario',
  'deck.sortDefault':'Recientes','deck.sortAria':'Ordenar cartas','deck.cardsOne':'carta','deck.cardsMany':'cartas','deck.changeLang':'idioma',
- 'deck.sort.added':'Añadidas más recientemente','deck.sort.addedShort':'Añadida reciente','deck.sort.first':'Añadidas primero','deck.sort.firstShort':'Añadida antigua',
- 'deck.sort.recent':'Editadas más recientemente','deck.sort.recentShort':'Edición reciente','deck.sort.old':'Editadas hace tiempo','deck.sort.oldShort':'Edición antigua',
- 'deck.sort.az':'Nombre A → Z','deck.sort.azShort':'A → Z','deck.sort.za':'Nombre Z → A','deck.sort.zaShort':'Z → A',
- 'deck.sort.pvd':'PS descendente','deck.sort.pvdShort':'PS ↓','deck.sort.pva':'PS ascendente','deck.sort.pvaShort':'PS ↑','deck.sort.type':'Por tipo','deck.sort.typeShort':'Tipo',
- 'deck.group.added':'Fecha de creación','deck.group.modified':'Última edición','deck.group.name':'Nombre','deck.group.other':'Otros',
- 'stage.back':'‹ Mazo','stage.change':'cambiar','stage.download':'Descargar imagen','stage.share':'Compartir','stage.personalize':'Personalizar','stage.hintDefault':'Mueve el ratón o el dedo sobre la carta',
+ 'deck.sort.rarD':'Más raras primero','deck.sort.rarDShort':'Rareza ↓',
+ 'deck.sort.added':'Añadidas más recientemente','deck.sort.addedShort':'Añadida reciente',
+ 
+ 'deck.sort.az':'Nombre A → Z','deck.sort.azShort':'A → Z',
+ 'deck.sort.pvd':'PS descendente','deck.sort.pvdShort':'PS ↓','deck.sort.type':'Por tipo','deck.sort.typeShort':'Tipo',
+ 
+ 'stage.back':'‹ Biblioteca','stage.change':'cambiar','stage.download':'Descargar imagen','stage.share':'Compartir','stage.personalize':'Personalizar','stage.hintDefault':'Mueve el ratón o el dedo sobre la carta',
  'stage.gyroActivate':'Activar giroscopio','stage.gyroActive':'Giroscopio activo','stage.gyroOpenAlone':'Abrir la página sola en el navegador',
  'gyro.sensorActive':'Sensor activo: β {b}° γ {g}°','gyro.noMotion':'No se ha recibido movimiento.','gyro.httpsNeeded':' La página debe estar en HTTPS para acceder al sensor.',
  'gyro.framed':' La página se muestra dentro de un marco (la app o el sitio) que bloquea el sensor: ábrela sola en tu navegador con el enlace de abajo.',
@@ -639,6 +1214,133 @@ es:{dir:'ltr',
  'export.errImg':'No se pudo crear la imagen.','export.errGif':'No se pudo crear el GIF animado.','export.shareUnavailable':'No se puede compartir directamente aquí: el archivo se ofrece para descargar.','export.dlError':'Descarga no disponible aquí ({err}).',
  'intro.title':'Personaliza<br>tu carta','intro.go':'Vamos',
  'perf.line':'pantalla {hz} Hz · {ms} ms · nivel {tier}','perf.stride':' (efecto ÷{n})',
+ 'deck.searchPh':'Buscar una carta…','deck.searchAria':'Buscar en la biblioteca','deck.noResults':'Ninguna carta coincide con tu búsqueda.','fx.metal':'Metálico (acero cepillado)',
+ 'settings.theme':'Tema de color','theme.blue':'Azul','theme.red':'Rojo','theme.black':'Negro','theme.white':'Blanco',
+ 'contest.nav':'Concurso',
+ 'contest.title':'Concurso de la semana',
+ 'contest.week':'Semana {n} · termina en {t}',
+ 'contest.demo':'Modo demo: las participaciones y los votos se quedan en este dispositivo. El voto real en línea llegará con un servidor.',
+ 'contest.mine':'Mi participación',
+ 'contest.noOwn':'Crea una carta para participar en el concurso.',
+ 'contest.pick':'Elige una de tus cartas',
+ 'contest.submit':'Participar',
+ 'contest.submitted':'Tu carta «{name}» participa esta semana.',
+ 'contest.withdraw':'Retirar mi carta',
+ 'contest.entries':'Cartas en competición',
+ 'contest.noEntries':'Nadie ha participado todavía esta semana.',
+ 'contest.by':'por {a}',
+ 'contest.votesOne':'{n} voto',
+ 'contest.votesMany':'{n} votos',
+ 'contest.vote':'Votar',
+ 'contest.voted':'Votado ✓',
+ 'contest.yours':'Tu carta',
+ 'contest.results':'Resultados de semanas anteriores',
+ 'contest.noResults':'Aún no hay resultados.',
+ 'contest.weekN':'Semana {n}',
+ 'contest.status.pending':'A la espera del moderador',
+ 'contest.status.approved':'Añadida a la biblioteca universal ({r})',
+ 'contest.status.rejected':'Rechazada por el moderador',
+ 'contest.status.none':'Sin votos esta semana',
+ 'contest.mod':'Validación del moderador',
+ 'contest.modNone':'Ninguna carta por validar.',
+ 'contest.approve':'Validar',
+ 'contest.reject':'Rechazar',
+ 'contest.rarityFor':'Rareza',
+ 'contest.toastSubmitted':'¡Carta inscrita en el concurso!',
+ 'contest.toastWithdrawn':'Participación retirada.',
+ 'contest.toastApproved':'Carta validada: entra en la biblioteca universal.',
+ 'contest.toastRejected':'Carta rechazada.',
+ 'demo.tools':'Herramientas demo',
+ 'demo.seed':'Añadir 3 participantes de demo',
+ 'demo.endWeek':'Simular el fin de la semana',
+ 'demo.backWeek':'Volver a la semana real',
+ 'demo.clear':'Borrar los datos del concurso',
+ 'rarity.common':'Común',
+ 'rarity.uncommon':'Poco común',
+ 'rarity.rare':'Rara',
+ 'rarity.epic':'Épica',
+ 'rarity.legendary':'Legendaria',
+ 'settings.mod':'Moderador',
+ 
+ 'settings.modNote':'Protección ligera, en el navegador: sin servidor, solo protege este dispositivo. Las cartas añadidas a la biblioteca universal, por ahora, solo se ven en este dispositivo.',
+ 'time.d':'d',
+ 'time.h':'h',
+ 'time.m':'min',
+ 'drop.nav':'Sobre del día',
+ 'drop.title':'Sobre del día',
+ 'drop.demo':'Modo demo: el sobre se recarga cada día en este dispositivo.',
+ 'drop.ready':'¡Tu sobre del día está listo!',
+ 'drop.wait':'Próximo sobre en {t}',
+ 'drop.open':'Invocar el sobre',
+ 'drop.tapOpen':'Toca para abrir',
+ 'drop.tapNext':'Toca para la siguiente carta',
+ 'drop.tapEnd':'Toca para ver tu sobre',
+ 'drop.skip':'Revelar todo',
+ 'drop.close':'Cerrar',
+ 'drop.cardNo':'Carta {i} / {n}',
+ 'drop.new':'Nueva',
+ 'drop.dup':'Repetida ×{n}',
+ 'drop.pack':'Tu sobre',
+ 'drop.added':'{n} / {t} cartas nuevas añadidas a tu biblioteca.',
+ 'drop.see':'Ver mi biblioteca',
+ 'drop.cardsOne':'{n} carta',
+ 'drop.cardsMany':'{n} cartas',
+ 'drop.empty':'La biblioteca universal está vacía por ahora.',
+ 'demo.resetDrop':'Reactivar el sobre del día',
+ 'info.btn':'Ver las probabilidades y los colores',
+ 'info.title':'Probabilidades y colores',
+ 'info.how':'Cómo funciona',
+ 'info.h1':'Un sobre contiene 5 cartas sacadas al azar.',
+ 'info.h2':'Cada carta recibe su rareza según los porcentajes de la tabla.',
+ 'info.h3':'Hay como máximo 1 legendaria por sobre.',
+ 'info.h4':'Las cartas salen de la menos rara a la más rara.',
+ 'info.table':'La tabla',
+ 'info.colRar':'Rareza',
+ 'info.colCards':'Cartas',
+ 'info.colOdds':'Por carta',
+ 'info.colPack':'Por sobre',
+ 'info.dRar':'El nivel de la carta.',
+ 'info.dCards':'Cuántas cartas de esta rareza existen en la biblioteca universal.',
+ 'info.dOdds':'La probabilidad de que cada una de las 5 cartas de tu sobre tenga esta rareza.',
+ 'info.dPack':'La probabilidad de obtener al menos una carta de esta rareza (o superior) en tu sobre.',
+ 'info.noCards':'Una rareza sin cartas se retira del sorteo y sus probabilidades se redistribuyen entre las demás.',
+ 'info.colors':'El color del paquete',
+ 'info.c1':'Durante la invocación, la luz alrededor del paquete cambia de color. No modifica tus probabilidades: las revela. El sobre se sortea antes de la animación y su color te muestra lo que contiene.',
+ 'info.c2':'Cuantas más cartas raras tenga tu paquete, más se acerca el color al oro de las legendarias. Su mejor carta es la que más cuenta; las demás lo empujan un poco más lejos.',
+ 'info.lk0':'Gris: solo comunes (o casi)',
+ 'info.lk1':'Verde: como mucho una poco común',
+ 'info.lk2':'Azul: como mucho una rara',
+ 'info.lk3':'Violeta: como mucho una épica',
+ 'info.lk4':'Oro: ¡una legendaria!',
+ 'tab.library':'Biblioteca','tab.contest':'Concurso','tab.booster':'Sobre','tab.nav':'Navegación',
+ 'uni.export':'Exportar para la biblioteca universal',
+ 'uni.title':'Añadir a la biblioteca universal',
+ 'uni.rarity':'Rareza',
+ 'uni.id':'Identificador',
+ 'uni.help':'Copia este texto y pégalo en universal-cards.js, justo antes de la línea «];» (después de la línea de la carta anterior).',
+ 'uni.copy':'Copiar',
+ 'uni.copied':'¡Copiado!',
+ 'uni.size':'Tamaño: {n} KB',
+ 'uni.big':'Imagen pesada: para aligerar el archivo, alójala y pon su dirección en «img».',
+ 'mod.user':'Usuario de moderador',
+ 'mod.code':'Código',
+ 'mod.login':'Iniciar sesión',
+ 'mod.logout':'Cerrar sesión',
+ 'mod.on':'Modo moderador activo en este dispositivo.',
+ 'mod.bad':'Usuario o código incorrecto.',
+ 'mod.wait':'Demasiados intentos: vuelve a intentarlo en {s} s.',
+ 'mod.busy':'Comprobando…',
+ 'mod.nocrypto':'Este navegador no puede hacer la comprobación.',
+ 'uni.add':'Añadir a la biblioteca universal',
+ 'uni.added':'Añadida a la biblioteca universal ({r}).',
+ 'uni.updated':'Actualizada en la biblioteca universal ({r}).',
+ 'uni.fileBtn':'Copiar para el archivo',
+ 'mod.bioLogin':'Iniciar sesión con Touch ID / Face ID',
+ 'mod.bioOn':'Activar Touch ID / Face ID en este dispositivo',
+ 'mod.bioOff':'Desactivar Touch ID / Face ID',
+ 'mod.bioDone':'Touch ID / Face ID activado: podrás entrar sin escribir el código.',
+ 'mod.bioFail':'Verificación biométrica imposible o cancelada.',
+ 'mod.bioNone':'Este dispositivo o navegador no ofrece Touch ID / Face ID (hace falta una dirección https).',
  'settings.title':'Ajustes','settings.account':'Cuenta','settings.language':'Idioma','settings.loggedAs':'Sesión iniciada como {user}',
  'settings.privacyTitle':'Política de privacidad',
  'settings.privacy':"MyCard funciona totalmente en tu navegador. No hay servidor, y nada de lo que hagas aquí se nos envía a nosotros ni a nadie más.\n\nTu nombre de usuario, tus cartas y tus ajustes se guardan solo en este dispositivo, en el almacenamiento local del navegador. Las fotos que añades a una carta también se quedan en este dispositivo y nunca se suben a ningún sitio.\n\nEsta página carga fuentes desde Google Fonts; esta carga puede compartir tu dirección IP con Google, como ocurre en cualquier sitio que use Google Fonts.\n\nNo hay analítica, ni publicidad, ni cookies de seguimiento.\n\nSi borras los datos del navegador, o abres la app en otro dispositivo o navegador, tus cartas no estarán disponibles allí: todavía no se respaldan en ningún otro sitio.\n\nEste aviso se actualizará si más adelante se añaden el inicio de sesión con cuenta y el almacenamiento en la nube.",
@@ -651,14 +1353,15 @@ de:{dir:'ltr',
  'login.googleBtn':'Mit Google anmelden','login.googleAria':'Mit Google anmelden (bald verfügbar)','login.appleBtn':'Mit Apple anmelden','login.appleAria':'Mit Apple anmelden (bald verfügbar)','login.soon':'bald',
  'login.errNeedName':'Gib einen Benutzernamen ein, um fortzufahren.','login.errProviderNotReady':'Die Anmeldung mit {provider} ist noch nicht aktiv. Mach vorerst mit deinem Benutzernamen weiter.','login.uniqueNote':'Die Eindeutigkeit des Namens wird geprüft, sobald die Google-Anmeldung aktiv ist.','deck.hello':'Hallo, {user} :)',
  'lang.title':'Wähle deine Sprache','lang.subtitle':'Du kannst sie später ändern.',
- 'deck.title':'Mein Deck','deck.newTitle':'Neue Karte','deck.newDesc':'Karte erstellen','deck.empty':'Dein Deck ist leer. Tippe auf „Neue Karte“, um deine erste Karte zu erstellen.','deck.changeUser':'Benutzer wechseln',
+ 'deck.title':'Meine Bibliothek','deck.newTitle':'Neue Karte','deck.newDesc':'Karte erstellen','deck.empty':'Deine Bibliothek ist leer. Tippe auf „Neue Karte“, um deine erste Karte zu erstellen.','deck.changeUser':'Benutzer wechseln',
  'deck.sortDefault':'Neueste','deck.sortAria':'Karten sortieren','deck.cardsOne':'Karte','deck.cardsMany':'Karten','deck.changeLang':'Sprache',
- 'deck.sort.added':'Zuletzt hinzugefügt','deck.sort.addedShort':'Neu hinzugefügt','deck.sort.first':'Zuerst hinzugefügt','deck.sort.firstShort':'Älteste zuerst',
- 'deck.sort.recent':'Zuletzt bearbeitet','deck.sort.recentShort':'Kürzlich bearbeitet','deck.sort.old':'Lange nicht bearbeitet','deck.sort.oldShort':'Älteste Bearbeitung',
- 'deck.sort.az':'Name A → Z','deck.sort.azShort':'A → Z','deck.sort.za':'Name Z → A','deck.sort.zaShort':'Z → A',
- 'deck.sort.pvd':'KP absteigend','deck.sort.pvdShort':'KP ↓','deck.sort.pva':'KP aufsteigend','deck.sort.pvaShort':'KP ↑','deck.sort.type':'Nach Typ','deck.sort.typeShort':'Typ',
- 'deck.group.added':'Hinzugefügt am','deck.group.modified':'Zuletzt bearbeitet','deck.group.name':'Name','deck.group.other':'Weitere',
- 'stage.back':'‹ Deck','stage.change':'wechseln','stage.download':'Als Bild herunterladen','stage.share':'Teilen','stage.personalize':'Anpassen','stage.hintDefault':'Bewege Maus oder Finger über die Karte',
+ 'deck.sort.rarD':'Seltenste zuerst','deck.sort.rarDShort':'Seltenheit ↓',
+ 'deck.sort.added':'Zuletzt hinzugefügt','deck.sort.addedShort':'Neu hinzugefügt',
+ 
+ 'deck.sort.az':'Name A → Z','deck.sort.azShort':'A → Z',
+ 'deck.sort.pvd':'KP absteigend','deck.sort.pvdShort':'KP ↓','deck.sort.type':'Nach Typ','deck.sort.typeShort':'Typ',
+ 
+ 'stage.back':'‹ Bibliothek','stage.change':'wechseln','stage.download':'Als Bild herunterladen','stage.share':'Teilen','stage.personalize':'Anpassen','stage.hintDefault':'Bewege Maus oder Finger über die Karte',
  'stage.gyroActivate':'Gyroskop aktivieren','stage.gyroActive':'Gyroskop aktiv','stage.gyroOpenAlone':'Seite allein im Browser öffnen',
  'gyro.sensorActive':'Sensor aktiv: β {b}° γ {g}°','gyro.noMotion':'Keine Bewegung erkannt.','gyro.httpsNeeded':' Die Seite muss über HTTPS aufgerufen werden, um auf den Sensor zuzugreifen.',
  'gyro.framed':' Die Seite wird in einem Rahmen (App oder Website) angezeigt, der den Sensor blockiert: öffne sie über den Link unten allein im Browser.',
@@ -684,6 +1387,133 @@ de:{dir:'ltr',
  'export.errImg':'Bild konnte nicht erstellt werden.','export.errGif':'Animiertes GIF konnte nicht erstellt werden.','export.shareUnavailable':'Direktes Teilen ist hier nicht verfügbar: die Datei wird stattdessen zum Herunterladen angeboten.','export.dlError':'Download hier nicht möglich ({err}).',
  'intro.title':'Gestalte<br>deine Karte','intro.go':"Los geht's",
  'perf.line':'Bildschirm {hz} Hz · {ms} ms · Stufe {tier}','perf.stride':' (Effekt ÷{n})',
+ 'deck.searchPh':'Karte suchen…','deck.searchAria':'In der Bibliothek suchen','deck.noResults':'Keine Karte passt zu deiner Suche.','fx.metal':'Metallisch (gebürsteter Stahl)',
+ 'settings.theme':'Farbthema','theme.blue':'Blau','theme.red':'Rot','theme.black':'Schwarz','theme.white':'Weiß',
+ 'contest.nav':'Wettbewerb',
+ 'contest.title':'Wettbewerb der Woche',
+ 'contest.week':'Woche {n} · endet in {t}',
+ 'contest.demo':'Demo-Modus: Teilnahmen und Stimmen bleiben auf diesem Gerät. Echtes Online-Voting kommt mit einem Server.',
+ 'contest.mine':'Meine Teilnahme',
+ 'contest.noOwn':'Erstelle eine Karte, um am Wettbewerb teilzunehmen.',
+ 'contest.pick':'Wähle eine deiner Karten',
+ 'contest.submit':'Teilnehmen',
+ 'contest.submitted':'Deine Karte „{name}“ nimmt diese Woche teil.',
+ 'contest.withdraw':'Meine Karte zurückziehen',
+ 'contest.entries':'Karten im Rennen',
+ 'contest.noEntries':'Diese Woche hat noch niemand teilgenommen.',
+ 'contest.by':'von {a}',
+ 'contest.votesOne':'{n} Stimme',
+ 'contest.votesMany':'{n} Stimmen',
+ 'contest.vote':'Abstimmen',
+ 'contest.voted':'Abgestimmt ✓',
+ 'contest.yours':'Deine Karte',
+ 'contest.results':'Ergebnisse vergangener Wochen',
+ 'contest.noResults':'Noch keine Ergebnisse.',
+ 'contest.weekN':'Woche {n}',
+ 'contest.status.pending':'Wartet auf den Moderator',
+ 'contest.status.approved':'In die Universal-Bibliothek aufgenommen ({r})',
+ 'contest.status.rejected':'Vom Moderator abgelehnt',
+ 'contest.status.none':'Keine Stimmen diese Woche',
+ 'contest.mod':'Prüfung durch den Moderator',
+ 'contest.modNone':'Keine Karte zu prüfen.',
+ 'contest.approve':'Freigeben',
+ 'contest.reject':'Ablehnen',
+ 'contest.rarityFor':'Seltenheit',
+ 'contest.toastSubmitted':'Karte für den Wettbewerb angemeldet!',
+ 'contest.toastWithdrawn':'Teilnahme zurückgezogen.',
+ 'contest.toastApproved':'Karte freigegeben: Sie kommt in die Universal-Bibliothek.',
+ 'contest.toastRejected':'Karte abgelehnt.',
+ 'demo.tools':'Demo-Werkzeuge',
+ 'demo.seed':'3 Demo-Teilnehmer hinzufügen',
+ 'demo.endWeek':'Ende der Woche simulieren',
+ 'demo.backWeek':'Zurück zur echten Woche',
+ 'demo.clear':'Wettbewerbsdaten löschen',
+ 'rarity.common':'Gewöhnlich',
+ 'rarity.uncommon':'Ungewöhnlich',
+ 'rarity.rare':'Selten',
+ 'rarity.epic':'Episch',
+ 'rarity.legendary':'Legendär',
+ 'settings.mod':'Moderator',
+ 
+ 'settings.modNote':'Leichter Schutz im Browser: Ohne Server schützt er nur dieses Gerät. Karten in der Universal-Bibliothek sind vorerst nur auf diesem Gerät sichtbar.',
+ 'time.d':'T',
+ 'time.h':'Std',
+ 'time.m':'Min',
+ 'drop.nav':'Tages-Booster',
+ 'drop.title':'Tages-Booster',
+ 'drop.demo':'Demo-Modus: Der Booster füllt sich jeden Tag auf diesem Gerät neu.',
+ 'drop.ready':'Dein Tages-Booster ist bereit!',
+ 'drop.wait':'Nächster Booster in {t}',
+ 'drop.open':'Booster beschwören',
+ 'drop.tapOpen':'Tippe zum Öffnen',
+ 'drop.tapNext':'Tippe für die nächste Karte',
+ 'drop.tapEnd':'Tippe, um deinen Booster zu sehen',
+ 'drop.skip':'Alle aufdecken',
+ 'drop.close':'Schließen',
+ 'drop.cardNo':'Karte {i} / {n}',
+ 'drop.new':'Neu',
+ 'drop.dup':'Duplikat ×{n}',
+ 'drop.pack':'Dein Booster',
+ 'drop.added':'{n} / {t} neue Karten zu deiner Bibliothek hinzugefügt.',
+ 'drop.see':'Meine Bibliothek ansehen',
+ 'drop.cardsOne':'{n} Karte',
+ 'drop.cardsMany':'{n} Karten',
+ 'drop.empty':'Die Universal-Bibliothek ist im Moment leer.',
+ 'demo.resetDrop':'Tages-Booster zurücksetzen',
+ 'info.btn':'Chancen und Farben ansehen',
+ 'info.title':'Chancen und Farben',
+ 'info.how':'So funktioniert es',
+ 'info.h1':'Ein Booster enthält 5 zufällig gezogene Karten.',
+ 'info.h2':'Jede Karte erhält ihre Seltenheit nach den Prozentwerten der Tabelle.',
+ 'info.h3':'Es gibt höchstens 1 legendäre Karte pro Booster.',
+ 'info.h4':'Die Karten kommen von der am wenigsten seltenen zur seltensten.',
+ 'info.table':'Die Tabelle',
+ 'info.colRar':'Seltenheit',
+ 'info.colCards':'Karten',
+ 'info.colOdds':'Pro Karte',
+ 'info.colPack':'Pro Booster',
+ 'info.dRar':'Die Stufe der Karte.',
+ 'info.dCards':'Wie viele Karten dieser Seltenheit es in der Universal-Bibliothek gibt.',
+ 'info.dOdds':'Die Chance, dass jede der 5 Karten deines Boosters diese Seltenheit hat.',
+ 'info.dPack':'Die Chance, in deinem Booster mindestens eine Karte dieser (oder einer höheren) Seltenheit zu bekommen.',
+ 'info.noCards':'Eine Seltenheit ohne Karten wird aus der Ziehung genommen, ihre Chancen werden auf die anderen verteilt.',
+ 'info.colors':'Die Farbe des Packs',
+ 'info.c1':'Bei der Beschwörung ändert das Licht um das Pack seine Farbe. Es verändert deine Chancen nicht: Es zeigt sie. Der Booster wird vor der Animation gezogen, und seine Farbe zeigt dir, was drin ist.',
+ 'info.c2':'Je mehr seltene Karten dein Pack enthält, desto näher kommt die Farbe dem Gold der Legendären. Die beste Karte zählt am meisten; die anderen schieben die Farbe noch etwas weiter.',
+ 'info.lk0':'Grau: nur Gewöhnliche (oder fast)',
+ 'info.lk1':'Grün: höchstens eine Ungewöhnliche',
+ 'info.lk2':'Blau: höchstens eine Seltene',
+ 'info.lk3':'Violett: höchstens eine Epische',
+ 'info.lk4':'Gold: eine Legendäre!',
+ 'tab.library':'Bibliothek','tab.contest':'Wettbewerb','tab.booster':'Booster','tab.nav':'Navigation',
+ 'uni.export':'Für die Universal-Bibliothek exportieren',
+ 'uni.title':'Zur Universal-Bibliothek hinzufügen',
+ 'uni.rarity':'Seltenheit',
+ 'uni.id':'Kennung',
+ 'uni.help':'Kopiere diesen Text und füge ihn in universal-cards.js ein, direkt vor der Zeile „];“ (nach der Zeile der vorherigen Karte).',
+ 'uni.copy':'Kopieren',
+ 'uni.copied':'Kopiert!',
+ 'uni.size':'Größe: {n} KB',
+ 'uni.big':'Großes Bild: Um die Datei klein zu halten, lade es hoch und trage seine Adresse bei „img“ ein.',
+ 'mod.user':'Moderator-Kennung',
+ 'mod.code':'Code',
+ 'mod.login':'Anmelden',
+ 'mod.logout':'Abmelden',
+ 'mod.on':'Moderator-Modus ist auf diesem Gerät aktiv.',
+ 'mod.bad':'Kennung oder Code falsch.',
+ 'mod.wait':'Zu viele Versuche: Versuche es in {s} s erneut.',
+ 'mod.busy':'Prüfung…',
+ 'mod.nocrypto':'Dieser Browser kann die Prüfung nicht durchführen.',
+ 'uni.add':'Zur Universal-Bibliothek hinzufügen',
+ 'uni.added':'Zur Universal-Bibliothek hinzugefügt ({r}).',
+ 'uni.updated':'In der Universal-Bibliothek aktualisiert ({r}).',
+ 'uni.fileBtn':'Für die Datei kopieren',
+ 'mod.bioLogin':'Mit Touch ID / Face ID anmelden',
+ 'mod.bioOn':'Touch ID / Face ID auf diesem Gerät aktivieren',
+ 'mod.bioOff':'Touch ID / Face ID deaktivieren',
+ 'mod.bioDone':'Touch ID / Face ID aktiviert: Du kannst dich ohne Code anmelden.',
+ 'mod.bioFail':'Biometrische Prüfung nicht möglich oder abgebrochen.',
+ 'mod.bioNone':'Dieses Gerät oder dieser Browser bietet kein Touch ID / Face ID (https-Adresse nötig).',
  'settings.title':'Einstellungen','settings.account':'Konto','settings.language':'Sprache','settings.loggedAs':'Angemeldet als {user}',
  'settings.privacyTitle':'Datenschutzerklärung',
  'settings.privacy':"MyCard läuft vollständig in deinem Browser. Es gibt keinen Server, und nichts von dem, was du hier tust, wird an uns oder sonst jemanden gesendet.\n\nDein Benutzername, deine Karten und deine Einstellungen werden nur auf diesem Gerät gespeichert, im lokalen Speicher des Browsers. Fotos, die du einer Karte hinzufügst, bleiben ebenfalls auf diesem Gerät und werden nie hochgeladen.\n\nDiese Seite lädt Schriftarten von Google Fonts; dabei kann deine IP-Adresse an Google übermittelt werden, wie bei jeder Website, die Google Fonts nutzt.\n\nEs gibt keine Analyse-Tools, keine Werbung und keine Tracking-Cookies.\n\nWenn du deine Browserdaten löschst oder die App auf einem anderen Gerät oder Browser öffnest, sind deine Karten dort nicht verfügbar: Sie werden bisher nirgendwo anders gesichert.\n\nDieser Hinweis wird aktualisiert, falls später eine Kontoanmeldung und Cloud-Speicherung hinzukommen.",
@@ -696,14 +1526,15 @@ ar:{dir:'rtl',
  'login.googleBtn':'تسجيل الدخول عبر Google','login.googleAria':'تسجيل الدخول عبر Google (قريبًا)','login.appleBtn':'تسجيل الدخول عبر Apple','login.appleAria':'تسجيل الدخول عبر Apple (قريبًا)','login.soon':'قريبًا',
  'login.errNeedName':'أدخل اسم مستخدم للمتابعة.','login.errProviderNotReady':'تسجيل الدخول عبر {provider} غير مفعّل بعد. تابع باسم المستخدم في الوقت الحالي.','login.uniqueNote':'سيتم التحقق من تفرّد الاسم عند تفعيل تسجيل الدخول عبر Google.','deck.hello':'أهلًا، {user} :)',
  'lang.title':'اختر لغتك','lang.subtitle':'يمكنك تغييرها لاحقًا.',
- 'deck.title':'مجموعتي','deck.newTitle':'بطاقة جديدة','deck.newDesc':'أنشئ بطاقة','deck.empty':'مجموعتك فارغة. اضغط على «بطاقة جديدة» لإنشاء أول بطاقة.','deck.changeUser':'تغيير المستخدم',
+ 'deck.title':'مكتبتي','deck.newTitle':'بطاقة جديدة','deck.newDesc':'أنشئ بطاقة','deck.empty':'مكتبتك فارغة. اضغط على «بطاقة جديدة» لإنشاء أول بطاقة.','deck.changeUser':'تغيير المستخدم',
  'deck.sortDefault':'الأحدث','deck.sortAria':'ترتيب البطاقات','deck.cardsOne':'بطاقة','deck.cardsMany':'بطاقات','deck.changeLang':'اللغة',
- 'deck.sort.added':'الأحدث إضافةً','deck.sort.addedShort':'إضافة حديثة','deck.sort.first':'الأقدم إضافةً','deck.sort.firstShort':'إضافة قديمة',
- 'deck.sort.recent':'الأحدث تعديلًا','deck.sort.recentShort':'تعديل حديث','deck.sort.old':'الأقدم تعديلًا','deck.sort.oldShort':'تعديل قديم',
- 'deck.sort.az':'الاسم أ ← ي','deck.sort.azShort':'أ ← ي','deck.sort.za':'الاسم ي ← أ','deck.sort.zaShort':'ي ← أ',
- 'deck.sort.pvd':'نقاط الحياة تنازليًا','deck.sort.pvdShort':'الحياة ↓','deck.sort.pva':'نقاط الحياة تصاعديًا','deck.sort.pvaShort':'الحياة ↑','deck.sort.type':'حسب النوع','deck.sort.typeShort':'النوع',
- 'deck.group.added':'تاريخ الإضافة','deck.group.modified':'آخر تعديل','deck.group.name':'الاسم','deck.group.other':'أخرى',
- 'stage.back':'› المجموعة','stage.change':'تغيير','stage.download':'تنزيل كصورة','stage.share':'مشاركة','stage.personalize':'تخصيص','stage.hintDefault':'حرّك الفأرة أو إصبعك فوق البطاقة',
+ 'deck.sort.rarD':'الأكثر ندرة أولًا','deck.sort.rarDShort':'الندرة ↓',
+ 'deck.sort.added':'الأحدث إضافةً','deck.sort.addedShort':'إضافة حديثة',
+ 
+ 'deck.sort.az':'الاسم أ ← ي','deck.sort.azShort':'أ ← ي',
+ 'deck.sort.pvd':'نقاط الحياة تنازليًا','deck.sort.pvdShort':'الحياة ↓','deck.sort.type':'حسب النوع','deck.sort.typeShort':'النوع',
+ 
+ 'stage.back':'› المكتبة','stage.change':'تغيير','stage.download':'تنزيل كصورة','stage.share':'مشاركة','stage.personalize':'تخصيص','stage.hintDefault':'حرّك الفأرة أو إصبعك فوق البطاقة',
  'stage.gyroActivate':'تفعيل الجيروسكوب','stage.gyroActive':'الجيروسكوب مفعّل','stage.gyroOpenAlone':'افتح الصفحة وحدها في المتصفح',
  'gyro.sensorActive':'المستشعر نشط: β {b}° γ {g}°','gyro.noMotion':'لم تُستقبل أي حركة.','gyro.httpsNeeded':' يجب أن تكون الصفحة عبر HTTPS للوصول إلى المستشعر.',
  'gyro.framed':' تُعرض الصفحة داخل إطار (تطبيق أو موقع) يمنع المستشعر: افتحها وحدها في متصفحك عبر الرابط أدناه.',
@@ -729,6 +1560,133 @@ ar:{dir:'rtl',
  'export.errImg':'تعذّر إنشاء الصورة.','export.errGif':'تعذّر إنشاء GIF المتحرك.','export.shareUnavailable':'المشاركة المباشرة غير متاحة هنا: الملف متاح للتنزيل بدلًا من ذلك.','export.dlError':'تعذّر التنزيل هنا ({err}).',
  'intro.title':'خصّص<br>بطاقتك','intro.go':'ابدأ',
  'perf.line':'الشاشة {hz} هرتز · {ms} مللي ثانية · المستوى {tier}','perf.stride':' (التأثير ÷{n})',
+ 'deck.searchPh':'ابحث عن بطاقة…','deck.searchAria':'ابحث في المكتبة','deck.noResults':'لا توجد بطاقة تطابق بحثك.','fx.metal':'معدني (فولاذ مصقول)',
+ 'settings.theme':'سمة الألوان','theme.blue':'أزرق','theme.red':'أحمر','theme.black':'أسود','theme.white':'أبيض',
+ 'contest.nav':'المسابقة',
+ 'contest.title':'مسابقة الأسبوع',
+ 'contest.week':'الأسبوع {n} · ينتهي بعد {t}',
+ 'contest.demo':'وضع تجريبي: تبقى المشاركات والأصوات على هذا الجهاز. سيأتي التصويت الحقيقي عبر الإنترنت مع الخادم.',
+ 'contest.mine':'مشاركتي',
+ 'contest.noOwn':'أنشئ بطاقة للمشاركة في المسابقة.',
+ 'contest.pick':'اختر إحدى بطاقاتك',
+ 'contest.submit':'شارك',
+ 'contest.submitted':'بطاقتك «{name}» تشارك هذا الأسبوع.',
+ 'contest.withdraw':'سحب بطاقتي',
+ 'contest.entries':'البطاقات المتنافسة',
+ 'contest.noEntries':'لم يشارك أحد بعد هذا الأسبوع.',
+ 'contest.by':'بواسطة {a}',
+ 'contest.votesOne':'{n} صوت',
+ 'contest.votesMany':'{n} أصوات',
+ 'contest.vote':'صوّت',
+ 'contest.voted':'تم التصويت ✓',
+ 'contest.yours':'بطاقتك',
+ 'contest.results':'نتائج الأسابيع السابقة',
+ 'contest.noResults':'لا توجد نتائج بعد.',
+ 'contest.weekN':'الأسبوع {n}',
+ 'contest.status.pending':'بانتظار المشرف',
+ 'contest.status.approved':'أُضيفت إلى المكتبة العامة ({r})',
+ 'contest.status.rejected':'رفضها المشرف',
+ 'contest.status.none':'لا أصوات هذا الأسبوع',
+ 'contest.mod':'مراجعة المشرف',
+ 'contest.modNone':'لا توجد بطاقة للمراجعة.',
+ 'contest.approve':'اعتماد',
+ 'contest.reject':'رفض',
+ 'contest.rarityFor':'الندرة',
+ 'contest.toastSubmitted':'تم تسجيل البطاقة في المسابقة!',
+ 'contest.toastWithdrawn':'تم سحب المشاركة.',
+ 'contest.toastApproved':'تم اعتماد البطاقة: انضمت إلى المكتبة العامة.',
+ 'contest.toastRejected':'تم رفض البطاقة.',
+ 'demo.tools':'أدوات تجريبية',
+ 'demo.seed':'إضافة 3 مشاركين تجريبيين',
+ 'demo.endWeek':'محاكاة نهاية الأسبوع',
+ 'demo.backWeek':'العودة إلى الأسبوع الفعلي',
+ 'demo.clear':'مسح بيانات المسابقة',
+ 'rarity.common':'عادية',
+ 'rarity.uncommon':'غير شائعة',
+ 'rarity.rare':'نادرة',
+ 'rarity.epic':'ملحمية',
+ 'rarity.legendary':'أسطورية',
+ 'settings.mod':'المشرف',
+ 
+ 'settings.modNote':'حماية خفيفة داخل المتصفح: بدون خادم، تحمي هذا الجهاز فقط. البطاقات المضافة إلى المكتبة العامة تظهر حاليًا على هذا الجهاز فقط.',
+ 'time.d':'ي',
+ 'time.h':'س',
+ 'time.m':'د',
+ 'drop.nav':'حزمة اليوم',
+ 'drop.title':'حزمة اليوم',
+ 'drop.demo':'وضع تجريبي: تتجدد الحزمة كل يوم على هذا الجهاز.',
+ 'drop.ready':'حزمتك اليومية جاهزة!',
+ 'drop.wait':'الحزمة التالية بعد {t}',
+ 'drop.open':'استدعاء الحزمة',
+ 'drop.tapOpen':'المس للفتح',
+ 'drop.tapNext':'المس للبطاقة التالية',
+ 'drop.tapEnd':'المس لرؤية حزمتك',
+ 'drop.skip':'كشف الكل',
+ 'drop.close':'إغلاق',
+ 'drop.cardNo':'البطاقة {i} / {n}',
+ 'drop.new':'جديدة',
+ 'drop.dup':'مكررة ×{n}',
+ 'drop.pack':'حزمتك',
+ 'drop.added':'أُضيفت {n} / {t} بطاقات جديدة إلى مكتبتك.',
+ 'drop.see':'عرض مكتبتي',
+ 'drop.cardsOne':'{n} بطاقة',
+ 'drop.cardsMany':'{n} بطاقات',
+ 'drop.empty':'المكتبة العامة فارغة حاليًا.',
+ 'demo.resetDrop':'إعادة تفعيل حزمة اليوم',
+ 'info.btn':'عرض الفرص والألوان',
+ 'info.title':'الفرص والألوان',
+ 'info.how':'كيف يعمل',
+ 'info.h1':'تحتوي الحزمة على 5 بطاقات تُسحب عشوائيًا.',
+ 'info.h2':'تحصل كل بطاقة على ندرتها وفق النسب المئوية في الجدول.',
+ 'info.h3':'هناك بطاقة أسطورية واحدة كحد أقصى في كل حزمة.',
+ 'info.h4':'تخرج البطاقات من الأقل ندرة إلى الأكثر ندرة.',
+ 'info.table':'الجدول',
+ 'info.colRar':'الندرة',
+ 'info.colCards':'البطاقات',
+ 'info.colOdds':'لكل بطاقة',
+ 'info.colPack':'لكل حزمة',
+ 'info.dRar':'مستوى البطاقة.',
+ 'info.dCards':'كم بطاقة من هذه الندرة موجودة في المكتبة العامة.',
+ 'info.dOdds':'فرصة أن تكون كل بطاقة من بطاقات حزمتك الخمس من هذه الندرة.',
+ 'info.dPack':'فرصة الحصول على بطاقة واحدة على الأقل من هذه الندرة (أو أعلى) في حزمتك.',
+ 'info.noCards':'تُحذف الندرة التي لا تحتوي على بطاقات من السحب وتُوزَّع فرصها على البقية.',
+ 'info.colors':'لون الحزمة',
+ 'info.c1':'أثناء الاستدعاء يتغير لون الضوء حول الحزمة. هو لا يغيّر فرصك: بل يكشفها. تُسحب الحزمة قبل الحركة، ويُظهر لونها ما بداخلها.',
+ 'info.c2':'كلما احتوت حزمتك على بطاقات نادرة أكثر، اقترب اللون من ذهبي البطاقات الأسطورية. أفضل بطاقة هي الأهم، وتدفع البطاقات الأخرى اللون أبعد قليلًا.',
+ 'info.lk0':'رمادي: عادية فقط (أو تقريبًا)',
+ 'info.lk1':'أخضر: غير شائعة على الأكثر',
+ 'info.lk2':'أزرق: نادرة على الأكثر',
+ 'info.lk3':'بنفسجي: ملحمية على الأكثر',
+ 'info.lk4':'ذهبي: أسطورية!',
+ 'tab.library':'المكتبة','tab.contest':'المسابقة','tab.booster':'الحزمة','tab.nav':'التنقل',
+ 'uni.export':'تصدير للمكتبة العامة',
+ 'uni.title':'إضافة إلى المكتبة العامة',
+ 'uni.rarity':'الندرة',
+ 'uni.id':'المعرّف',
+ 'uni.help':'انسخ هذا النص والصقه في universal-cards.js قبل السطر «];» مباشرة (بعد سطر البطاقة السابقة).',
+ 'uni.copy':'نسخ',
+ 'uni.copied':'تم النسخ!',
+ 'uni.size':'الحجم: {n} ك.ب',
+ 'uni.big':'صورة ثقيلة: لتخفيف الملف، استضفها وضع عنوانها في «img».',
+ 'mod.user':'معرّف المشرف',
+ 'mod.code':'الرمز',
+ 'mod.login':'تسجيل الدخول',
+ 'mod.logout':'تسجيل الخروج',
+ 'mod.on':'وضع المشرف مفعّل على هذا الجهاز.',
+ 'mod.bad':'المعرّف أو الرمز غير صحيح.',
+ 'mod.wait':'محاولات كثيرة: حاول مجددًا بعد {s} ث.',
+ 'mod.busy':'جارٍ التحقق…',
+ 'mod.nocrypto':'لا يدعم هذا المتصفح التحقق.',
+ 'uni.add':'إضافة إلى المكتبة العامة',
+ 'uni.added':'أُضيفت إلى المكتبة العامة ({r}).',
+ 'uni.updated':'تم التحديث في المكتبة العامة ({r}).',
+ 'uni.fileBtn':'نسخ للملف',
+ 'mod.bioLogin':'تسجيل الدخول ببصمة الإصبع / الوجه',
+ 'mod.bioOn':'تفعيل بصمة الإصبع / الوجه على هذا الجهاز',
+ 'mod.bioOff':'إيقاف بصمة الإصبع / الوجه',
+ 'mod.bioDone':'تم تفعيل البصمة / الوجه: يمكنك الدخول دون كتابة الرمز.',
+ 'mod.bioFail':'تعذّر التحقق الحيوي أو أُلغي.',
+ 'mod.bioNone':'لا يوفر هذا الجهاز أو المتصفح بصمة الإصبع / الوجه (يلزم عنوان https).',
  'settings.title':'الإعدادات','settings.account':'الحساب','settings.language':'اللغة','settings.loggedAs':'مسجّل الدخول باسم {user}',
  'settings.privacyTitle':'سياسة الخصوصية',
  'settings.privacy':"يعمل MyCard بالكامل داخل متصفحك. لا يوجد خادم، ولا يُرسَل أي شيء تفعله هنا إلينا أو إلى أي جهة أخرى.\n\nيُحفظ اسم المستخدم وبطاقاتك وإعداداتك على هذا الجهاز فقط، داخل التخزين المحلي للمتصفح. كما تبقى الصور التي تضيفها إلى بطاقة على هذا الجهاز ولا تُرفع إلى أي مكان.\n\nتُحمّل هذه الصفحة خطوطًا من Google Fonts؛ قد يشارك ذلك عنوان IP الخاص بك مع Google، كما هو الحال في أي موقع يستخدم Google Fonts.\n\nلا توجد أدوات تحليل، ولا إعلانات، ولا ملفات تعريف ارتباط للتتبع.\n\nعند مسح بيانات المتصفح، أو فتح التطبيق على جهاز أو متصفح آخر، لن تكون بطاقاتك متاحة هناك: فهي غير محفوظة بعد في أي مكان آخر.\n\nسيتم تحديث هذا الإشعار إذا أُضيف لاحقًا تسجيل الدخول بحساب والتخزين السحابي.",
@@ -959,7 +1917,7 @@ function aim(e){
   const x=Math.min(1,Math.max(0,(e.clientX-R.left)/R.width)),y=Math.min(1,Math.max(0,(e.clientY-R.top)/R.height));
   t={mx:x*100,my:y*100,rx:(0.5-y)*26,ry:(x-0.5)*26,o:1};
 }
-card.addEventListener('pointerdown',e=>{active=true;document.body.classList.add('touching');R=card.getBoundingClientRect();card.setPointerCapture(e.pointerId);aim(e)});
+card.addEventListener('pointerdown',e=>{active=true;if(gyroWanted)setGyro(false);document.body.classList.add('touching');R=card.getBoundingClientRect();card.setPointerCapture(e.pointerId);aim(e)});
 card.addEventListener('pointermove',e=>{active=true;aim(e)});
 ['pointerleave','pointerup','pointercancel'].forEach(n=>card.addEventListener(n,()=>{active=false;R=null;document.body.classList.remove('touching')}));
 addEventListener('scroll',()=>{R=null},{passive:true});addEventListener('resize',()=>{R=null});
@@ -1078,6 +2036,7 @@ async function drawCard(c0,op){
     rainbow:{an:150,sz:4,st:ev([...Array(3)].flatMap(()=>['hsl(0,70%,48%)','hsl(40,70%,48%)','hsl(90,70%,42%)','hsl(180,70%,42%)','hsl(210,70%,48%)','hsl(280,65%,42%)'])),sheen:0,glit:2,al:.55,gn:1800},
     amazing:{an:133,sz:3,st:ev(['hsl(2,100%,73%)','hsl(53,100%,69%)','hsl(93,100%,69%)','hsl(176,100%,76%)','hsl(228,100%,74%)','hsl(283,100%,73%)','hsl(2,100%,73%)']),sheen:0,glit:2,al:.3,gn:1200},
     vmax:{an:-33,sz:3,st:ev(['hsl(2,70%,47%)','hsl(228,60%,64%)','hsl(176,55%,39%)','hsl(123,68%,35%)','hsl(283,75%,57%)','hsl(2,70%,47%)','hsl(228,60%,64%)','hsl(176,55%,39%)','hsl(123,68%,35%)','hsl(283,75%,57%)','hsl(2,70%,47%)']),sheen:1,glit:0,al:.5,gn:0},
+    metal:{an:115,sz:3,st:[['#4a4d55',0],['#e6e9f0',.15],['#7b808b',.3],['#fafbfd',.45],['#5a5f6b',.6],['#d5d9e2',.75],['#868b97',.9],['#4a4d55',1]],sheen:1,glit:0,al:.55,gn:0},
     cosmos:{an:82,sz:4,st:ev(['hsl(53,65%,60%)','hsl(93,56%,50%)','hsl(176,54%,49%)','hsl(228,59%,55%)','hsl(283,60%,55%)','hsl(326,59%,51%)','hsl(326,59%,51%)','hsl(283,60%,55%)','hsl(228,59%,55%)','hsl(176,54%,49%)','hsl(93,56%,50%)','hsl(53,65%,60%)']),sheen:0,glit:2,al:.5,gn:1500}};
   CFG.shinyv=CFG.vfull;const C=CFG[fxm]||CFG.classic;
   const an=C.an*Math.PI/180,dx=Math.sin(an),dy=-Math.cos(an),hq=document.createElement('canvas');hq.width=W;hq.height=H;
@@ -1436,8 +2395,8 @@ function startDeck(){
 }
 function showDeck(){
   saveNow();clearTimeout(introT);
-  editing=false;Bd.classList.remove('locked','introing','introshow','view-edit','viewing');Bd.classList.add('view-deck');document.documentElement.classList.remove('introing');
-  selId=null;renderDeck();window.scrollTo(0,0);
+  editing=false;Bd.classList.remove('locked','introing','introshow','view-edit','viewing','uni-card');Bd.classList.add('view-deck');document.documentElement.classList.remove('introing');
+  selId=null;openSub('deck');renderDeck();window.scrollTo(0,0);
 }
 function newCard(){
   const c=JSON.parse(JSON.stringify(TEMPLATE));
@@ -1451,7 +2410,7 @@ function openEditor(c,isNew){               /* personnalisation (panneau visible
   if(isNew)playIntro();else quickOpen();
 }
 function openCard(c){                        /* affichage en grand, sans le panneau */
-  Bd.classList.remove('view-deck');Bd.classList.add('view-edit','viewing');
+  Bd.classList.remove('view-deck');Bd.classList.add('view-edit','viewing');Bd.classList.toggle('uni-card',!!c.uni);$('v-uni-box').hidden=!(isMod()&&!c.uni);if(!$('v-uni-rar').options.length){$('v-uni-rar').innerHTML=RARITIES.map(r=>`<option value="${r.k}">${rarName(r.k)}</option>`).join('')}try{$('v-uni-rar').value=localStorage.getItem('mycard-uni-rar')||'rare'}catch(e){}
   editing=false;render(c);fill(c);goStep(0);editNew=false;editSnap=null;
   const d=$('e-del');delete d.dataset.arm;d.textContent=tr('panel.deleteCard');
   quickOpen();
@@ -1463,14 +2422,16 @@ function quickOpen(){
   fl.classList.remove('back','flipping');st.classList.remove('flipping','settle','rise','dropin');void st.offsetWidth;st.classList.add('dropin','settle');window.scrollTo(0,0);
 }
 function deleteCard(id){removeCard(id);showDeck();toast(tr('toast.deleted'))}
-const SORTS=[['added','added'],['first','added'],['recent','modified'],['old','modified'],['az','name'],['za','name'],['pvd','other'],['pva','other'],['type','other']];
-let sortKey='recent';try{sortKey=localStorage.getItem('mycard-sort')||'recent'}catch(e){}
-if(!SORTS.some(x=>x[0]===sortKey))sortKey='recent';
+const SORTS=[['added',''],['rarD',''],['az',''],['pvd',''],['type','']];
+let sortKey='added';try{sortKey=localStorage.getItem('mycard-sort')||'added'}catch(e){}
+if(!SORTS.some(x=>x[0]===sortKey))sortKey='added';
 const nmOf=c=>String(c.name||''),coll=(a,b)=>a.localeCompare(b,'fr',{sensitivity:'base',numeric:true});
 /* date d'ajout : champ c ; pour les anciennes cartes, déduite de leur identifiant (horodatage encodé), sinon de la dernière modification */
 const createdOf=c=>{if(c.c)return c.c;const m=/^c([0-9a-z]{7,9})[0-9a-z]{3}$/.exec(String(c.id||''));if(m){const v=parseInt(m[1],36);if(v>1e12&&v<4e12)return v}return c.t||0};
-const CMP={added:(a,b)=>createdOf(b)-createdOf(a),first:(a,b)=>createdOf(a)-createdOf(b),recent:(a,b)=>b.t-a.t,old:(a,b)=>a.t-b.t,az:(a,b)=>coll(nmOf(a),nmOf(b)),za:(a,b)=>coll(nmOf(b),nmOf(a)),
-  pvd:(a,b)=>(parseInt(b.hp)||0)-(parseInt(a.hp)||0),pva:(a,b)=>(parseInt(a.hp)||0)-(parseInt(b.hp)||0),type:(a,b)=>coll(typeName(a.type),typeName(b.type))};
+const CMP={added:(a,b)=>createdOf(b)-createdOf(a),az:(a,b)=>coll(nmOf(a),nmOf(b)),
+  rarD:(a,b)=>rarRank(b)-rarRank(a),                                      /* cartes sans rareté (créées par le joueur) : à la fin */
+  pvd:(a,b)=>(parseInt(b.hp)||0)-(parseInt(a.hp)||0),type:(a,b)=>coll(typeName(a.type),typeName(b.type))};
+const rarRank=c=>c.uni?rarIdx(c.rar):-1;
 const sortedDeck=()=>[...deck].sort((a,b)=>CMP[sortKey](a,b)||coll(nmOf(a),nmOf(b))||b.t-a.t);
 function renderSortMenu(){
   let g='';
@@ -1490,14 +2451,20 @@ document.addEventListener('click',e=>{                                   /* appu
   e.stopPropagation();e.preventDefault();toggleMenu(false);
 },true);
 document.addEventListener('keydown',e=>{if(e.key==='Escape')toggleMenu(false)});
+/* recherche : insensible à la casse et aux accents, sur le nom, le type, l'évolution, le talent et les attaques */
+const normQ=s=>String(s==null?'':s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+const hayOf=c=>[c.name,typeName(c.type),c.evo,c.special,c.hp,c.ab&&c.ab.n,...(c.mv||[]).map(m=>m.n)].filter(Boolean).join(' ');
 function renderDeck(){
   $('dk-hello').textContent=tr('deck.hello',{user});
-  $('dk-count').textContent=deck.length+' '+(deck.length>1?tr('deck.cardsMany'):tr('deck.cardsOne'));
+  const q=normQ($('dk-q').value),shown=q?sortedDeck().filter(c=>normQ(hayOf(c)).includes(q)):sortedDeck();
+  $('dk-count').textContent=(q?shown.length+' / ':'')+deck.length+' '+(deck.length>1?tr('deck.cardsMany'):tr('deck.cardsOne'));
   $('dk-empty').hidden=deck.length>0;
-  const meta=c=>esc(typeName(c.type))+' · '+esc(c.hp)+' '+tr('panel.card.hp');
+  $('dk-nores').hidden=!(q&&deck.length&&!shown.length);
+  const meta=c=>esc(typeName(c.type))+' · '+esc(c.hp)+' '+tr('panel.card.hp')+(c.uni?' · '+rarName(c.rar):'');
   $('dk-grid').innerHTML=`<button type="button" class="tile new" data-act="new"><span class="tcov"><i>+</i></span><b>${tr('deck.newTitle')}</b><small>${tr('deck.newDesc')}</small></button>`+
-    sortedDeck().map(c=>`<button type="button" class="tile" data-id="${c.id}"><span class="tcov"><img alt="" data-thumb="${c.id}"></span><b>${esc(c.name)}</b><small>${meta(c)}</small></button>`).join('');
+    shown.map(c=>`<button type="button" class="tile${c.uni?' uni':''}"${c.uni?` style="--rc:${rarOf(c.rar).c}"`:''} data-id="${c.id}"><span class="tcov"><img alt="" data-thumb="${c.id}"></span><b>${esc(c.name)}</b><small>${meta(c)}</small></button>`).join('');
   fillThumbs();
+  if(typeof updateDropDot==='function')updateDropDot();
 }
 async function fillThumbs(){
   const paint=()=>deck.forEach(c=>{const th=thumbs[c.id];if(th)document.querySelectorAll('img[data-thumb="'+c.id+'"]').forEach(im=>{if(im.getAttribute('src')!==th.url)im.src=th.url})});
@@ -1526,6 +2493,7 @@ $('dk-grid').addEventListener('click',e=>{
 $('v-edit').addEventListener('click',startEdit);
 $('e-del').addEventListener('click',()=>{const b=$('e-del');if(!b.dataset.arm){b.dataset.arm=1;b.textContent=tr('panel.confirmDelete');clearTimeout(delT);delT=setTimeout(()=>{delete b.dataset.arm;b.textContent=tr('panel.deleteCard')},3000);return}deleteCard(cur.id)});
 $('dk-new').addEventListener('click',newCard);
+$('dk-q').addEventListener('input',renderDeck);
 function ask(title,text,yes){
   return new Promise(res=>{
     const m=$('cfm');$('cfm-t').textContent=title;$('cfm-p').textContent=text;$('cfm-yes').textContent=yes;m.hidden=false;$('cfm-no').focus();
@@ -1546,14 +2514,28 @@ $('e-back').addEventListener('click',async()=>{
 });
 $('dk-change').addEventListener('click',()=>$('u-change').click());
 /* ---- écran Paramètres : confidentialité, crédits, changer de pseudo ---- */
+/* ---- thèmes de couleur : bleu (défaut), rouge, noir, blanc ---- */
+const THEMES=['blue','red','black','white'];
+let theme='blue';try{const v=localStorage.getItem('mycard-theme');if(THEMES.includes(v))theme=v}catch(e){}
+function applyTheme(code){
+  if(!THEMES.includes(code))return;
+  theme=code;document.documentElement.dataset.theme=code;try{localStorage.setItem('mycard-theme',code)}catch(e){}
+  buildThemeGrid();
+}
+function buildThemeGrid(){
+  const g=$('set-theme');
+  g.innerHTML=THEMES.map(c=>`<button type="button" data-t="${c}" aria-pressed="${c===theme}"><span class="tsw" data-t="${c}" aria-hidden="true"></span>${tr('theme.'+c)}</button>`).join('');
+  g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>applyTheme(b.dataset.t)));
+}
 function fillSettings(){
   $('set-loggedas').textContent=tr('settings.loggedAs',{user});
   $('set-privacy').textContent=tr('settings.privacy');
   $('set-credits').textContent=tr('settings.credits');
-  buildSettingsLangGrid();
+  buildSettingsLangGrid();buildThemeGrid();
+  if(typeof refreshMod==='function')refreshMod();
 }
-function showSettings(){saveNow();fillSettings();$('deck').hidden=true;$('settings').hidden=false;window.scrollTo(0,0)}
-function hideSettings(){$('settings').hidden=true;$('deck').hidden=false;window.scrollTo(0,0)}
+function showSettings(){fillSettings();openSub('settings')}
+function hideSettings(){backToDeck()}
 $('dk-settings').addEventListener('click',showSettings);
 $('set-back').addEventListener('click',hideSettings);
 $('set-change').addEventListener('click',()=>{hideSettings();$('u-change').click()});
@@ -1636,6 +2618,526 @@ setInterval(()=>{if(perfEl)perfEl.textContent='écran '+gov.hz+' Hz · '+gov.ema
   }
 })(t0);
 
+/* ---- concours hebdomadaire + deck universel (booster du jour) ----
+   Tout ce qui est partagé passe par `cloud`. Ici c'est une version locale (démo) : rien n'est envoyé ni partagé.
+   Pour un vrai concours en ligne, remplacer `cloud` par un client serveur (mêmes méthodes). Côté serveur il faudra aussi
+   le tirage du booster, le calcul du n°1 de la semaine et le rôle de modérateur : ils ne doivent pas dépendre du navigateur. */
+const RARITIES=[{k:'common',w:60,c:'#9aa4b5'},{k:'uncommon',w:25,c:'#4fd08a'},{k:'rare',w:10,c:'#4aa3ff'},{k:'epic',w:4,c:'#b06bff'},{k:'legendary',w:1,c:'#ffc233'}];
+const rarOf=k=>RARITIES.find(r=>r.k===k)||RARITIES[0],rarName=k=>tr('rarity.'+rarOf(k).k);
+const UNIVERSAL=Array.isArray(window.UNIVERSAL_CARDS)?window.UNIVERSAL_CARDS:[];
+const demoOff=()=>{try{return +localStorage.getItem('mycard-demo-off')||0}catch(e){return 0}};
+const nowD=()=>new Date(Date.now()+demoOff()*6048e5);                     /* « maintenant », décalé de semaines en démo */
+const weekId=()=>{const d=nowD(),t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())),day=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-day);
+  const y=t.getUTCFullYear();return y+'-W'+String(Math.ceil(((t-Date.UTC(y,0,1))/864e5+1)/7)).padStart(2,'0')};
+const weekEnd=()=>{const d=nowD(),e=new Date(d.getFullYear(),d.getMonth(),d.getDate());e.setDate(e.getDate()+(8-(e.getDay()||7)));return e};   /* prochain lundi 00:00 */
+const fmtLeft=ms=>{const m=Math.max(0,Math.floor(ms/6e4)),d=Math.floor(m/1440),h=Math.floor(m%1440/60);return d?`${d} ${tr('time.d')} ${h} ${tr('time.h')}`:`${h} ${tr('time.h')} ${m%60} ${tr('time.m')}`};
+/* Mode modérateur : identifiant + code. Seule l'empreinte (PBKDF2) est dans le code. Protection légère, côté navigateur : sans serveur,
+   elle ne protège que cet appareil (les cartes ajoutées à la bibliothèque universelle n'y sont visibles que sur cet appareil). */
+const MOD_SALT='dd9e081f7bc3776603c8f5faadf4c6ab',MOD_HASH='e21a3e70d4100e3da15949d13875acbd35827edac31f74df596f6a82e8171604',MOD_ITER=210000;
+const isMod=()=>{try{return localStorage.getItem('mycard-mod')===MOD_HASH}catch(e){return false}};
+async function modHash(user,code){
+  const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(user+'\n'+code),'PBKDF2',false,['deriveBits']);
+  const b=await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:new Uint8Array(MOD_SALT.match(/../g).map(x=>parseInt(x,16))),iterations:MOD_ITER},k,256);
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+const cloud=(()=>{
+  const rd=(k,d)=>{try{const v=JSON.parse(localStorage.getItem('mycard-cloud:'+k));return v==null?d:v}catch(e){return d}};
+  const wr=(k,v)=>lsSet('mycard-cloud:'+k,JSON.stringify(v));
+  return {
+    async allEntries(){return rd('entries',{})},
+    async entries(wk){return rd('entries',{})[wk]||[]},
+    async submit(wk,e){const a=rd('entries',{});a[wk]=(a[wk]||[]).filter(x=>x.uk!==e.uk).concat(e);wr('entries',a)},
+    async withdraw(wk,u){const a=rd('entries',{}),v=rd('votes',{}),gone=(a[wk]||[]).filter(x=>x.uk===u);
+      a[wk]=(a[wk]||[]).filter(x=>x.uk!==u);for(const k in (v[wk]||{}))if(gone.some(g=>g.id===v[wk][k]))delete v[wk][k];wr('entries',a);wr('votes',v);return gone},
+    async votes(wk){return rd('votes',{})[wk]||{}},
+    async vote(wk,voter,id){const a=rd('entries',{}),v=rd('votes',{}),e=(a[wk]||[]).find(x=>x.id===id);
+      if(!e||e.uk===voter)return false;v[wk]=v[wk]||{};if(v[wk][voter]===id)delete v[wk][voter];else v[wk][voter]=id;wr('votes',v);return true},
+    async results(){return rd('results',{})},
+    async setResult(wk,r){const a=rd('results',{});a[wk]=r;wr('results',a)},
+    async extras(){return rd('extras',[])},
+    async addExtra(c){const a=rd('extras',[]).filter(x=>x.id!==c.id);a.push(c);wr('extras',a)},
+    async clear(){const ks=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('mycard-cloud:'))ks.push(k)}ks.forEach(k=>localStorage.removeItem(k))}
+  };
+})();
+const catalog=async()=>[...UNIVERSAL,...await cloud.extras()].map(c=>({...c,rarity:RARITIES.some(r=>r.k===c.rarity)?c.rarity:'common'}));
+const catImg=async c=>c.img||(c.hasImg?await media.get('ext:'+c.id):null);
+const wait=ms=>new Promise(r=>setTimeout(r,calm?0:ms));
+/* miniatures : une à la fois (le dessin d'une carte est coûteux), avec mémoire */
+const thumbMem=new Map();let thumbQ=Promise.resolve();
+function thumbUrl(key,c,img){
+  if(thumbMem.has(key))return Promise.resolve(thumbMem.get(key));
+  const p=thumbQ.then(async()=>{const cv=await drawCard({...c,img:img||undefined},{W:340,fx:c.fx||'classic',k:c.k!=null?c.k:1,state:{mx:55,my:30,rx:0,ry:0,o:.7}});
+    const u=cv.toDataURL('image/jpeg',.82);thumbMem.set(key,u);return u}).catch(()=>'');
+  thumbQ=p;return p;
+}
+function paintThumbs(root,list){root.querySelectorAll('img[data-i]').forEach(im=>{const t=list[+im.dataset.i];if(t)Promise.resolve(t.img()).then(img=>thumbUrl(t.key,t.card,img)).then(u=>{if(u)im.src=u})})}
+const TAB_OF={deck:'library',settings:'library',contest:'contest',booster:'booster'};
+const openSub=id=>{saveNow();['deck','settings','contest','booster'].forEach(s=>$(s).hidden=s!==id);clearInterval(bstTick);window.scrollTo(0,0);
+  document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-current',t.dataset.tab===TAB_OF[id]?'page':'false'))};
+function backToDeck(){openSub('deck');renderDeck()}
+
+/* -- concours -- */
+async function settleWeeks(){                      /* une semaine terminée désigne son n°1 (côté serveur dans la vraie version) */
+  const cur=weekId(),all=await cloud.allEntries(),res=await cloud.results();
+  for(const wk of Object.keys(all)){
+    if(wk>=cur||res[wk])continue;
+    const cnt={};Object.values(await cloud.votes(wk)).forEach(id=>cnt[id]=(cnt[id]||0)+1);
+    const w=[...all[wk]].sort((a,b)=>(cnt[b.id]||0)-(cnt[a.id]||0)||a.t-b.t)[0];
+    await cloud.setResult(wk,w&&cnt[w.id]?{entryId:w.id,votes:cnt[w.id],status:'pending'}:{status:'none'});
+  }
+}
+const votesText=n=>tr(n===1?'contest.votesOne':'contest.votesMany',{n});
+async function renderContest(){
+  if($('contest').hidden)return;
+  await settleWeeks();
+  const wk=weekId(),[ents,votes,res,all]=await Promise.all([cloud.entries(wk),cloud.votes(wk),cloud.results(),cloud.allEntries()]),me=uk(),mine=ents.find(e=>e.uk===me),my=votes[me],thumbs=[];
+  $('ct-week').textContent=tr('contest.week',{n:+wk.split('-W')[1],t:fmtLeft(weekEnd()-nowD())});
+  const own=deck.filter(c=>!c.uni);
+  $('ct-mine').innerHTML=`<h2 class="set-h">${tr('contest.mine')}</h2>`+(mine
+    ?`<p class="set-p">${tr('contest.submitted',{name:esc(mine.card.name)})}</p><div class="ct-row"><button type="button" class="gbtn" id="ct-withdraw">${tr('contest.withdraw')}</button></div>`
+    :own.length?`<div class="ct-row"><select id="ct-pick" aria-label="${tr('contest.pick')}">${own.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select><button type="button" class="gbtn primary" id="ct-submit">${tr('contest.submit')}</button></div>`
+    :`<p class="set-p">${tr('contest.noOwn')}</p>`);
+  const cnt={};Object.values(votes).forEach(id=>cnt[id]=(cnt[id]||0)+1);
+  const ranked=[...ents].sort((a,b)=>(cnt[b.id]||0)-(cnt[a.id]||0)||a.t-b.t);
+  $('ct-noent').hidden=ents.length>0;
+  $('ct-grid').innerHTML=ranked.map((e,i)=>{thumbs.push({key:'e:'+e.id+':'+(e.card.t||0),card:e.card,img:()=>e.hasImg?media.get('ent:'+e.id):null});
+    const n=cnt[e.id]||0,lab=e.uk===me?tr('contest.yours'):my===e.id?tr('contest.voted'):tr('contest.vote');
+    return `<div class="tile ent"><span class="tcov"><img data-i="${thumbs.length-1}" alt="">${n&&i<3?`<span class="rk">${i+1}</span>`:''}</span><b>${esc(e.card.name)}</b><small>${tr('contest.by',{a:esc(e.author)})} · ${votesText(n)}</small><button type="button" class="gbtn vote" data-id="${e.id}" aria-pressed="${my===e.id}"${e.uk===me?' disabled':''}>${lab}</button></div>`}).join('');
+  paintThumbs($('ct-grid'),thumbs.splice(0));
+  const past=Object.keys(res).sort().reverse().slice(0,6),entOf=(w,r)=>((all[w]||[]).find(x=>x.id===r.entryId));
+  $('ct-res').innerHTML=past.length?past.map(w=>{const r=res[w],e=entOf(w,r),st=r.status==='approved'?tr('contest.status.approved',{r:rarName(r.rarity)}):tr('contest.status.'+r.status);
+    return `<div class="res"><b>${tr('contest.weekN',{n:+w.split('-W')[1]})}</b>${e?` · ${esc(e.card.name)} ${tr('contest.by',{a:esc(e.author)})} · ${votesText(r.votes)}`:''}<small>${st}</small></div>`}).join(''):`<p class="set-p">${tr('contest.noResults')}</p>`;
+  const pend=Object.keys(res).filter(w=>res[w].status==='pending').sort();
+  $('ct-mod').hidden=!isMod();
+  if(isMod()){
+    const t2=[];
+    $('ct-modlist').innerHTML=pend.length?pend.map(w=>{const e=entOf(w,res[w]);if(!e)return '';t2.push({key:'e:'+e.id+':'+(e.card.t||0),card:e.card,img:()=>e.hasImg?media.get('ent:'+e.id):null});
+      return `<div class="mod-item"><img data-i="${t2.length-1}" alt=""><div><b>${esc(e.card.name)}</b> ${tr('contest.by',{a:esc(e.author)})}<br><small>${tr('contest.weekN',{n:+w.split('-W')[1]})} · ${votesText(res[w].votes)}</small>
+        <div class="ct-row"><select id="ct-r-${w}" aria-label="${tr('contest.rarityFor')}">${RARITIES.map(r=>`<option value="${r.k}"${r.k==='rare'?' selected':''}>${rarName(r.k)}</option>`).join('')}</select></div>
+        <div class="ct-row"><button type="button" class="gbtn primary" data-mod="ok" data-wk="${w}">${tr('contest.approve')}</button><button type="button" class="gbtn" data-mod="no" data-wk="${w}">${tr('contest.reject')}</button></div></div></div>`}).join(''):`<p class="set-p">${tr('contest.modNone')}</p>`;
+    paintThumbs($('ct-modlist'),t2);
+  }
+}
+async function submitMine(){
+  const c=deck.find(x=>x.id===$('ct-pick').value);if(!c||c.uni)return;
+  await hydrated;const img=c.img||(c.hasImg?await media.get('img:'+uk()+':'+c.id):null);
+  const e={id:'e'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),uk:uk(),author:user,t:Date.now(),card:JSON.parse(JSON.stringify({...c,img:undefined,hasImg:!!img})),hasImg:!!img};
+  if(img)await media.put('ent:'+e.id,img);
+  await cloud.submit(weekId(),e);toast(tr('contest.toastSubmitted'));renderContest();
+}
+async function moderate(wk,ok,rarity){
+  const r=(await cloud.results())[wk];if(!r||r.status!=='pending')return;
+  if(ok){
+    const e=(await cloud.entries(wk)).find(x=>x.id===r.entryId);if(!e)return;
+    const id='w-'+wk+'-'+e.id,c={...e.card,id,rarity,ill:e.author,hasImg:!!e.hasImg};delete c.img;delete c.uni;delete c.rar;
+    if(e.hasImg){const im=await media.get('ent:'+e.id);if(im)await media.put('ext:'+id,im);else c.hasImg=false}
+    await cloud.addExtra(c);
+  }
+  await cloud.setResult(wk,{...r,status:ok?'approved':'rejected',rarity:ok?rarity:undefined});
+  toast(tr(ok?'contest.toastApproved':'contest.toastRejected'));renderContest();
+}
+$('contest').addEventListener('click',async e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.classList.contains('vote')){await cloud.vote(weekId(),uk(),b.dataset.id);return renderContest()}
+  if(b.id==='ct-submit')return submitMine();
+  if(b.id==='ct-withdraw'){(await cloud.withdraw(weekId(),uk())).forEach(g=>media.del('ent:'+g.id));toast(tr('contest.toastWithdrawn'));return renderContest()}
+  if(b.dataset.mod)return moderate(b.dataset.wk,b.dataset.mod==='ok',($('ct-r-'+b.dataset.wk)||{}).value||'rare');
+  if(b.id==='dm-seed'){                                                  /* outils démo */
+    const wk=weekId(),P=[['Aurora','Léa','L','cosmos'],['Tempête','Sam','W','regular'],['Mirage','Noor','P','vmax']];
+    for(const [i,[nm,au,ty,fx]] of P.entries()){const c=JSON.parse(JSON.stringify(TEMPLATE));Object.assign(c,{id:'demo-'+au,name:nm,type:ty,fx,pal:PALS[i%PALS.length],hp:150+i*60,t:Date.now()});
+      await cloud.submit(wk,{id:'e-demo-'+au.toLowerCase(),uk:'demo:'+au.toLowerCase(),author:'Démo '+au,t:Date.now()-i*1000,card:c,hasImg:false})}
+    return renderContest();
+  }
+  if(b.id==='dm-end'){try{localStorage.setItem('mycard-demo-off',demoOff()+1)}catch(_){}return renderContest()}
+  if(b.id==='dm-back'){try{localStorage.setItem('mycard-demo-off',0)}catch(_){}return renderContest()}
+  if(b.id==='dm-clear'){const all=await cloud.allEntries();Object.values(all).flat().forEach(x=>media.del('ent:'+x.id));await cloud.clear();return renderContest()}
+});
+
+/* -- booster du jour : 5 cartes, au plus 1 légendaire -- */
+const dayKey=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
+const dropKey=()=>'mycard-drop:'+uk();
+const dropReady=()=>{try{return localStorage.getItem(dropKey())!==dayKey()}catch(e){return true}};
+const clock=ms=>{const s=Math.max(0,Math.floor(ms/1e3));return [Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(v=>String(v).padStart(2,'0')).join(':')};
+const PACK_SIZE=5,rarIdx=k=>Math.max(0,RARITIES.findIndex(r=>r.k===k)),RN=RARITIES.length-1;
+let bstTick=0,bstBusy=false,bstEmpty=false;
+function updateDropDot(){const d=$('drop-dot');if(d)d.hidden=!user||!dropReady()}
+function rollRarity(keys){                         /* tirage pondéré parmi les raretés qui ont au moins une carte */
+  const pool=RARITIES.filter(r=>keys.includes(r.k));let x=Math.random()*pool.reduce((a,r)=>a+r.w,0);
+  for(const r of pool)if((x-=r.w)<0)return r.k;
+  return pool[pool.length-1].k;
+}
+function rollPack(cat){
+  const by={};cat.forEach(c=>(by[c.rarity]=by[c.rarity]||[]).push(c));
+  const keys=Object.keys(by),out=[],used=new Set();let legend=false;
+  for(let i=0;i<PACK_SIZE;i++){
+    let ks=legend?keys.filter(k=>k!=='legendary'):keys;if(!ks.length)ks=keys;     /* une légendaire déjà tirée : plus d'autre dans ce booster */
+    const rk=rollRarity(ks);if(rk==='legendary')legend=true;
+    let pool=by[rk].filter(c=>!used.has(c.id));if(!pool.length)pool=by[rk];       /* pas deux fois la même carte si possible */
+    const c=pool[Math.floor(Math.random()*pool.length)];used.add(c.id);out.push(c);
+  }
+  return out.map(c=>[c,Math.random()]).sort((a,b)=>rarIdx(a[0].rarity)-rarIdx(b[0].rarity)||a[1]-b[1]).map(x=>x[0]);   /* du moins rare au plus rare */
+}
+/* chance du booster (0 → 1) : surtout sa meilleure carte, un peu le total ; la couleur glisse du gris vers le doré légendaire */
+function packLuck(cards){
+  const tot=RARITIES.reduce((a,r)=>a+r.w,0),bits=k=>Math.log2(tot/rarOf(k).w),best=Math.max(...cards.map(c=>rarIdx(c.rarity)));
+  const lo=PACK_SIZE*bits(RARITIES[0].k),hi=bits(RARITIES[RN].k)+(PACK_SIZE-1)*bits(RARITIES[Math.max(0,RN-1)].k);
+  const norm=Math.min(1,Math.max(0,(cards.reduce((a,c)=>a+bits(c.rarity),0)-lo)/(hi-lo||1))),floor=.04+.96*best/(RN||1);
+  return Math.min(1,floor+(1-floor)*.5*norm);
+}
+const hex2rgb=x=>[1,3,5].map(i=>parseInt(x.slice(i,i+2),16));
+function luckRGB(l){const st=RARITIES.map(r=>hex2rgb(r.c)),p=Math.min(RN,Math.max(0,l*RN)),i=Math.min(RN-1,Math.floor(p)),f=p-i;return st[i].map((v,q)=>Math.round(v+(st[i+1][q]-v)*f))}
+const flashOf=i=>.08+.72*Math.pow(i/(RN||1),1.6);
+const buzz=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
+const pickOf=(list,not)=>{const l=list.filter(x=>x!==not);return l[Math.floor(Math.random()*l.length)]};
+async function unlockUniversal(cat,rk){
+  const id='u-'+cat.id,have=deck.find(c=>c.id===id);
+  if(have){have.dup=(have.dup||0)+1;saveCard(have);return {isNew:false,n:have.dup+1}}
+  const c=JSON.parse(JSON.stringify(cat));delete c.rarity;delete c.img;delete c.hasImg;delete c.upd;
+  Object.assign(c,{id,uni:true,rar:rk,t:Date.now(),pal:c.pal||PALS[0],fx:c.fx||'classic',k:c.k!=null?c.k:1});c.c=c.t;
+  const img=await catImg(cat);if(img)c.img=img;
+  deck.push(c);saveIdx();saveCard(c);return {isNew:true,n:1};
+}
+
+/* ---- le pack : un seul dessin, copié sur deux calques découpés le long de la déchirure ---- */
+const NOISE=(()=>{try{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d'),d=g.createImageData(128,128);
+  for(let i=0;i<d.data.length;i+=4){const v=Math.random()*255;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}g.putImageData(d,0,0);return c.toDataURL()}catch(e){return ''}})();
+const CREASE='url("data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 180" preserveAspectRatio="none"><g fill="none" stroke-linecap="round"><g stroke="#fff" stroke-opacity=".55" stroke-width=".6"><path d="M4 12L30 30M96 14L70 34M6 168L28 150M95 166L72 148M12 60Q30 66 50 58M88 112Q66 106 48 116M20 96L42 88M80 70L58 80"/></g><g stroke="#000" stroke-opacity=".5" stroke-width=".7"><path d="M5 14L31 32M95 16L69 36M7 166L29 148M94 164L71 146M12 62Q30 68 50 60M88 114Q66 108 48 118M20 98L42 90M80 72L58 82"/></g></g></svg>')+'")';
+document.documentElement.style.setProperty('--noise',NOISE?'url('+NOISE+')':'none');document.documentElement.style.setProperty('--crease',CREASE);
+const ZZ=[...Array(17)].map((_,i)=>[i/16*100,15+(i%2?1.1:-1.1)]),zp=p=>p[0].toFixed(2)+'% '+p[1].toFixed(2)+'%',poly=pts=>'polygon('+pts.map(zp).join(',')+')';
+const OV=.35,CLIP_TOP=poly([[0,0],[100,0],...[...ZZ].reverse()]),CLIP_MAIN=poly([...ZZ.map(p=>[p[0],p[1]-OV]),[100,100],[0,100]]);   /* léger recouvrement : pas de liseré entre les deux calques */
+const SLASH={top:poly([[0,0],[100,0],[100,6],[0,22]]),main:poly([[0,22-OV],[100,6-OV],[100,100],[0,100]]),pts:[[0,22],[100,6]]};
+const ART_CLIP=(()=>{const T=36,pin=t=>1.3*(1-Math.sin(Math.PI*t)),q=n=>n.toFixed(2),p=[];
+  for(let i=0;i<=T;i++)p.push(q(pin(0)+(100-2*pin(0))*i/T)+'% '+(i%2?'0.9%':'0%'));
+  for(let k=1;k<=10;k++)p.push(q(100-pin(k/10))+'% '+q(k*10)+'%');
+  for(let i=T;i>=0;i--)p.push(q(pin(1)+(100-2*pin(1))*i/T)+'% '+(i%2?'99.1%':'100%'));
+  for(let k=9;k>=1;k--)p.push(q(pin(k/10))+'% '+q(k*10)+'%');
+  return 'polygon('+p.join(',')+')'})();
+const packArt='<div class="pk-art"><div class="pk-fan"><i></i><i></i><i></i><b>✦</b></div><div class="pk-logo">MyCard</div><div class="pk-sub">BOOSTER</div><div class="pk-five">5 CARDS</div><i class="pk-foil"></i><i class="pk-noise"></i><i class="pk-crease"></i><i class="pk-vol"></i><i class="pk-spec"></i><i class="pk-crimp"></i><i class="pk-crimp b"></i></div>';
+const packHTML=split=>split?`<div class="pk-shaker" id="pk-shaker"><div class="pk-layer main">${packArt}</div><div class="pk-layer top">${packArt}</div><i class="pk-burst"></i></div>`:`<div class="pk-layer">${packArt}</div>`;
+const setPackVars=(el,top,main)=>{el.style.setProperty('--art-clip',ART_CLIP);el.style.setProperty('--clip-top',top||CLIP_TOP);el.style.setProperty('--clip-main',main||CLIP_MAIN)};
+
+/* effets de lumière : étincelles en spirale (invocation) et gerbes (déchirure, révélations) */
+const fx=(()=>{
+  const cv=$('pk-fx'),g=cv.getContext('2d');let W=0,H=0,D=1,P=[],run=false,rgb=[255,255,255],amb=0,last=0,acc=0;
+  const size=()=>{D=Math.min(2,window.devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;cv.width=Math.round(W*D);cv.height=Math.round(H*D)};
+  function frame(t){
+    if(!run)return;requestAnimationFrame(frame);
+    const dt=Math.min(.05,(t-last)/1e3||.016);last=t;g.setTransform(D,0,0,D,0,0);g.clearRect(0,0,W,H);g.globalCompositeOperation='lighter';
+    acc+=amb*dt;while(acc>=1&&P.length<500){acc--;P.push({s:1,a:Math.random()*6.283,r:30+Math.random()*120,x:W/2,y:H*.56+Math.random()*H*.1,vy:-(70+Math.random()*150),w:(Math.random()<.5?-1:1)*(1.2+Math.random()*2),l:0,ttl:1.8+Math.random()*1.4,z:1+Math.random()*2.2})}
+    P=P.filter(p=>{
+      p.l+=dt;if(p.l>=p.ttl)return false;const k=p.l/p.ttl;let x,y;
+      if(p.s){p.a+=p.w*dt;p.y+=p.vy*dt;x=W/2+Math.cos(p.a)*p.r*(1-k*.35);y=p.y}
+      else{p.vy+=p.gy*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;x=p.x;y=p.y}
+      const al=p.s?Math.sin(Math.PI*k)*.9:(1-k)*(1-k);
+      g.fillStyle=`rgba(${rgb[0]},${rgb[1]},${rgb[2]},${al*.25})`;g.beginPath();g.arc(x,y,p.z*4,0,6.283);g.fill();
+      g.fillStyle=`rgba(255,255,255,${al*.9})`;g.beginPath();g.arc(x,y,p.z*1.1,0,6.283);g.fill();return true;
+    });
+  }
+  return {
+    start(c,rate){rgb=c;amb=calm?rate*.15:rate;P=[];acc=0;size();if(!run){run=true;last=performance.now();requestAnimationFrame(frame)}},
+    rate(r){amb=calm?r*.15:r},
+    burst(x,y,c,n,v){if(calm)n=Math.round(n/6);for(let i=0;i<n&&P.length<600;i++){const a=Math.random()*6.283,s=(.35+Math.random())*v;P.push({s:0,x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-v*.25,gy:260,l:0,ttl:.7+Math.random()*.9,z:1+Math.random()*2.4})}if(c)rgb=c},
+    stop(){run=false;P=[];g.clearRect(0,0,W,H)}
+  };
+})();
+const pk={on:false,stage:'',idx:0,cards:[],res:[],urls:[],luck:0,rgb:[255,255,255],cur:null,until:0};
+function pkFlash(col,o){const f=$('pk-flash');f.style.setProperty('--fc',col);f.style.setProperty('--fo',o);f.classList.remove('go');void f.offsetWidth;f.classList.add('go')}
+function pkCenter(el){const r=el.getBoundingClientRect();return [r.left+r.width/2,r.top+r.height/2]}
+function pkAt(px,py){const r=$('pk-pack').getBoundingClientRect();return [r.left+r.width*px/100,r.top+r.height*py/100]}
+function pkHint(k){$('pk-hint').textContent=k?tr(k):''}
+const DUR=ms=>calm?1:ms,an=(el,kf,o)=>el.animate(kf,{fill:'forwards',...o});
+
+/* ---- six façons de déchirer le pack (une au hasard, jamais deux fois de suite) ---- */
+const TEAR_KINDS=['strip','fall','unzip','shatter','split','slash'];let lastTear='';
+function pickTear(){return pickOf(TEAR_KINDS,lastTear)}
+const piece=(pts,origin)=>{const d=document.createElement('div');d.className='pk-layer';d.innerHTML=packArt;d.style.clipPath=poly(pts);d.style.transformOrigin=origin||'50% 15%';return d};
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const PRELUDE={
+  shake:sh=>an(sh,[{transform:'none'},{transform:'translate(-5px,2px) rotate(-3deg)'},{transform:'translate(6px,-2px) rotate(3deg)'},{transform:'translate(-6px,3px) rotate(-4deg)'},{transform:'translate(6px,-3px) rotate(4deg)'},{transform:'translate(-3px,1px) rotate(-1.5deg)'},{transform:'none'}],{duration:DUR(420),easing:'linear'}).finished,
+  pull:sh=>an(sh,[{transform:'none'},{transform:'translateY(9px) scale(.965)',offset:.55},{transform:'translateY(-6px) scale(1.03)'}],{duration:DUR(420),easing:'ease-in-out'}).finished,
+  swell:sh=>an(sh,[{transform:'none',filter:'brightness(1)'},{transform:'scale(1.07)',filter:'brightness(1.7)',offset:.8},{transform:'scale(1.1)',filter:'brightness(2.5)'}],{duration:DUR(520),easing:'ease-in'}).finished,
+  slash:async sh=>{const s=document.createElement('i');s.className='pk-slash';s.style.transform='rotate(-16deg) scaleX(0)';sh.append(s);
+    await an(s,[{transform:'rotate(-16deg) scaleX(0)',opacity:1},{transform:'rotate(-16deg) scaleX(1)',opacity:1,offset:.7},{transform:'rotate(-16deg) scaleX(1)',opacity:0}],{duration:DUR(300),easing:'ease-out'}).finished;s.remove()}
+};
+const TEARS={
+  strip:{pre:'shake',run(top){an(top,[{transform:'none',opacity:1},{transform:'rotate(-9deg) translate(2%,-3%)',opacity:1,offset:.28},{transform:'translate(78%,-250%) rotate(-48deg)',opacity:0}],{duration:DUR(760),easing:'cubic-bezier(.5,0,.8,.5)'});return 650}},
+  fall:{pre:'pull',run(top){top.style.transformOrigin='0% 15%';an(top,[{transform:'none',offset:0},{transform:'rotate(-26deg) translateY(-5%)',offset:.28},{transform:'rotate(-100deg) translate(2%,-8%)',offset:.55},{transform:'rotate(-178deg) translate(-8%,300%)',opacity:1,offset:.9},{transform:'rotate(-205deg) translate(-10%,420%)',opacity:0,offset:1}],{duration:DUR(1150),easing:'ease-in'});return 850}},
+  unzip:{pre:'shake',run(top,sh){top.style.visibility='hidden';
+    for(let k=0;k<8;k++){const x0=ZZ[2*k][0],pts=[[x0,0],[ZZ[2*k+2][0],0],ZZ[2*k+2],ZZ[2*k+1],ZZ[2*k]],p=piece(pts,x0+'% 15%');sh.append(p);
+      an(p,[{transform:'none',opacity:1},{transform:'rotate(-38deg) translate(0,-16%)',opacity:1,offset:.45},{transform:'rotate(-88deg) translate(6%,-60%)',opacity:0}],{duration:DUR(560),delay:DUR(k*80),easing:'cubic-bezier(.4,0,.9,.6)'});
+      setTimeout(()=>{if(pk.on){const [x,y]=pkAt(x0+6,15);fx.burst(x,y,pk.rgb,16,260)}},calm?0:k*80)}
+    return 8*80+500}},
+  shatter:{pre:'swell',run(top,sh){top.style.visibility='hidden';
+    for(let i=0;i<16;i++){const p=piece([[ZZ[i][0],0],[ZZ[i+1][0],0],ZZ[i+1],ZZ[i]],((ZZ[i][0]+ZZ[i+1][0])/2)+'% 8%'),dx=(((ZZ[i][0]+ZZ[i+1][0])/2)-50)*5+rnd(-40,40),dy=-rnd(120,300),r=rnd(-540,540);sh.append(p);
+      an(p,[{transform:'none',opacity:1},{transform:`translate(${dx*.7}px,${dy}px) rotate(${r*.6}deg)`,opacity:1,offset:.5},{transform:`translate(${dx}px,${dy+520}px) rotate(${r}deg)`,opacity:0}],{duration:DUR(rnd(850,1200)),easing:'cubic-bezier(.2,.6,.4,1)'})}
+    return 700}},
+  split:{pre:'swell',run(top,sh){top.style.visibility='hidden';
+    const L=piece([[0,0],[50,0],...ZZ.slice(0,9).reverse()],'0% 15%'),R=piece([[50,0],[100,0],...ZZ.slice(8).reverse()],'100% 15%');sh.append(L,R);
+    an(L,[{transform:'none',opacity:1},{transform:'rotate(-64deg)',opacity:1,offset:.5},{transform:'rotate(-100deg) translate(-14%,-20%)',opacity:0}],{duration:DUR(900),easing:'cubic-bezier(.3,1.3,.5,1)'});
+    an(R,[{transform:'none',opacity:1},{transform:'rotate(64deg)',opacity:1,offset:.5},{transform:'rotate(100deg) translate(14%,-20%)',opacity:0}],{duration:DUR(900),easing:'cubic-bezier(.3,1.3,.5,1)'});return 800}},
+  slash:{pre:'slash',cut:SLASH,run(top){top.style.transformOrigin='50% 14%';an(top,[{transform:'none',opacity:1},{transform:'translate(40%,-12%) rotate(-3deg)',opacity:1,offset:.3},{transform:'translate(125%,-22%) rotate(-10deg)',opacity:1,offset:.6},{transform:'translate(170%,300%) rotate(28deg)',opacity:0}],{duration:DUR(1000),easing:'ease-in'});return 750}}
+};
+async function openBooster(){
+  if(bstBusy||!dropReady())return;
+  const cat=await catalog();if(!cat.length)return renderBooster();
+  bstBusy=true;$('bst-open').disabled=true;
+  const cards=rollPack(cat);
+  try{localStorage.setItem(dropKey(),dayKey())}catch(e){}                  /* le booster est consommé et les cartes ajoutées dès le tirage */
+  updateDropDot();
+  const res=[];for(const c of cards)res.push(await unlockUniversal(c,c.rarity));
+  const urls=cards.map(c=>catImg(c).then(img=>thumbUrl('cat:'+c.id+':'+(c.upd||0),c,img)));
+  const luck=packLuck(cards),rgb=luckRGB(luck);
+  Object.assign(pk,{on:true,stage:'summon',idx:0,cards,res,urls,luck,rgb,cur:null,until:Date.now()+1e9});
+  const P=$('pk');P.hidden=false;P.classList.remove('on','legend');
+  P.style.setProperty('--lc-rgb',rgb.join(','));P.style.setProperty('--lc',`rgb(${rgb.join(',')})`);P.style.setProperty('--cy','15%');P.style.setProperty('--rx','0deg');P.style.setProperty('--ry','0deg');P.style.setProperty('--sx','50');
+  const pack=$('pk-pack');pack.className='pk-pack';pack.innerHTML=packHTML(true);setPackVars(pack);
+  $('pk-spill').getAnimations().forEach(a=>a.cancel());
+  $('pk-cardwrap').innerHTML='';$('pk-row').innerHTML='';$('pk-final').hidden=true;$('pk-skip').hidden=true;$('pk-rar').classList.remove('go','legend');$('pk-world').classList.remove('shake');pkHint('');
+  void P.offsetWidth;P.classList.add('on');P.focus({preventScroll:true});
+  fx.start(rgb,30+120*luck);
+  await wait(2000);if(!pk.on)return;
+  const [lx,ly]=(()=>{const r=pack.getBoundingClientRect();return [r.left+r.width/2,r.bottom]})();pkFlash(`rgb(${rgb})`,.3);fx.burst(lx,ly,rgb,70,340);buzz(20);   /* l'impact quand le pack se pose */
+  await wait(300);if(!pk.on)return;
+  pk.stage='ready';pk.until=0;pkHint('drop.tapOpen');$('pk-skip').hidden=false;
+}
+async function pkTear(){
+  pk.stage='torn';pk.until=Date.now()+1500;
+  const kind=pickTear(),T=TEARS[kind];lastTear=kind;pk.tear=kind;
+  const pack=$('pk-pack'),sh=$('pk-shaker'),top=sh.querySelector('.pk-layer.top'),cut=T.cut||{top:CLIP_TOP,main:CLIP_MAIN,pts:ZZ};
+  setPackVars(pack,cut.top,cut.main);$('pk').style.setProperty('--cy',kind==='slash'?'14%':'15%');sh.querySelector('.pk-burst').style.transform=kind==='slash'?'rotate(-16deg)':'';
+  pkHint('');buzz([15,30,15]);
+  await PRELUDE[T.pre](sh);if(!pk.on)return;sh.getAnimations().forEach(a=>a.cancel());
+  sh.insertAdjacentHTML('beforeend',`<svg class="pk-edge" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="${cut.pts.map(p=>p[0].toFixed(2)+','+p[1].toFixed(2)).join(' ')}" fill="none" stroke="#fff" stroke-width="1.3" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>`);
+  const edge=sh.querySelector('.pk-edge');
+  pack.classList.add('torn');const dur=T.run(top,sh);requestAnimationFrame(()=>edge.classList.add('go'));
+  an($('pk-spill'),[{opacity:0},{opacity:.95,offset:.3},{opacity:.4}],{duration:DUR(1100)});
+  const [x,y]=pkAt(50,kind==='slash'?14:15);
+  pkFlash(`rgb(${pk.rgb})`,.35+.4*pk.luck);fx.burst(x,y,pk.rgb,70+Math.round(120*pk.luck),kind==='shatter'?520:380);fx.rate(20+60*pk.luck);buzz([40]);
+  if(kind==='shatter'||kind==='split'){const w=$('pk-world');w.classList.remove('shake');void w.offsetWidth;w.classList.add('shake')}
+  pk.until=Date.now()+Math.min(dur,700);
+  await wait(dur);if(pk.on&&pk.stage==='torn'&&!pk.cur)pkHint('drop.tapNext');
+  setTimeout(()=>sh.querySelectorAll('.pk-layer:not(.main):not(.top)').forEach(e=>e.remove()),calm?0:1500);
+}
+/* ---- quatre façons de sortir une carte ---- */
+const REVEAL_KINDS=['rise','flip','slam','spin'];let lastRev='';
+const TX=(y,s,ry,rz)=>`translate(-50%,${y}%) scale(${s}) rotateY(${ry||0}deg) rotateZ(${rz||0}deg)`;
+const REVEALS={
+  rise:{dur:900,at:.88,z:.5,kf:[{transform:TX(-50,.45)},{transform:TX(-92,.5),offset:.5},{transform:TX(-58,1)}]},
+  flip:{dur:1200,at:.9,z:.4,kf:[{transform:TX(-50,.45,180)},{transform:TX(-92,.5,180),offset:.4},{transform:TX(-72,.85,90),offset:.72},{transform:TX(-58,1,0)}]},
+  slam:{dur:800,at:.55,z:0,kf:[{transform:TX(-300,1.7,0,-10)},{transform:TX(-58,1),offset:.55},{transform:TX(-52,.95),offset:.72},{transform:TX(-58,1)}]},
+  spin:{dur:1050,at:.9,z:.42,kf:[{transform:TX(-50,.45,0)},{transform:TX(-92,.5,360),offset:.42},{transform:TX(-58,1,720)}]}
+};
+async function pkNext(){
+  if(pk.idx>=pk.cards.length)return pkFinal();
+  const i=pk.idx++,c=pk.cards[i],r=pk.res[i],ri=rarIdx(c.rarity),col=rarOf(c.rarity).c,leg=c.rarity==='legendary';
+  const kind=pickOf(REVEAL_KINDS,lastRev);lastRev=kind;const R=REVEALS[kind];
+  pk.until=Date.now()+Math.max(600,R.dur*.7)+(leg?500:0);
+  const url=await pk.urls[i];if(!pk.on)return;
+  if(pk.cur)pkLeave(pk.cur);
+  const el=document.createElement('div');el.className='pk-card'+(leg?' legend':'');el.style.setProperty('--rc',col);
+  el.innerHTML=`<img alt="${esc(c.name)}" src="${url}"><div class="bk"><b>MyCard</b></div><span class="pk-tag">${r.isNew?tr('drop.new'):tr('drop.dup',{n:r.n})}</span>`;
+  $('pk-cardwrap').append(el);pk.cur=el;$('pk-pack').classList.add('spent');pkHint(i<pk.cards.length-1?'drop.tapNext':'drop.tapEnd');
+  const dur=DUR(R.dur);el.style.zIndex=R.z===0?6:1;if(R.z)setTimeout(()=>{if(pk.cur===el)el.style.zIndex=6},dur*R.z);
+  const a=el.animate(R.kf,{duration:dur,easing:'cubic-bezier(.3,.8,.4,1)',fill:'forwards'});a.onfinish=()=>{el.classList.add('front');el.style.zIndex='';a.cancel()};
+  await wait(R.dur*R.at);if(!pk.on||pk.cur!==el)return;
+  const [cx,cy]=pkCenter(el);
+  pkFlash(col,flashOf(ri));fx.burst(cx,cy,hex2rgb(col),20+ri*30+(leg?160:0),300+ri*90);buzz(leg?[30,40,30,40,160]:ri>=3?[40,30,60]:[20]);
+  if(ri>=3||kind==='slam'){const w=$('pk-world');w.classList.remove('shake');void w.offsetWidth;w.classList.add('shake')}
+  if(leg)$('pk').classList.add('legend');
+  const rar=$('pk-rar');rar.style.setProperty('--rc',col);rar.classList.remove('go','legend');$('pk-rar-n').textContent=rarName(c.rarity);$('pk-count').textContent=tr('drop.cardNo',{i:i+1,n:pk.cards.length});
+  void rar.offsetWidth;rar.classList.add('go');if(leg)rar.classList.add('legend');
+}
+function pkLeave(el){
+  const im=document.createElement('img');im.src=el.querySelector('img').src;im.alt='';im.style.setProperty('--rc',el.style.getPropertyValue('--rc'));$('pk-row').append(im);
+  el.getAnimations().forEach(a=>a.cancel());el.classList.remove('front');el.classList.add('leave');setTimeout(()=>el.remove(),520);
+}
+function pkFinal(){
+  pk.stage='final';pk.until=Date.now()+1e9;if(pk.cur){pkLeave(pk.cur);pk.cur=null}
+  pkHint('');$('pk-skip').hidden=true;$('pk-rar').classList.remove('go');$('pk-row').innerHTML='';$('pk-pack').classList.add('spent');
+  $('pk-fin-t').textContent=tr('drop.pack');
+  $('pk-fin-grid').innerHTML=pk.cards.map((c,i)=>`<figure style="--rc:${rarOf(c.rarity).c};animation-delay:${.08*i+.15}s"><img alt="${esc(c.name)}" data-i="${i}"><span class="rar" style="--rc:${rarOf(c.rarity).c}">${rarName(c.rarity)}</span><small>${pk.res[i].isNew?tr('drop.new'):tr('drop.dup',{n:pk.res[i].n})}</small></figure>`).join('');
+  pk.urls.forEach((p,i)=>p.then(u=>{const im=$('pk-fin-grid').querySelector(`img[data-i="${i}"]`);if(im)im.src=u}));
+  $('pk-fin-msg').textContent=tr('drop.added',{n:pk.res.filter(r=>r.isNew).length,t:pk.cards.length});
+  $('pk-final').hidden=false;pk.cards.some(c=>c.rarity==='legendary')&&fx.burst(innerWidth/2,innerHeight*.45,pk.rgb,90,360);
+}
+function pkAdvance(){
+  if(!pk.on||Date.now()<pk.until||!$('odds-modal').hidden)return;
+  if(pk.stage==='ready')pkTear();else if(pk.stage==='torn')pkNext();
+}
+function pkClose(){
+  if(!pk.on)return;pk.on=false;fx.stop();$('pk').classList.remove('on','legend');
+  setTimeout(()=>{if(!pk.on){$('pk').hidden=true;$('pk-cardwrap').innerHTML=''}},450);
+  bstBusy=false;renderBooster();
+}
+$('pk').addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;pkAdvance()});
+$('pk').addEventListener('pointermove',e=>{                           /* le pack et les cartes suivent un peu le doigt : reflets et relief */
+  if(!pk.on||calm)return;const P=$('pk'),x=e.clientX/innerWidth,y=e.clientY/innerHeight;
+  P.style.setProperty('--rx',((.5-y)*14).toFixed(1)+'deg');P.style.setProperty('--ry',((x-.5)*18).toFixed(1)+'deg');P.style.setProperty('--sx',(x*100).toFixed(0));
+});
+$('pk-skip').addEventListener('click',()=>{if(pk.on&&pk.stage!=='final')pkFinal()});
+$('pk-close').addEventListener('click',pkClose);$('pk-done').addEventListener('click',pkClose);
+$('pk-see').addEventListener('click',()=>{pkClose();backToDeck()});
+
+/* -- la fenêtre « i » : chances, tableau et couleurs -- */
+const fmtP=x=>(x*100).toLocaleString(lang,{maximumFractionDigits:1})+' %';
+async function renderInfo(){
+  if($('odds-modal').hidden)return;
+  const cat=await catalog(),n={};cat.forEach(c=>n[c.rarity]=(n[c.rarity]||0)+1);
+  const tot=RARITIES.filter(r=>n[r.k]).reduce((a,r)=>a+r.w,0),pc=r=>n[r.k]&&tot?r.w/tot:0;
+  const rows=RARITIES.map((r,i)=>{const q=RARITIES.reduce((a,x,j)=>a+(j>=i?pc(x):0),0);
+    return `<tr style="--rc:${r.c}"><td><span class="rar">${rarName(r.k)}</span></td><td>${n[r.k]||'—'}</td><td>${n[r.k]?fmtP(pc(r)):'—'}</td><td>${n[r.k]?fmtP(1-Math.pow(1-q,PACK_SIZE)):'—'}</td></tr>`}).join('');
+  $('info-body').innerHTML=`<h4>${tr('info.how')}</h4><ul><li>${tr('info.h1')}</li><li>${tr('info.h2')}</li><li>${tr('info.h3')}</li><li>${tr('info.h4')}</li></ul>
+    <h4>${tr('info.table')}</h4>
+    <table class="odds"><thead><tr><th>${tr('info.colRar')}</th><th>${tr('info.colCards')}</th><th>${tr('info.colOdds')}</th><th>${tr('info.colPack')}</th></tr></thead><tbody>${rows}</tbody></table>
+    <dl><dt>${tr('info.colRar')}</dt><dd>${tr('info.dRar')}</dd><dt>${tr('info.colCards')}</dt><dd>${tr('info.dCards')}</dd><dt>${tr('info.colOdds')}</dt><dd>${tr('info.dOdds')}</dd><dt>${tr('info.colPack')}</dt><dd>${tr('info.dPack')}</dd></dl>
+    <p>${tr('info.noCards')}</p>
+    <h4>${tr('info.colors')}</h4><p>${tr('info.c1')}</p><p>${tr('info.c2')}</p>
+    <div class="lk-bar" style="background:linear-gradient(90deg,${RARITIES.map(r=>r.c).join(',')})"></div>
+    <ul class="lk-list">${RARITIES.map((r,i)=>`<li><i style="--c:${r.c}"></i><span>${tr('info.lk'+i)}</span></li>`).join('')}</ul>`;
+}
+function openInfo(){$('odds-modal').hidden=false;renderInfo();$('info-x').focus({preventScroll:true})}
+function closeInfo(){$('odds-modal').hidden=true}
+$('bst-info').addEventListener('click',openInfo);$('pk-info').addEventListener('click',openInfo);$('info-x').addEventListener('click',closeInfo);
+$('odds-modal').addEventListener('click',e=>{if(e.target===$('odds-modal'))closeInfo()});
+document.addEventListener('keydown',e=>{
+  if(!$('odds-modal').hidden){if(e.key==='Escape')closeInfo();return}
+  if(!pk.on)return;if(e.key==='Escape')pkClose();else if((e.key==='Enter'||e.key===' ')&&!e.target.closest('button')){e.preventDefault();pkAdvance()}
+});
+
+/* -- écran du booster -- */
+function bstMsg(){
+  if($('booster').hidden||bstBusy||bstEmpty)return;
+  const ready=dropReady(),btn=$('bst-open');
+  $('bst-msg').textContent=ready?tr('drop.ready'):tr('drop.wait',{t:clock((()=>{const d=new Date();d.setHours(24,0,0,0);return d-new Date()})())});
+  if(ready===btn.disabled)renderBooster();                                       /* minuit passé (ou autre onglet) : on remet à jour */
+}
+async function renderBooster(){
+  if($('booster').hidden)return;
+  const cat=await catalog(),ready=dropReady(),off=!ready||!cat.length||bstBusy;
+  bstEmpty=!cat.length;$('bst-open').disabled=off;
+  if(!$('bst-pack').firstChild){$('bst-pack').innerHTML=`<div class="pk-pack bst-mini">${packHTML(false)}</div>`;setPackVars($('bst-pack').firstChild)}
+  $('bst-pack').firstChild.classList.toggle('off',!ready||bstEmpty);
+  if(bstEmpty)$('bst-msg').textContent=tr('drop.empty');
+  bstMsg();updateDropDot();
+}
+$('bst-open').addEventListener('click',openBooster);
+$('dm-drop').addEventListener('click',()=>{try{localStorage.removeItem(dropKey())}catch(e){}renderBooster()});
+
+/* ---- icônes : dessinées ici en SVG (trait = couleur du texte). Pour utiliser vos propres fichiers, renseigner ICON_ASSETS
+   (ex. ICON_ASSETS.library='assets/icons/library.png') : l'image remplace alors le dessin. ---- */
+const ICONS={
+  library:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.6" y="7" width="10" height="13" rx="2" transform="rotate(-12 8.6 13.5)" opacity=".5"/><rect x="10.4" y="7" width="10" height="13" rx="2" transform="rotate(12 15.4 13.5)" opacity=".5"/><rect x="7" y="4.2" width="10" height="14.6" rx="2" fill="currentColor" fill-opacity=".16"/><path d="M12 8.6l.95 1.95 2.15.3-1.55 1.5.35 2.15L12 13.45 10.1 14.5l.35-2.15L8.9 10.85l2.15-.3z" fill="currentColor" stroke="none"/></svg>',
+  contest:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8v5.2a4 4 0 0 1-8 0z" fill="currentColor" fill-opacity=".16"/><path d="M8 5.6H5.2c0 2.9 1 4.4 3 4.8M16 5.6h2.8c0 2.9-1 4.4-3 4.8"/><path d="M12 13.2V16.6M9 20h6M9.8 16.6h4.4l.7 3.4H9.1z"/></svg>',
+  booster:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 5.4l1 -1.2 l1 1.2 l1 -1.2 l1 1.2 l1 -1.2 l1 1.2 l1 -1.2 l1 1.2 l1 -1.2 l1 1.2 l1 -1.2 l1 1.2V18.6l-1 1.2 l-1 -1.2 l-1 1.2 l-1 -1.2 l-1 1.2 l-1 -1.2 l-1 1.2 l-1 -1.2 l-1 1.2 l-1 -1.2 l-1 1.2 l-1 -1.2z" fill="currentColor" fill-opacity=".16"/><path d="M12 9.2l.95 2.1 2.1.95-2.1.95-.95 2.1-.95-2.1-2.1-.95 2.1-.95z" fill="currentColor" stroke="none"/></svg>',
+  gear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.11 4.95L10.50 2.52L13.50 2.52L13.89 4.95L15.65 5.68L17.64 4.23L19.77 6.36L18.32 8.35L19.05 10.11L21.48 10.50L21.48 13.50L19.05 13.89L18.32 15.65L19.77 17.64L17.64 19.77L15.65 18.32L13.89 19.05L13.50 21.48L10.50 21.48L10.11 19.05L8.35 18.32L6.36 19.77L4.23 17.64L5.68 15.65L4.95 13.89L2.52 13.50L2.52 10.50L4.95 10.11L5.68 8.35L4.23 6.36L6.36 4.23L8.35 5.68z" fill="currentColor" fill-opacity=".16"/><circle cx="12" cy="12" r="3.1"/></svg>',
+  camera:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.3l1.1-1.6A1.5 1.5 0 0 1 10.1 4h3.8a1.5 1.5 0 0 1 1.2.4L16.2 6h1.3A2.5 2.5 0 0 1 20 8.5v8a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z" fill="currentColor" fill-opacity=".16"/><circle cx="12" cy="12.5" r="3.4"/></svg>',
+  sparkle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4l1.6 4.4L16 10l-4.4 1.6L10 16l-1.6-4.4L4 10l4.4-1.6z" fill="currentColor" fill-opacity=".16"/><path d="M18 14l.8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8z"/></svg>'
+};
+const ICON_ASSETS={library:'',contest:'',booster:'',gear:'',camera:'',sparkle:''};
+const iconHTML=n=>ICON_ASSETS[n]?`<img src="${ICON_ASSETS[n]}" alt="">`:(ICONS[n]||'');
+document.querySelectorAll('[data-ico]').forEach(el=>{el.innerHTML=iconHTML(el.dataset.ico)});
+/* ---- barre d'onglets du bas ---- */
+function goTab(t){
+  if(t==='library')backToDeck();
+  else if(t==='contest'){openSub('contest');renderContest()}
+  else{openSub('booster');renderBooster();bstTick=setInterval(bstMsg,1000)}
+}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>goTab(b.dataset.tab)));
+
+/* -- export d'une carte vers universal-cards.js (mode modérateur) -- */
+const slug=s=>String(s||'carte').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'carte';
+let uniCard=null,uniImg=null;
+async function uniSnippet(){
+  const o=JSON.parse(JSON.stringify({...uniCard,img:undefined}));['t','c','dup','uni','rar','hasImg','id'].forEach(k=>delete o[k]);
+  const out={id:$('uni-id').value.trim()||slug(uniCard.name),rarity:$('uni-rar').value,...o};if(uniImg)out.img=uniImg;
+  const txt='  '+JSON.stringify(out)+',';$('uni-ta').value=txt;
+  const kb=Math.round(txt.length/1024*10)/10;$('uni-size').textContent=tr('uni.size',{n:kb})+(kb>300?' · '+tr('uni.big'):'');
+}
+async function openUni(c){
+  uniCard=c;await hydrated;uniImg=c.img||(c.hasImg?await media.get('img:'+uk()+':'+c.id):null);
+  const ids=new Set((await catalog()).map(x=>x.id));let id=slug(c.name),n=2;while(ids.has(id))id=slug(c.name)+'-'+n++;
+  $('uni-rar').innerHTML=RARITIES.map(r=>`<option value="${r.k}"${r.k==='rare'?' selected':''}>${rarName(r.k)}</option>`).join('');
+  $('uni-id').value=id;$('uni-copy').textContent=tr('uni.copy');$('uni-modal').hidden=false;await uniSnippet();
+}
+$('v-uni-file').addEventListener('click',()=>{if(cur)openUni(cur)});
+async function addToUniversal(c){                       /* l'ajout est immédiat : la carte entre dans les boosters de cet appareil */
+  const rar=$('v-uni-rar').value;try{localStorage.setItem('mycard-uni-rar',rar)}catch(e){}
+  await hydrated;const img=c.img||(c.hasImg?await media.get('img:'+uk()+':'+c.id):null);
+  const id='x-'+c.id,existed=(await cloud.extras()).some(x=>x.id===id);
+  const o=JSON.parse(JSON.stringify({...c,img:undefined}));['t','c','dup','uni','rar','hasImg','id'].forEach(k=>delete o[k]);
+  Object.assign(o,{id,rarity:rar,hasImg:!!img,upd:Date.now()});
+  if(img)await media.put('ext:'+id,img);else await media.del('ext:'+id);
+  await cloud.addExtra(o);toast(tr(existed?'uni.updated':'uni.added',{r:rarName(rar)}));
+}
+$('v-uni').addEventListener('click',()=>{if(cur)addToUniversal(cur)});
+/* -- connexion modérateur -- */
+/* -- Touch ID / Face ID (WebAuthn) : à activer une fois connecté avec l'identifiant + le code. La signature est vérifiée ici, avec la clé publique gardée sur l'appareil. -- */
+const BIO_KEY='mycard-mod-bio';
+const b64u=b=>btoa(String.fromCharCode(...new Uint8Array(b))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const unb64u=s=>Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0));
+const bioGet=()=>{try{return JSON.parse(localStorage.getItem(BIO_KEY))}catch(e){return null}};
+async function bioSupported(){try{return !!(window.PublicKeyCredential&&navigator.credentials&&await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable())}catch(e){return false}}
+async function bioEnroll(){
+  const cred=await navigator.credentials.create({publicKey:{rp:{name:'MyCard'},user:{id:crypto.getRandomValues(new Uint8Array(16)),name:'moderateur',displayName:'Modérateur'},
+    challenge:crypto.getRandomValues(new Uint8Array(32)),pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],
+    authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required',residentKey:'discouraged'},timeout:60000,attestation:'none'}});
+  const r=cred.response;if(!r.getPublicKey)throw new Error('no-pk');
+  localStorage.setItem(BIO_KEY,JSON.stringify({id:b64u(cred.rawId),pk:b64u(r.getPublicKey()),alg:r.getPublicKeyAlgorithm?r.getPublicKeyAlgorithm():-7}));
+}
+function derToRaw(d){                                    /* signature ECDSA DER → r||s (64 octets) pour WebCrypto */
+  let i=2;const part=()=>{const l=d[i+1];let x=d.slice(i+2,i+2+l);i+=2+l;while(x.length>32&&x[0]===0)x=x.slice(1);const o=new Uint8Array(32);o.set(x,32-x.length);return o};
+  const r=part(),s=part(),o=new Uint8Array(64);o.set(r);o.set(s,32);return o;
+}
+async function bioVerify(){
+  const s=bioGet();if(!s)return false;
+  const ch=crypto.getRandomValues(new Uint8Array(32));
+  const a=await navigator.credentials.get({publicKey:{challenge:ch,allowCredentials:[{type:'public-key',id:unb64u(s.id)}],userVerification:'required',timeout:60000}});
+  const r=a.response,cd=JSON.parse(new TextDecoder().decode(r.clientDataJSON));
+  if(cd.type!=='webauthn.get'||cd.challenge!==b64u(ch)||cd.origin!==location.origin)return false;
+  const ad=new Uint8Array(r.authenticatorData);if(!(ad[32]&4))return false;          /* l'utilisateur a bien été vérifié (empreinte / visage) */
+  const hash=new Uint8Array(await crypto.subtle.digest('SHA-256',r.clientDataJSON)),data=new Uint8Array(ad.length+32);data.set(ad);data.set(hash,ad.length);
+  const es=s.alg===-7;
+  const key=await crypto.subtle.importKey('spki',unb64u(s.pk),es?{name:'ECDSA',namedCurve:'P-256'}:{name:'RSASSA-PKCS1-v1_5',hash:'SHA-256'},false,['verify']);
+  return crypto.subtle.verify(es?{name:'ECDSA',hash:'SHA-256'}:{name:'RSASSA-PKCS1-v1_5'},key,es?derToRaw(new Uint8Array(r.signature)):r.signature,data);
+}
+async function bioRefresh(){
+  const has=!!bioGet(),sup=has||await bioSupported();
+  $('mod-bio-login').hidden=!(has&&sup);$('mod-bio-on').hidden=has;$('mod-bio-off').hidden=!has;
+}
+$('mod-bio-login').addEventListener('click',async()=>{
+  const err=$('mod-err');err.textContent='';let good=false;
+  try{good=await bioVerify()}catch(_){}
+  if(good){try{localStorage.setItem('mycard-mod',MOD_HASH)}catch(_){}refreshMod();renderContest()}else err.textContent=tr('mod.bioFail');
+});
+$('mod-bio-on').addEventListener('click',async()=>{
+  const m=$('mod-bio-msg');m.textContent='';
+  if(!isMod())return;
+  if(!(await bioSupported())){m.textContent=tr('mod.bioNone');return}
+  try{await bioEnroll();m.textContent=tr('mod.bioDone')}catch(_){m.textContent=tr('mod.bioFail')}
+  bioRefresh();
+});
+$('mod-bio-off').addEventListener('click',()=>{try{localStorage.removeItem(BIO_KEY)}catch(_){}$('mod-bio-msg').textContent='';bioRefresh()});
+let modFails=0,modLockUntil=0;
+function refreshMod(){const on=isMod();$('mod-in').hidden=on;$('mod-out').hidden=!on;$('mod-err').textContent='';$('mod-bio-msg').textContent='';bioRefresh()}
+$('mod-in').addEventListener('submit',async e=>{
+  e.preventDefault();const err=$('mod-err'),btn=$('mod-login');
+  if(Date.now()<modLockUntil){err.textContent=tr('mod.wait',{s:Math.ceil((modLockUntil-Date.now())/1e3)});return}
+  if(!(window.crypto&&crypto.subtle)){err.textContent=tr('mod.nocrypto');return}
+  btn.disabled=true;err.textContent=tr('mod.busy');
+  let good=false;try{good=(await modHash($('mod-user').value.trim(),$('mod-code').value))===MOD_HASH}catch(_){}
+  btn.disabled=false;$('mod-code').value='';
+  if(good){modFails=0;try{localStorage.setItem('mycard-mod',MOD_HASH)}catch(_){}$('mod-user').value='';refreshMod();renderContest()}
+  else{modFails++;if(modFails>=5){modLockUntil=Date.now()+6e4;modFails=0;err.textContent=tr('mod.wait',{s:60})}else err.textContent=tr('mod.bad')}
+});
+$('mod-logout').addEventListener('click',()=>{try{localStorage.removeItem('mycard-mod')}catch(_){}refreshMod();renderContest()});
+$('uni-x').addEventListener('click',()=>{$('uni-modal').hidden=true});
+$('uni-modal').addEventListener('click',e=>{if(e.target===$('uni-modal'))$('uni-modal').hidden=true});
+$('uni-rar').addEventListener('change',uniSnippet);$('uni-id').addEventListener('input',uniSnippet);
+$('uni-copy').addEventListener('click',async()=>{
+  const ta=$('uni-ta');ta.focus();ta.select();let okc=false;
+  try{await navigator.clipboard.writeText(ta.value);okc=true}catch(e){try{okc=document.execCommand('copy')}catch(_){}}
+  $('uni-copy').textContent=okc?tr('uni.copied'):tr('uni.copy');
+});
 /* ---- application de la langue : texte statique (data-i18n*), reconstructions dynamiques, RTL ---- */
 function applyI18n(){
   document.documentElement.lang=lang;document.documentElement.dir=(I18N[lang]||I18N.fr).dir;
@@ -1654,6 +3156,9 @@ function applyI18n(){
   if(Bd.classList.contains('view-deck')&&typeof renderDeck==='function')renderDeck();
   if(user)$('who-n').textContent=tr('deck.hello',{user});
   if(!$('settings').hidden)fillSettings();
+  if(typeof renderContest==='function')renderContest();
+  if(typeof renderBooster==='function')renderBooster();
+  if(typeof renderInfo==='function')renderInfo();
   if(!$('exp-modal').hidden)openExpModal(expIntent);
 }
 function setLang(code){
