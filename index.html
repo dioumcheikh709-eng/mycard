@@ -627,6 +627,9 @@ body.view-deck .toast{bottom:calc(104px + env(safe-area-inset-bottom,0px))}
 #uni-modal select option{color:#111}
 .mod-form{display:grid;gap:10px;margin-top:10px}
 .mod-form[hidden],.v-uni[hidden]{display:none}
+.mod-actions{display:grid;gap:8px;justify-items:start;margin-top:8px}
+.mod-actions [hidden]{display:none}
+.mod-form [hidden]{display:none}
 .mod-form input{font:400 16px Barlow,sans-serif;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:10px;padding:11px 14px;box-sizing:border-box;width:100%}
 .mod-form .gbtn{justify-self:start}
 .v-uni{display:grid;gap:8px;justify-items:center;margin-top:10px}
@@ -686,9 +689,10 @@ body.viewing .vbar{flex-direction:column;align-items:center}
       <input id="mod-user" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Identifiant modérateur" aria-label="Identifiant modérateur" data-i18n-ph="mod.user" data-i18n-aria="mod.user">
       <input id="mod-code" type="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Code" aria-label="Code" data-i18n-ph="mod.code" data-i18n-aria="mod.code">
       <button type="submit" id="mod-login" class="gbtn primary" data-i18n="mod.login">Se connecter</button>
+      <button type="button" id="mod-bio-login" class="gbtn" hidden data-i18n="mod.bioLogin">Se connecter avec Touch ID / Face ID</button>
       <p class="set-p" id="mod-err" role="status"></p>
     </form>
-    <div id="mod-out" hidden><p class="set-p" data-i18n="mod.on">Mode modérateur actif sur cet appareil.</p><button type="button" id="mod-logout" class="gbtn" data-i18n="mod.logout">Se déconnecter</button></div>
+    <div id="mod-out" hidden><p class="set-p" data-i18n="mod.on">Mode modérateur actif sur cet appareil.</p><div class="mod-actions"><button type="button" id="mod-bio-on" class="gbtn" data-i18n="mod.bioOn">Activer Touch ID / Face ID sur cet appareil</button><button type="button" id="mod-bio-off" class="gbtn" hidden data-i18n="mod.bioOff">Désactiver Touch ID / Face ID</button><button type="button" id="mod-logout" class="gbtn" data-i18n="mod.logout">Se déconnecter</button></div><p class="set-p" id="mod-bio-msg" role="status"></p></div>
     <p class="set-p" data-i18n="settings.modNote">Protection légère, côté navigateur.</p>
   </div>
   <details class="set-block">
@@ -985,6 +989,12 @@ fr:{dir:'ltr',
  'uni.added':'Ajoutée à la bibliothèque universelle ({r}).',
  'uni.updated':'Mise à jour dans la bibliothèque universelle ({r}).',
  'uni.fileBtn':'Copier pour le fichier',
+ 'mod.bioLogin':'Se connecter avec Touch ID / Face ID',
+ 'mod.bioOn':'Activer Touch ID / Face ID sur cet appareil',
+ 'mod.bioOff':'Désactiver Touch ID / Face ID',
+ 'mod.bioDone':'Touch ID / Face ID activé : tu pourras te connecter sans taper le code.',
+ 'mod.bioFail':'Vérification biométrique impossible ou annulée.',
+ 'mod.bioNone':'Cet appareil ou ce navigateur ne propose pas Touch ID / Face ID (il faut une adresse https).',
  'settings.title':'Paramètres','settings.account':'Compte','settings.language':'Langue','settings.loggedAs':'Connecté en tant que {user}',
  'settings.privacyTitle':'Politique de confidentialité',
  'settings.privacy':"MyCard fonctionne entièrement dans ton navigateur. Il n'y a pas de serveur, et rien de ce que tu fais ici ne nous est envoyé, ni à personne d'autre.\n\nTon pseudo, tes cartes et tes réglages sont stockés uniquement sur cet appareil, dans le navigateur. Les photos que tu ajoutes à une carte restent aussi sur cet appareil et ne sont jamais envoyées ailleurs.\n\nCette page charge des polices depuis Google Fonts ; ce chargement peut partager ton adresse IP avec Google, comme pour tout site qui utilise Google Fonts.\n\nIl n'y a ni outil de mesure d'audience, ni publicité, ni cookie de suivi.\n\nSi tu effaces les données de ton navigateur, ou si tu ouvres l'appli sur un autre appareil ou un autre navigateur, tes cartes n'y seront pas accessibles : elles ne sont pas encore sauvegardées ailleurs.\n\nCette note sera mise à jour si la connexion par compte et le stockage en ligne sont ajoutés plus tard.",
@@ -1152,6 +1162,12 @@ en:{dir:'ltr',
  'uni.added':'Added to the universal library ({r}).',
  'uni.updated':'Updated in the universal library ({r}).',
  'uni.fileBtn':'Copy for the file',
+ 'mod.bioLogin':'Sign in with Touch ID / Face ID',
+ 'mod.bioOn':'Enable Touch ID / Face ID on this device',
+ 'mod.bioOff':'Disable Touch ID / Face ID',
+ 'mod.bioDone':'Touch ID / Face ID enabled: you can sign in without typing the code.',
+ 'mod.bioFail':'Biometric check failed or was cancelled.',
+ 'mod.bioNone':'This device or browser does not offer Touch ID / Face ID (an https address is required).',
  'settings.title':'Settings','settings.account':'Account','settings.language':'Language','settings.loggedAs':'Signed in as {user}',
  'settings.privacyTitle':'Privacy policy',
  'settings.privacy':"MyCard runs entirely in your browser. There is no server, and nothing you do here is sent to us or to anyone else.\n\nYour username, your cards, and your settings are stored only on this device, in your browser's local storage. Photos you add to a card stay on this device too and are never uploaded.\n\nThis page loads fonts from Google Fonts; loading them may share your IP address with Google, as with any site that uses Google Fonts.\n\nThere is no analytics, no advertising, and no tracking cookies.\n\nClearing your browser data, or opening the app on a different device or browser, makes your cards inaccessible there — they aren't backed up anywhere else yet.\n\nThis notice will be updated if account sign-in and cloud storage are added later.",
@@ -1319,6 +1335,12 @@ es:{dir:'ltr',
  'uni.added':'Añadida a la biblioteca universal ({r}).',
  'uni.updated':'Actualizada en la biblioteca universal ({r}).',
  'uni.fileBtn':'Copiar para el archivo',
+ 'mod.bioLogin':'Iniciar sesión con Touch ID / Face ID',
+ 'mod.bioOn':'Activar Touch ID / Face ID en este dispositivo',
+ 'mod.bioOff':'Desactivar Touch ID / Face ID',
+ 'mod.bioDone':'Touch ID / Face ID activado: podrás entrar sin escribir el código.',
+ 'mod.bioFail':'Verificación biométrica imposible o cancelada.',
+ 'mod.bioNone':'Este dispositivo o navegador no ofrece Touch ID / Face ID (hace falta una dirección https).',
  'settings.title':'Ajustes','settings.account':'Cuenta','settings.language':'Idioma','settings.loggedAs':'Sesión iniciada como {user}',
  'settings.privacyTitle':'Política de privacidad',
  'settings.privacy':"MyCard funciona totalmente en tu navegador. No hay servidor, y nada de lo que hagas aquí se nos envía a nosotros ni a nadie más.\n\nTu nombre de usuario, tus cartas y tus ajustes se guardan solo en este dispositivo, en el almacenamiento local del navegador. Las fotos que añades a una carta también se quedan en este dispositivo y nunca se suben a ningún sitio.\n\nEsta página carga fuentes desde Google Fonts; esta carga puede compartir tu dirección IP con Google, como ocurre en cualquier sitio que use Google Fonts.\n\nNo hay analítica, ni publicidad, ni cookies de seguimiento.\n\nSi borras los datos del navegador, o abres la app en otro dispositivo o navegador, tus cartas no estarán disponibles allí: todavía no se respaldan en ningún otro sitio.\n\nEste aviso se actualizará si más adelante se añaden el inicio de sesión con cuenta y el almacenamiento en la nube.",
@@ -1486,6 +1508,12 @@ de:{dir:'ltr',
  'uni.added':'Zur Universal-Bibliothek hinzugefügt ({r}).',
  'uni.updated':'In der Universal-Bibliothek aktualisiert ({r}).',
  'uni.fileBtn':'Für die Datei kopieren',
+ 'mod.bioLogin':'Mit Touch ID / Face ID anmelden',
+ 'mod.bioOn':'Touch ID / Face ID auf diesem Gerät aktivieren',
+ 'mod.bioOff':'Touch ID / Face ID deaktivieren',
+ 'mod.bioDone':'Touch ID / Face ID aktiviert: Du kannst dich ohne Code anmelden.',
+ 'mod.bioFail':'Biometrische Prüfung nicht möglich oder abgebrochen.',
+ 'mod.bioNone':'Dieses Gerät oder dieser Browser bietet kein Touch ID / Face ID (https-Adresse nötig).',
  'settings.title':'Einstellungen','settings.account':'Konto','settings.language':'Sprache','settings.loggedAs':'Angemeldet als {user}',
  'settings.privacyTitle':'Datenschutzerklärung',
  'settings.privacy':"MyCard läuft vollständig in deinem Browser. Es gibt keinen Server, und nichts von dem, was du hier tust, wird an uns oder sonst jemanden gesendet.\n\nDein Benutzername, deine Karten und deine Einstellungen werden nur auf diesem Gerät gespeichert, im lokalen Speicher des Browsers. Fotos, die du einer Karte hinzufügst, bleiben ebenfalls auf diesem Gerät und werden nie hochgeladen.\n\nDiese Seite lädt Schriftarten von Google Fonts; dabei kann deine IP-Adresse an Google übermittelt werden, wie bei jeder Website, die Google Fonts nutzt.\n\nEs gibt keine Analyse-Tools, keine Werbung und keine Tracking-Cookies.\n\nWenn du deine Browserdaten löschst oder die App auf einem anderen Gerät oder Browser öffnest, sind deine Karten dort nicht verfügbar: Sie werden bisher nirgendwo anders gesichert.\n\nDieser Hinweis wird aktualisiert, falls später eine Kontoanmeldung und Cloud-Speicherung hinzukommen.",
@@ -1653,6 +1681,12 @@ ar:{dir:'rtl',
  'uni.added':'أُضيفت إلى المكتبة العامة ({r}).',
  'uni.updated':'تم التحديث في المكتبة العامة ({r}).',
  'uni.fileBtn':'نسخ للملف',
+ 'mod.bioLogin':'تسجيل الدخول ببصمة الإصبع / الوجه',
+ 'mod.bioOn':'تفعيل بصمة الإصبع / الوجه على هذا الجهاز',
+ 'mod.bioOff':'إيقاف بصمة الإصبع / الوجه',
+ 'mod.bioDone':'تم تفعيل البصمة / الوجه: يمكنك الدخول دون كتابة الرمز.',
+ 'mod.bioFail':'تعذّر التحقق الحيوي أو أُلغي.',
+ 'mod.bioNone':'لا يوفر هذا الجهاز أو المتصفح بصمة الإصبع / الوجه (يلزم عنوان https).',
  'settings.title':'الإعدادات','settings.account':'الحساب','settings.language':'اللغة','settings.loggedAs':'مسجّل الدخول باسم {user}',
  'settings.privacyTitle':'سياسة الخصوصية',
  'settings.privacy':"يعمل MyCard بالكامل داخل متصفحك. لا يوجد خادم، ولا يُرسَل أي شيء تفعله هنا إلينا أو إلى أي جهة أخرى.\n\nيُحفظ اسم المستخدم وبطاقاتك وإعداداتك على هذا الجهاز فقط، داخل التخزين المحلي للمتصفح. كما تبقى الصور التي تضيفها إلى بطاقة على هذا الجهاز ولا تُرفع إلى أي مكان.\n\nتُحمّل هذه الصفحة خطوطًا من Google Fonts؛ قد يشارك ذلك عنوان IP الخاص بك مع Google، كما هو الحال في أي موقع يستخدم Google Fonts.\n\nلا توجد أدوات تحليل، ولا إعلانات، ولا ملفات تعريف ارتباط للتتبع.\n\nعند مسح بيانات المتصفح، أو فتح التطبيق على جهاز أو متصفح آخر، لن تكون بطاقاتك متاحة هناك: فهي غير محفوظة بعد في أي مكان آخر.\n\nسيتم تحديث هذا الإشعار إذا أُضيف لاحقًا تسجيل الدخول بحساب والتخزين السحابي.",
@@ -3037,8 +3071,54 @@ async function addToUniversal(c){                       /* l'ajout est immédiat
 }
 $('v-uni').addEventListener('click',()=>{if(cur)addToUniversal(cur)});
 /* -- connexion modérateur -- */
+/* -- Touch ID / Face ID (WebAuthn) : à activer une fois connecté avec l'identifiant + le code. La signature est vérifiée ici, avec la clé publique gardée sur l'appareil. -- */
+const BIO_KEY='mycard-mod-bio';
+const b64u=b=>btoa(String.fromCharCode(...new Uint8Array(b))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const unb64u=s=>Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0));
+const bioGet=()=>{try{return JSON.parse(localStorage.getItem(BIO_KEY))}catch(e){return null}};
+async function bioSupported(){try{return !!(window.PublicKeyCredential&&navigator.credentials&&await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable())}catch(e){return false}}
+async function bioEnroll(){
+  const cred=await navigator.credentials.create({publicKey:{rp:{name:'MyCard'},user:{id:crypto.getRandomValues(new Uint8Array(16)),name:'moderateur',displayName:'Modérateur'},
+    challenge:crypto.getRandomValues(new Uint8Array(32)),pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],
+    authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required',residentKey:'discouraged'},timeout:60000,attestation:'none'}});
+  const r=cred.response;if(!r.getPublicKey)throw new Error('no-pk');
+  localStorage.setItem(BIO_KEY,JSON.stringify({id:b64u(cred.rawId),pk:b64u(r.getPublicKey()),alg:r.getPublicKeyAlgorithm?r.getPublicKeyAlgorithm():-7}));
+}
+function derToRaw(d){                                    /* signature ECDSA DER → r||s (64 octets) pour WebCrypto */
+  let i=2;const part=()=>{const l=d[i+1];let x=d.slice(i+2,i+2+l);i+=2+l;while(x.length>32&&x[0]===0)x=x.slice(1);const o=new Uint8Array(32);o.set(x,32-x.length);return o};
+  const r=part(),s=part(),o=new Uint8Array(64);o.set(r);o.set(s,32);return o;
+}
+async function bioVerify(){
+  const s=bioGet();if(!s)return false;
+  const ch=crypto.getRandomValues(new Uint8Array(32));
+  const a=await navigator.credentials.get({publicKey:{challenge:ch,allowCredentials:[{type:'public-key',id:unb64u(s.id)}],userVerification:'required',timeout:60000}});
+  const r=a.response,cd=JSON.parse(new TextDecoder().decode(r.clientDataJSON));
+  if(cd.type!=='webauthn.get'||cd.challenge!==b64u(ch)||cd.origin!==location.origin)return false;
+  const ad=new Uint8Array(r.authenticatorData);if(!(ad[32]&4))return false;          /* l'utilisateur a bien été vérifié (empreinte / visage) */
+  const hash=new Uint8Array(await crypto.subtle.digest('SHA-256',r.clientDataJSON)),data=new Uint8Array(ad.length+32);data.set(ad);data.set(hash,ad.length);
+  const es=s.alg===-7;
+  const key=await crypto.subtle.importKey('spki',unb64u(s.pk),es?{name:'ECDSA',namedCurve:'P-256'}:{name:'RSASSA-PKCS1-v1_5',hash:'SHA-256'},false,['verify']);
+  return crypto.subtle.verify(es?{name:'ECDSA',hash:'SHA-256'}:{name:'RSASSA-PKCS1-v1_5'},key,es?derToRaw(new Uint8Array(r.signature)):r.signature,data);
+}
+async function bioRefresh(){
+  const has=!!bioGet(),sup=has||await bioSupported();
+  $('mod-bio-login').hidden=!(has&&sup);$('mod-bio-on').hidden=has;$('mod-bio-off').hidden=!has;
+}
+$('mod-bio-login').addEventListener('click',async()=>{
+  const err=$('mod-err');err.textContent='';let good=false;
+  try{good=await bioVerify()}catch(_){}
+  if(good){try{localStorage.setItem('mycard-mod',MOD_HASH)}catch(_){}refreshMod();renderContest()}else err.textContent=tr('mod.bioFail');
+});
+$('mod-bio-on').addEventListener('click',async()=>{
+  const m=$('mod-bio-msg');m.textContent='';
+  if(!isMod())return;
+  if(!(await bioSupported())){m.textContent=tr('mod.bioNone');return}
+  try{await bioEnroll();m.textContent=tr('mod.bioDone')}catch(_){m.textContent=tr('mod.bioFail')}
+  bioRefresh();
+});
+$('mod-bio-off').addEventListener('click',()=>{try{localStorage.removeItem(BIO_KEY)}catch(_){}$('mod-bio-msg').textContent='';bioRefresh()});
 let modFails=0,modLockUntil=0;
-function refreshMod(){const on=isMod();$('mod-in').hidden=on;$('mod-out').hidden=!on;$('mod-err').textContent=''}
+function refreshMod(){const on=isMod();$('mod-in').hidden=on;$('mod-out').hidden=!on;$('mod-err').textContent='';$('mod-bio-msg').textContent='';bioRefresh()}
 $('mod-in').addEventListener('submit',async e=>{
   e.preventDefault();const err=$('mod-err'),btn=$('mod-login');
   if(Date.now()<modLockUntil){err.textContent=tr('mod.wait',{s:Math.ceil((modLockUntil-Date.now())/1e3)});return}
