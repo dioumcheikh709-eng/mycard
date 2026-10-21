@@ -59,6 +59,15 @@ et elle **rejoint la bibliothèque universelle**.
 **Bibliothèque universelle.** Les cartes créées par l'auteur du projet, à débloquer dans les boosters. Elles sont décrites dans **`universal-cards.js`** (même format qu'une carte de la bibliothèque, plus `rarity`).
 Les cartes `exemple-…` sont des exemples à remplacer. Une carte débloquée est copiée dans la bibliothèque du joueur (non modifiable) ; un doublon est signalé.
 
+**Créer les cartes de la bibliothèque universelle.**
+1. Crée la carte dans l'application comme n'importe quelle carte (bouton « + », personnalisation en 6 étapes : image, texte, attaques, effet…).
+2. Dans les **Paramètres**, coche « Activer le mode modérateur (démo) ».
+3. Ouvre ta carte depuis la bibliothèque : un bouton **« Exporter pour la bibliothèque universelle »** apparaît sous « Personnaliser ».
+4. Choisis la **rareté** (et l'identifiant si besoin), puis **Copier**.
+5. Ouvre `universal-cards.js` et colle la ligne copiée **juste avant la ligne `];`** (chaque carte est sur sa ligne, terminée par une virgule). Enregistre : la carte est dans les boosters.
+
+L'image est incluse dans l'extrait (en `data:` URL). Si elle alourdit trop le fichier (l'application prévient au-delà de 300 Ko), héberge-la et remplace la valeur de `img` par son adresse.
+
 **Booster du jour.** Un booster par jour (il se recharge à minuit, heure locale), de **5 cartes avec au plus 1 légendaire**.
 Chaque carte est tirée selon sa rareté ; dès qu'une légendaire sort, les cartes suivantes du booster ne peuvent plus l'être. Une carte n'apparaît pas deux fois dans le même booster tant que sa rareté a assez de cartes.
 

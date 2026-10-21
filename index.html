@@ -621,6 +621,10 @@ body.view-deck{padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
 .dk-sort{white-space:nowrap}
 .dk-head h1{font-size:clamp(34px,9.6vw,46px)}
 body.view-deck .toast{bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+#uni-modal{z-index:90}
+.uni-ta{width:100%;box-sizing:border-box;margin-top:12px;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.35);color:#fff;font:12px/1.4 ui-monospace,Menlo,Consolas,monospace;resize:vertical}
+#uni-modal select,#uni-modal input{font:400 15px Barlow,sans-serif;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);border-radius:10px;padding:9px 12px;box-sizing:border-box}
+#uni-modal select option{color:#111}
 </style>
 <script>try{var __t=localStorage.getItem('mycard-theme');if(__t&&/^(blue|red|black|white)$/.test(__t))document.documentElement.dataset.theme=__t}catch(e){}</script>
 </head>
@@ -711,7 +715,7 @@ body.view-deck .toast{bottom:calc(104px + env(safe-area-inset-bottom,0px))}
 <div class="who"><span id="who-n"></span> · <button type="button" id="u-change" data-i18n="stage.change">changer</button></div>
 <div class="stage" id="stage"><div class="shadow" id="shadow"></div><div class="glow" id="glow"></div><div class="flipper" id="flipper"><div class="card" id="card"></div><div class="cardback"><div class="logo">MyCard</div></div></div></div>
 <div class="actions"><button type="button" id="dl" class="gbtn" data-i18n="stage.download">Télécharger en image</button><button type="button" id="sh" class="gbtn" data-i18n="stage.share">Partager</button></div>
-<div class="vbar"><button type="button" id="v-edit" class="gbtn primary" data-i18n="stage.personalize">Personnaliser</button></div>
+<div class="vbar"><button type="button" id="v-edit" class="gbtn primary" data-i18n="stage.personalize">Personnaliser</button><button type="button" id="v-uni" class="gbtn" hidden data-i18n="uni.export">Exporter pour la bibliothèque universelle</button></div>
 <div class="hint" id="hint" data-i18n="stage.hintDefault">Bouge la souris ou le doigt sur la carte</div>
 <button type="button" id="gyro" class="gbtn" hidden aria-pressed="false" data-i18n="stage.gyroActivate">Activer le gyroscope</button>
 <a id="gopen" class="glink" hidden target="_blank" rel="noopener" data-i18n="stage.gyroOpenAlone">Ouvrir la page seule dans le navigateur</a>
@@ -778,6 +782,10 @@ body.view-deck .toast{bottom:calc(104px + env(safe-area-inset-bottom,0px))}
     <div class="pk-fin-btns"><button type="button" class="gbtn primary" id="pk-see" data-i18n="drop.see">Voir ma bibliothèque</button><button type="button" class="gbtn" id="pk-done" data-i18n="drop.close">Fermer</button></div>
   </div>
 </div>
+<div class="cfm" id="uni-modal" hidden><div class="info-box" role="dialog" aria-modal="true" aria-labelledby="uni-t"><button type="button" class="info-x" id="uni-x" aria-label="Fermer" data-i18n-aria="drop.close">✕</button><h3 id="uni-t" data-i18n="uni.title">Ajouter à la bibliothèque universelle</h3>
+  <div class="ct-row"><label style="flex:1;min-width:0"><span class="set-p" data-i18n="uni.rarity">Rareté</span><select id="uni-rar" style="width:100%"></select></label><label style="flex:1;min-width:0"><span class="set-p" data-i18n="uni.id">Identifiant</span><input id="uni-id" type="text" autocomplete="off" style="width:100%"></label></div>
+  <textarea id="uni-ta" class="uni-ta" readonly rows="8" spellcheck="false"></textarea><p class="set-p" id="uni-size"></p><p class="set-p" data-i18n="uni.help">Copie ce texte et colle-le dans universal-cards.js, juste avant la ligne « ]; ».</p>
+  <div class="ct-row"><button type="button" class="gbtn primary" id="uni-copy" data-i18n="uni.copy">Copier</button></div></div></div>
 <div class="cfm" id="odds-modal" hidden><div class="info-box" role="dialog" aria-modal="true" aria-labelledby="info-t"><button type="button" class="info-x" id="info-x" aria-label="Fermer" data-i18n-aria="drop.close">✕</button><h3 id="info-t" data-i18n="info.title">Chances et couleurs</h3><div id="info-body"></div></div></div>
 <nav class="tabbar" id="tabbar" aria-label="Navigation" data-i18n-aria="tab.nav"><div class="tabbar-in">
   <button type="button" class="tab" data-tab="library" aria-current="page"><span class="tab-ico" data-ico="library"></span><span data-i18n="tab.library">Bibliothèque</span></button>
@@ -941,6 +949,15 @@ fr:{dir:'ltr',
  'info.lk3':'Violet : au mieux une épique',
  'info.lk4':'Or : une légendaire !',
  'tab.library':'Bibliothèque','tab.contest':'Concours','tab.booster':'Booster','tab.nav':'Navigation',
+ 'uni.export':'Exporter pour la bibliothèque universelle',
+ 'uni.title':'Ajouter à la bibliothèque universelle',
+ 'uni.rarity':'Rareté',
+ 'uni.id':'Identifiant',
+ 'uni.help':'Copie ce texte et colle-le dans universal-cards.js, juste avant la ligne « ]; » (après la ligne de la carte précédente).',
+ 'uni.copy':'Copier',
+ 'uni.copied':'Copié !',
+ 'uni.size':'Taille : {n} Ko',
+ 'uni.big':'Image lourde : pour alléger le fichier, héberge-la et mets son adresse dans « img ».',
  'settings.title':'Paramètres','settings.account':'Compte','settings.language':'Langue','settings.loggedAs':'Connecté en tant que {user}',
  'settings.privacyTitle':'Politique de confidentialité',
  'settings.privacy':"MyCard fonctionne entièrement dans ton navigateur. Il n'y a pas de serveur, et rien de ce que tu fais ici ne nous est envoyé, ni à personne d'autre.\n\nTon pseudo, tes cartes et tes réglages sont stockés uniquement sur cet appareil, dans le navigateur. Les photos que tu ajoutes à une carte restent aussi sur cet appareil et ne sont jamais envoyées ailleurs.\n\nCette page charge des polices depuis Google Fonts ; ce chargement peut partager ton adresse IP avec Google, comme pour tout site qui utilise Google Fonts.\n\nIl n'y a ni outil de mesure d'audience, ni publicité, ni cookie de suivi.\n\nSi tu effaces les données de ton navigateur, ou si tu ouvres l'appli sur un autre appareil ou un autre navigateur, tes cartes n'y seront pas accessibles : elles ne sont pas encore sauvegardées ailleurs.\n\nCette note sera mise à jour si la connexion par compte et le stockage en ligne sont ajoutés plus tard.",
@@ -1086,6 +1103,15 @@ en:{dir:'ltr',
  'info.lk3':'Purple: an epic at best',
  'info.lk4':'Gold: a legendary!',
  'tab.library':'Library','tab.contest':'Contest','tab.booster':'Booster','tab.nav':'Navigation',
+ 'uni.export':'Export for the universal library',
+ 'uni.title':'Add to the universal library',
+ 'uni.rarity':'Rarity',
+ 'uni.id':'Identifier',
+ 'uni.help':'Copy this text and paste it into universal-cards.js, just before the "];" line (after the previous card’s line).',
+ 'uni.copy':'Copy',
+ 'uni.copied':'Copied!',
+ 'uni.size':'Size: {n} KB',
+ 'uni.big':'Heavy image: to keep the file light, host it and put its address in "img".',
  'settings.title':'Settings','settings.account':'Account','settings.language':'Language','settings.loggedAs':'Signed in as {user}',
  'settings.privacyTitle':'Privacy policy',
  'settings.privacy':"MyCard runs entirely in your browser. There is no server, and nothing you do here is sent to us or to anyone else.\n\nYour username, your cards, and your settings are stored only on this device, in your browser's local storage. Photos you add to a card stay on this device too and are never uploaded.\n\nThis page loads fonts from Google Fonts; loading them may share your IP address with Google, as with any site that uses Google Fonts.\n\nThere is no analytics, no advertising, and no tracking cookies.\n\nClearing your browser data, or opening the app on a different device or browser, makes your cards inaccessible there — they aren't backed up anywhere else yet.\n\nThis notice will be updated if account sign-in and cloud storage are added later.",
@@ -1231,6 +1257,15 @@ es:{dir:'ltr',
  'info.lk3':'Violeta: como mucho una épica',
  'info.lk4':'Oro: ¡una legendaria!',
  'tab.library':'Biblioteca','tab.contest':'Concurso','tab.booster':'Sobre','tab.nav':'Navegación',
+ 'uni.export':'Exportar para la biblioteca universal',
+ 'uni.title':'Añadir a la biblioteca universal',
+ 'uni.rarity':'Rareza',
+ 'uni.id':'Identificador',
+ 'uni.help':'Copia este texto y pégalo en universal-cards.js, justo antes de la línea «];» (después de la línea de la carta anterior).',
+ 'uni.copy':'Copiar',
+ 'uni.copied':'¡Copiado!',
+ 'uni.size':'Tamaño: {n} KB',
+ 'uni.big':'Imagen pesada: para aligerar el archivo, alójala y pon su dirección en «img».',
  'settings.title':'Ajustes','settings.account':'Cuenta','settings.language':'Idioma','settings.loggedAs':'Sesión iniciada como {user}',
  'settings.privacyTitle':'Política de privacidad',
  'settings.privacy':"MyCard funciona totalmente en tu navegador. No hay servidor, y nada de lo que hagas aquí se nos envía a nosotros ni a nadie más.\n\nTu nombre de usuario, tus cartas y tus ajustes se guardan solo en este dispositivo, en el almacenamiento local del navegador. Las fotos que añades a una carta también se quedan en este dispositivo y nunca se suben a ningún sitio.\n\nEsta página carga fuentes desde Google Fonts; esta carga puede compartir tu dirección IP con Google, como ocurre en cualquier sitio que use Google Fonts.\n\nNo hay analítica, ni publicidad, ni cookies de seguimiento.\n\nSi borras los datos del navegador, o abres la app en otro dispositivo o navegador, tus cartas no estarán disponibles allí: todavía no se respaldan en ningún otro sitio.\n\nEste aviso se actualizará si más adelante se añaden el inicio de sesión con cuenta y el almacenamiento en la nube.",
@@ -1376,6 +1411,15 @@ de:{dir:'ltr',
  'info.lk3':'Violett: höchstens eine Epische',
  'info.lk4':'Gold: eine Legendäre!',
  'tab.library':'Bibliothek','tab.contest':'Wettbewerb','tab.booster':'Booster','tab.nav':'Navigation',
+ 'uni.export':'Für die Universal-Bibliothek exportieren',
+ 'uni.title':'Zur Universal-Bibliothek hinzufügen',
+ 'uni.rarity':'Seltenheit',
+ 'uni.id':'Kennung',
+ 'uni.help':'Kopiere diesen Text und füge ihn in universal-cards.js ein, direkt vor der Zeile „];“ (nach der Zeile der vorherigen Karte).',
+ 'uni.copy':'Kopieren',
+ 'uni.copied':'Kopiert!',
+ 'uni.size':'Größe: {n} KB',
+ 'uni.big':'Großes Bild: Um die Datei klein zu halten, lade es hoch und trage seine Adresse bei „img“ ein.',
  'settings.title':'Einstellungen','settings.account':'Konto','settings.language':'Sprache','settings.loggedAs':'Angemeldet als {user}',
  'settings.privacyTitle':'Datenschutzerklärung',
  'settings.privacy':"MyCard läuft vollständig in deinem Browser. Es gibt keinen Server, und nichts von dem, was du hier tust, wird an uns oder sonst jemanden gesendet.\n\nDein Benutzername, deine Karten und deine Einstellungen werden nur auf diesem Gerät gespeichert, im lokalen Speicher des Browsers. Fotos, die du einer Karte hinzufügst, bleiben ebenfalls auf diesem Gerät und werden nie hochgeladen.\n\nDiese Seite lädt Schriftarten von Google Fonts; dabei kann deine IP-Adresse an Google übermittelt werden, wie bei jeder Website, die Google Fonts nutzt.\n\nEs gibt keine Analyse-Tools, keine Werbung und keine Tracking-Cookies.\n\nWenn du deine Browserdaten löschst oder die App auf einem anderen Gerät oder Browser öffnest, sind deine Karten dort nicht verfügbar: Sie werden bisher nirgendwo anders gesichert.\n\nDieser Hinweis wird aktualisiert, falls später eine Kontoanmeldung und Cloud-Speicherung hinzukommen.",
@@ -1521,6 +1565,15 @@ ar:{dir:'rtl',
  'info.lk3':'بنفسجي: ملحمية على الأكثر',
  'info.lk4':'ذهبي: أسطورية!',
  'tab.library':'المكتبة','tab.contest':'المسابقة','tab.booster':'الحزمة','tab.nav':'التنقل',
+ 'uni.export':'تصدير للمكتبة العامة',
+ 'uni.title':'إضافة إلى المكتبة العامة',
+ 'uni.rarity':'الندرة',
+ 'uni.id':'المعرّف',
+ 'uni.help':'انسخ هذا النص والصقه في universal-cards.js قبل السطر «];» مباشرة (بعد سطر البطاقة السابقة).',
+ 'uni.copy':'نسخ',
+ 'uni.copied':'تم النسخ!',
+ 'uni.size':'الحجم: {n} ك.ب',
+ 'uni.big':'صورة ثقيلة: لتخفيف الملف، استضفها وضع عنوانها في «img».',
  'settings.title':'الإعدادات','settings.account':'الحساب','settings.language':'اللغة','settings.loggedAs':'مسجّل الدخول باسم {user}',
  'settings.privacyTitle':'سياسة الخصوصية',
  'settings.privacy':"يعمل MyCard بالكامل داخل متصفحك. لا يوجد خادم، ولا يُرسَل أي شيء تفعله هنا إلينا أو إلى أي جهة أخرى.\n\nيُحفظ اسم المستخدم وبطاقاتك وإعداداتك على هذا الجهاز فقط، داخل التخزين المحلي للمتصفح. كما تبقى الصور التي تضيفها إلى بطاقة على هذا الجهاز ولا تُرفع إلى أي مكان.\n\nتُحمّل هذه الصفحة خطوطًا من Google Fonts؛ قد يشارك ذلك عنوان IP الخاص بك مع Google، كما هو الحال في أي موقع يستخدم Google Fonts.\n\nلا توجد أدوات تحليل، ولا إعلانات، ولا ملفات تعريف ارتباط للتتبع.\n\nعند مسح بيانات المتصفح، أو فتح التطبيق على جهاز أو متصفح آخر، لن تكون بطاقاتك متاحة هناك: فهي غير محفوظة بعد في أي مكان آخر.\n\nسيتم تحديث هذا الإشعار إذا أُضيف لاحقًا تسجيل الدخول بحساب والتخزين السحابي.",
@@ -2244,7 +2297,7 @@ function openEditor(c,isNew){               /* personnalisation (panneau visible
   if(isNew)playIntro();else quickOpen();
 }
 function openCard(c){                        /* affichage en grand, sans le panneau */
-  Bd.classList.remove('view-deck');Bd.classList.add('view-edit','viewing');Bd.classList.toggle('uni-card',!!c.uni);
+  Bd.classList.remove('view-deck');Bd.classList.add('view-edit','viewing');Bd.classList.toggle('uni-card',!!c.uni);$('v-uni').hidden=!(isMod()&&!c.uni);
   editing=false;render(c);fill(c);goStep(0);editNew=false;editSnap=null;
   const d=$('e-del');delete d.dataset.arm;d.textContent=tr('panel.deleteCard');
   quickOpen();
@@ -2871,6 +2924,30 @@ function goTab(t){
 }
 document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>goTab(b.dataset.tab)));
 
+/* -- export d'une carte vers universal-cards.js (mode modérateur) -- */
+const slug=s=>String(s||'carte').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'carte';
+let uniCard=null,uniImg=null;
+async function uniSnippet(){
+  const o=JSON.parse(JSON.stringify({...uniCard,img:undefined}));['t','c','dup','uni','rar','hasImg','id'].forEach(k=>delete o[k]);
+  const out={id:$('uni-id').value.trim()||slug(uniCard.name),rarity:$('uni-rar').value,...o};if(uniImg)out.img=uniImg;
+  const txt='  '+JSON.stringify(out)+',';$('uni-ta').value=txt;
+  const kb=Math.round(txt.length/1024*10)/10;$('uni-size').textContent=tr('uni.size',{n:kb})+(kb>300?' · '+tr('uni.big'):'');
+}
+async function openUni(c){
+  uniCard=c;await hydrated;uniImg=c.img||(c.hasImg?await media.get('img:'+uk()+':'+c.id):null);
+  const ids=new Set((await catalog()).map(x=>x.id));let id=slug(c.name),n=2;while(ids.has(id))id=slug(c.name)+'-'+n++;
+  $('uni-rar').innerHTML=RARITIES.map(r=>`<option value="${r.k}"${r.k==='rare'?' selected':''}>${rarName(r.k)}</option>`).join('');
+  $('uni-id').value=id;$('uni-copy').textContent=tr('uni.copy');$('uni-modal').hidden=false;await uniSnippet();
+}
+$('v-uni').addEventListener('click',()=>{if(cur)openUni(cur)});
+$('uni-x').addEventListener('click',()=>{$('uni-modal').hidden=true});
+$('uni-modal').addEventListener('click',e=>{if(e.target===$('uni-modal'))$('uni-modal').hidden=true});
+$('uni-rar').addEventListener('change',uniSnippet);$('uni-id').addEventListener('input',uniSnippet);
+$('uni-copy').addEventListener('click',async()=>{
+  const ta=$('uni-ta');ta.focus();ta.select();let okc=false;
+  try{await navigator.clipboard.writeText(ta.value);okc=true}catch(e){try{okc=document.execCommand('copy')}catch(_){}}
+  $('uni-copy').textContent=okc?tr('uni.copied'):tr('uni.copy');
+});
 /* ---- application de la langue : texte statique (data-i18n*), reconstructions dynamiques, RTL ---- */
 function applyI18n(){
   document.documentElement.lang=lang;document.documentElement.dir=(I18N[lang]||I18N.fr).dir;
