@@ -71,9 +71,17 @@ Chaque carte est tirée selon sa rareté ; dès qu'une légendaire sort, les car
 
 Les pourcentages se règlent dans `index.html` (`const RARITIES`). Une rareté qui n'a aucune carte est retirée du tirage et ses chances sont redistribuées ; le tableau « Tes chances » affiche les chances réelles.
 
-*L'ouverture* : le bouton « Invoquer le booster » fait apparaître le pack dans un portail de lumière (façon invocation). On **tape pour l'ouvrir** (le haut se déchire), puis **chaque appui sort une carte, de la moins rare à la plus rare**,
-avec un éclat de la couleur de sa rareté (secousse d'écran pour les épiques et les légendaires). Un récapitulatif des 5 cartes termine l'ouverture ; « Tout révéler » permet de le sauter.
-**La couleur de l'invocation indique la chance du pack** : gris (que des communes), vert, bleu, violet, puis or dès qu'il contient une légendaire. Les cartes sont ajoutées au deck dès le tirage, même si on ferme l'animation avant la fin.
+*Les chances* : le petit bouton **i** (sur l'écran du booster et pendant l'invocation) ouvre une fenêtre qui explique le tableau (rareté, nombre de cartes, chance par carte, chance par booster)
+et la couleur du pack.
+
+*L'ouverture* : le bouton « Invoquer le booster » fait apparaître le pack dans un portail de lumière (façon invocation). Le pack ressemble à un vrai booster : emballage métallisé scellé aux deux bouts
+(soudures dentelées), plis, grain, relief, et un reflet qui suit le doigt. On **tape pour l'ouvrir** : le haut se déchire de l'une des **6 façons** tirées au hasard, jamais deux fois de suite
+(bande arrachée, bande qui tombe, lamelles qui se soulèvent une à une, éclats, volets qui s'ouvrent, coupure en diagonale). Ensuite **chaque appui sort une carte, de la moins rare à la plus rare**,
+de l'une des **4 façons** tirées au hasard (sortie du pack, retournement, chute avec impact, rotation), avec un éclat de la couleur de sa rareté (secousse d'écran pour les épiques et les légendaires).
+Un récapitulatif des 5 cartes termine l'ouverture ; « Tout révéler » permet de le sauter.
+
+**La couleur de l'invocation ne change pas les chances : elle les révèle.** Le booster est tiré avant l'animation ; sa couleur dit ce qu'il contient : gris (que des communes), vert, bleu, violet, puis or dès qu'il contient une légendaire.
+La meilleure carte compte le plus, les autres font glisser la couleur un peu plus loin. Les cartes sont ajoutées au deck dès le tirage, même si on ferme l'animation avant la fin.
 
 **Mode démo (état actuel).** Il n'y a pas de serveur : participations, votes, résultats et validations sont stockés dans le navigateur (`mycard-cloud:*`), donc **rien n'est partagé entre joueurs ni entre appareils**.
 Tout passe par un seul objet `cloud` dans `index.html` : pour un vrai concours en ligne, il suffit de le remplacer par un client serveur (mêmes méthodes). Côté serveur, il faudra aussi faire le tirage du booster,

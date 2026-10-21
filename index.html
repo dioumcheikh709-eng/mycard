@@ -461,31 +461,61 @@ body.uni-card #v-edit{display:none}
 .bst-stage{display:grid;justify-items:center;gap:14px;padding:8px 0}
 .bst-msg{margin:0;font:600 17px Barlow,sans-serif;text-align:center;min-height:1.4em}
 .bst-mini{margin:6px 0;animation:pkfloat 3.6s ease-in-out infinite}
-.bst-mini.off{filter:grayscale(.9) brightness(.65);animation:none}
+.bst-mini.off{filter:grayscale(.9) brightness(.65) drop-shadow(0 12px 14px rgba(0,0,0,.4));animation:none}
+.info-btn{width:38px;height:38px;border-radius:50%;padding:0;display:grid;place-items:center;flex:none;font:italic 700 21px Georgia,'Times New Roman',serif}
 .odds{width:100%;border-collapse:collapse;margin-top:8px;font:500 14px Barlow,sans-serif}
-.odds td{padding:7px 4px;border-top:1px solid var(--line)}
-.odds td:not(:first-child){text-align:right;opacity:.85}
+.odds td,.odds th{padding:7px 4px;border-top:1px solid var(--line)}
+.odds thead th{border-top:0;font:600 11px Barlow,sans-serif;text-transform:uppercase;letter-spacing:.06em;opacity:.7;text-align:right}
+.odds thead th:first-child{text-align:left}
+.odds td:not(:first-child){text-align:right;opacity:.9}
+#odds-modal{z-index:90}
+.info-box{position:relative;width:min(460px,100%);max-height:88vh;overflow:auto;box-sizing:border-box;background:rgba(var(--panel-rgb),.98);border:1px solid rgba(255,255,255,.28);border-radius:22px;padding:20px 18px 22px;color:#fff;text-align:left;box-shadow:0 20px 50px rgba(var(--shade-rgb),.6)}
+.info-box h3{margin:0 40px 6px 0;font:700 28px/1.05 'Barlow Condensed',sans-serif}
+.info-box h4{margin:20px 0 6px;font:700 19px 'Barlow Condensed',sans-serif;letter-spacing:.04em;text-transform:uppercase;opacity:.9}
+.info-box p,.info-box li,.info-box dd{font:400 14.5px/1.5 Barlow,sans-serif}
+.info-box p{margin:6px 0}
+.info-box ul{margin:6px 0;padding-left:20px}
+.info-box dl{margin:10px 0}
+.info-box dt{font:700 13px Barlow,sans-serif;letter-spacing:.05em;text-transform:uppercase;margin-top:8px;opacity:.85}
+.info-box dd{margin:2px 0 0;opacity:.9}
+.info-box .odds td,.info-box .odds th{color:#fff}
+.info-x{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:16px;cursor:pointer}
+.lk-bar{height:12px;border-radius:99px;margin:12px 0 12px;box-shadow:0 0 14px rgba(255,255,255,.2)}
+.lk-list{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.lk-list li{display:flex;gap:10px;align-items:center}
+.lk-list i{width:14px;height:14px;border-radius:50%;flex:none;background:var(--c);box-shadow:0 0 10px var(--c)}
 
-/* ---- le pack ---- */
-.pk-pack{position:relative;width:min(220px,58vw);aspect-ratio:5/9;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))}
+/* ---- le pack : emballage métallisé scellé aux deux bouts, silhouette en oreiller ---- */
+.pk-pack{position:relative;width:min(220px,58vw);aspect-ratio:5/9;filter:drop-shadow(0 22px 26px rgba(0,0,0,.55)) drop-shadow(0 3px 5px rgba(0,0,0,.4))}
 .pk-shaker{position:absolute;inset:0}
-.pk-layer{position:absolute;inset:0}
-.pk-layer.top{clip-path:var(--clip-top);transform-origin:88% 15%}
+.pk-layer{position:absolute;inset:0;will-change:transform}
+.pk-layer.top{clip-path:var(--clip-top)}
 .pk-layer.main{clip-path:var(--clip-main)}
-.pk-art{position:absolute;inset:0;border-radius:12px;overflow:hidden;color:#fff;
-  background:radial-gradient(120% 55% at 30% 10%,rgba(255,255,255,.3),transparent 60%),radial-gradient(90% 60% at 50% 105%,rgba(var(--lc-rgb,140,170,255),.55),transparent 70%),linear-gradient(165deg,#2b3fb8 0%,#16228a 48%,#0b1244 100%);
-  box-shadow:inset 0 0 0 2px rgba(var(--lc-rgb,140,170,255),.65),inset 0 0 28px rgba(var(--lc-rgb,140,170,255),.35)}
-.pk-crimp{position:absolute;left:0;right:0;top:0;height:6.5%;background:repeating-linear-gradient(90deg,rgba(255,255,255,.4) 0 2px,rgba(0,0,0,.28) 2px 4px),linear-gradient(#b9c0e0,#6f78a8)}
-.pk-crimp.b{top:auto;bottom:0}
-.pk-star{position:absolute;left:0;right:0;top:19%;text-align:center;font-size:min(64px,16vw);line-height:1;color:rgba(var(--lc-rgb,200,220,255),1);text-shadow:0 0 18px rgba(var(--lc-rgb,200,220,255),.9)}
-.pk-logo{position:absolute;left:50%;top:40%;transform:translateX(-50%);white-space:nowrap;font:italic 700 min(40px,10vw)/1 'Barlow Condensed',sans-serif;color:#222;background:rgba(255,255,255,.92);padding:.18em .7em .18em .6em;border-radius:99px 8px 8px 99px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
-.pk-sub{position:absolute;left:0;right:0;top:57%;text-align:center;font:700 min(22px,5.6vw) 'Barlow Condensed',sans-serif;letter-spacing:.32em;text-indent:.32em;text-shadow:0 2px 8px rgba(0,0,0,.5)}
-.pk-five{position:absolute;left:0;right:0;bottom:12%;text-align:center;font:600 min(14px,3.6vw) Barlow,sans-serif;letter-spacing:.22em;opacity:.8}
-.pk-foil{position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(var(--lc-rgb,200,220,255),.35) 43%,rgba(255,255,255,.6) 50%,rgba(var(--lc-rgb,200,220,255),.35) 57%,transparent 70%);background-size:260% 100%;mix-blend-mode:screen;animation:pkfoil 3.4s ease-in-out infinite}
-.pk-burst{position:absolute;left:-35%;right:-35%;top:calc(15% - 18px);height:36px;pointer-events:none;opacity:0;filter:blur(6px);background:radial-gradient(ellipse at center,#fff 0,rgba(var(--lc-rgb,255,255,255),.95) 28%,transparent 70%)}
-.pk-pack.torn .pk-layer.top{animation:pktear .75s cubic-bezier(.5,0,.8,.5) forwards}
+.pk-art{position:absolute;inset:0;overflow:hidden;color:#fff;clip-path:var(--art-clip);
+  background:radial-gradient(130% 70% at 28% 8%,rgba(255,255,255,.24),transparent 60%),radial-gradient(100% 70% at 50% 108%,rgba(var(--lc-rgb,140,170,255),.5),transparent 70%),linear-gradient(165deg,#4660ea 0%,#1d2da6 42%,#0a1252 100%)}
+.pk-art>*{position:absolute;pointer-events:none}
+.pk-fan{left:16%;right:16%;top:15%;height:31%}
+.pk-fan i,.pk-fan b{position:absolute}
+.pk-fan i{left:50%;bottom:0;width:46%;aspect-ratio:63/88;border-radius:5px;transform-origin:50% 100%;background:linear-gradient(155deg,rgba(var(--lc-rgb,170,200,255),1),rgba(16,26,110,.96) 72%);border:1.5px solid rgba(255,255,255,.8);box-shadow:0 5px 12px rgba(0,0,0,.45),inset 0 0 12px rgba(255,255,255,.28)}
+.pk-fan i:nth-child(1){transform:translateX(-50%) rotate(-19deg)}
+.pk-fan i:nth-child(2){transform:translateX(-50%) rotate(19deg)}
+.pk-fan i:nth-child(3){transform:translateX(-50%)}
+.pk-fan b{left:50%;top:26%;transform:translateX(-50%);font-size:min(30px,7.6vw);line-height:1;color:#fff;text-shadow:0 0 14px rgba(var(--lc-rgb,200,220,255),1),0 0 4px #fff}
+.pk-logo{left:50%;top:50%;transform:translateX(-50%);white-space:nowrap;font:italic 700 min(36px,9vw)/1 'Barlow Condensed',sans-serif;color:#1d1d2b;background:linear-gradient(180deg,#fff,#dfe3f3);padding:.18em .7em .18em .6em;border-radius:99px 8px 8px 99px;box-shadow:0 6px 16px rgba(0,0,0,.4),inset 0 -2px 0 rgba(0,0,0,.12)}
+.pk-sub{left:0;right:0;top:64%;text-align:center;font:700 min(21px,5.4vw) 'Barlow Condensed',sans-serif;letter-spacing:.32em;text-indent:.32em;text-shadow:0 2px 8px rgba(0,0,0,.55)}
+.pk-five{left:0;right:0;bottom:12.5%;text-align:center;font:600 min(13px,3.4vw) Barlow,sans-serif;letter-spacing:.22em;opacity:.8}
+.pk-foil{inset:0;background:linear-gradient(115deg,transparent 28%,rgba(var(--lc-rgb,200,220,255),.35) 43%,rgba(255,255,255,.55) 50%,rgba(var(--lc-rgb,200,220,255),.35) 57%,transparent 72%);background-size:260% 100%;mix-blend-mode:screen;animation:pkfoil 3.6s ease-in-out infinite}
+.pk-noise{inset:0;background-image:var(--noise);background-size:128px;mix-blend-mode:overlay;opacity:.34}
+.pk-crease{inset:0;background:var(--crease) center/100% 100% no-repeat;mix-blend-mode:soft-light;opacity:.95}
+.pk-vol{inset:0;background:linear-gradient(90deg,rgba(0,0,0,.6) 0,rgba(0,0,0,.08) 11%,rgba(255,255,255,.14) 37%,rgba(255,255,255,.04) 55%,rgba(0,0,0,.2) 88%,rgba(0,0,0,.65) 100%),linear-gradient(180deg,rgba(0,0,0,.4) 0,transparent 12%,transparent 88%,rgba(0,0,0,.45) 100%)}
+.pk-spec{inset:0;background:linear-gradient(105deg,transparent calc(var(--sx,50)*1% - 16%),rgba(255,255,255,.55) calc(var(--sx,50)*1%),transparent calc(var(--sx,50)*1% + 16%));mix-blend-mode:soft-light}
+.pk-crimp{left:0;right:0;top:0;height:7%;background:repeating-linear-gradient(90deg,rgba(255,255,255,.6) 0 1.4px,rgba(20,30,90,.5) 1.4px 3px),linear-gradient(#e6ebff,#8089bb 55%,#566096);box-shadow:0 3px 5px rgba(0,0,0,.5)}
+.pk-crimp.b{top:auto;bottom:0;box-shadow:0 -3px 5px rgba(0,0,0,.5)}
+.pk-burst{position:absolute;left:-35%;right:-35%;top:calc(var(--cy,15%) - 18px);height:36px;pointer-events:none;opacity:0;filter:blur(6px);background:radial-gradient(ellipse at center,#fff 0,rgba(var(--lc-rgb,255,255,255),.95) 28%,transparent 70%)}
 .pk-pack.torn .pk-burst{animation:pkburst .9s ease-out}
-.pk-shaker.shake{animation:pkshake .4s linear}
+.pk-edge{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;filter:drop-shadow(0 0 5px rgba(var(--lc-rgb,255,255,255),1));transition:opacity .25s}
+.pk-edge.go{opacity:1}
+.pk-slash{position:absolute;left:0;width:104%;top:calc(22% - 1.5px);height:3px;border-radius:3px;background:#fff;transform-origin:left center;pointer-events:none;z-index:5;box-shadow:0 0 14px 3px rgba(var(--lc-rgb,255,255,255),1),0 0 32px 8px rgba(255,255,255,.8)}
 .pk-pack{transition:opacity .6s,transform .7s}
 .pk-pack.spent{opacity:0;transform:translateY(22%) scale(.86)}
 
@@ -503,27 +533,32 @@ body.uni-card #v-edit{display:none}
 .pk-flash.go{animation:pkflash .6s ease-out}
 .pk-world{position:absolute;inset:0;z-index:3;display:grid;place-items:center;padding-bottom:12vh;box-sizing:border-box}
 .pk-world.shake{animation:pkscreen .55s linear}
+.pk-tilt{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .16s ease-out;transform-style:preserve-3d}
 .pk-bob{animation:pkfloat 3.4s ease-in-out infinite}
 .pk-stage{position:relative;width:min(220px,58vw);aspect-ratio:5/9}
-.pk-portal{position:absolute;left:50%;bottom:-7%;width:190%;height:24%;margin-left:0;transform:translateX(-50%) scale(0);opacity:0;border-radius:50%;pointer-events:none;
+.pk-portal{position:absolute;left:50%;bottom:-7%;width:190%;height:24%;transform:translateX(-50%) scale(0);opacity:0;border-radius:50%;pointer-events:none;
   background:radial-gradient(ellipse at center,rgba(var(--lc-rgb),.95) 0,rgba(var(--lc-rgb),.4) 38%,transparent 72%);box-shadow:0 0 70px 12px rgba(var(--lc-rgb),.55)}
 .pk-portal::before,.pk-portal::after{content:"";position:absolute;inset:6%;border-radius:50%;border:3px solid rgba(var(--lc-rgb),.95);box-shadow:0 0 22px rgba(var(--lc-rgb),.9),inset 0 0 22px rgba(var(--lc-rgb),.6)}
 .pk-portal::after{inset:20%;border-width:2px;opacity:.7;animation:pkring 2.2s ease-in-out infinite}
 .pk-beam{position:absolute;left:50%;bottom:2%;width:150%;height:330%;transform:translateX(-50%) scaleY(0);transform-origin:50% 100%;opacity:0;pointer-events:none;filter:blur(3px);
   background:linear-gradient(to top,rgba(var(--lc-rgb),.9),rgba(var(--lc-rgb),.28) 42%,transparent 85%);-webkit-mask:linear-gradient(90deg,transparent,#000 32%,#000 68%,transparent);mask:linear-gradient(90deg,transparent,#000 32%,#000 68%,transparent)}
+.pk-spill{position:absolute;left:50%;top:var(--cy,15%);width:150%;height:250%;transform:translate(-50%,-100%);opacity:0;pointer-events:none;filter:blur(7px);
+  background:linear-gradient(to top,rgba(var(--lc-rgb),.9),rgba(var(--lc-rgb),.25) 45%,transparent 90%);clip-path:polygon(34% 100%,66% 100%,100% 0,0 0)}
 .pk.on .pk-portal{animation:pkportal 1.1s cubic-bezier(.2,.9,.25,1) both}
 .pk.on .pk-beam{animation:pkbeam 1.6s ease-out .25s both}
 .pk.on .pk-pack{animation:pkarrive 1.4s cubic-bezier(.2,.9,.25,1) .95s backwards}
 .pk-stage .pk-pack{position:absolute;inset:0;width:auto;z-index:3}
-.pk-cardwrap{position:absolute;inset:0;pointer-events:none}
-.pk-card{--rc:#9aa4b5;position:absolute;left:50%;top:50%;width:min(300px,76vw,44vh);aspect-ratio:63/88;z-index:1;transform:translate(-50%,-50%) scale(.45);border-radius:4.5%/3.2%;opacity:1;will-change:transform}
-.pk-card img{display:block;width:100%;height:100%;border-radius:inherit;box-shadow:0 0 0 2px var(--rc),0 0 34px 2px var(--rc),0 14px 36px rgba(0,0,0,.5)}
-.pk-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;mix-blend-mode:screen;opacity:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.65) 48%,transparent 66%);background-size:260% 100%}
-.pk-card.rise{animation:pkcardrise .5s cubic-bezier(.3,.8,.4,1) forwards}
-.pk-card.front{z-index:6;animation:none;transform:translate(-50%,-58%) scale(1);transition:transform .55s cubic-bezier(.2,1.1,.3,1)}
+.pk-cardwrap{position:absolute;inset:0;pointer-events:none;perspective:1100px}
+.pk-card{--rc:#9aa4b5;position:absolute;left:50%;top:50%;width:min(300px,76vw,44vh);aspect-ratio:63/88;z-index:1;transform:translate(-50%,-50%) scale(.45);border-radius:4.5%/3.2%;transform-style:preserve-3d;will-change:transform}
+.pk-card img{display:block;width:100%;height:100%;border-radius:inherit;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 0 0 2px var(--rc),0 0 34px 2px var(--rc),0 14px 36px rgba(0,0,0,.5)}
+.pk-card .bk{position:absolute;inset:0;border-radius:inherit;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);display:grid;place-items:center;
+  background:radial-gradient(circle at 28% 18%,rgba(143,170,255,.95) 0,rgba(143,170,255,0) 55%),repeating-linear-gradient(45deg,rgba(255,255,255,.06) 0 2px,transparent 2px 16px),linear-gradient(160deg,#2a4fe0,#14309f 62%,#0e2377);box-shadow:0 0 0 2px var(--rc),0 0 30px var(--rc)}
+.pk-card .bk b{font:italic 700 34px 'Barlow Condensed',sans-serif;color:#222;background:rgba(255,255,255,.92);padding:6px 20px;border-radius:99px 8px 8px 99px}
+.pk-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;mix-blend-mode:screen;opacity:0;backface-visibility:hidden;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.65) 48%,transparent 66%);background-size:260% 100%}
+.pk-card.front{z-index:6;transform:translate(-50%,-58%) scale(1)}
 .pk-card.front::after{opacity:1;animation:pkfoil 1.6s ease-out .3s 2}
 .pk-card.leave{z-index:6;animation:pkleave .5s ease-in forwards}
-.pk-tag{position:absolute;left:8px;top:8px;z-index:2;padding:3px 10px;border-radius:99px;background:#fff;color:#111;font:700 13px 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;opacity:0;transform:scale(.6);transition:.4s .35s}
+.pk-tag{position:absolute;left:8px;top:8px;z-index:2;padding:3px 10px;border-radius:99px;background:#fff;color:#111;font:700 13px 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;opacity:0;transform:scale(.6);transition:.4s .35s;backface-visibility:hidden}
 .pk-card.front .pk-tag{opacity:1;transform:none}
 .pk-card.legend img{box-shadow:0 0 0 3px var(--rc),0 0 60px 8px var(--rc),0 14px 36px rgba(0,0,0,.5)}
 .pk-rar{position:absolute;left:0;right:0;bottom:calc(max(36px,env(safe-area-inset-bottom,0px)) + 100px);display:grid;justify-items:center;gap:6px;pointer-events:none;opacity:0;z-index:7}
@@ -534,8 +569,10 @@ body.uni-card #v-edit{display:none}
 .pk-row{position:absolute;left:0;right:0;bottom:calc(max(36px,env(safe-area-inset-bottom,0px)) + 48px);display:flex;justify-content:center;gap:7px;pointer-events:none;z-index:7}
 .pk-row img{width:30px;aspect-ratio:63/88;object-fit:cover;border-radius:4px;box-shadow:0 0 0 1.5px var(--rc);animation:pkpop .4s both}
 .pk-hint{position:absolute;left:0;right:0;bottom:calc(max(36px,env(safe-area-inset-bottom,0px)) + 6px);text-align:center;margin:0;font:600 19px 'Barlow Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#fff;text-shadow:0 0 14px rgba(var(--lc-rgb),.9);animation:pkpulse 1.6s ease-in-out infinite;pointer-events:none;z-index:7}
-.pk-close,.pk-skip{position:absolute;top:max(14px,env(safe-area-inset-top,0px));z-index:10;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.35);color:#fff;border-radius:99px;font:600 15px 'Barlow Condensed',sans-serif;letter-spacing:.05em;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-.pk-close{right:max(14px,env(safe-area-inset-right,0px));width:40px;height:40px;font-size:18px}
+.pk-close,.pk-skip,.pk-info{position:absolute;top:max(14px,env(safe-area-inset-top,0px));z-index:10;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.35);color:#fff;border-radius:99px;font:600 15px 'Barlow Condensed',sans-serif;letter-spacing:.05em;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.pk-close,.pk-info{width:40px;height:40px}
+.pk-close{right:max(14px,env(safe-area-inset-right,0px));font-size:18px}
+.pk-info{right:calc(max(14px,env(safe-area-inset-right,0px)) + 50px);font:italic 700 21px Georgia,'Times New Roman',serif}
 .pk-skip{left:max(14px,env(safe-area-inset-left,0px));padding:9px 16px}
 .pk-skip[hidden]{display:none}
 .pk-final{position:absolute;inset:0;z-index:7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:70px 16px 24px;box-sizing:border-box;overflow:auto;background:rgba(4,6,15,.55)}
@@ -555,17 +592,14 @@ body.uni-card #v-edit{display:none}
 @keyframes pkbeam{0%{opacity:0;transform:translateX(-50%) scaleY(0)}35%{opacity:1}60%{transform:translateX(-50%) scaleY(1)}100%{opacity:.4;transform:translateX(-50%) scaleY(1)}}
 @keyframes pkarrive{0%{opacity:0;transform:translateY(34%) scale(.2) rotateY(-720deg);filter:brightness(4) blur(6px)}55%{opacity:1;filter:brightness(2.2) blur(0)}100%{opacity:1;transform:none;filter:brightness(1)}}
 @keyframes pkfloat{0%,100%{transform:translateY(0) rotate(-.6deg)}50%{transform:translateY(-12px) rotate(.8deg)}}
-@keyframes pkshake{0%,100%{transform:none}12%{transform:translate(-5px,2px) rotate(-3deg)}25%{transform:translate(6px,-2px) rotate(3deg)}38%{transform:translate(-6px,3px) rotate(-4deg)}52%{transform:translate(6px,-3px) rotate(4deg)}68%{transform:translate(-4px,2px) rotate(-2deg)}84%{transform:translate(3px,-1px) rotate(1deg)}}
-@keyframes pktear{0%{transform:none;opacity:1}28%{transform:rotate(-9deg) translate(2%,-3%);opacity:1}100%{transform:translate(78%,-250%) rotate(-48deg);opacity:0}}
 @keyframes pkburst{0%{opacity:1;transform:scale(.6,.2)}100%{opacity:0;transform:scale(1.5,7)}}
 @keyframes pkflash{0%{opacity:var(--fo,.5)}100%{opacity:0}}
 @keyframes pkpulse{0%,100%{opacity:.55;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
 @keyframes pkfoil{0%{background-position:150% 0}100%{background-position:-50% 0}}
-@keyframes pkcardrise{0%{transform:translate(-50%,-50%) scale(.45)}100%{transform:translate(-50%,-92%) scale(.5)}}
 @keyframes pkleave{0%{transform:translate(-50%,-58%) scale(1);opacity:1}100%{transform:translate(-50%,38vh) rotate(16deg) scale(.22);opacity:0}}
 @keyframes pkpop{from{opacity:0;transform:translateY(22px) scale(.6)}to{opacity:1;transform:none}}
 @keyframes pkscreen{0%,100%{transform:none}10%{transform:translate(-9px,5px)}25%{transform:translate(8px,-6px)}40%{transform:translate(-7px,-4px)}55%{transform:translate(6px,6px)}70%{transform:translate(-4px,2px)}85%{transform:translate(3px,-2px)}}
-@media (prefers-reduced-motion:reduce){.pk *,.pk{animation-duration:.01s!important;animation-delay:0s!important;transition-duration:.01s!important}.pk-rays,.pk-bob,.pk-foil,.pk-hint,.pk-portal::after,.bst-mini{animation:none!important}}
+@media (prefers-reduced-motion:reduce){.pk *,.pk{animation-duration:.01s!important;animation-delay:0s!important;transition-duration:.01s!important}.pk-rays,.pk-bob,.pk-foil,.pk-hint,.pk-portal::after,.bst-mini{animation:none!important}.pk-tilt{transform:none!important}}
 </style>
 <script>try{var __t=localStorage.getItem('mycard-theme');if(__t&&/^(blue|red|black|white)$/.test(__t))document.documentElement.dataset.theme=__t}catch(e){}</script>
 </head>
@@ -642,14 +676,13 @@ body.uni-card #v-edit{display:none}
   </details>
 </section>
 <section id="booster" class="deck" hidden>
-  <header class="dk-head"><div><button type="button" id="bst-back" class="linkbtn" data-i18n="stage.back" style="padding:0;margin-bottom:6px">‹ Deck</button><h1 data-i18n="drop.title">Booster du jour</h1></div></header>
+  <header class="dk-head"><div><button type="button" id="bst-back" class="linkbtn" data-i18n="stage.back" style="padding:0;margin-bottom:6px">‹ Deck</button><h1 data-i18n="drop.title">Booster du jour</h1></div><button type="button" id="bst-info" class="gbtn info-btn" aria-label="Chances et couleurs" data-i18n-aria="info.btn">i</button></header>
   <p class="demo-note" data-i18n="drop.demo">Mode démo : le booster se recharge chaque jour sur cet appareil.</p>
   <div class="bst-stage">
     <div id="bst-pack"></div>
     <p class="bst-msg" id="bst-msg" role="status"></p>
     <button type="button" id="bst-open" class="gbtn primary" data-i18n="drop.open">Invoquer le booster</button>
   </div>
-  <div class="set-block"><h2 class="set-h" data-i18n="drop.odds">Tes chances</h2><table class="odds" id="bst-odds"></table><p class="set-p" id="bst-legend" style="margin-top:12px"></p><p class="set-p" data-i18n="drop.oddsNote">Chances pour chaque carte. Un booster contient 5 cartes, avec au plus 1 légendaire.</p></div>
   <details class="set-block">
     <summary class="set-h" data-i18n="demo.tools">Outils démo</summary>
     <div class="ct-row"><button type="button" class="gbtn" id="dm-drop" data-i18n="demo.resetDrop">Réactiver le booster du jour</button></div>
@@ -710,12 +743,13 @@ body.uni-card #v-edit{display:none}
   <div class="pk-flash" id="pk-flash"></div>
   <canvas class="pk-fx" id="pk-fx"></canvas>
   <button type="button" class="pk-skip" id="pk-skip" hidden data-i18n="drop.skip">Tout révéler</button>
+  <button type="button" class="pk-info" id="pk-info" aria-label="Chances et couleurs" data-i18n-aria="info.btn">i</button>
   <button type="button" class="pk-close" id="pk-close" aria-label="Fermer" data-i18n-aria="drop.close">✕</button>
-  <div class="pk-world" id="pk-world"><div class="pk-bob"><div class="pk-stage" id="pk-stage">
-    <div class="pk-portal"></div><div class="pk-beam"></div>
+  <div class="pk-world" id="pk-world"><div class="pk-tilt"><div class="pk-bob"><div class="pk-stage" id="pk-stage">
+    <div class="pk-portal"></div><div class="pk-beam"></div><i class="pk-spill" id="pk-spill"></i>
     <div class="pk-cardwrap" id="pk-cardwrap"></div>
     <div class="pk-pack" id="pk-pack"></div>
-  </div></div></div>
+  </div></div></div></div>
   <div class="pk-rar" id="pk-rar"><span class="rar" id="pk-rar-n"></span><span class="pk-count" id="pk-count"></span></div>
   <div class="pk-row" id="pk-row"></div>
   <p class="pk-hint" id="pk-hint" role="status"></p>
@@ -724,6 +758,7 @@ body.uni-card #v-edit{display:none}
     <div class="pk-fin-btns"><button type="button" class="gbtn primary" id="pk-see" data-i18n="drop.see">Voir mon deck</button><button type="button" class="gbtn" id="pk-done" data-i18n="drop.close">Fermer</button></div>
   </div>
 </div>
+<div class="cfm" id="odds-modal" hidden><div class="info-box" role="dialog" aria-modal="true" aria-labelledby="info-t"><button type="button" class="info-x" id="info-x" aria-label="Fermer" data-i18n-aria="drop.close">✕</button><h3 id="info-t" data-i18n="info.title">Chances et couleurs</h3><div id="info-body"></div></div></div>
 <div class="toast" id="toast" role="status"></div>
 <div class="cfm" id="cfm" hidden><div class="cfm-box" role="alertdialog" aria-modal="true" aria-labelledby="cfm-t" aria-describedby="cfm-p"><h3 id="cfm-t"></h3><p id="cfm-p"></p><div class="cfm-b"><button type="button" id="cfm-no" class="gbtn" data-i18n="confirm.continue">Continuer</button><button type="button" id="cfm-yes" class="gbtn primary"></button></div></div></div>
 <div class="cfm" id="exp-modal" hidden>
@@ -850,13 +885,35 @@ fr:{dir:'ltr',
  'drop.pack':'Ton booster',
  'drop.added':'{n} / {t} nouvelles cartes ajoutées à ton deck.',
  'drop.see':'Voir mon deck',
- 'drop.odds':'Tes chances',
- 'drop.oddsNote':'Chances pour chaque carte. Un booster contient 5 cartes, avec au plus 1 légendaire. Une rareté sans carte est retirée et ses chances sont redistribuées.',
- 'drop.packLegend':'Chance d’avoir une légendaire dans un booster : {p} %',
  'drop.cardsOne':'{n} carte',
  'drop.cardsMany':'{n} cartes',
  'drop.empty':'Le deck universel est vide pour le moment.',
  'demo.resetDrop':'Réactiver le booster du jour',
+ 'info.btn':'Voir les chances et les couleurs',
+ 'info.title':'Chances et couleurs',
+ 'info.how':'Comment ça marche',
+ 'info.h1':'Un booster contient 5 cartes tirées au hasard.',
+ 'info.h2':'Chaque carte reçoit sa rareté selon les pourcentages du tableau.',
+ 'info.h3':'Il y a au plus 1 légendaire par booster.',
+ 'info.h4':'Les cartes sortent de la moins rare à la plus rare.',
+ 'info.table':'Le tableau',
+ 'info.colRar':'Rareté',
+ 'info.colCards':'Cartes',
+ 'info.colOdds':'Par carte',
+ 'info.colPack':'Par booster',
+ 'info.dRar':'Le niveau de la carte.',
+ 'info.dCards':'Combien de cartes de cette rareté existent dans le deck universel.',
+ 'info.dOdds':'La chance que chacune des 5 cartes de ton booster ait cette rareté.',
+ 'info.dPack':'La chance d’avoir au moins une carte de cette rareté (ou d’une rareté plus haute) dans ton booster.',
+ 'info.noCards':'Une rareté sans carte est retirée du tirage et ses chances sont redistribuées aux autres.',
+ 'info.colors':'La couleur du pack',
+ 'info.c1':'Pendant l’invocation, la lumière autour du pack change de couleur. Elle ne modifie pas tes chances : elle les révèle. Le booster est tiré avant l’animation, et sa couleur te montre ce qu’il contient.',
+ 'info.c2':'Plus ton pack contient de cartes rares, plus la couleur se rapproche de l’or des légendaires. Sa meilleure carte compte le plus ; les autres cartes la font glisser un peu plus loin.',
+ 'info.lk0':'Gris : que des communes (ou presque)',
+ 'info.lk1':'Vert : au mieux une peu commune',
+ 'info.lk2':'Bleu : au mieux une rare',
+ 'info.lk3':'Violet : au mieux une épique',
+ 'info.lk4':'Or : une légendaire !',
  'settings.title':'Paramètres','settings.account':'Compte','settings.language':'Langue','settings.loggedAs':'Connecté en tant que {user}',
  'settings.privacyTitle':'Politique de confidentialité',
  'settings.privacy':"MyCard fonctionne entièrement dans ton navigateur. Il n'y a pas de serveur, et rien de ce que tu fais ici ne nous est envoyé, ni à personne d'autre.\n\nTon pseudo, tes cartes et tes réglages sont stockés uniquement sur cet appareil, dans le navigateur. Les photos que tu ajoutes à une carte restent aussi sur cet appareil et ne sont jamais envoyées ailleurs.\n\nCette page charge des polices depuis Google Fonts ; ce chargement peut partager ton adresse IP avec Google, comme pour tout site qui utilise Google Fonts.\n\nIl n'y a ni outil de mesure d'audience, ni publicité, ni cookie de suivi.\n\nSi tu effaces les données de ton navigateur, ou si tu ouvres l'appli sur un autre appareil ou un autre navigateur, tes cartes n'y seront pas accessibles : elles ne sont pas encore sauvegardées ailleurs.\n\nCette note sera mise à jour si la connexion par compte et le stockage en ligne sont ajoutés plus tard.",
@@ -971,13 +1028,35 @@ en:{dir:'ltr',
  'drop.pack':'Your booster',
  'drop.added':'{n} / {t} new cards added to your deck.',
  'drop.see':'See my deck',
- 'drop.odds':'Your odds',
- 'drop.oddsNote':'Odds for each card. A booster holds 5 cards, with at most 1 legendary. A rarity with no cards is removed and its odds are redistributed.',
- 'drop.packLegend':'Chance of a legendary in a booster: {p} %',
  'drop.cardsOne':'{n} card',
  'drop.cardsMany':'{n} cards',
  'drop.empty':'The universal deck is empty for now.',
  'demo.resetDrop':'Reset today’s booster',
+ 'info.btn':'See the odds and colors',
+ 'info.title':'Odds and colors',
+ 'info.how':'How it works',
+ 'info.h1':'A booster holds 5 randomly drawn cards.',
+ 'info.h2':'Each card gets its rarity from the percentages in the table.',
+ 'info.h3':'There is at most 1 legendary per booster.',
+ 'info.h4':'Cards come out from the least rare to the rarest.',
+ 'info.table':'The table',
+ 'info.colRar':'Rarity',
+ 'info.colCards':'Cards',
+ 'info.colOdds':'Per card',
+ 'info.colPack':'Per booster',
+ 'info.dRar':'The level of the card.',
+ 'info.dCards':'How many cards of this rarity exist in the universal deck.',
+ 'info.dOdds':'The chance that each of the 5 cards in your booster has this rarity.',
+ 'info.dPack':'The chance of getting at least one card of this rarity (or a higher one) in your booster.',
+ 'info.noCards':'A rarity with no cards is removed from the draw and its odds are redistributed to the others.',
+ 'info.colors':'The color of the pack',
+ 'info.c1':'During the summoning, the light around the pack changes color. It does not change your odds: it reveals them. The booster is drawn before the animation, and its color shows you what is inside.',
+ 'info.c2':'The more rare cards your pack holds, the closer the color gets to the gold of legendaries. Its best card counts the most; the other cards push the color a little further.',
+ 'info.lk0':'Grey: only commons (or nearly)',
+ 'info.lk1':'Green: an uncommon at best',
+ 'info.lk2':'Blue: a rare at best',
+ 'info.lk3':'Purple: an epic at best',
+ 'info.lk4':'Gold: a legendary!',
  'settings.title':'Settings','settings.account':'Account','settings.language':'Language','settings.loggedAs':'Signed in as {user}',
  'settings.privacyTitle':'Privacy policy',
  'settings.privacy':"MyCard runs entirely in your browser. There is no server, and nothing you do here is sent to us or to anyone else.\n\nYour username, your cards, and your settings are stored only on this device, in your browser's local storage. Photos you add to a card stay on this device too and are never uploaded.\n\nThis page loads fonts from Google Fonts; loading them may share your IP address with Google, as with any site that uses Google Fonts.\n\nThere is no analytics, no advertising, and no tracking cookies.\n\nClearing your browser data, or opening the app on a different device or browser, makes your cards inaccessible there — they aren't backed up anywhere else yet.\n\nThis notice will be updated if account sign-in and cloud storage are added later.",
@@ -1092,13 +1171,35 @@ es:{dir:'ltr',
  'drop.pack':'Tu sobre',
  'drop.added':'{n} / {t} cartas nuevas añadidas a tu mazo.',
  'drop.see':'Ver mi mazo',
- 'drop.odds':'Tus probabilidades',
- 'drop.oddsNote':'Probabilidades de cada carta. Un sobre contiene 5 cartas, con como máximo 1 legendaria. Una rareza sin cartas se retira y sus probabilidades se redistribuyen.',
- 'drop.packLegend':'Probabilidad de una legendaria en un sobre: {p} %',
  'drop.cardsOne':'{n} carta',
  'drop.cardsMany':'{n} cartas',
  'drop.empty':'El mazo universal está vacío por ahora.',
  'demo.resetDrop':'Reactivar el sobre del día',
+ 'info.btn':'Ver las probabilidades y los colores',
+ 'info.title':'Probabilidades y colores',
+ 'info.how':'Cómo funciona',
+ 'info.h1':'Un sobre contiene 5 cartas sacadas al azar.',
+ 'info.h2':'Cada carta recibe su rareza según los porcentajes de la tabla.',
+ 'info.h3':'Hay como máximo 1 legendaria por sobre.',
+ 'info.h4':'Las cartas salen de la menos rara a la más rara.',
+ 'info.table':'La tabla',
+ 'info.colRar':'Rareza',
+ 'info.colCards':'Cartas',
+ 'info.colOdds':'Por carta',
+ 'info.colPack':'Por sobre',
+ 'info.dRar':'El nivel de la carta.',
+ 'info.dCards':'Cuántas cartas de esta rareza existen en el mazo universal.',
+ 'info.dOdds':'La probabilidad de que cada una de las 5 cartas de tu sobre tenga esta rareza.',
+ 'info.dPack':'La probabilidad de obtener al menos una carta de esta rareza (o superior) en tu sobre.',
+ 'info.noCards':'Una rareza sin cartas se retira del sorteo y sus probabilidades se redistribuyen entre las demás.',
+ 'info.colors':'El color del paquete',
+ 'info.c1':'Durante la invocación, la luz alrededor del paquete cambia de color. No modifica tus probabilidades: las revela. El sobre se sortea antes de la animación y su color te muestra lo que contiene.',
+ 'info.c2':'Cuantas más cartas raras tenga tu paquete, más se acerca el color al oro de las legendarias. Su mejor carta es la que más cuenta; las demás lo empujan un poco más lejos.',
+ 'info.lk0':'Gris: solo comunes (o casi)',
+ 'info.lk1':'Verde: como mucho una poco común',
+ 'info.lk2':'Azul: como mucho una rara',
+ 'info.lk3':'Violeta: como mucho una épica',
+ 'info.lk4':'Oro: ¡una legendaria!',
  'settings.title':'Ajustes','settings.account':'Cuenta','settings.language':'Idioma','settings.loggedAs':'Sesión iniciada como {user}',
  'settings.privacyTitle':'Política de privacidad',
  'settings.privacy':"MyCard funciona totalmente en tu navegador. No hay servidor, y nada de lo que hagas aquí se nos envía a nosotros ni a nadie más.\n\nTu nombre de usuario, tus cartas y tus ajustes se guardan solo en este dispositivo, en el almacenamiento local del navegador. Las fotos que añades a una carta también se quedan en este dispositivo y nunca se suben a ningún sitio.\n\nEsta página carga fuentes desde Google Fonts; esta carga puede compartir tu dirección IP con Google, como ocurre en cualquier sitio que use Google Fonts.\n\nNo hay analítica, ni publicidad, ni cookies de seguimiento.\n\nSi borras los datos del navegador, o abres la app en otro dispositivo o navegador, tus cartas no estarán disponibles allí: todavía no se respaldan en ningún otro sitio.\n\nEste aviso se actualizará si más adelante se añaden el inicio de sesión con cuenta y el almacenamiento en la nube.",
@@ -1213,13 +1314,35 @@ de:{dir:'ltr',
  'drop.pack':'Dein Booster',
  'drop.added':'{n} / {t} neue Karten zu deinem Deck hinzugefügt.',
  'drop.see':'Mein Deck ansehen',
- 'drop.odds':'Deine Chancen',
- 'drop.oddsNote':'Chancen für jede Karte. Ein Booster enthält 5 Karten, höchstens 1 legendäre. Eine Seltenheit ohne Karten entfällt, ihre Chancen werden verteilt.',
- 'drop.packLegend':'Chance auf eine legendäre Karte in einem Booster: {p} %',
  'drop.cardsOne':'{n} Karte',
  'drop.cardsMany':'{n} Karten',
  'drop.empty':'Das Universal-Deck ist im Moment leer.',
  'demo.resetDrop':'Tages-Booster zurücksetzen',
+ 'info.btn':'Chancen und Farben ansehen',
+ 'info.title':'Chancen und Farben',
+ 'info.how':'So funktioniert es',
+ 'info.h1':'Ein Booster enthält 5 zufällig gezogene Karten.',
+ 'info.h2':'Jede Karte erhält ihre Seltenheit nach den Prozentwerten der Tabelle.',
+ 'info.h3':'Es gibt höchstens 1 legendäre Karte pro Booster.',
+ 'info.h4':'Die Karten kommen von der am wenigsten seltenen zur seltensten.',
+ 'info.table':'Die Tabelle',
+ 'info.colRar':'Seltenheit',
+ 'info.colCards':'Karten',
+ 'info.colOdds':'Pro Karte',
+ 'info.colPack':'Pro Booster',
+ 'info.dRar':'Die Stufe der Karte.',
+ 'info.dCards':'Wie viele Karten dieser Seltenheit es im Universal-Deck gibt.',
+ 'info.dOdds':'Die Chance, dass jede der 5 Karten deines Boosters diese Seltenheit hat.',
+ 'info.dPack':'Die Chance, in deinem Booster mindestens eine Karte dieser (oder einer höheren) Seltenheit zu bekommen.',
+ 'info.noCards':'Eine Seltenheit ohne Karten wird aus der Ziehung genommen, ihre Chancen werden auf die anderen verteilt.',
+ 'info.colors':'Die Farbe des Packs',
+ 'info.c1':'Bei der Beschwörung ändert das Licht um das Pack seine Farbe. Es verändert deine Chancen nicht: Es zeigt sie. Der Booster wird vor der Animation gezogen, und seine Farbe zeigt dir, was drin ist.',
+ 'info.c2':'Je mehr seltene Karten dein Pack enthält, desto näher kommt die Farbe dem Gold der Legendären. Die beste Karte zählt am meisten; die anderen schieben die Farbe noch etwas weiter.',
+ 'info.lk0':'Grau: nur Gewöhnliche (oder fast)',
+ 'info.lk1':'Grün: höchstens eine Ungewöhnliche',
+ 'info.lk2':'Blau: höchstens eine Seltene',
+ 'info.lk3':'Violett: höchstens eine Epische',
+ 'info.lk4':'Gold: eine Legendäre!',
  'settings.title':'Einstellungen','settings.account':'Konto','settings.language':'Sprache','settings.loggedAs':'Angemeldet als {user}',
  'settings.privacyTitle':'Datenschutzerklärung',
  'settings.privacy':"MyCard läuft vollständig in deinem Browser. Es gibt keinen Server, und nichts von dem, was du hier tust, wird an uns oder sonst jemanden gesendet.\n\nDein Benutzername, deine Karten und deine Einstellungen werden nur auf diesem Gerät gespeichert, im lokalen Speicher des Browsers. Fotos, die du einer Karte hinzufügst, bleiben ebenfalls auf diesem Gerät und werden nie hochgeladen.\n\nDiese Seite lädt Schriftarten von Google Fonts; dabei kann deine IP-Adresse an Google übermittelt werden, wie bei jeder Website, die Google Fonts nutzt.\n\nEs gibt keine Analyse-Tools, keine Werbung und keine Tracking-Cookies.\n\nWenn du deine Browserdaten löschst oder die App auf einem anderen Gerät oder Browser öffnest, sind deine Karten dort nicht verfügbar: Sie werden bisher nirgendwo anders gesichert.\n\nDieser Hinweis wird aktualisiert, falls später eine Kontoanmeldung und Cloud-Speicherung hinzukommen.",
@@ -1334,13 +1457,35 @@ ar:{dir:'rtl',
  'drop.pack':'حزمتك',
  'drop.added':'أُضيفت {n} / {t} بطاقات جديدة إلى مجموعتك.',
  'drop.see':'عرض مجموعتي',
- 'drop.odds':'فرصك',
- 'drop.oddsNote':'فرص كل بطاقة. تحتوي الحزمة على 5 بطاقات، بحد أقصى بطاقة أسطورية واحدة. تُحذف الندرة التي لا تحتوي على بطاقات وتُوزَّع فرصها على البقية.',
- 'drop.packLegend':'فرصة الحصول على بطاقة أسطورية في حزمة: {p} %',
  'drop.cardsOne':'{n} بطاقة',
  'drop.cardsMany':'{n} بطاقات',
  'drop.empty':'المجموعة العامة فارغة حاليًا.',
  'demo.resetDrop':'إعادة تفعيل حزمة اليوم',
+ 'info.btn':'عرض الفرص والألوان',
+ 'info.title':'الفرص والألوان',
+ 'info.how':'كيف يعمل',
+ 'info.h1':'تحتوي الحزمة على 5 بطاقات تُسحب عشوائيًا.',
+ 'info.h2':'تحصل كل بطاقة على ندرتها وفق النسب المئوية في الجدول.',
+ 'info.h3':'هناك بطاقة أسطورية واحدة كحد أقصى في كل حزمة.',
+ 'info.h4':'تخرج البطاقات من الأقل ندرة إلى الأكثر ندرة.',
+ 'info.table':'الجدول',
+ 'info.colRar':'الندرة',
+ 'info.colCards':'البطاقات',
+ 'info.colOdds':'لكل بطاقة',
+ 'info.colPack':'لكل حزمة',
+ 'info.dRar':'مستوى البطاقة.',
+ 'info.dCards':'كم بطاقة من هذه الندرة موجودة في المجموعة العامة.',
+ 'info.dOdds':'فرصة أن تكون كل بطاقة من بطاقات حزمتك الخمس من هذه الندرة.',
+ 'info.dPack':'فرصة الحصول على بطاقة واحدة على الأقل من هذه الندرة (أو أعلى) في حزمتك.',
+ 'info.noCards':'تُحذف الندرة التي لا تحتوي على بطاقات من السحب وتُوزَّع فرصها على البقية.',
+ 'info.colors':'لون الحزمة',
+ 'info.c1':'أثناء الاستدعاء يتغير لون الضوء حول الحزمة. هو لا يغيّر فرصك: بل يكشفها. تُسحب الحزمة قبل الحركة، ويُظهر لونها ما بداخلها.',
+ 'info.c2':'كلما احتوت حزمتك على بطاقات نادرة أكثر، اقترب اللون من ذهبي البطاقات الأسطورية. أفضل بطاقة هي الأهم، وتدفع البطاقات الأخرى اللون أبعد قليلًا.',
+ 'info.lk0':'رمادي: عادية فقط (أو تقريبًا)',
+ 'info.lk1':'أخضر: غير شائعة على الأكثر',
+ 'info.lk2':'أزرق: نادرة على الأكثر',
+ 'info.lk3':'بنفسجي: ملحمية على الأكثر',
+ 'info.lk4':'ذهبي: أسطورية!',
  'settings.title':'الإعدادات','settings.account':'الحساب','settings.language':'اللغة','settings.loggedAs':'مسجّل الدخول باسم {user}',
  'settings.privacyTitle':'سياسة الخصوصية',
  'settings.privacy':"يعمل MyCard بالكامل داخل متصفحك. لا يوجد خادم، ولا يُرسَل أي شيء تفعله هنا إلينا أو إلى أي جهة أخرى.\n\nيُحفظ اسم المستخدم وبطاقاتك وإعداداتك على هذا الجهاز فقط، داخل التخزين المحلي للمتصفح. كما تبقى الصور التي تضيفها إلى بطاقة على هذا الجهاز ولا تُرفع إلى أي مكان.\n\nتُحمّل هذه الصفحة خطوطًا من Google Fonts؛ قد يشارك ذلك عنوان IP الخاص بك مع Google، كما هو الحال في أي موقع يستخدم Google Fonts.\n\nلا توجد أدوات تحليل، ولا إعلانات، ولا ملفات تعريف ارتباط للتتبع.\n\nعند مسح بيانات المتصفح، أو فتح التطبيق على جهاز أو متصفح آخر، لن تكون بطاقاتك متاحة هناك: فهي غير محفوظة بعد في أي مكان آخر.\n\nسيتم تحديث هذا الإشعار إذا أُضيف لاحقًا تسجيل الدخول بحساب والتخزين السحابي.",
@@ -2432,6 +2577,7 @@ const hex2rgb=x=>[1,3,5].map(i=>parseInt(x.slice(i,i+2),16));
 function luckRGB(l){const st=RARITIES.map(r=>hex2rgb(r.c)),p=Math.min(RN,Math.max(0,l*RN)),i=Math.min(RN-1,Math.floor(p)),f=p-i;return st[i].map((v,q)=>Math.round(v+(st[i+1][q]-v)*f))}
 const flashOf=i=>.08+.72*Math.pow(i/(RN||1),1.6);
 const buzz=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
+const pickOf=(list,not)=>{const l=list.filter(x=>x!==not);return l[Math.floor(Math.random()*l.length)]};
 async function unlockUniversal(cat,rk){
   const id='u-'+cat.id,have=deck.find(c=>c.id===id);
   if(have){have.dup=(have.dup||0)+1;saveCard(have);return {isNew:false,n:have.dup+1}}
@@ -2440,11 +2586,24 @@ async function unlockUniversal(cat,rk){
   const img=await catImg(cat);if(img)c.img=img;
   deck.push(c);saveIdx();saveCard(c);return {isNew:true,n:1};
 }
-/* le pack : deux calques identiques, découpés le long d'une déchirure en dents de scie */
-const ZZ=[...Array(18)].map((_,i)=>[i/17*100,15+(i%2?1.1:-1.1)]),zp=p=>p[0].toFixed(2)+'% '+p[1].toFixed(2)+'%';
-const CLIP_TOP='polygon(0% 0%,100% 0%,'+[...ZZ].reverse().map(zp).join(',')+')',CLIP_MAIN='polygon('+ZZ.map(zp).join(',')+',100% 100%,0% 100%)';
-const packArt='<div class="pk-art"><i class="pk-crimp"></i><i class="pk-crimp b"></i><div class="pk-star">✦</div><div class="pk-logo">MyCard</div><div class="pk-sub">BOOSTER</div><div class="pk-five">5 CARDS</div><i class="pk-foil"></i></div>';
+
+/* ---- le pack : un seul dessin, copié sur deux calques découpés le long de la déchirure ---- */
+const NOISE=(()=>{try{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d'),d=g.createImageData(128,128);
+  for(let i=0;i<d.data.length;i+=4){const v=Math.random()*255;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}g.putImageData(d,0,0);return c.toDataURL()}catch(e){return ''}})();
+const CREASE='url("data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 180" preserveAspectRatio="none"><g fill="none" stroke-linecap="round"><g stroke="#fff" stroke-opacity=".55" stroke-width=".6"><path d="M4 12L30 30M96 14L70 34M6 168L28 150M95 166L72 148M12 60Q30 66 50 58M88 112Q66 106 48 116M20 96L42 88M80 70L58 80"/></g><g stroke="#000" stroke-opacity=".5" stroke-width=".7"><path d="M5 14L31 32M95 16L69 36M7 166L29 148M94 164L71 146M12 62Q30 68 50 60M88 114Q66 108 48 118M20 98L42 90M80 72L58 82"/></g></g></svg>')+'")';
+document.documentElement.style.setProperty('--noise',NOISE?'url('+NOISE+')':'none');document.documentElement.style.setProperty('--crease',CREASE);
+const ZZ=[...Array(17)].map((_,i)=>[i/16*100,15+(i%2?1.1:-1.1)]),zp=p=>p[0].toFixed(2)+'% '+p[1].toFixed(2)+'%',poly=pts=>'polygon('+pts.map(zp).join(',')+')';
+const OV=.35,CLIP_TOP=poly([[0,0],[100,0],...[...ZZ].reverse()]),CLIP_MAIN=poly([...ZZ.map(p=>[p[0],p[1]-OV]),[100,100],[0,100]]);   /* léger recouvrement : pas de liseré entre les deux calques */
+const SLASH={top:poly([[0,0],[100,0],[100,6],[0,22]]),main:poly([[0,22-OV],[100,6-OV],[100,100],[0,100]]),pts:[[0,22],[100,6]]};
+const ART_CLIP=(()=>{const T=36,pin=t=>1.3*(1-Math.sin(Math.PI*t)),q=n=>n.toFixed(2),p=[];
+  for(let i=0;i<=T;i++)p.push(q(pin(0)+(100-2*pin(0))*i/T)+'% '+(i%2?'0.9%':'0%'));
+  for(let k=1;k<=10;k++)p.push(q(100-pin(k/10))+'% '+q(k*10)+'%');
+  for(let i=T;i>=0;i--)p.push(q(pin(1)+(100-2*pin(1))*i/T)+'% '+(i%2?'99.1%':'100%'));
+  for(let k=9;k>=1;k--)p.push(q(pin(k/10))+'% '+q(k*10)+'%');
+  return 'polygon('+p.join(',')+')'})();
+const packArt='<div class="pk-art"><div class="pk-fan"><i></i><i></i><i></i><b>✦</b></div><div class="pk-logo">MyCard</div><div class="pk-sub">BOOSTER</div><div class="pk-five">5 CARDS</div><i class="pk-foil"></i><i class="pk-noise"></i><i class="pk-crease"></i><i class="pk-vol"></i><i class="pk-spec"></i><i class="pk-crimp"></i><i class="pk-crimp b"></i></div>';
 const packHTML=split=>split?`<div class="pk-shaker" id="pk-shaker"><div class="pk-layer main">${packArt}</div><div class="pk-layer top">${packArt}</div><i class="pk-burst"></i></div>`:`<div class="pk-layer">${packArt}</div>`;
+const setPackVars=(el,top,main)=>{el.style.setProperty('--art-clip',ART_CLIP);el.style.setProperty('--clip-top',top||CLIP_TOP);el.style.setProperty('--clip-main',main||CLIP_MAIN)};
 
 /* effets de lumière : étincelles en spirale (invocation) et gerbes (déchirure, révélations) */
 const fx=(()=>{
@@ -2471,10 +2630,42 @@ const fx=(()=>{
   };
 })();
 const pk={on:false,stage:'',idx:0,cards:[],res:[],urls:[],luck:0,rgb:[255,255,255],cur:null,until:0};
-const pkEl=id=>$(id);
-function pkFlash(col,o){const f=pkEl('pk-flash');f.style.setProperty('--fc',col);f.style.setProperty('--fo',o);f.classList.remove('go');void f.offsetWidth;f.classList.add('go')}
+function pkFlash(col,o){const f=$('pk-flash');f.style.setProperty('--fc',col);f.style.setProperty('--fo',o);f.classList.remove('go');void f.offsetWidth;f.classList.add('go')}
 function pkCenter(el){const r=el.getBoundingClientRect();return [r.left+r.width/2,r.top+r.height/2]}
-function pkHint(k){pkEl('pk-hint').textContent=k?tr(k):''}
+function pkAt(px,py){const r=$('pk-pack').getBoundingClientRect();return [r.left+r.width*px/100,r.top+r.height*py/100]}
+function pkHint(k){$('pk-hint').textContent=k?tr(k):''}
+const DUR=ms=>calm?1:ms,an=(el,kf,o)=>el.animate(kf,{fill:'forwards',...o});
+
+/* ---- six façons de déchirer le pack (une au hasard, jamais deux fois de suite) ---- */
+const TEAR_KINDS=['strip','fall','unzip','shatter','split','slash'];let lastTear='';
+function pickTear(){return pickOf(TEAR_KINDS,lastTear)}
+const piece=(pts,origin)=>{const d=document.createElement('div');d.className='pk-layer';d.innerHTML=packArt;d.style.clipPath=poly(pts);d.style.transformOrigin=origin||'50% 15%';return d};
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const PRELUDE={
+  shake:sh=>an(sh,[{transform:'none'},{transform:'translate(-5px,2px) rotate(-3deg)'},{transform:'translate(6px,-2px) rotate(3deg)'},{transform:'translate(-6px,3px) rotate(-4deg)'},{transform:'translate(6px,-3px) rotate(4deg)'},{transform:'translate(-3px,1px) rotate(-1.5deg)'},{transform:'none'}],{duration:DUR(420),easing:'linear'}).finished,
+  pull:sh=>an(sh,[{transform:'none'},{transform:'translateY(9px) scale(.965)',offset:.55},{transform:'translateY(-6px) scale(1.03)'}],{duration:DUR(420),easing:'ease-in-out'}).finished,
+  swell:sh=>an(sh,[{transform:'none',filter:'brightness(1)'},{transform:'scale(1.07)',filter:'brightness(1.7)',offset:.8},{transform:'scale(1.1)',filter:'brightness(2.5)'}],{duration:DUR(520),easing:'ease-in'}).finished,
+  slash:async sh=>{const s=document.createElement('i');s.className='pk-slash';s.style.transform='rotate(-16deg) scaleX(0)';sh.append(s);
+    await an(s,[{transform:'rotate(-16deg) scaleX(0)',opacity:1},{transform:'rotate(-16deg) scaleX(1)',opacity:1,offset:.7},{transform:'rotate(-16deg) scaleX(1)',opacity:0}],{duration:DUR(300),easing:'ease-out'}).finished;s.remove()}
+};
+const TEARS={
+  strip:{pre:'shake',run(top){an(top,[{transform:'none',opacity:1},{transform:'rotate(-9deg) translate(2%,-3%)',opacity:1,offset:.28},{transform:'translate(78%,-250%) rotate(-48deg)',opacity:0}],{duration:DUR(760),easing:'cubic-bezier(.5,0,.8,.5)'});return 650}},
+  fall:{pre:'pull',run(top){top.style.transformOrigin='0% 15%';an(top,[{transform:'none',offset:0},{transform:'rotate(-26deg) translateY(-5%)',offset:.28},{transform:'rotate(-100deg) translate(2%,-8%)',offset:.55},{transform:'rotate(-178deg) translate(-8%,300%)',opacity:1,offset:.9},{transform:'rotate(-205deg) translate(-10%,420%)',opacity:0,offset:1}],{duration:DUR(1150),easing:'ease-in'});return 850}},
+  unzip:{pre:'shake',run(top,sh){top.style.visibility='hidden';
+    for(let k=0;k<8;k++){const x0=ZZ[2*k][0],pts=[[x0,0],[ZZ[2*k+2][0],0],ZZ[2*k+2],ZZ[2*k+1],ZZ[2*k]],p=piece(pts,x0+'% 15%');sh.append(p);
+      an(p,[{transform:'none',opacity:1},{transform:'rotate(-38deg) translate(0,-16%)',opacity:1,offset:.45},{transform:'rotate(-88deg) translate(6%,-60%)',opacity:0}],{duration:DUR(560),delay:DUR(k*80),easing:'cubic-bezier(.4,0,.9,.6)'});
+      setTimeout(()=>{if(pk.on){const [x,y]=pkAt(x0+6,15);fx.burst(x,y,pk.rgb,16,260)}},calm?0:k*80)}
+    return 8*80+500}},
+  shatter:{pre:'swell',run(top,sh){top.style.visibility='hidden';
+    for(let i=0;i<16;i++){const p=piece([[ZZ[i][0],0],[ZZ[i+1][0],0],ZZ[i+1],ZZ[i]],((ZZ[i][0]+ZZ[i+1][0])/2)+'% 8%'),dx=(((ZZ[i][0]+ZZ[i+1][0])/2)-50)*5+rnd(-40,40),dy=-rnd(120,300),r=rnd(-540,540);sh.append(p);
+      an(p,[{transform:'none',opacity:1},{transform:`translate(${dx*.7}px,${dy}px) rotate(${r*.6}deg)`,opacity:1,offset:.5},{transform:`translate(${dx}px,${dy+520}px) rotate(${r}deg)`,opacity:0}],{duration:DUR(rnd(850,1200)),easing:'cubic-bezier(.2,.6,.4,1)'})}
+    return 700}},
+  split:{pre:'swell',run(top,sh){top.style.visibility='hidden';
+    const L=piece([[0,0],[50,0],...ZZ.slice(0,9).reverse()],'0% 15%'),R=piece([[50,0],[100,0],...ZZ.slice(8).reverse()],'100% 15%');sh.append(L,R);
+    an(L,[{transform:'none',opacity:1},{transform:'rotate(-64deg)',opacity:1,offset:.5},{transform:'rotate(-100deg) translate(-14%,-20%)',opacity:0}],{duration:DUR(900),easing:'cubic-bezier(.3,1.3,.5,1)'});
+    an(R,[{transform:'none',opacity:1},{transform:'rotate(64deg)',opacity:1,offset:.5},{transform:'rotate(100deg) translate(14%,-20%)',opacity:0}],{duration:DUR(900),easing:'cubic-bezier(.3,1.3,.5,1)'});return 800}},
+  slash:{pre:'slash',cut:SLASH,run(top){top.style.transformOrigin='50% 14%';an(top,[{transform:'none',opacity:1},{transform:'translate(40%,-12%) rotate(-3deg)',opacity:1,offset:.3},{transform:'translate(125%,-22%) rotate(-10deg)',opacity:1,offset:.6},{transform:'translate(170%,300%) rotate(28deg)',opacity:0}],{duration:DUR(1000),easing:'ease-in'});return 750}}
+};
 async function openBooster(){
   if(bstBusy||!dropReady())return;
   const cat=await catalog();if(!cat.length)return renderBooster();
@@ -2487,46 +2678,67 @@ async function openBooster(){
   const luck=packLuck(cards),rgb=luckRGB(luck);
   Object.assign(pk,{on:true,stage:'summon',idx:0,cards,res,urls,luck,rgb,cur:null,until:Date.now()+1e9});
   const P=$('pk');P.hidden=false;P.classList.remove('on','legend');
-  P.style.setProperty('--lc-rgb',rgb.join(','));P.style.setProperty('--lc',`rgb(${rgb.join(',')})`);
-  $('pk-pack').className='pk-pack';$('pk-pack').innerHTML=packHTML(true);$('pk-pack').style.setProperty('--clip-top',CLIP_TOP);$('pk-pack').style.setProperty('--clip-main',CLIP_MAIN);
+  P.style.setProperty('--lc-rgb',rgb.join(','));P.style.setProperty('--lc',`rgb(${rgb.join(',')})`);P.style.setProperty('--cy','15%');P.style.setProperty('--rx','0deg');P.style.setProperty('--ry','0deg');P.style.setProperty('--sx','50');
+  const pack=$('pk-pack');pack.className='pk-pack';pack.innerHTML=packHTML(true);setPackVars(pack);
+  $('pk-spill').getAnimations().forEach(a=>a.cancel());
   $('pk-cardwrap').innerHTML='';$('pk-row').innerHTML='';$('pk-final').hidden=true;$('pk-skip').hidden=true;$('pk-rar').classList.remove('go','legend');$('pk-world').classList.remove('shake');pkHint('');
   void P.offsetWidth;P.classList.add('on');P.focus({preventScroll:true});
   fx.start(rgb,30+120*luck);
   await wait(2000);if(!pk.on)return;
-  const pr=$('pk-pack').getBoundingClientRect();pkFlash(`rgb(${rgb})`,.3);fx.burst(pr.left+pr.width/2,pr.bottom,rgb,70,340);buzz(20);   /* l'impact quand le pack se pose */
+  const [lx,ly]=(()=>{const r=pack.getBoundingClientRect();return [r.left+r.width/2,r.bottom]})();pkFlash(`rgb(${rgb})`,.3);fx.burst(lx,ly,rgb,70,340);buzz(20);   /* l'impact quand le pack se pose */
   await wait(300);if(!pk.on)return;
   pk.stage='ready';pk.until=0;pkHint('drop.tapOpen');$('pk-skip').hidden=false;
 }
 async function pkTear(){
-  pk.stage='torn';pk.until=Date.now()+900;
-  const sh=$('pk-shaker');sh.classList.add('shake');buzz([15,30,15]);pkHint('');await wait(400);
-  sh.classList.remove('shake');$('pk-pack').classList.add('torn');
-  const [x,y]=(()=>{const r=$('pk-pack').getBoundingClientRect();return [r.left+r.width/2,r.top+r.height*.15]})();
-  pkFlash(`rgb(${pk.rgb})`,.35+.4*pk.luck);fx.burst(x,y,pk.rgb,70+Math.round(120*pk.luck),380);fx.rate(20+60*pk.luck);buzz([40]);
-  await wait(500);if(pk.on)pkHint('drop.tapNext');
+  pk.stage='torn';pk.until=Date.now()+1500;
+  const kind=pickTear(),T=TEARS[kind];lastTear=kind;pk.tear=kind;
+  const pack=$('pk-pack'),sh=$('pk-shaker'),top=sh.querySelector('.pk-layer.top'),cut=T.cut||{top:CLIP_TOP,main:CLIP_MAIN,pts:ZZ};
+  setPackVars(pack,cut.top,cut.main);$('pk').style.setProperty('--cy',kind==='slash'?'14%':'15%');sh.querySelector('.pk-burst').style.transform=kind==='slash'?'rotate(-16deg)':'';
+  pkHint('');buzz([15,30,15]);
+  await PRELUDE[T.pre](sh);if(!pk.on)return;sh.getAnimations().forEach(a=>a.cancel());
+  sh.insertAdjacentHTML('beforeend',`<svg class="pk-edge" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="${cut.pts.map(p=>p[0].toFixed(2)+','+p[1].toFixed(2)).join(' ')}" fill="none" stroke="#fff" stroke-width="1.3" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>`);
+  const edge=sh.querySelector('.pk-edge');
+  pack.classList.add('torn');const dur=T.run(top,sh);requestAnimationFrame(()=>edge.classList.add('go'));
+  an($('pk-spill'),[{opacity:0},{opacity:.95,offset:.3},{opacity:.4}],{duration:DUR(1100)});
+  const [x,y]=pkAt(50,kind==='slash'?14:15);
+  pkFlash(`rgb(${pk.rgb})`,.35+.4*pk.luck);fx.burst(x,y,pk.rgb,70+Math.round(120*pk.luck),kind==='shatter'?520:380);fx.rate(20+60*pk.luck);buzz([40]);
+  if(kind==='shatter'||kind==='split'){const w=$('pk-world');w.classList.remove('shake');void w.offsetWidth;w.classList.add('shake')}
+  pk.until=Date.now()+Math.min(dur,700);
+  await wait(dur);if(pk.on&&pk.stage==='torn'&&!pk.cur)pkHint('drop.tapNext');
+  setTimeout(()=>sh.querySelectorAll('.pk-layer:not(.main):not(.top)').forEach(e=>e.remove()),calm?0:1500);
 }
+/* ---- quatre façons de sortir une carte ---- */
+const REVEAL_KINDS=['rise','flip','slam','spin'];let lastRev='';
+const TX=(y,s,ry,rz)=>`translate(-50%,${y}%) scale(${s}) rotateY(${ry||0}deg) rotateZ(${rz||0}deg)`;
+const REVEALS={
+  rise:{dur:900,at:.88,z:.5,kf:[{transform:TX(-50,.45)},{transform:TX(-92,.5),offset:.5},{transform:TX(-58,1)}]},
+  flip:{dur:1200,at:.9,z:.4,kf:[{transform:TX(-50,.45,180)},{transform:TX(-92,.5,180),offset:.4},{transform:TX(-72,.85,90),offset:.72},{transform:TX(-58,1,0)}]},
+  slam:{dur:800,at:.55,z:0,kf:[{transform:TX(-300,1.7,0,-10)},{transform:TX(-58,1),offset:.55},{transform:TX(-52,.95),offset:.72},{transform:TX(-58,1)}]},
+  spin:{dur:1050,at:.9,z:.42,kf:[{transform:TX(-50,.45,0)},{transform:TX(-92,.5,360),offset:.42},{transform:TX(-58,1,720)}]}
+};
 async function pkNext(){
   if(pk.idx>=pk.cards.length)return pkFinal();
   const i=pk.idx++,c=pk.cards[i],r=pk.res[i],ri=rarIdx(c.rarity),col=rarOf(c.rarity).c,leg=c.rarity==='legendary';
-  pk.until=Date.now()+(leg?1400:700);
+  const kind=pickOf(REVEAL_KINDS,lastRev);lastRev=kind;const R=REVEALS[kind];
+  pk.until=Date.now()+Math.max(600,R.dur*.7)+(leg?500:0);
   const url=await pk.urls[i];if(!pk.on)return;
   if(pk.cur)pkLeave(pk.cur);
   const el=document.createElement('div');el.className='pk-card'+(leg?' legend':'');el.style.setProperty('--rc',col);
-  el.innerHTML=`<img alt="${esc(c.name)}" src="${url}"><span class="pk-tag">${r.isNew?tr('drop.new'):tr('drop.dup',{n:r.n})}</span>`;
+  el.innerHTML=`<img alt="${esc(c.name)}" src="${url}"><div class="bk"><b>MyCard</b></div><span class="pk-tag">${r.isNew?tr('drop.new'):tr('drop.dup',{n:r.n})}</span>`;
   $('pk-cardwrap').append(el);pk.cur=el;$('pk-pack').classList.add('spent');pkHint(i<pk.cards.length-1?'drop.tapNext':'drop.tapEnd');
-  void el.offsetWidth;el.classList.add('rise');
-  await wait(430);if(!pk.on||pk.cur!==el)return;
-  el.classList.remove('rise');el.classList.add('front');
-  const ch=rarOf(c.rarity).c,[cx,cy]=pkCenter(el);
+  const dur=DUR(R.dur);el.style.zIndex=R.z===0?6:1;if(R.z)setTimeout(()=>{if(pk.cur===el)el.style.zIndex=6},dur*R.z);
+  const a=el.animate(R.kf,{duration:dur,easing:'cubic-bezier(.3,.8,.4,1)',fill:'forwards'});a.onfinish=()=>{el.classList.add('front');el.style.zIndex='';a.cancel()};
+  await wait(R.dur*R.at);if(!pk.on||pk.cur!==el)return;
+  const [cx,cy]=pkCenter(el);
   pkFlash(col,flashOf(ri));fx.burst(cx,cy,hex2rgb(col),20+ri*30+(leg?160:0),300+ri*90);buzz(leg?[30,40,30,40,160]:ri>=3?[40,30,60]:[20]);
-  if(ri>=3){const w=$('pk-world');w.classList.remove('shake');void w.offsetWidth;w.classList.add('shake')}
+  if(ri>=3||kind==='slam'){const w=$('pk-world');w.classList.remove('shake');void w.offsetWidth;w.classList.add('shake')}
   if(leg)$('pk').classList.add('legend');
-  const rar=$('pk-rar');rar.style.setProperty('--rc',ch);rar.classList.remove('go','legend');$('pk-rar-n').textContent=rarName(c.rarity);$('pk-count').textContent=tr('drop.cardNo',{i:i+1,n:pk.cards.length});
+  const rar=$('pk-rar');rar.style.setProperty('--rc',col);rar.classList.remove('go','legend');$('pk-rar-n').textContent=rarName(c.rarity);$('pk-count').textContent=tr('drop.cardNo',{i:i+1,n:pk.cards.length});
   void rar.offsetWidth;rar.classList.add('go');if(leg)rar.classList.add('legend');
 }
 function pkLeave(el){
   const im=document.createElement('img');im.src=el.querySelector('img').src;im.alt='';im.style.setProperty('--rc',el.style.getPropertyValue('--rc'));$('pk-row').append(im);
-  el.classList.remove('front','rise');el.classList.add('leave');setTimeout(()=>el.remove(),520);
+  el.getAnimations().forEach(a=>a.cancel());el.classList.remove('front');el.classList.add('leave');setTimeout(()=>el.remove(),520);
 }
 function pkFinal(){
   pk.stage='final';pk.until=Date.now()+1e9;if(pk.cur){pkLeave(pk.cur);pk.cur=null}
@@ -2538,7 +2750,7 @@ function pkFinal(){
   $('pk-final').hidden=false;pk.cards.some(c=>c.rarity==='legendary')&&fx.burst(innerWidth/2,innerHeight*.45,pk.rgb,90,360);
 }
 function pkAdvance(){
-  if(!pk.on||Date.now()<pk.until)return;
+  if(!pk.on||Date.now()<pk.until||!$('odds-modal').hidden)return;
   if(pk.stage==='ready')pkTear();else if(pk.stage==='torn')pkNext();
 }
 function pkClose(){
@@ -2547,10 +2759,39 @@ function pkClose(){
   bstBusy=false;renderBooster();
 }
 $('pk').addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;pkAdvance()});
+$('pk').addEventListener('pointermove',e=>{                           /* le pack et les cartes suivent un peu le doigt : reflets et relief */
+  if(!pk.on||calm)return;const P=$('pk'),x=e.clientX/innerWidth,y=e.clientY/innerHeight;
+  P.style.setProperty('--rx',((.5-y)*14).toFixed(1)+'deg');P.style.setProperty('--ry',((x-.5)*18).toFixed(1)+'deg');P.style.setProperty('--sx',(x*100).toFixed(0));
+});
 $('pk-skip').addEventListener('click',()=>{if(pk.on&&pk.stage!=='final')pkFinal()});
 $('pk-close').addEventListener('click',pkClose);$('pk-done').addEventListener('click',pkClose);
 $('pk-see').addEventListener('click',()=>{pkClose();backToDeck()});
-document.addEventListener('keydown',e=>{if(!pk.on)return;if(e.key==='Escape')pkClose();else if((e.key==='Enter'||e.key===' ')&&!e.target.closest('button')){e.preventDefault();pkAdvance()}});
+
+/* -- la fenêtre « i » : chances, tableau et couleurs -- */
+const fmtP=x=>(x*100).toLocaleString(lang,{maximumFractionDigits:1})+' %';
+async function renderInfo(){
+  if($('odds-modal').hidden)return;
+  const cat=await catalog(),n={};cat.forEach(c=>n[c.rarity]=(n[c.rarity]||0)+1);
+  const tot=RARITIES.filter(r=>n[r.k]).reduce((a,r)=>a+r.w,0),pc=r=>n[r.k]&&tot?r.w/tot:0;
+  const rows=RARITIES.map((r,i)=>{const q=RARITIES.reduce((a,x,j)=>a+(j>=i?pc(x):0),0);
+    return `<tr style="--rc:${r.c}"><td><span class="rar">${rarName(r.k)}</span></td><td>${n[r.k]||'—'}</td><td>${n[r.k]?fmtP(pc(r)):'—'}</td><td>${n[r.k]?fmtP(1-Math.pow(1-q,PACK_SIZE)):'—'}</td></tr>`}).join('');
+  $('info-body').innerHTML=`<h4>${tr('info.how')}</h4><ul><li>${tr('info.h1')}</li><li>${tr('info.h2')}</li><li>${tr('info.h3')}</li><li>${tr('info.h4')}</li></ul>
+    <h4>${tr('info.table')}</h4>
+    <table class="odds"><thead><tr><th>${tr('info.colRar')}</th><th>${tr('info.colCards')}</th><th>${tr('info.colOdds')}</th><th>${tr('info.colPack')}</th></tr></thead><tbody>${rows}</tbody></table>
+    <dl><dt>${tr('info.colRar')}</dt><dd>${tr('info.dRar')}</dd><dt>${tr('info.colCards')}</dt><dd>${tr('info.dCards')}</dd><dt>${tr('info.colOdds')}</dt><dd>${tr('info.dOdds')}</dd><dt>${tr('info.colPack')}</dt><dd>${tr('info.dPack')}</dd></dl>
+    <p>${tr('info.noCards')}</p>
+    <h4>${tr('info.colors')}</h4><p>${tr('info.c1')}</p><p>${tr('info.c2')}</p>
+    <div class="lk-bar" style="background:linear-gradient(90deg,${RARITIES.map(r=>r.c).join(',')})"></div>
+    <ul class="lk-list">${RARITIES.map((r,i)=>`<li><i style="--c:${r.c}"></i><span>${tr('info.lk'+i)}</span></li>`).join('')}</ul>`;
+}
+function openInfo(){$('odds-modal').hidden=false;renderInfo();$('info-x').focus({preventScroll:true})}
+function closeInfo(){$('odds-modal').hidden=true}
+$('bst-info').addEventListener('click',openInfo);$('pk-info').addEventListener('click',openInfo);$('info-x').addEventListener('click',closeInfo);
+$('odds-modal').addEventListener('click',e=>{if(e.target===$('odds-modal'))closeInfo()});
+document.addEventListener('keydown',e=>{
+  if(!$('odds-modal').hidden){if(e.key==='Escape')closeInfo();return}
+  if(!pk.on)return;if(e.key==='Escape')pkClose();else if((e.key==='Enter'||e.key===' ')&&!e.target.closest('button')){e.preventDefault();pkAdvance()}
+});
 
 /* -- écran du booster -- */
 function bstMsg(){
@@ -2563,13 +2804,9 @@ async function renderBooster(){
   if($('booster').hidden)return;
   const cat=await catalog(),ready=dropReady(),off=!ready||!cat.length||bstBusy;
   bstEmpty=!cat.length;$('bst-open').disabled=off;
-  if(!$('bst-pack').firstChild)$('bst-pack').innerHTML=`<div class="pk-pack bst-mini">${packHTML(false)}</div>`;
+  if(!$('bst-pack').firstChild){$('bst-pack').innerHTML=`<div class="pk-pack bst-mini">${packHTML(false)}</div>`;setPackVars($('bst-pack').firstChild)}
   $('bst-pack').firstChild.classList.toggle('off',!ready||bstEmpty);
   if(bstEmpty)$('bst-msg').textContent=tr('drop.empty');
-  const n={};cat.forEach(c=>n[c.rarity]=(n[c.rarity]||0)+1);const tot=RARITIES.filter(r=>n[r.k]).reduce((a,r)=>a+r.w,0),pc=r=>n[r.k]&&tot?r.w/tot:0;
-  $('bst-odds').innerHTML=RARITIES.map(r=>`<tr style="--rc:${r.c}"><td><span class="rar">${rarName(r.k)}</span></td><td>${n[r.k]?tr(n[r.k]>1?'drop.cardsMany':'drop.cardsOne',{n:n[r.k]}):'—'}</td><td>${n[r.k]?(pc(r)*100).toLocaleString(lang,{maximumFractionDigits:1})+' %':'—'}</td></tr>`).join('');
-  const lg=RARITIES.find(r=>r.k==='legendary');
-  $('bst-legend').textContent=lg&&n.legendary?tr('drop.packLegend',{p:((1-Math.pow(1-pc(lg),PACK_SIZE))*100).toLocaleString(lang,{maximumFractionDigits:1})}):'';
   bstMsg();updateDropDot();
 }
 $('dk-drop').addEventListener('click',()=>{openSub('booster');renderBooster();bstTick=setInterval(bstMsg,1000)});
@@ -2598,6 +2835,7 @@ function applyI18n(){
   if(!$('settings').hidden)fillSettings();
   if(typeof renderContest==='function')renderContest();
   if(typeof renderBooster==='function')renderBooster();
+  if(typeof renderInfo==='function')renderInfo();
   if(!$('exp-modal').hidden)openExpModal(expIntent);
 }
 function setLang(code){
