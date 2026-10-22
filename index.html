@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <!--
   MyCard — cartes holographiques (application web en un seul fichier).
-
-  Une partie des effets holographiques (holo régulier, cosmos, reverse holo « foil », V pleine illustration,
-  rainbow, Shiny V, Amazing Rare, VMax) est adaptée du projet « pokemon-cards-css » de Simon Goellner
-  (https://github.com/simeydotme/pokemon-cards-css), distribué sous licence GNU GPL v3.
-  Les images d'origine ont été remplacées par des textures générées. Voir LICENSE et NOTICE.md.
+  Tous les effets holographiques sont écrits pour cette application. Voir NOTICE.md.
   Projet non officiel, sans lien avec The Pokémon Company, Nintendo, Creatures ou Game Freak.
 -->
 <html lang="fr">
@@ -79,86 +75,94 @@ body{margin:0;min-height:100vh;box-sizing:border-box;padding:24px 16px;backgroun
 .spk{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform;pointer-events:none;-webkit-mask:linear-gradient(90deg,transparent,#000 50%,transparent);mask:linear-gradient(90deg,transparent,#000 50%,transparent)}
 .spk canvas{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
 
-/* ---- modes du site (holo régulier, cosmos, reverse holo) ---- */
-.card{--red:#f80e7b;--yellow:#eedf10;--green:#21e985;--blue:#0dbde9;--violet:#c929f1;--cosmos:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27500%27%20height%3D%27500%27%3E%3Cdefs%3E%0A%3CradialGradient%20id%3D%27a%27%20cx%3D%27.25%27%20cy%3D%27.3%27%20r%3D%27.55%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%237a4cf0%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%237a4cf0%27%20stop-opacity%3D%270%27%2F%3E%3C%2FradialGradient%3E%0A%3CradialGradient%20id%3D%27b%27%20cx%3D%27.75%27%20cy%3D%27.7%27%20r%3D%27.5%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%231fa3d8%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%231fa3d8%27%20stop-opacity%3D%270%27%2F%3E%3C%2FradialGradient%3E%0A%3CradialGradient%20id%3D%27c%27%20cx%3D%27.65%27%20cy%3D%27.2%27%20r%3D%27.4%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23d03fa0%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23d03fa0%27%20stop-opacity%3D%270%27%2F%3E%3C%2FradialGradient%3E%0A%3Cfilter%20id%3D%27n%27%20x%3D%270%27%20y%3D%270%27%20width%3D%27100%25%27%20height%3D%27100%25%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%27.8%27%20numOctaves%3D%272%27%20stitchTiles%3D%27stitch%27%2F%3E%3CfeColorMatrix%20values%3D%270%200%200%200%201%200%200%200%200%201%200%200%200%200%201%200%200%2018%200%20-11%27%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%0A%3Crect%20width%3D%27500%27%20height%3D%27500%27%20fill%3D%27%230a0c2b%27%2F%3E%3Crect%20width%3D%27500%27%20height%3D%27500%27%20fill%3D%27url(%23a)%27%2F%3E%3Crect%20width%3D%27500%27%20height%3D%27500%27%20fill%3D%27url(%23b)%27%2F%3E%3Crect%20width%3D%27500%27%20height%3D%27500%27%20fill%3D%27url(%23c)%27%2F%3E%3Crect%20width%3D%27500%27%20height%3D%27500%27%20filter%3D%27url(%23n)%27%2F%3E%3C%2Fsvg%3E")}
-.shine,.shine::before,.shine::after,.glare2,.glare2::after{position:absolute;inset:0;border-radius:inherit;pointer-events:none;background-size:cover}
-.shine,.glare2{display:none}
-.card:is([data-fx=regular],[data-fx=cosmos],[data-fx=sitereverse],[data-fx=vfull],[data-fx=rainbow],[data-fx=shinyv],[data-fx=amazing],[data-fx=vmax],[data-fx=metal]) :is(.shine,.glare2){display:block}
-.card:is([data-fx=regular],[data-fx=cosmos],[data-fx=sitereverse],[data-fx=vfull],[data-fx=rainbow],[data-fx=shinyv],[data-fx=amazing],[data-fx=vmax],[data-fx=metal]) :is(.holo,.sparkle,.revwrap,.glare){display:none}
-.glare2{background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsla(0,0%,100%,.8) 10%,hsla(0,0%,100%,.65) 20%,hsla(0,0%,0%,.5) 90%);mix-blend-mode:overlay;opacity:calc(var(--card-opacity)*var(--k))}
-.card[data-fx=regular] .shine,.card[data-fx=cosmos] .shine{opacity:var(--k);clip-path:inset(2.6% 3.4% 2.4% 3.4% round 4%)}
-/* MÉTALLIQUE (acier brossé) */
-.card[data-fx=metal] .shine{opacity:var(--k);clip-path:inset(2.6% 3.4% 2.4% 3.4% round 4%);mix-blend-mode:overlay;
-  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0,rgba(255,255,255,.07) 1px,rgba(0,0,0,.07) 1px,rgba(0,0,0,.07) 2px),linear-gradient(115deg,#202226 0%,#f4f6fa 12%,#4a4e58 24%,#ffffff 36%,#30333b 48%,#e9ecf2 60%,#555a66 72%,#fbfcfe 84%,#262830 100%);
-  background-size:3px 100%,260% 260%;background-position:0 0,var(--background-x) var(--background-y);
-  filter:contrast(2) saturate(0)}
-.card[data-fx=metal] .shine::after{content:"";background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),rgba(255,255,255,.95) 0%,rgba(235,240,250,.4) 24%,transparent 58%);mix-blend-mode:soft-light;opacity:calc(var(--card-opacity)*var(--k))}
-.card[data-fx=metal] .glare2{background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsla(0,0%,100%,.9) 6%,hsla(0,0%,70%,.25) 30%,hsla(0,0%,0%,.5) 95%);mix-blend-mode:soft-light;filter:contrast(1.3) saturate(0)}
-/* HOLO RÉGULIER */
-.card[data-fx=regular] .shine{background-image:repeating-linear-gradient(110deg,var(--violet),var(--blue),var(--green),var(--yellow),var(--red),var(--violet),var(--blue),var(--green),var(--yellow),var(--red),var(--violet),var(--blue),var(--green),var(--yellow),var(--red)),repeating-linear-gradient(90deg,#000 0,#000 2px,#666 2px,#666 4px);
-  background-position:calc(((50% - var(--background-x))*2.6) + 50%) calc(((50% - var(--background-y))*3.5) + 50%),center center;background-size:400% 400%,cover;background-blend-mode:overlay;filter:brightness(1.1) contrast(1.1) saturate(1.2);mix-blend-mode:color-dodge}
-.card[data-fx=regular] .shine::before{content:"";--bars:3%;--bc:hsla(0,0%,70%,1);--bb:#000;
-  background-image:repeating-linear-gradient(90deg,var(--bb) calc(var(--bars)*2),var(--bc) calc(var(--bars)*3),var(--bb) calc(var(--bars)*3.5),var(--bc) calc(var(--bars)*4),var(--bb) calc(var(--bars)*5),var(--bb) calc(var(--bars)*14)),repeating-linear-gradient(90deg,var(--bb) calc(var(--bars)*2),var(--bc) calc(var(--bars)*3),var(--bb) calc(var(--bars)*3.5),var(--bc) calc(var(--bars)*4),var(--bb) calc(var(--bars)*5),var(--bb) calc(var(--bars)*10));
-  background-position:calc((((50% - var(--background-x))*1.65) + 50%) + (var(--background-y)*.5)) var(--background-x),calc((((50% - var(--background-x))*-.9) + 50%) - (var(--background-y)*.75)) var(--background-y);background-size:200% 200%,200% 200%;background-blend-mode:screen;filter:brightness(1.15) contrast(1.1);mix-blend-mode:hard-light}
-.card[data-fx=regular] .shine::after{content:"";background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsla(0,0%,90%,.8) 0%,hsla(0,0%,78%,.1) 25%,hsl(0,0%,0%) 90%);mix-blend-mode:luminosity;filter:brightness(.6) contrast(4)}
-.card[data-fx=regular] .glare2{opacity:calc(var(--card-opacity)*.8*var(--k));filter:brightness(.8) contrast(1.5);mix-blend-mode:overlay}
-.card[data-fx=regular] .glare2::after{content:"";background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsl(180,100%,95%) 5%,hsla(0,0%,39%,.25) 55%,hsla(0,0%,0%,.36) 110%);mix-blend-mode:overlay;filter:brightness(.6) contrast(3)}
-/* COSMOS */
-.card[data-fx=cosmos] .shine{--space:4%;background-image:var(--cosmos),repeating-linear-gradient(82deg,hsl(53,65%,60%) calc(var(--space)*1),hsl(93,56%,50%) calc(var(--space)*2),hsl(176,54%,49%) calc(var(--space)*3),hsl(228,59%,55%) calc(var(--space)*4),hsl(283,60%,55%) calc(var(--space)*5),hsl(326,59%,51%) calc(var(--space)*6),hsl(326,59%,51%) calc(var(--space)*7),hsl(283,60%,55%) calc(var(--space)*8),hsl(228,59%,55%) calc(var(--space)*9),hsl(176,54%,49%) calc(var(--space)*10),hsl(93,56%,50%) calc(var(--space)*11),hsl(53,65%,60%) calc(var(--space)*12)),radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsla(180,100%,89%,.5) 5%,hsla(180,14%,57%,.3) 40%,hsl(0,0%,0%) 130%);
-  background-blend-mode:color-burn,multiply;background-position:center center,calc(10% + (var(--pointer-from-left)*80%)) calc(10% + (var(--pointer-from-top)*80%)),center center;background-size:cover,400% 900%,cover;filter:brightness(1) contrast(1) saturate(.8);mix-blend-mode:color-dodge}
-.card[data-fx=cosmos] .shine::before{content:"";z-index:2;background-image:var(--cosmos),repeating-linear-gradient(82deg,hsl(53,65%,60%) calc(var(--space)*1),hsl(93,56%,50%) calc(var(--space)*2),hsl(176,54%,49%) calc(var(--space)*3),hsl(228,59%,55%) calc(var(--space)*4),hsl(283,60%,55%) calc(var(--space)*5),hsl(326,59%,51%) calc(var(--space)*6),hsl(326,59%,51%) calc(var(--space)*7),hsl(283,60%,55%) calc(var(--space)*8),hsl(228,59%,55%) calc(var(--space)*9),hsl(176,54%,49%) calc(var(--space)*10),hsl(93,56%,50%) calc(var(--space)*11),hsl(53,65%,60%) calc(var(--space)*12));background-blend-mode:lighten,multiply;background-position:center center,calc(15% + (var(--pointer-from-left)*70%)) calc(15% + (var(--pointer-from-top)*70%));background-size:cover,400% 900%;filter:brightness(1.25) contrast(1.75) saturate(.8);mix-blend-mode:overlay}
-.card[data-fx=cosmos] .shine::after{content:"";z-index:3;background-image:var(--cosmos),repeating-linear-gradient(82deg,hsl(53,65%,60%) calc(var(--space)*1),hsl(93,56%,50%) calc(var(--space)*2),hsl(176,54%,49%) calc(var(--space)*3),hsl(228,59%,55%) calc(var(--space)*4),hsl(283,60%,55%) calc(var(--space)*5),hsl(326,59%,51%) calc(var(--space)*6),hsl(326,59%,51%) calc(var(--space)*7),hsl(283,60%,55%) calc(var(--space)*8),hsl(228,59%,55%) calc(var(--space)*9),hsl(176,54%,49%) calc(var(--space)*10),hsl(93,56%,50%) calc(var(--space)*11),hsl(53,65%,60%) calc(var(--space)*12));background-blend-mode:multiply,multiply;background-position:center center,calc(20% + (var(--pointer-from-left)*60%)) calc(20% + (var(--pointer-from-top)*60%));background-size:cover,400% 900%;filter:brightness(1.25) contrast(1.75) saturate(.8);mix-blend-mode:multiply}
-.card[data-fx=cosmos] .glare2{background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsla(204,100%,95%,.8) 5%,hsla(250,15%,20%,1) 150%);filter:brightness(.75) contrast(2) saturate(2);mix-blend-mode:overlay;opacity:calc(var(--card-opacity)*(.25 + var(--pointer-from-center))*var(--k))}
-.card[data-fx=cosmos] .glare2::after{content:"";background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsl(280,100%,96%) 5%,hsl(0,0%,10%) 60%);filter:brightness(.75) contrast(2.5) saturate(2);mix-blend-mode:soft-light;opacity:calc(1 - var(--pointer-from-top)*.75)}
-/* REVERSE HOLO (version du site) */
-.card[data-fx=sitereverse] .shine{--foil:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2080%2080%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23ff3d8f%27%2F%3E%3Cstop%20offset%3D%27.33%27%20stop-color%3D%27%23ffd84d%27%2F%3E%3Cstop%20offset%3D%27.66%27%20stop-color%3D%27%233dffb0%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%236a5cff%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2780%27%20height%3D%2780%27%20fill%3D%27%23101020%27%2F%3E%3Cpath%20d%3D%27M0%200L80%2080M80%200L0%2080%27%20stroke%3D%27url(%23g)%27%20stroke-opacity%3D%27.5%27%20stroke-width%3D%271.2%27%2F%3E%3Cpolygon%20points%3D%2740.00%2C31.00%2042.02%2C37.22%2048.56%2C37.22%2043.27%2C41.06%2045.29%2C47.28%2040.00%2C43.44%2034.71%2C47.28%2036.73%2C41.06%2031.44%2C37.22%2037.98%2C37.22%27%20fill%3D%27url(%23g)%27%2F%3E%3Cpolygon%20points%3D%270.00%2C-9.00%202.02%2C-2.78%208.56%2C-2.78%203.27%2C1.06%205.29%2C7.28%200.00%2C3.44%20-5.29%2C7.28%20-3.27%2C1.06%20-8.56%2C-2.78%20-2.02%2C-2.78%27%20fill%3D%27url(%23g)%27%2F%3E%3Cpolygon%20points%3D%2780.00%2C-9.00%2082.02%2C-2.78%2088.56%2C-2.78%2083.27%2C1.06%2085.29%2C7.28%2080.00%2C3.44%2074.71%2C7.28%2076.73%2C1.06%2071.44%2C-2.78%2077.98%2C-2.78%27%20fill%3D%27url(%23g)%27%2F%3E%3Cpolygon%20points%3D%270.00%2C71.00%202.02%2C77.22%208.56%2C77.22%203.27%2C81.06%205.29%2C87.28%200.00%2C83.44%20-5.29%2C87.28%20-3.27%2C81.06%20-8.56%2C77.22%20-2.02%2C77.22%27%20fill%3D%27url(%23g)%27%2F%3E%3Cpolygon%20points%3D%2780.00%2C71.00%2082.02%2C77.22%2088.56%2C77.22%2083.27%2C81.06%2085.29%2C87.28%2080.00%2C83.44%2074.71%2C87.28%2076.73%2C81.06%2071.44%2C77.22%2077.98%2C77.22%27%20fill%3D%27url(%23g)%27%2F%3E%3C%2Fsvg%3E");-webkit-mask:linear-gradient(#000,#000) top/100% 3.4% no-repeat,linear-gradient(#000,#000) bottom/100% 3.4% no-repeat,linear-gradient(#000,#000) left/3.4% 100% no-repeat,linear-gradient(#000,#000) right/3.4% 100% no-repeat,linear-gradient(transparent 52%,#000 60%);mask:linear-gradient(#000,#000) top/100% 3.4% no-repeat,linear-gradient(#000,#000) bottom/100% 3.4% no-repeat,linear-gradient(#000,#000) left/3.4% 100% no-repeat,linear-gradient(#000,#000) right/3.4% 100% no-repeat,linear-gradient(transparent 52%,#000 60%);
-  background-image:radial-gradient(circle at var(--pointer-x) var(--pointer-y),#fff 5%,#000 50%,#fff 80%),linear-gradient(-45deg,#000 15%,#fff,#000 85%),var(--foil);
-  background-blend-mode:soft-light,difference;background-size:120% 120%,200% 200%,var(--tile);background-position:center center,calc(100%*var(--pointer-from-left)) calc(100%*var(--pointer-from-top)),0 0;
-  filter:brightness(.55) contrast(1.5) saturate(1);mix-blend-mode:color-dodge;opacity:calc(((1.5*var(--card-opacity)) - var(--pointer-from-center))*var(--k))}
-.card[data-fx=sitereverse] .glare2{background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsla(0,0%,100%,.8) 10%,hsla(0,0%,100%,.5) 20%,hsla(0,0%,0%,.75) 90%);filter:brightness(.7) contrast(1.5)}
-.card[data-fx=sitereverse] .glare2::after{content:"";opacity:var(--card-opacity);background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsl(0,0%,100%) 10%,hsla(0,0%,100%,.5) 20%,hsla(0,0%,0%,.5) 120%);filter:brightness(1) contrast(1.5)}
+/* ---- effets « calques de lumière » (écrits pour MyCard) ----
+   .fxa : trois calques <i> sous les textes · .fxg : le reflet au-dessus de tout.
+   Variables posées par la boucle d'animation : --px / --py = position de la lumière (0 → 1), --pd = distance au centre (0 → 1),
+   --po = intensité du geste (0 → 1). --k = intensité choisie dans la personnalisation. */
+.fxa,.fxg{position:absolute;inset:0;border-radius:inherit;pointer-events:none;display:none;--px:.5;--py:.5;--pd:0;--po:0;
+  --at:calc(var(--px)*100%) calc(var(--py)*100%);--anti:calc(100% - var(--px)*100%) calc(100% - var(--py)*100%)}
+.fxa{isolation:isolate;opacity:calc(var(--k)*(.5 + var(--po)*.5))}
+.fxa>i{position:absolute;inset:0;border-radius:inherit}
+.fxg{z-index:5;mix-blend-mode:soft-light;opacity:calc(var(--k)*(.15 + var(--po)*.65));
+  background:radial-gradient(circle at var(--at),rgba(255,255,255,.95),rgba(255,255,255,.3) 20%,rgba(255,255,255,0) 50%)}
+.card:is([data-fx=prism],[data-fx=nebula],[data-fx=mosaic],[data-fx=aurora],[data-fx=opal],[data-fx=glitter],[data-fx=ripple],[data-fx=gold],[data-fx=metal]) :is(.fxa,.fxg){display:block}
 
-/* ---- V pleine illustration + Rainbow ---- */
-.card{--sp1:hsl(2,100%,73%);--sp2:hsl(53,100%,69%);--sp3:hsl(93,100%,69%);--sp4:hsl(176,100%,76%);--sp5:hsl(228,100%,74%);--sp6:hsl(283,100%,73%);--glitter:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27250%27%20height%3D%27250%27%3E%3Cfilter%20id%3D%27n%27%20x%3D%270%27%20y%3D%270%27%20width%3D%27100%25%27%20height%3D%27100%25%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%27.9%27%20numOctaves%3D%272%27%20stitchTiles%3D%27stitch%27%2F%3E%3CfeColorMatrix%20values%3D%272.2%200%200%200%20-.4%200%202.2%200%200%20-.4%200%200%202.2%200%20-.4%200%200%2016%200%20-9.8%27%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%27250%27%20height%3D%27250%27%20filter%3D%27url(%23n)%27%2F%3E%3C%2Fsvg%3E");--glittersize:25%;--illusion:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2080%2080%27%3E%3Crect%20width%3D%2780%27%20height%3D%2780%27%20fill%3D%27%23202030%27%2F%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23a9b0c0%27%20stroke-width%3D%271.2%27%3E%3Ccircle%20cx%3D%2740%27%20cy%3D%2740%27%20r%3D%2712%27%2F%3E%3Ccircle%20cx%3D%2740%27%20cy%3D%2740%27%20r%3D%2724%27%2F%3E%3Ccircle%20cx%3D%2740%27%20cy%3D%2740%27%20r%3D%2736%27%2F%3E%3Ccircle%20cx%3D%270%27%20cy%3D%270%27%20r%3D%2718%27%2F%3E%3Ccircle%20cx%3D%2780%27%20cy%3D%270%27%20r%3D%2718%27%2F%3E%3Ccircle%20cx%3D%270%27%20cy%3D%2780%27%20r%3D%2718%27%2F%3E%3Ccircle%20cx%3D%2780%27%20cy%3D%2780%27%20r%3D%2718%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E")}
-.card:is([data-fx=vfull],[data-fx=rainbow],[data-fx=shinyv],[data-fx=amazing],[data-fx=vmax]) .shine{opacity:var(--k);mix-blend-mode:color-dodge}
-.card:is([data-fx=vfull],[data-fx=shinyv]) .shine,.card:is([data-fx=vfull],[data-fx=shinyv]) .shine::after{--space:5%;--angle:133deg;--imgsize:33%;
-  background-image:var(--illusion),repeating-linear-gradient(0deg,var(--sp1) calc(var(--space)*1),var(--sp2) calc(var(--space)*2),var(--sp3) calc(var(--space)*3),var(--sp4) calc(var(--space)*4),var(--sp5) calc(var(--space)*5),var(--sp6) calc(var(--space)*6),var(--sp1) calc(var(--space)*7)),
-   repeating-linear-gradient(var(--angle),#0e152e 0%,hsl(180,10%,60%) 3.8%,hsl(180,29%,66%) 4.5%,hsl(180,10%,60%) 5.2%,#0e152e 10%,#0e152e 12%),
-   radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsla(0,0%,0%,.1) 12%,hsla(0,0%,0%,.15) 20%,hsla(0,0%,0%,.25) 120%);
-  background-position:center center,0% var(--background-y),calc(var(--background-x) + (var(--background-y)*.2)) var(--background-y),var(--background-x) var(--background-y);
-  background-blend-mode:exclusion,hue,hard-light;background-size:var(--imgsize),200% 700%,300% 100%,200% 100%;
-  filter:brightness(calc((var(--pointer-from-center)*.3) + .35)) contrast(2) saturate(1.5)}
-.card:is([data-fx=vfull],[data-fx=shinyv]) .shine::after{content:"";background-position:center center,0% var(--background-y),calc((var(--background-x) + (var(--background-y)*.2))*-1) calc(var(--background-y)*-1),var(--background-x) var(--background-y);
-  background-size:var(--imgsize),200% 400%,195% 100%,200% 100%;filter:brightness(calc((var(--pointer-from-center)*.5) + .8)) contrast(1.6) saturate(1.4);mix-blend-mode:exclusion}
-.card[data-fx=vfull] .glare2{background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsl(0,0%,75%) 5%,hsl(200,5%,35%) 60%,hsl(320,40%,10%) 150%);background-size:120% 150%;background-position:center center;mix-blend-mode:hard-light;filter:brightness(1) contrast(1.2) saturate(1);opacity:calc(var(--card-opacity)*.75*var(--k))}
-.card[data-fx=rainbow] .shine{--r-clr-1:hsl(0,57%,37%);--r-clr-2:hsl(40,53%,39%);--r-clr-3:hsl(90,60%,35%);--r-clr-4:hsl(180,60%,35%);--r-clr-5:hsl(180,60%,35%);--r-clr-6:hsl(210,57%,39%);--r-clr-7:hsl(280,55%,31%);--imgsize:33%;
-  background-image:linear-gradient(-45deg,var(--r-clr-1),var(--r-clr-5)),var(--glitter),linear-gradient(-30deg,var(--r-clr-1),var(--r-clr-2),var(--r-clr-3),var(--r-clr-4),var(--r-clr-5),var(--r-clr-6),var(--r-clr-7),var(--r-clr-1),var(--r-clr-2),var(--r-clr-3),var(--r-clr-4),var(--r-clr-5),var(--r-clr-6),var(--r-clr-7),var(--r-clr-1),var(--r-clr-2),var(--r-clr-3),var(--r-clr-4),var(--r-clr-5),var(--r-clr-6),var(--r-clr-7),var(--r-clr-1));
-  background-blend-mode:luminosity,soft-light;background-size:200% 200%,var(--glittersize) var(--glittersize),400% 400%;
-  background-position:calc(25% + (50%*var(--pointer-from-left))) calc(25% + (50%*var(--pointer-from-top))),center center,calc(25% + (var(--pointer-x)/2)) calc(25% + (var(--pointer-y)/2));
-  filter:brightness(calc((var(--pointer-from-center)*.25) + .6)) contrast(2.2) saturate(.75)}
-.card[data-fx=rainbow] .shine::after{content:"";background-image:var(--glitter),linear-gradient(-60deg,var(--r-clr-1),var(--r-clr-2),var(--r-clr-3),var(--r-clr-4),var(--r-clr-5),var(--r-clr-6),var(--r-clr-7),var(--r-clr-1),var(--r-clr-2),var(--r-clr-3),var(--r-clr-4),var(--r-clr-5),var(--r-clr-6),var(--r-clr-7),var(--r-clr-1),var(--r-clr-2),var(--r-clr-3),var(--r-clr-4),var(--r-clr-5),var(--r-clr-6),var(--r-clr-7),var(--r-clr-1));background-blend-mode:soft-light;background-size:var(--glittersize) var(--glittersize),400% 400%;background-position:center center,var(--pointer-x) var(--pointer-y);filter:brightness(calc((var(--pointer-from-center)*.3) + .55)) contrast(2) saturate(1);mix-blend-mode:color-dodge}
-.card[data-fx=rainbow] .shine::before{content:"";background-image:var(--illusion);background-size:var(--imgsize);background-position:center center;filter:brightness(2.5) contrast(1);opacity:calc((var(--pointer-from-center) + .4)*.6);background-blend-mode:difference;mix-blend-mode:darken}
-.card[data-fx=rainbow] .glare2{background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsl(0,0%,80%),hsla(187,10%,85%,.25) 30%,hsl(197,6%,25%) 120%);filter:brightness(.9) contrast(1.75);opacity:calc(var(--pointer-from-center)*.9*var(--k));mix-blend-mode:hard-light}
+/* PRISME : réseau de fines lignes qui décompose la lumière en arc-en-ciel */
+.card[data-fx=prism] .fxa{mix-blend-mode:color-dodge}
+.card[data-fx=prism] .fxa>i:nth-child(1){opacity:.6;background:repeating-linear-gradient(100deg,#ff5f6d 0,#ffc371 2.2cqw,#47ffb2 4.4cqw,#3ec9ff 6.6cqw,#a46bff 8.8cqw,#ff5f6d 11cqw);
+  background-size:320% 320%;background-position:var(--at)}
+.card[data-fx=prism] .fxa>i:nth-child(2){mix-blend-mode:multiply;background:repeating-linear-gradient(12deg,rgba(0,0,0,.6) 0 .3cqw,transparent .3cqw 1.05cqw)}
+.card[data-fx=prism] .fxa>i:nth-child(3){mix-blend-mode:screen;background:linear-gradient(118deg,transparent 32%,rgba(255,255,255,.7) 48%,transparent 64%);
+  background-size:260% 260%;background-position:calc(var(--px)*100%) calc(var(--py)*60% + 20%)}
 
-/* ---- Amazing Rare, Shiny V, VMax ---- */
-.card{--vmaxbg:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20120%2060%27%3E%3Crect%20width%3D%27120%27%20height%3D%2760%27%20fill%3D%27%23101428%27%2F%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%238fa0c8%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M0%2015Q30%200%2060%2015T120%2015%27%2F%3E%3Cpath%20d%3D%27M0%2030Q30%2015%2060%2030T120%2030%27%2F%3E%3Cpath%20d%3D%27M0%2045Q30%2030%2060%2045T120%2045%27%2F%3E%3Cpath%20d%3D%27M0%2060Q30%2045%2060%2060T120%2060%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E")}
-.card[data-fx=shinyv] .glare2{background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsl(0,0%,90%) 5%,hsl(200,5%,45%) 80%,hsl(320,40%,10%) 150%);background-size:120% 140%;background-position:center center;mix-blend-mode:darken;filter:brightness(.88) contrast(2.25) saturate(.7);opacity:calc(var(--card-opacity)*var(--pointer-from-center)*.75*var(--k))}
-/* AMAZING RARE */
-.card[data-fx=amazing] .shine{--space:5%;--angle:133deg;--foil:var(--illusion);clip-path:inset(2.6% 3.4% 2.4% 3.4% round 4%);
-  background-image:var(--glitter),var(--glitter),radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsla(150,20%,10%,1) 10%,hsla(177,22%,80%,.1) 50%,hsla(0,0%,95%,.98) 90%);
-  background-size:var(--glittersize) var(--glittersize),var(--glittersize) var(--glittersize),cover;background-position:40% 45%,55% 55%,center center;background-blend-mode:soft-light,color-burn;filter:brightness(1) contrast(1) saturate(.9)}
-.card[data-fx=amazing] .shine::before{content:"";background-image:var(--foil),radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsla(50,20%,90%,.95) 10%,rgba(181,139,164,.5) 50%,hsl(0,0%,0%) 60%);background-size:cover,cover;background-position:center center,center center;background-blend-mode:color-burn;mix-blend-mode:lighten;filter:brightness(1) contrast(1) saturate(1);opacity:.5}
-.card[data-fx=amazing] .shine::after{content:"";background-image:repeating-linear-gradient(var(--angle),var(--sp1) calc(var(--space)*1),var(--sp2) calc(var(--space)*2),var(--sp3) calc(var(--space)*3),var(--sp4) calc(var(--space)*4),var(--sp5) calc(var(--space)*5),var(--sp6) calc(var(--space)*6),var(--sp1) calc(var(--space)*7));background-size:400% 800%;background-position:calc(50% + (50% - var(--background-x))*3) calc(50% + (50% - var(--background-y))*3);filter:brightness(calc(.75 - (var(--pointer-from-center)*.5))) contrast(1) saturate(1);mix-blend-mode:saturation}
-.card[data-fx=amazing] .glare2{background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsla(0,0%,100%,1) 10%,hsla(0,0%,100%,.85) 20%,hsla(0,0%,0%,.35) 90%);mix-blend-mode:multiply}
-/* VMAX */
-.card[data-fx=vmax] .shine{--space:6%;--angle:133deg;--imgsize:60% 30%;--foil:var(--vmaxbg);
-  background-image:var(--foil),repeating-linear-gradient(-33deg,hsl(2,70%,47%) calc(var(--space)*1),hsl(228,60%,64%) calc(var(--space)*2),hsl(176,55%,39%) calc(var(--space)*3),hsl(123,68%,35%) calc(var(--space)*4),hsl(283,75%,57%) calc(var(--space)*5),hsl(2,70%,47%) calc(var(--space)*6)),
-   repeating-linear-gradient(var(--angle),hsla(227,53%,12%,.5) 0%,hsl(180,10%,50%) 2.5%,hsl(83,50%,35%) 5%,hsl(180,10%,50%) 7.5%,hsla(227,53%,12%,.5) 10%,hsla(227,53%,12%,.5) 15%),
-   radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsla(189,76%,77%,.6) 0%,hsla(147,59%,77%,.6) 25%,hsla(271,55%,69%,.6) 50%,hsla(355,56%,72%,.6) 75%);
-  background-blend-mode:difference,luminosity,soft-light;background-size:var(--imgsize),1100% 1100%,600% 600%,200% 200%;background-position:center,var(--background-x) var(--background-y),var(--background-x) var(--background-y),var(--background-x) var(--background-y);
-  filter:brightness(calc((var(--pointer-from-center)*.4) + .4)) contrast(2) saturate(1)}
-.card[data-fx=vmax] .shine::after{content:"";background-image:repeating-linear-gradient(0deg,var(--sp1) calc(var(--space)*1),var(--sp2) calc(var(--space)*2),var(--sp3) calc(var(--space)*3),var(--sp4) calc(var(--space)*4),var(--sp5) calc(var(--space)*5),var(--sp6) calc(var(--space)*6),var(--sp1) calc(var(--space)*7)),repeating-linear-gradient(var(--angle),#0e152e 0%,hsl(180,10%,60%) 3.8%,hsl(180,29%,66%) 4.5%,hsl(180,10%,60%) 5.2%,#0e152e 10%,#0e152e 12%);background-blend-mode:hue,hard-light;background-size:200% 700%,300% 100%,200% 100%;background-position:0% var(--background-y),var(--background-x) var(--background-y),var(--background-x) var(--background-y);mix-blend-mode:lighten;opacity:calc((.3*var(--card-opacity)) + var(--card-opacity)*var(--pointer-from-center)*.5);filter:saturate(1.5)}
-.card[data-fx=vmax] .glare2{mix-blend-mode:hard-light;filter:brightness(1) contrast(1);background-image:radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),hsla(0,0%,100%,.75) 0%,hsl(0,0%,0%) 120%);opacity:calc(((.2*var(--card-opacity)) + var(--card-opacity)*var(--pointer-from-center)*.8)*var(--k))}
+/* NÉBULEUSE : nuages colorés et étoiles en parallaxe */
+.card[data-fx=nebula] .fxa{mix-blend-mode:screen}
+.card[data-fx=nebula] .fxa>i:nth-child(1){opacity:.85;background:
+   radial-gradient(38% 28% at 24% 30%,hsla(285,90%,62%,.6),transparent 70%),radial-gradient(44% 34% at 76% 58%,hsla(195,95%,56%,.55),transparent 70%),
+   radial-gradient(34% 26% at 40% 84%,hsla(330,90%,62%,.5),transparent 70%),radial-gradient(28% 22% at 86% 16%,hsla(42,95%,62%,.4),transparent 70%);
+  background-size:135% 135%;background-position:calc(var(--px)*35%) calc(var(--py)*35%)}
+.card[data-fx=nebula] .fxa>i:nth-child(2){inset:-5%;opacity:calc(.35 + var(--po)*.65);
+  transform:translate(calc((var(--px) - .5)*-4cqw),calc((var(--py) - .5)*-4cqw));background:
+   radial-gradient(circle,#fff 0 .22cqw,transparent .42cqw) 0 0/7.3cqw 8.1cqw,radial-gradient(circle,#fff 0 .16cqw,transparent .34cqw) 2.1cqw 3.7cqw/5.3cqw 6.7cqw,
+   radial-gradient(circle,#d4ebff 0 .3cqw,transparent .56cqw) 4.4cqw 1.2cqw/11.9cqw 13.1cqw,radial-gradient(circle,#ffe2f5 0 .2cqw,transparent .4cqw) 6.2cqw 9.4cqw/9.7cqw 10.3cqw}
+.card[data-fx=nebula] .fxa>i:nth-child(3){background:linear-gradient(calc(55deg + var(--px)*70deg),transparent 36%,hsla(262,100%,76%,.38) 50%,transparent 64%)}
+
+/* MOSAÏQUE : petits carreaux-prismes qui tournent avec la lumière */
+.card[data-fx=mosaic] .fxa{mix-blend-mode:overlay}
+.card[data-fx=mosaic] .fxa>i:nth-child(1){background:repeating-conic-gradient(from calc(var(--px)*300deg + var(--py)*140deg),#ff6b9e 0 30deg,#ffd36b 30deg 60deg,#6bffb8 60deg 90deg,#6bc8ff 90deg 120deg,#b36bff 120deg 150deg,#ff6b9e 150deg 180deg) 0 0/6cqw 6cqw;
+  -webkit-mask:radial-gradient(circle at var(--at),#000 8%,rgba(0,0,0,.4) 62%);mask:radial-gradient(circle at var(--at),#000 8%,rgba(0,0,0,.4) 62%)}
+.card[data-fx=mosaic] .fxa>i:nth-child(2){mix-blend-mode:multiply;background:linear-gradient(90deg,rgba(0,0,0,.55) .28cqw,transparent .28cqw) 0 0/6cqw 6cqw,linear-gradient(0deg,rgba(0,0,0,.55) .28cqw,transparent .28cqw) 0 0/6cqw 6cqw}
+.card[data-fx=mosaic] .fxa>i:nth-child(3){mix-blend-mode:screen;background:radial-gradient(circle at var(--at),rgba(255,255,255,.55),transparent 34%)}
+
+/* AURORE : rideaux de lumière verts et violets qui ondulent */
+.card[data-fx=aurora] .fxa{mix-blend-mode:screen}
+.card[data-fx=aurora] .fxa>i:nth-child(1){transform-origin:50% 0;transform:skewX(calc((var(--px) - .5)*-18deg));
+  background:repeating-linear-gradient(90deg,hsla(150,100%,60%,0) 0,hsla(150,100%,62%,.7) 4cqw,hsla(175,100%,60%,0) 9cqw,hsla(275,100%,70%,.55) 14cqw,hsla(300,100%,70%,0) 19cqw);
+  background-size:200% 100%;background-position:calc(var(--px)*100%) 0;
+  -webkit-mask:linear-gradient(180deg,transparent 2%,#000 22%,rgba(0,0,0,.6) 55%,transparent 85%);mask:linear-gradient(180deg,transparent 2%,#000 22%,rgba(0,0,0,.6) 55%,transparent 85%)}
+.card[data-fx=aurora] .fxa>i:nth-child(2){opacity:.6;transform-origin:50% 0;transform:skewX(calc((var(--px) - .5)*10deg));
+  background:repeating-linear-gradient(90deg,hsla(185,100%,62%,0) 0,hsla(185,100%,64%,.65) 3cqw,hsla(320,100%,72%,0) 7cqw,hsla(320,100%,72%,.5) 11cqw,hsla(185,100%,62%,0) 15cqw);
+  background-size:250% 100%;background-position:calc(100% - var(--px)*100%) 0;
+  -webkit-mask:linear-gradient(180deg,transparent 8%,#000 28%,transparent 70%);mask:linear-gradient(180deg,transparent 8%,#000 28%,transparent 70%)}
+.card[data-fx=aurora] .fxa>i:nth-child(3){background:radial-gradient(70% 22% at 50% calc(12% + var(--py)*22%),hsla(150,100%,65%,.35),transparent 70%)}
+
+/* OPALE : reflets laiteux pastel qui changent de teinte selon l'angle */
+.card[data-fx=opal] .fxa{mix-blend-mode:screen}
+.card[data-fx=opal] .fxa>i:nth-child(1){opacity:.55;filter:hue-rotate(calc(var(--px)*160deg - var(--py)*90deg)) saturate(1.3);background:
+   radial-gradient(22% 18% at 18% 22%,hsl(330,90%,78%),transparent 70%),radial-gradient(25% 20% at 62% 18%,hsl(190,90%,76%),transparent 70%),
+   radial-gradient(20% 16% at 82% 48%,hsl(140,80%,76%),transparent 70%),radial-gradient(24% 20% at 35% 58%,hsl(260,90%,80%),transparent 70%),
+   radial-gradient(22% 18% at 70% 82%,hsl(45,95%,76%),transparent 70%),radial-gradient(20% 16% at 15% 85%,hsl(170,85%,74%),transparent 70%)}
+.card[data-fx=opal] .fxa>i:nth-child(2){background:linear-gradient(135deg,transparent 22%,rgba(255,255,255,.45) 50%,transparent 78%);background-size:240% 240%;background-position:var(--at)}
+.card[data-fx=opal] .fxa>i:nth-child(3){background:radial-gradient(circle,#fff 0 .2cqw,transparent .34cqw) 0 0/4.7cqw 5.3cqw,radial-gradient(circle,#ffd9f2 0 .18cqw,transparent .3cqw) 2.3cqw 1.9cqw/6.1cqw 5.9cqw;
+  -webkit-mask:radial-gradient(circle at var(--at),#000 0,transparent 40%);mask:radial-gradient(circle at var(--at),#000 0,transparent 40%)}
+
+/* PAILLETTES : grains qui s'allument là où tombe la lumière (et en reflet de l'autre côté) */
+.card[data-fx=glitter] .fxa{mix-blend-mode:screen}
+.card[data-fx=glitter] .fxa>i:nth-child(1){background:linear-gradient(120deg,rgba(200,210,255,0) 25%,rgba(222,226,255,.3) 50%,rgba(255,255,255,0) 75%);background-size:250% 250%;background-position:var(--at)}
+.card[data-fx=glitter] .fxa>i:nth-child(2){background:
+   radial-gradient(circle,#fff 0 .22cqw,transparent .32cqw) 0 0/3.1cqw 3.7cqw,radial-gradient(circle,#ffe6a8 0 .2cqw,transparent .3cqw) 1.3cqw 2.2cqw/4.3cqw 3.3cqw,
+   radial-gradient(circle,#bfe9ff 0 .18cqw,transparent .28cqw) 2.6cqw .9cqw/5.9cqw 4.9cqw,radial-gradient(circle,#ffc4ec 0 .2cqw,transparent .3cqw) .7cqw 3.1cqw/6.7cqw 7.3cqw;
+  -webkit-mask:radial-gradient(circle at var(--at),#000 0,rgba(0,0,0,.55) 18%,transparent 48%);mask:radial-gradient(circle at var(--at),#000 0,rgba(0,0,0,.55) 18%,transparent 48%)}
+.card[data-fx=glitter] .fxa>i:nth-child(3){opacity:.7;background:radial-gradient(circle,#fff 0 .2cqw,transparent .3cqw) 1.7cqw .4cqw/3.9cqw 4.1cqw,radial-gradient(circle,#e7d9ff 0 .18cqw,transparent .28cqw) .2cqw 2.8cqw/5.1cqw 4.5cqw;
+  -webkit-mask:radial-gradient(circle at var(--anti),#000 0,transparent 34%);mask:radial-gradient(circle at var(--anti),#000 0,transparent 34%)}
+
+/* ONDES : anneaux arc-en-ciel qui partent du doigt, comme sur un disque */
+.card[data-fx=ripple] .fxa{mix-blend-mode:color-dodge}
+.card[data-fx=ripple] .fxa>i:nth-child(1){opacity:.55;background:repeating-radial-gradient(circle at var(--at),hsl(0,95%,65%) 0,hsl(50,95%,62%) 1.6cqw,hsl(120,85%,58%) 3.2cqw,hsl(190,95%,60%) 4.8cqw,hsl(260,90%,68%) 6.4cqw,hsl(320,90%,65%) 8cqw,hsl(0,95%,65%) 9.6cqw)}
+.card[data-fx=ripple] .fxa>i:nth-child(2){mix-blend-mode:multiply;background:radial-gradient(circle at var(--at),transparent 12%,rgba(0,0,0,.8) 72%)}
+.card[data-fx=ripple] .fxa>i:nth-child(3){mix-blend-mode:screen;background:radial-gradient(circle at var(--at),rgba(255,255,255,.6),transparent 16%)}
+
+/* OR : feuille d'or brossée */
+.card[data-fx=gold] .fxa{mix-blend-mode:hard-light;opacity:calc(var(--k)*(.42 + var(--po)*.33))}
+.card[data-fx=gold] .fxa>i:nth-child(1){background:linear-gradient(115deg,#5b3a07 0%,#c8961e 18%,#fff1a8 32%,#b07a12 46%,#ffe27a 60%,#7a5208 76%,#f4cf5b 90%,#5b3a07 100%);background-size:260% 260%;background-position:var(--at)}
+.card[data-fx=gold] .fxa>i:nth-child(2){mix-blend-mode:soft-light;background:repeating-linear-gradient(0deg,rgba(255,255,255,.1) 0 .2cqw,rgba(0,0,0,.1) .2cqw .45cqw),repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 .1cqw,transparent .1cqw .7cqw)}
+.card[data-fx=gold] .fxa>i:nth-child(3){mix-blend-mode:screen;background:radial-gradient(circle at var(--at),rgba(255,240,190,.75),transparent 40%)}
+
+/* MÉTALLIQUE : acier brossé */
+.card[data-fx=metal] .fxa{mix-blend-mode:overlay}
+.card[data-fx=metal] .fxa>i:nth-child(1){background:linear-gradient(115deg,#4a4d55 0%,#e6e9f0 15%,#7b808b 30%,#fafbfd 45%,#5a5f6b 60%,#d5d9e2 75%,#868b97 90%,#4a4d55 100%);background-size:260% 260%;background-position:var(--at)}
+.card[data-fx=metal] .fxa>i:nth-child(2){mix-blend-mode:soft-light;background:repeating-linear-gradient(90deg,rgba(255,255,255,.12) 0 .15cqw,rgba(0,0,0,.12) .15cqw .4cqw)}
+.card[data-fx=metal] .fxa>i:nth-child(3){mix-blend-mode:screen;background:radial-gradient(70% 45% at var(--at),rgba(235,242,255,.7),transparent 60%)}
 .glare{z-index:5;mix-blend-mode:overlay;opacity:.5;overflow:hidden}
 
 /* ---- card text ---- */
@@ -349,7 +353,8 @@ body.viewing .vbar{display:flex;justify-content:center}
 body.viewing .panel{display:none}
 .gbtn.primary{background:radial-gradient(circle at 35% 30%,var(--acc1),var(--acc2));color:#fff;box-shadow:0 8px 24px rgba(var(--acc-rgb),.5)}
 /* ---- gouverneur de fluidité : paliers de qualité (0 = complet) ---- */
-body[data-q]:not([data-q="0"]) .sparkle,body[data-q]:not([data-q="0"]) .rev.spot,body[data-q]:not([data-q="0"]) .shine::before,body[data-q]:not([data-q="0"]) .glare2::after{display:none}
+body[data-q]:not([data-q="0"]) .sparkle,body[data-q]:not([data-q="0"]) .rev.spot,body[data-q]:not([data-q="0"]) .fxa>i:nth-child(3){display:none}
+body[data-q]:not([data-q="0"]) .card[data-fx=opal] .fxa>i:nth-child(1){filter:none}
 .dk-tools{position:relative;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
 .dk-sort{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.28);border-radius:99px;padding:8px 14px;background:rgba(255,255,255,.1);color:#fff;font:600 14px 'Barlow Condensed',sans-serif;letter-spacing:.04em;cursor:pointer}
 .dk-sort svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -748,7 +753,7 @@ button.coins{cursor:pointer}
   <details class="set-block">
     <summary class="set-h" data-i18n="settings.creditsTitle">Crédits</summary>
     <p class="set-p" id="set-credits" style="white-space:pre-line"></p>
-    <a id="set-creditslink" href="https://github.com/simeydotme/pokemon-cards-css" target="_blank" rel="noopener" class="glink" data-i18n="settings.creditsLink">pokemon-cards-css sur GitHub</a>
+    
   </details>
 </section>
 <section id="contest" class="deck" hidden>
@@ -826,7 +831,7 @@ button.coins{cursor:pointer}
   </div>
   <div class="step editor" data-step="effect" hidden>
     <div class="wide en-row"><span data-i18n="panel.effect.label">Effet holographique</span><div class="fxgrid" id="fxgrid"></div></div>
-    <select id="f-fx" hidden><option value="classic">Holo classique (diagonal, style V)</option><option value="reverse">Reverse holo (étoiles à 5 branches)</option><option value="regular">Holo régulier</option><option value="cosmos">Cosmos / galaxie</option><option value="sitereverse">Reverse holo foil</option><option value="metal">Métallique (acier brossé)</option><option value="vfull">V pleine illustration</option><option value="rainbow">Rainbow / secret</option><option value="shinyv">Shiny V</option><option value="amazing">Amazing Rare</option><option value="vmax">VMax</option></select>
+    <select id="f-fx" hidden><option value="classic">Holo classique (diagonal)</option><option value="reverse">Cadre étoilé</option><option value="prism">Prisme</option><option value="nebula">Nébuleuse</option><option value="mosaic">Mosaïque</option><option value="aurora">Aurore boréale</option><option value="opal">Opale</option><option value="glitter">Paillettes</option><option value="ripple">Ondes</option><option value="metal">Métallique (acier brossé)</option><option value="gold">Or</option></select>
     <label class="wide"><span data-i18n="panel.effect.intensity">Intensité de l'effet :</span> <output id="kv">100%</output><input type="range" id="f-k" min="0" max="2" step="0.05" value="1"></label>
   </div>
   <div class="nav"><button type="button" id="s-prev" class="gbtn" data-i18n="panel.prev">← Précédent</button><button type="button" id="s-next" class="gbtn" data-i18n="panel.next">Suivant →</button></div>
@@ -909,8 +914,8 @@ fr:{dir:'ltr',
  'panel.rule.title':'Titre de la règle','panel.rule.text':'Texte de la règle','panel.effect.label':'Effet holographique','panel.effect.intensity':"Intensité de l'effet :",
  'panel.prev':'← Précédent','panel.next':'Suivant →','panel.done':'Terminé ✓','panel.deleteCard':'Supprimer cette carte','panel.confirmDelete':'Confirmer la suppression ?',
  'toast.saved':'Carte enregistrée ✓','toast.deleted':'Carte supprimée',
- 'fx.classic':'Holo classique (diagonal, style V)','fx.reverse':'Reverse holo (étoiles à 5 branches)','fx.regular':'Holo régulier','fx.cosmos':'Cosmos / galaxie','fx.sitereverse':'Reverse holo foil',
- 'fx.vfull':'V pleine illustration','fx.rainbow':'Rainbow / secret','fx.shinyv':'Shiny V','fx.amazing':'Amazing Rare','fx.vmax':'VMax',
+ 'fx.classic':'Holo classique (diagonal)','fx.reverse':'Cadre étoilé','fx.prism':'Prisme','fx.nebula':'Nébuleuse','fx.mosaic':'Mosaïque','fx.aurora':'Aurore boréale','fx.opal':'Opale','fx.glitter':'Paillettes','fx.ripple':'Ondes','fx.gold':'Or',
+ 
  'type.G':'Plante','type.R':'Feu','type.W':'Eau','type.L':'Électrik','type.P':'Psy','type.I':'Glace','type.F':'Combat','type.X':'Poison','type.O':'Sol','type.Y':'Vol',
  'type.B':'Insecte','type.K':'Roche','type.H':'Spectre','type.A':'Dragon','type.D':'Ténèbres','type.S':'Acier','type.Z':'Fée','type.N':'Normal','type.C':'Incolore',
  'confirm.cancelTitle':'Annuler la personnalisation ?','confirm.cancelNewText':'Cette nouvelle carte ne sera pas créée.','confirm.cancelEditText':'Les modifications faites sur cette carte seront perdues.',
@@ -1088,8 +1093,8 @@ fr:{dir:'ltr',
  'settings.privacyTitle':'Politique de confidentialité',
  'settings.privacy':"MyCard fonctionne entièrement dans ton navigateur. Il n'y a pas de serveur, et rien de ce que tu fais ici ne nous est envoyé, ni à personne d'autre.\n\nTon pseudo, tes cartes et tes réglages sont stockés uniquement sur cet appareil, dans le navigateur. Les photos que tu ajoutes à une carte restent aussi sur cet appareil et ne sont jamais envoyées ailleurs.\n\nCette page charge des polices depuis Google Fonts ; ce chargement peut partager ton adresse IP avec Google, comme pour tout site qui utilise Google Fonts.\n\nIl n'y a ni outil de mesure d'audience, ni publicité, ni cookie de suivi.\n\nSi tu effaces les données de ton navigateur, ou si tu ouvres l'appli sur un autre appareil ou un autre navigateur, tes cartes n'y seront pas accessibles : elles ne sont pas encore sauvegardées ailleurs.\n\nCette note sera mise à jour si la connexion par compte et le stockage en ligne sont ajoutés plus tard.",
  'settings.creditsTitle':'Crédits',
- 'settings.credits':"MyCard est un projet non officiel, fait par un fan. Il n'est affilié à, ni approuvé par, ni lié à Nintendo, Game Freak, Creatures Inc. ou The Pokémon Company.\n\nPlusieurs effets holographiques (Holo régulier, Cosmos, Reverse holo foil, V pleine illustration, Rainbow, Shiny V, Amazing Rare, VMax) sont adaptés du projet pokemon-cards-css de Simon Goellner, publié sous licence GNU GPL v3.\n\nPolices : Barlow et Barlow Condensed de Jeremy Dooley, Tajawal d'Ahmed Bulbul, via Google Fonts.",
- 'settings.creditsLink':'pokemon-cards-css sur GitHub'},
+ 'settings.credits':'MyCard est un projet non officiel, fait par un fan. Il n\'est affilié à, ni approuvé par, ni lié à Nintendo, Game Freak, Creatures Inc. ou The Pokémon Company.\n\nPolices : Barlow et Barlow Condensed de Jeremy Dooley, Tajawal d\'Ahmed Bulbul, via Google Fonts.',
+ },
 
 en:{dir:'ltr',
  'login.hello':'Welcome :)','login.title':'Enter your name to<br>create your card','login.namePlaceholder':'Your username','login.nameAria':'Username','login.continueAria':'Continue','login.or':'or',
@@ -1118,8 +1123,8 @@ en:{dir:'ltr',
  'panel.rule.title':'Rule title','panel.rule.text':'Rule text','panel.effect.label':'Holographic effect','panel.effect.intensity':'Effect intensity:',
  'panel.prev':'← Previous','panel.next':'Next →','panel.done':'Done ✓','panel.deleteCard':'Delete this card','panel.confirmDelete':'Confirm deletion?',
  'toast.saved':'Card saved ✓','toast.deleted':'Card deleted',
- 'fx.classic':'Classic holo (diagonal, V style)','fx.reverse':'Reverse holo (5-point stars)','fx.regular':'Regular holo','fx.cosmos':'Cosmos / galaxy','fx.sitereverse':'Reverse holo foil',
- 'fx.vfull':'Full-art V','fx.rainbow':'Rainbow / secret','fx.shinyv':'Shiny V','fx.amazing':'Amazing Rare','fx.vmax':'VMax',
+ 'fx.classic':'Classic holo (diagonal)','fx.reverse':'Starry frame','fx.prism':'Prism','fx.nebula':'Nebula','fx.mosaic':'Mosaic','fx.aurora':'Aurora','fx.opal':'Opal','fx.glitter':'Glitter','fx.ripple':'Ripples','fx.gold':'Gold',
+ 
  'type.G':'Grass','type.R':'Fire','type.W':'Water','type.L':'Electric','type.P':'Psychic','type.I':'Ice','type.F':'Fighting','type.X':'Poison','type.O':'Ground','type.Y':'Flying',
  'type.B':'Bug','type.K':'Rock','type.H':'Ghost','type.A':'Dragon','type.D':'Dark','type.S':'Steel','type.Z':'Fairy','type.N':'Normal','type.C':'Colorless',
  'confirm.cancelTitle':'Cancel customization?','confirm.cancelNewText':'This new card will not be created.','confirm.cancelEditText':'Changes made to this card will be lost.',
@@ -1297,8 +1302,8 @@ en:{dir:'ltr',
  'settings.privacyTitle':'Privacy policy',
  'settings.privacy':"MyCard runs entirely in your browser. There is no server, and nothing you do here is sent to us or to anyone else.\n\nYour username, your cards, and your settings are stored only on this device, in your browser's local storage. Photos you add to a card stay on this device too and are never uploaded.\n\nThis page loads fonts from Google Fonts; loading them may share your IP address with Google, as with any site that uses Google Fonts.\n\nThere is no analytics, no advertising, and no tracking cookies.\n\nClearing your browser data, or opening the app on a different device or browser, makes your cards inaccessible there — they aren't backed up anywhere else yet.\n\nThis notice will be updated if account sign-in and cloud storage are added later.",
  'settings.creditsTitle':'Credits',
- 'settings.credits':"MyCard is an unofficial, fan-made project. It is not affiliated with, endorsed by, or connected to Nintendo, Game Freak, Creatures Inc., or The Pokémon Company.\n\nSeveral holographic effects (Regular Holo, Cosmos, Reverse Holo Foil, Full-Art V, Rainbow, Shiny V, Amazing Rare, VMax) are adapted from the pokemon-cards-css project by Simon Goellner, released under the GNU General Public License v3.\n\nFonts: Barlow and Barlow Condensed by Jeremy Dooley, Tajawal by Ahmed Bulbul, via Google Fonts.",
- 'settings.creditsLink':'pokemon-cards-css on GitHub'},
+ 'settings.credits':'MyCard is an unofficial, fan-made project. It is not affiliated with, endorsed by, or connected to Nintendo, Game Freak, Creatures Inc., or The Pokémon Company.\n\nFonts: Barlow and Barlow Condensed by Jeremy Dooley, Tajawal by Ahmed Bulbul, via Google Fonts.',
+ },
 
 es:{dir:'ltr',
  'login.hello':'Bienvenido/a :)','login.title':'Escribe tu nombre para<br>crear tu carta','login.namePlaceholder':'Tu nombre de usuario','login.nameAria':'Nombre de usuario','login.continueAria':'Continuar','login.or':'o',
@@ -1327,8 +1332,8 @@ es:{dir:'ltr',
  'panel.rule.title':'Título de la regla','panel.rule.text':'Texto de la regla','panel.effect.label':'Efecto holográfico','panel.effect.intensity':'Intensidad del efecto:',
  'panel.prev':'← Anterior','panel.next':'Siguiente →','panel.done':'Listo ✓','panel.deleteCard':'Eliminar esta carta','panel.confirmDelete':'¿Confirmar eliminación?',
  'toast.saved':'Carta guardada ✓','toast.deleted':'Carta eliminada',
- 'fx.classic':'Holo clásico (diagonal, estilo V)','fx.reverse':'Reverse holo (estrellas de 5 puntas)','fx.regular':'Holo normal','fx.cosmos':'Cosmos / galaxia','fx.sitereverse':'Reverse holo foil',
- 'fx.vfull':'V a toda ilustración','fx.rainbow':'Rainbow / secreta','fx.shinyv':'Shiny V','fx.amazing':'Amazing Rare','fx.vmax':'VMax',
+ 'fx.classic':'Holo clásico (diagonal)','fx.reverse':'Marco estrellado','fx.prism':'Prisma','fx.nebula':'Nebulosa','fx.mosaic':'Mosaico','fx.aurora':'Aurora boreal','fx.opal':'Ópalo','fx.glitter':'Purpurina','fx.ripple':'Ondas','fx.gold':'Oro',
+ 
  'type.G':'Planta','type.R':'Fuego','type.W':'Agua','type.L':'Eléctrico','type.P':'Psíquico','type.I':'Hielo','type.F':'Lucha','type.X':'Veneno','type.O':'Tierra','type.Y':'Volador',
  'type.B':'Bicho','type.K':'Roca','type.H':'Fantasma','type.A':'Dragón','type.D':'Siniestro','type.S':'Acero','type.Z':'Hada','type.N':'Normal','type.C':'Incoloro',
  'confirm.cancelTitle':'¿Cancelar la personalización?','confirm.cancelNewText':'Esta nueva carta no se creará.','confirm.cancelEditText':'Se perderán los cambios hechos en esta carta.',
@@ -1506,8 +1511,8 @@ es:{dir:'ltr',
  'settings.privacyTitle':'Política de privacidad',
  'settings.privacy':"MyCard funciona totalmente en tu navegador. No hay servidor, y nada de lo que hagas aquí se nos envía a nosotros ni a nadie más.\n\nTu nombre de usuario, tus cartas y tus ajustes se guardan solo en este dispositivo, en el almacenamiento local del navegador. Las fotos que añades a una carta también se quedan en este dispositivo y nunca se suben a ningún sitio.\n\nEsta página carga fuentes desde Google Fonts; esta carga puede compartir tu dirección IP con Google, como ocurre en cualquier sitio que use Google Fonts.\n\nNo hay analítica, ni publicidad, ni cookies de seguimiento.\n\nSi borras los datos del navegador, o abres la app en otro dispositivo o navegador, tus cartas no estarán disponibles allí: todavía no se respaldan en ningún otro sitio.\n\nEste aviso se actualizará si más adelante se añaden el inicio de sesión con cuenta y el almacenamiento en la nube.",
  'settings.creditsTitle':'Créditos',
- 'settings.credits':"MyCard es un proyecto no oficial, hecho por un aficionado. No está afiliado, respaldado ni vinculado a Nintendo, Game Freak, Creatures Inc. ni The Pokémon Company.\n\nVarios efectos holográficos (Holo normal, Cosmos, Reverse holo foil, V a toda ilustración, Rainbow, Shiny V, Amazing Rare, VMax) están adaptados del proyecto pokemon-cards-css de Simon Goellner, publicado bajo la licencia GNU GPL v3.\n\nTipografías: Barlow y Barlow Condensed de Jeremy Dooley, Tajawal de Ahmed Bulbul, a través de Google Fonts.",
- 'settings.creditsLink':'pokemon-cards-css en GitHub'},
+ 'settings.credits':'MyCard es un proyecto no oficial, hecho por un aficionado. No está afiliado, respaldado ni vinculado a Nintendo, Game Freak, Creatures Inc. ni The Pokémon Company.\n\nTipografías: Barlow y Barlow Condensed de Jeremy Dooley, Tajawal de Ahmed Bulbul, a través de Google Fonts.',
+ },
 
 de:{dir:'ltr',
  'login.hello':'Willkommen :)','login.title':'Gib deinen Namen ein, um<br>deine Karte zu erstellen','login.namePlaceholder':'Dein Benutzername','login.nameAria':'Benutzername','login.continueAria':'Weiter','login.or':'oder',
@@ -1536,8 +1541,8 @@ de:{dir:'ltr',
  'panel.rule.title':'Titel der Regel','panel.rule.text':'Text der Regel','panel.effect.label':'Holo-Effekt','panel.effect.intensity':'Effektstärke:',
  'panel.prev':'← Zurück','panel.next':'Weiter →','panel.done':'Fertig ✓','panel.deleteCard':'Diese Karte löschen','panel.confirmDelete':'Löschen bestätigen?',
  'toast.saved':'Karte gespeichert ✓','toast.deleted':'Karte gelöscht',
- 'fx.classic':'Klassisches Holo (diagonal, V-Stil)','fx.reverse':'Reverse-Holo (5-zackige Sterne)','fx.regular':'Reguläres Holo','fx.cosmos':'Kosmos / Galaxie','fx.sitereverse':'Reverse-Holo-Folie',
- 'fx.vfull':'Vollbild-V','fx.rainbow':'Rainbow / Secret','fx.shinyv':'Shiny V','fx.amazing':'Amazing Rare','fx.vmax':'VMax',
+ 'fx.classic':'Klassisches Holo (diagonal)','fx.reverse':'Sternenrahmen','fx.prism':'Prisma','fx.nebula':'Nebel','fx.mosaic':'Mosaik','fx.aurora':'Polarlicht','fx.opal':'Opal','fx.glitter':'Glitzer','fx.ripple':'Wellen','fx.gold':'Gold',
+ 
  'type.G':'Pflanze','type.R':'Feuer','type.W':'Wasser','type.L':'Elektro','type.P':'Psycho','type.I':'Eis','type.F':'Kampf','type.X':'Gift','type.O':'Boden','type.Y':'Flug',
  'type.B':'Käfer','type.K':'Gestein','type.H':'Geist','type.A':'Drache','type.D':'Unlicht','type.S':'Stahl','type.Z':'Fee','type.N':'Normal','type.C':'Farblos',
  'confirm.cancelTitle':'Anpassung abbrechen?','confirm.cancelNewText':'Diese neue Karte wird nicht erstellt.','confirm.cancelEditText':'Änderungen an dieser Karte gehen verloren.',
@@ -1715,8 +1720,8 @@ de:{dir:'ltr',
  'settings.privacyTitle':'Datenschutzerklärung',
  'settings.privacy':"MyCard läuft vollständig in deinem Browser. Es gibt keinen Server, und nichts von dem, was du hier tust, wird an uns oder sonst jemanden gesendet.\n\nDein Benutzername, deine Karten und deine Einstellungen werden nur auf diesem Gerät gespeichert, im lokalen Speicher des Browsers. Fotos, die du einer Karte hinzufügst, bleiben ebenfalls auf diesem Gerät und werden nie hochgeladen.\n\nDiese Seite lädt Schriftarten von Google Fonts; dabei kann deine IP-Adresse an Google übermittelt werden, wie bei jeder Website, die Google Fonts nutzt.\n\nEs gibt keine Analyse-Tools, keine Werbung und keine Tracking-Cookies.\n\nWenn du deine Browserdaten löschst oder die App auf einem anderen Gerät oder Browser öffnest, sind deine Karten dort nicht verfügbar: Sie werden bisher nirgendwo anders gesichert.\n\nDieser Hinweis wird aktualisiert, falls später eine Kontoanmeldung und Cloud-Speicherung hinzukommen.",
  'settings.creditsTitle':'Credits',
- 'settings.credits':"MyCard ist ein inoffizielles Fan-Projekt. Es steht in keiner Verbindung zu Nintendo, Game Freak, Creatures Inc. oder The Pokémon Company und wird nicht von ihnen unterstützt.\n\nMehrere holografische Effekte (Reguläres Holo, Kosmos, Reverse-Holo-Folie, Vollbild-V, Rainbow, Shiny V, Amazing Rare, VMax) sind vom Projekt pokemon-cards-css von Simon Goellner übernommen, veröffentlicht unter der GNU General Public License v3.\n\nSchriftarten: Barlow und Barlow Condensed von Jeremy Dooley, Tajawal von Ahmed Bulbul, über Google Fonts.",
- 'settings.creditsLink':'pokemon-cards-css auf GitHub'},
+ 'settings.credits':'MyCard ist ein inoffizielles Fan-Projekt. Es steht in keiner Verbindung zu Nintendo, Game Freak, Creatures Inc. oder The Pokémon Company und wird nicht von ihnen unterstützt.\n\nSchriftarten: Barlow und Barlow Condensed von Jeremy Dooley, Tajawal von Ahmed Bulbul, über Google Fonts.',
+ },
 
 ar:{dir:'rtl',
  'login.hello':'أهلًا بك :)','login.title':'أدخل اسمك<br>لإنشاء بطاقتك','login.namePlaceholder':'اسم المستخدم','login.nameAria':'اسم المستخدم','login.continueAria':'متابعة','login.or':'أو',
@@ -1745,8 +1750,8 @@ ar:{dir:'rtl',
  'panel.rule.title':'عنوان القاعدة','panel.rule.text':'نص القاعدة','panel.effect.label':'التأثير الهولوغرافي','panel.effect.intensity':'شدة التأثير:',
  'panel.prev':'→ السابق','panel.next':'التالي ←','panel.done':'تم ✓','panel.deleteCard':'حذف هذه البطاقة','panel.confirmDelete':'تأكيد الحذف؟',
  'toast.saved':'تم حفظ البطاقة ✓','toast.deleted':'تم حذف البطاقة',
- 'fx.classic':'هولو كلاسيكي (قطري، نمط V)','fx.reverse':'هولو معكوس (نجوم خماسية)','fx.regular':'هولو عادي','fx.cosmos':'كوزموس / مجرّة','fx.sitereverse':'هولو معكوس لامع',
- 'fx.vfull':'V بتصميم كامل','fx.rainbow':'قوس قزح / سرّي','fx.shinyv':'Shiny V','fx.amazing':'Amazing Rare','fx.vmax':'VMax',
+ 'fx.classic':'هولو كلاسيكي (قطري)','fx.reverse':'إطار مرصّع بالنجوم','fx.prism':'منشور','fx.nebula':'سديم','fx.mosaic':'فسيفساء','fx.aurora':'شفق قطبي','fx.opal':'أوبال','fx.glitter':'لمعان','fx.ripple':'تموّجات','fx.gold':'ذهبي',
+ 
  'type.G':'نبات','type.R':'نار','type.W':'ماء','type.L':'كهرباء','type.P':'خارق','type.I':'جليد','type.F':'قتال','type.X':'سم','type.O':'أرض','type.Y':'طيران',
  'type.B':'حشرة','type.K':'صخر','type.H':'شبح','type.A':'تنين','type.D':'ظلام','type.S':'فولاذ','type.Z':'جنّية','type.N':'عادي','type.C':'عديم اللون',
  'confirm.cancelTitle':'إلغاء التخصيص؟','confirm.cancelNewText':'لن يتم إنشاء هذه البطاقة الجديدة.','confirm.cancelEditText':'ستُفقد التعديلات التي أجريتها على هذه البطاقة.',
@@ -1924,8 +1929,8 @@ ar:{dir:'rtl',
  'settings.privacyTitle':'سياسة الخصوصية',
  'settings.privacy':"يعمل MyCard بالكامل داخل متصفحك. لا يوجد خادم، ولا يُرسَل أي شيء تفعله هنا إلينا أو إلى أي جهة أخرى.\n\nيُحفظ اسم المستخدم وبطاقاتك وإعداداتك على هذا الجهاز فقط، داخل التخزين المحلي للمتصفح. كما تبقى الصور التي تضيفها إلى بطاقة على هذا الجهاز ولا تُرفع إلى أي مكان.\n\nتُحمّل هذه الصفحة خطوطًا من Google Fonts؛ قد يشارك ذلك عنوان IP الخاص بك مع Google، كما هو الحال في أي موقع يستخدم Google Fonts.\n\nلا توجد أدوات تحليل، ولا إعلانات، ولا ملفات تعريف ارتباط للتتبع.\n\nعند مسح بيانات المتصفح، أو فتح التطبيق على جهاز أو متصفح آخر، لن تكون بطاقاتك متاحة هناك: فهي غير محفوظة بعد في أي مكان آخر.\n\nسيتم تحديث هذا الإشعار إذا أُضيف لاحقًا تسجيل الدخول بحساب والتخزين السحابي.",
  'settings.creditsTitle':'الاعتمادات',
- 'settings.credits':"MyCard مشروع غير رسمي من إعداد أحد المعجبين. وهو غير تابع لشركة Nintendo أو Game Freak أو Creatures Inc. أو The Pokémon Company، ولا تدعمه أيٌّ منها.\n\nبعض التأثيرات الهولوغرافية (هولو عادي، كوزموس، هولو معكوس لامع، V بتصميم كامل، Rainbow، Shiny V، Amazing Rare، VMax) مقتبسة من مشروع pokemon-cards-css لـ Simon Goellner، المنشور بموجب رخصة GNU GPL v3.\n\nالخطوط: Barlow وBarlow Condensed من Jeremy Dooley، وTajawal من Ahmed Bulbul، عبر Google Fonts.",
- 'settings.creditsLink':'pokemon-cards-css على GitHub'}
+ 'settings.credits':'MyCard مشروع غير رسمي من إعداد أحد المعجبين. وهو غير تابع لشركة Nintendo أو Game Freak أو Creatures Inc. أو The Pokémon Company، ولا تدعمه أيٌّ منها.\n\nالخطوط: Barlow وBarlow Condensed من Jeremy Dooley، وTajawal من Ahmed Bulbul، عبر Google Fonts.',
+ }
 };
 
 let lang='fr';
@@ -1938,6 +1943,9 @@ function tr(key,vars){
   return s;
 }
 const LANGS=[['fr','\u{1F1EB}\u{1F1F7}','Fran\u00e7ais'],['en','\u{1F1EC}\u{1F1E7}','English'],['es','\u{1F1EA}\u{1F1F8}','Espa\u00f1ol'],['de','\u{1F1E9}\u{1F1EA}','Deutsch'],['ar','\u{1F1F8}\u{1F1E6}','\u0627\u0644\u0639\u0631\u0628\u064a\u0629']];
+/* anciens identifiants d'effets (avant la réécriture) → nouveaux effets */
+const FX_OLD={regular:'prism',cosmos:'nebula',sitereverse:'mosaic',vfull:'aurora',rainbow:'opal',shinyv:'glitter',amazing:'ripple',vmax:'gold'};
+const fxOf=v=>FX_OLD[v]||v||'classic';
 let user='';const Bd=document.body;let deck=[];let editing=false,photoEl=null,photoKey=null,needSave=false,FX={},fxDirty=true,CW=340,CH=475;
 const lite=h=>{const n=parseInt(h.slice(1),16);return '#'+[16,8,0].map(q=>{const v=(n>>q)&255;return Math.round(v+(255-v)*.55).toString(16).padStart(2,'0')}).join('')};
 const ICON={
@@ -2011,7 +2019,7 @@ function render(c){
   Object.entries(c.pal).forEach(([k,v])=>{card.style.setProperty(k,v);card.closest('.stage').style.setProperty(k,v)});
   card.innerHTML=`
   <div class="art"><i></i><b></b><em></em></div>
-  <div class="holo"></div><div class="sparkle"></div><div class="revwrap"><div class="rev"></div><div class="rev spot"></div></div><div class="shine"></div>
+  <div class="holo"></div><div class="sparkle"></div><div class="revwrap"><div class="rev"></div><div class="rev spot"></div></div><div class="fxa"><i></i><i></i><i></i></div>
   <div class="ui">
     <div class="vbadge">MyCard</div>
     <div class="name">${esc(c.name)}</div>
@@ -2031,12 +2039,12 @@ function render(c){
     <div class="num">${c.num} ★</div>
     <div class="rule"><b>${esc(c.rule.t)}</b><span>${esc(c.rule.x)}</span></div>
   </div>
-  <div class="glare"></div><div class="glare2"></div>`;
+  <div class="glare"></div><div class="fxg"></div>`;
   if(c.img){const a=card.querySelector('.art');a.classList.add('img');if(photoKey!==c.img){photoEl=new Image();photoEl.className='photo';photoEl.alt='';photoEl.src=c.img;photoKey=c.img}a.append(photoEl);frame()}
   card.querySelector('.holo').append(HG,HS);card.querySelector('.glare').append(GL);
   card.querySelector('.sparkle').append(SK);
   CW=card.offsetWidth||CW;CH=card.offsetHeight||CH;sizeFx();
-  FX={holo:card.querySelector('.holo'),sparkle:card.querySelector('.sparkle'),glare:card.querySelector('.glare'),revwrap:card.querySelector('.revwrap'),shine:card.querySelector('.shine'),glare2:card.querySelector('.glare2')};fxDirty=true;
+  FX={holo:card.querySelector('.holo'),sparkle:card.querySelector('.sparkle'),glare:card.querySelector('.glare'),revwrap:card.querySelector('.revwrap'),fxa:card.querySelector('.fxa'),fxg:card.querySelector('.fxg')};fxDirty=true;
 }
 render(CARDS[0]);
 
@@ -2213,7 +2221,7 @@ function wrap(c,str,maxW){
 const ICO={};let icoP=null;
 function loadIcons(){return icoP||(icoP=Promise.all(Object.keys(TY).map(k=>new Promise(ok=>{const im=new Image();im.onload=()=>{ICO[k]=im;ok()};im.onerror=()=>ok();im.src='data:image/svg+xml,'+encodeURIComponent(svgOf(k,96))}))))}
 async function drawCard(c0,op){
-  op=op||{};const c=c0||cur,W=op.W||840,H=Math.round(W*1174/840),u=W/100,v=H/100,S=op.state||{...s},k=op.k!=null?op.k:+$('f-k').value,fxm=op.fx||card.dataset.fx,o=S.o,mx=S.mx,my=S.my;
+  op=op||{};const c=c0||cur,W=op.W||840,H=Math.round(W*1174/840),u=W/100,v=H/100,S=op.state||{...s},k=op.k!=null?op.k:+$('f-k').value,fxm=fxOf(op.fx||card.dataset.fx),o=S.o,mx=S.mx,my=S.my;
   await Promise.all(['700 20px "Barlow Condensed"','500 20px Barlow','400 20px Barlow'].map(f=>document.fonts.load(f).catch(()=>0)));
   await loadIcons();
   const cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');
@@ -2261,29 +2269,59 @@ async function drawCard(c0,op){
     layer(g=>{const sp=g.createRadialGradient(mx/100*W,my/100*H,0,mx/100*W,my/100*H,Math.hypot(W,H)*.3);sp.addColorStop(0,'#fff');sp.addColorStop(.4,'#ffffff88');sp.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=sp;g.fillRect(0,0,W,H)},(.1+o*.7)*k);
   };
   /* holo */
-  if(fxm==='reverse'||fxm==='sitereverse')reverseFx();else{
-  const ev=(arr)=>arr.map((c0,i)=>[c0,i/(arr.length-1)]),rg5=['#c929f1','#0dbde9','#21e985','#eedf10','#f80e7b'];
-  const CFG={classic:{an:115,sz:2.6,st:[['#ff6b6b',0],['#ffd86b',.18],['#6bffa8',.36],['#6bd6ff',.54],['#8f7bff',.72],['#ff6bd6',.9],['#ff6b6b',1]],sheen:1,glit:1,al:.5,gn:900},
-    regular:{an:110,sz:4,st:ev([...rg5,...rg5,...rg5]),sheen:0,glit:0,al:.45,gn:0},
-    vfull:{an:133,sz:3,st:ev(['hsl(2,100%,73%)','hsl(53,100%,69%)','hsl(93,100%,69%)','hsl(176,100%,76%)','hsl(228,100%,74%)','hsl(283,100%,73%)','hsl(2,100%,73%)']),sheen:1,glit:0,al:.5,gn:0},
-    rainbow:{an:150,sz:4,st:ev([...Array(3)].flatMap(()=>['hsl(0,70%,48%)','hsl(40,70%,48%)','hsl(90,70%,42%)','hsl(180,70%,42%)','hsl(210,70%,48%)','hsl(280,65%,42%)'])),sheen:0,glit:2,al:.55,gn:1800},
-    amazing:{an:133,sz:3,st:ev(['hsl(2,100%,73%)','hsl(53,100%,69%)','hsl(93,100%,69%)','hsl(176,100%,76%)','hsl(228,100%,74%)','hsl(283,100%,73%)','hsl(2,100%,73%)']),sheen:0,glit:2,al:.3,gn:1200},
-    vmax:{an:-33,sz:3,st:ev(['hsl(2,70%,47%)','hsl(228,60%,64%)','hsl(176,55%,39%)','hsl(123,68%,35%)','hsl(283,75%,57%)','hsl(2,70%,47%)','hsl(228,60%,64%)','hsl(176,55%,39%)','hsl(123,68%,35%)','hsl(283,75%,57%)','hsl(2,70%,47%)']),sheen:1,glit:0,al:.5,gn:0},
-    metal:{an:115,sz:3,st:[['#4a4d55',0],['#e6e9f0',.15],['#7b808b',.3],['#fafbfd',.45],['#5a5f6b',.6],['#d5d9e2',.75],['#868b97',.9],['#4a4d55',1]],sheen:1,glit:0,al:.55,gn:0},
-    cosmos:{an:82,sz:4,st:ev(['hsl(53,65%,60%)','hsl(93,56%,50%)','hsl(176,54%,49%)','hsl(228,59%,55%)','hsl(283,60%,55%)','hsl(326,59%,51%)','hsl(326,59%,51%)','hsl(283,60%,55%)','hsl(228,59%,55%)','hsl(176,54%,49%)','hsl(93,56%,50%)','hsl(53,65%,60%)']),sheen:0,glit:2,al:.5,gn:1500}};
-  CFG.shinyv=CFG.vfull;const C=CFG[fxm]||CFG.classic;
-  const an=C.an*Math.PI/180,dx=Math.sin(an),dy=-Math.cos(an),hq=document.createElement('canvas');hq.width=W;hq.height=H;
-  const h=hq.getContext('2d'),bw=C.sz*W,bh=C.sz*H,ccx=-(C.sz-1)*W*mx/100+bw/2,ccy=-(C.sz-1)*H*my/100+bh/2,Lg=bw*Math.abs(dx)+bh*Math.abs(dy);
-  const hg=h.createLinearGradient(ccx-dx*Lg/2,ccy-dy*Lg/2,ccx+dx*Lg/2,ccy+dy*Lg/2);
-  C.st.forEach(([c0,p0])=>hg.addColorStop(p0,c0));
-  h.fillStyle=hg;h.fillRect(0,0,W,H);
-  const Lc=W*Math.abs(dx)+H*Math.abs(dy),sx=W/2-dx*Lc/2,sy=H/2-dy*Lc/2,tt=mx/100,pt=t=>[sx+dx*Lc*t,sy+dy*Lc*t],p1=pt(tt-.16),p2=pt(tt+.16);
-  if(C.sheen){const sg=h.createLinearGradient(p1[0],p1[1],p2[0],p2[1]);sg.addColorStop(0,'rgba(255,255,255,0)');sg.addColorStop(.5,'#fff');sg.addColorStop(1,'rgba(255,255,255,0)');
-    h.globalCompositeOperation='soft-light';h.globalAlpha=.9;h.fillStyle=sg;h.fillRect(0,0,W,H)}
-  x.save();x.globalCompositeOperation='color-dodge';x.globalAlpha=Math.min(1,(.3+o*.5)*k*C.al);x.drawImage(hq,0,0);
+  if(fxm==='reverse')reverseFx();else{
+  const ev=(arr)=>arr.map((c0,i)=>[c0,i/(arr.length-1)]);
+  /* même esprit que les calques de l'écran, en une image fixe */
+  const rep=(a,n)=>[].concat(...Array(n).fill(a));
+  const CFG={classic:{mode:'band',blend:'color-dodge',an:115,sz:2.6,st:[['#ff6b6b',0],['#ffd86b',.18],['#6bffa8',.36],['#6bd6ff',.54],['#8f7bff',.72],['#ff6bd6',.9],['#ff6b6b',1]],sheen:1,glit:1,al:.5,gn:900},
+    prism:{mode:'band',blend:'color-dodge',an:100,sz:5,st:ev(rep(['#ff5f6d','#ffc371','#47ffb2','#3ec9ff','#a46bff'],6).concat('#ff5f6d')),sheen:1,lines:1,al:.55,gn:0},
+    nebula:{mode:'clouds',blend:'screen',glit:2,al:.8,gn:700},
+    mosaic:{mode:'tiles',blend:'overlay',al:.9,gn:0},
+    aurora:{mode:'aurora',blend:'screen',al:.8,gn:0},
+    opal:{mode:'opal',blend:'screen',al:.7,gn:260,glit:3},
+    glitter:{mode:'band',blend:'screen',an:120,sz:2.5,st:[['rgba(200,210,255,0)',0],['rgba(222,226,255,.35)',.5],['rgba(255,255,255,0)',1]],sheen:0,glit:3,al:.9,gn:2600},
+    ripple:{mode:'rings',blend:'color-dodge',al:.5,gn:0},
+    gold:{mode:'band',blend:'hard-light',an:115,sz:2.6,st:[['#5b3a07',0],['#c8961e',.18],['#fff1a8',.32],['#b07a12',.46],['#ffe27a',.6],['#7a5208',.76],['#f4cf5b',.9],['#5b3a07',1]],sheen:1,brush:1,al:.95,gn:0},
+    metal:{mode:'band',blend:'overlay',an:115,sz:2.6,st:[['#4a4d55',0],['#e6e9f0',.15],['#7b808b',.3],['#fafbfd',.45],['#5a5f6b',.6],['#d5d9e2',.75],['#868b97',.9],['#4a4d55',1]],sheen:1,brush:1,al:.9,gn:0}};
+  const C=CFG[fxm]||CFG.classic,PX=mx/100*W,PY=my/100*H,DIAG=Math.hypot(W,H);
+  const an=(C.an||115)*Math.PI/180,dx=Math.sin(an),dy=-Math.cos(an),hq=document.createElement('canvas');hq.width=W;hq.height=H;
+  const h=hq.getContext('2d'),Lc=W*Math.abs(dx)+H*Math.abs(dy),sx=W/2-dx*Lc/2,sy=H/2-dy*Lc/2,tt=mx/100,pt=t=>[sx+dx*Lc*t,sy+dy*Lc*t];
+  const blob=(cx,cy,rx,ry,col)=>{h.save();h.translate(cx,cy);h.scale(1,ry/rx);const g=h.createRadialGradient(0,0,0,0,0,rx);g.addColorStop(0,col);g.addColorStop(1,'rgba(0,0,0,0)');h.fillStyle=g;h.fillRect(-rx,-rx,rx*2,rx*2);h.restore()};
+  if(C.mode==='band'){
+    const bw=C.sz*W,bh=C.sz*H,ccx=-(C.sz-1)*W*mx/100+bw/2,ccy=-(C.sz-1)*H*my/100+bh/2,Lg=bw*Math.abs(dx)+bh*Math.abs(dy);
+    const hg=h.createLinearGradient(ccx-dx*Lg/2,ccy-dy*Lg/2,ccx+dx*Lg/2,ccy+dy*Lg/2);C.st.forEach(([c0,p0])=>hg.addColorStop(p0,c0));
+    h.fillStyle=hg;h.fillRect(0,0,W,H);
+    if(C.lines){h.save();h.globalCompositeOperation='destination-out';h.globalAlpha=.55;h.lineWidth=.3*u;h.translate(W/2,H/2);h.rotate(12*Math.PI/180);
+      for(let y=-DIAG;y<DIAG;y+=1.05*u){h.beginPath();h.moveTo(-DIAG,y);h.lineTo(DIAG,y);h.stroke()}h.restore()}
+    if(C.brush){h.save();for(let y=0;y<H;y+=.45*u){h.fillStyle=(y/(.45*u))%2<1?'rgba(255,255,255,.1)':'rgba(0,0,0,.1)';h.fillRect(0,y,W,.22*u)}h.restore()}
+    if(C.sheen){const p1=pt(tt-.16),p2=pt(tt+.16),sg=h.createLinearGradient(p1[0],p1[1],p2[0],p2[1]);sg.addColorStop(0,'rgba(255,255,255,0)');sg.addColorStop(.5,'#fff');sg.addColorStop(1,'rgba(255,255,255,0)');
+      h.globalCompositeOperation='soft-light';h.globalAlpha=.9;h.fillStyle=sg;h.fillRect(0,0,W,H);h.globalCompositeOperation='source-over';h.globalAlpha=1}
+  }else if(C.mode==='clouds'){
+    const ox=(mx/100-.5)*W*.12,oy=(my/100-.5)*H*.12;
+    [[.24,.3,.38,.28,'hsla(285,90%,62%,.6)'],[.76,.58,.44,.34,'hsla(195,95%,56%,.55)'],[.4,.84,.34,.26,'hsla(330,90%,62%,.5)'],[.86,.16,.28,.22,'hsla(42,95%,62%,.4)']]
+      .forEach(([bx,by,rx,ry,col])=>blob(bx*W+ox,by*H+oy,rx*W,ry*H,col));
+  }else if(C.mode==='tiles'){
+    const T=6*u;for(let r=0;r*T<H;r++)for(let q=0;q*T<W;q++){const cx=q*T+T/2,cy=r*T+T/2,near=Math.max(.35,1-Math.hypot(cx-PX,cy-PY)/(W*.7));
+      h.fillStyle=`hsla(${(q*37+r*53+mx*3+my*1.4)%360},90%,66%,${near.toFixed(2)})`;h.fillRect(q*T+.28*u,r*T+.28*u,T-.28*u,T-.28*u)}
+  }else if(C.mode==='aurora'){
+    const g=h.createLinearGradient(0,0,W,0),cols=['hsla(150,100%,62%,0)','hsla(150,100%,62%,.7)','hsla(175,100%,60%,0)','hsla(275,100%,70%,.55)','hsla(300,100%,70%,0)'];
+    const off=mx/100;for(let i=0;i<=20;i++)g.addColorStop(i/20,cols[(i+Math.round(off*10))%cols.length]);
+    h.save();h.setTransform(1,0,Math.tan((mx/100-.5)*-18*Math.PI/180),1,0,0);h.fillStyle=g;h.fillRect(-W,0,W*3,H);h.restore();
+    h.globalCompositeOperation='destination-in';const m=h.createLinearGradient(0,0,0,H);m.addColorStop(.02,'rgba(0,0,0,0)');m.addColorStop(.22,'#000');m.addColorStop(.55,'rgba(0,0,0,.6)');m.addColorStop(.85,'rgba(0,0,0,0)');
+    h.fillStyle=m;h.fillRect(0,0,W,H);h.globalCompositeOperation='source-over';
+  }else if(C.mode==='opal'){
+    const sh=mx*1.6-my*.9;[[.18,.22,330],[.62,.18,190],[.82,.48,140],[.35,.58,260],[.7,.82,45],[.15,.85,170]].forEach(([bx,by,hu])=>blob(bx*W,by*H,.23*W,.19*H,`hsla(${(hu+sh+360)%360},90%,78%,.55)`));
+    const sg=h.createLinearGradient(0,0,W,H);sg.addColorStop(.22,'rgba(255,255,255,0)');sg.addColorStop(.5,'rgba(255,255,255,.4)');sg.addColorStop(.78,'rgba(255,255,255,0)');h.fillStyle=sg;h.fillRect(0,0,W,H);
+  }else if(C.mode==='rings'){
+    const st=1.6*u,R=Math.hypot(Math.max(PX,W-PX),Math.max(PY,H-PY));h.lineWidth=st;
+    for(let r=st/2,i=0;r<R;r+=st,i++){h.strokeStyle=`hsla(${(i*60)%360},95%,64%,${Math.max(.1,1-r/(W*.75)).toFixed(2)})`;h.beginPath();h.arc(PX,PY,r,0,7);h.stroke()}
+    blob(PX,PY,W*.16,W*.16,'rgba(255,255,255,.6)');
+  }
+  x.save();x.globalCompositeOperation=C.blend;x.globalAlpha=Math.min(1,(.3+o*.5)*k*C.al);x.drawImage(hq,0,0);
   x.fillStyle='#fff';
   for(let i=0;i<C.gn;i++){
-    const px=((Math.sin(i*12.9898)*43758.5453)%1+1)%1*W,py=((Math.sin(i*78.233)*12345.678)%1+1)%1*H,t=((px-sx)*dx+(py-sy)*dy)/Lc,near=C.glit===2?.7:Math.max(0,1-Math.abs(t-tt)/.22);
+    const px=((Math.sin(i*12.9898)*43758.5453)%1+1)%1*W,py=((Math.sin(i*78.233)*12345.678)%1+1)%1*H,t=((px-sx)*dx+(py-sy)*dy)/Lc,
+      near=C.glit===2?.7:C.glit===3?Math.max(0,1-Math.hypot(px-PX,py-PY)/(W*.45)):Math.max(0,1-Math.abs(t-tt)/.22);
     if(near<=0)continue;x.globalAlpha=Math.min(1,o*.9*k*near);x.beginPath();x.arc(px,py,.8+(i%3)*.6,0,7);x.fill();
   }
   x.restore();}
@@ -2619,7 +2657,7 @@ function queueSave(){if(!deck.includes(cur))return;cur.t=Date.now();needSave=tru
 function saveNow(){clearTimeout(sv);if(needSave&&deck.includes(cur)){needSave=false;cur.t=Date.now();saveCard(cur)}}
 function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),3200)}
 function syncFx(c){
-  const f=c.fx||'classic',kk=c.k!=null?c.k:1;
+  const f=fxOf(c.fx),kk=c.k!=null?c.k:1;if(c.fx&&c.fx!==f)c.fx=f;
   card.dataset.fx=f;$('f-fx').value=f;[...fg.children].forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===f));
   $('f-k').value=kk;card.style.setProperty('--k',kk);$('kv').textContent=Math.round(kk*100)+'%';
 }
@@ -2845,8 +2883,7 @@ setInterval(()=>{if(perfEl)perfEl.textContent='écran '+gov.hz+' Hz · '+gov.ema
       const k=cur&&cur.k!=null?cur.k:1;
       if(fx==='classic'||fx==='reverse')applyClassic(fx,s.o,k,s.mx,s.my);
       if(fx==='reverse')sv_([FX.revwrap],{'--mx':s.mx.toFixed(2),'--my':s.my.toFixed(2),'--o':s.o.toFixed(3)});
-      else sv_([FX.shine,FX.glare2],{'--pointer-x':s.mx.toFixed(2)+'%','--pointer-y':s.my.toFixed(2)+'%','--pointer-from-left':(s.mx/100).toFixed(3),'--pointer-from-top':(s.my/100).toFixed(3),
-        '--pointer-from-center':Math.min(1,Math.hypot(s.my-50,s.mx-50)/50).toFixed(3),'--card-opacity':s.o.toFixed(3),'--background-x':(37+s.mx*.26).toFixed(2)+'%','--background-y':(33+s.my*.34).toFixed(2)+'%'});
+      else sv_([FX.fxa,FX.fxg],{'--px':(s.mx/100).toFixed(3),'--py':(s.my/100).toFixed(3),'--pd':Math.min(1,Math.hypot(s.my-50,s.mx-50)/50).toFixed(3),'--po':s.o.toFixed(3)});
     }else fxPending=true;
   }
 })(t0);
@@ -2978,7 +3015,7 @@ $('contest').addEventListener('click',async e=>{
   if(b.id==='ct-withdraw'){(await cloud.withdraw(weekId(),uk())).forEach(g=>media.del('ent:'+g.id));toast(tr('contest.toastWithdrawn'));return renderContest()}
   if(b.dataset.mod)return moderate(b.dataset.wk,b.dataset.mod==='ok',($('ct-r-'+b.dataset.wk)||{}).value||'rare');
   if(b.id==='dm-seed'){                                                  /* outils démo */
-    const wk=weekId(),P=[['Aurora','Léa','L','cosmos'],['Tempête','Sam','W','regular'],['Mirage','Noor','P','vmax']];
+    const wk=weekId(),P=[['Aurora','Léa','L','nebula'],['Tempête','Sam','W','prism'],['Mirage','Noor','P','gold']];
     for(const [i,[nm,au,ty,fx]] of P.entries()){const c=JSON.parse(JSON.stringify(TEMPLATE));Object.assign(c,{id:'demo-'+au,name:nm,type:ty,fx,pal:PALS[i%PALS.length],hp:150+i*60,t:Date.now()});
       await cloud.submit(wk,{id:'e-demo-'+au.toLowerCase(),uk:'demo:'+au.toLowerCase(),author:'Démo '+au,t:Date.now()-i*1000,card:c,hasImg:false})}
     return renderContest();
@@ -3050,7 +3087,7 @@ async function unlockUniversal(cat,rk){
   const id='u-'+cat.id,have=deck.find(c=>c.id===id);
   if(have){have.dup=(have.dup||0)+1;saveCard(have);return {isNew:false,n:have.dup+1}}
   const c=JSON.parse(JSON.stringify(cat));delete c.rarity;delete c.img;delete c.hasImg;delete c.upd;
-  Object.assign(c,{id,uni:true,rar:rk,t:Date.now(),pal:c.pal||PALS[0],fx:c.fx||'classic',k:c.k!=null?c.k:1});c.c=c.t;
+  Object.assign(c,{id,uni:true,rar:rk,t:Date.now(),pal:c.pal||PALS[0],fx:fxOf(c.fx),k:c.k!=null?c.k:1});c.c=c.t;
   const img=await catImg(cat);if(img)c.img=img;
   deck.push(c);saveIdx();saveCard(c);return {isNew:true,n:1};
 }

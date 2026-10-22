@@ -3,7 +3,7 @@
 Application web, **un seul fichier** (`index.html`, sans installation ni compilation) pour créer,
 personnaliser et collectionner des cartes holographiques, pensée pour téléphone.
 
-> Projet non officiel. Voir [NOTICE.md](NOTICE.md) pour les attributions et la licence (GPL v3).
+> Projet non officiel. Voir [NOTICE.md](NOTICE.md) pour les attributions et [LICENSE](LICENSE) pour la licence.
 
 ## Fonctions
 - **Connexion par nom d'utilisateur.** Les boutons « Se connecter avec Google / Apple » sont présents mais **pas encore branchés** (voir « À faire »).
@@ -143,10 +143,12 @@ Interface en **français, anglais, espagnol, allemand et arabe** (RTL pris en ch
 Limites connues : les chiffres de dimension du PNG peuvent s'afficher dans un ordre inhabituel en arabe (effet bidi standard, pas un bug) ; l'accord du pluriel arabe du compteur de cartes est simplifié (pas de forme duelle).
 
 ## Effets
-Holo classique · Reverse à étoiles · Holo régulier · Cosmos · Reverse holo foil · Métallique (acier brossé) · V pleine illustration · Rainbow · Shiny V · Amazing Rare · VMax.
+Holo classique · Cadre étoilé · Prisme · Nébuleuse · Mosaïque · Aurore boréale · Opale · Paillettes · Ondes · Métallique (acier brossé) · Or.
 
-Seul le **holo classique** est entièrement composé de calques déplacés (le plus fluide).
-Les autres effets sont redessinés à chaque image et sont plus lourds sur téléphone.
+Tous les effets sont écrits pour MyCard. Le **holo classique** et le **cadre étoilé** sont des calques pré-dessinés simplement déplacés (le plus fluide).
+Les neuf autres sont des « calques de lumière » en CSS (`.fxa` : trois calques sous les textes, `.fxg` : le reflet au-dessus), pilotés par
+quatre variables posées à chaque image : `--px` / `--py` (position de la lumière), `--pd` (distance au centre), `--po` (intensité du geste).
+Les cartes enregistrées avec les anciens effets (holo régulier, cosmos, etc.) passent automatiquement au nouvel effet le plus proche (`FX_OLD`).
 
 ## Performance
 - Appuyer **5 fois vite** sur « Bonjour, … » dans la bibliothèque affiche un encart : fréquence d'écran détectée, durée des images, palier.
@@ -156,11 +158,11 @@ Les autres effets sont redessinés à chaque image et sont plus lourds sur tél�
 ## À faire / limites connues
 - **Connexion Google / Apple** : demande des identifiants OAuth, un serveur de vérification et une page hébergée
   sur ton propre domaine. Rattacher alors les cartes à l'identifiant du compte plutôt qu'au pseudo.
-- Convertir les 8 autres effets en calques déplacés (comme le holo classique) pour viser 120 Hz.
+- Convertir les 9 effets « calques de lumière » en calques déplacés (comme le holo classique) pour viser 120 Hz sur les téléphones lents.
 - L'export PNG et le GIF animé, pour les effets autres que « classique » et « reverse à étoiles », sont une approximation.
 - Le GIF animé n'a pas été chronométré sur un vrai téléphone (seulement en navigateur de bureau, sans accélération graphique).
 - Les polices (Barlow, Barlow Condensed) viennent de `fonts.googleapis.com`.
 - Pas de tests automatisés dans ce dépôt.
 
 ## Licence
-GNU GPL v3 — voir [LICENSE](LICENSE) et [NOTICE.md](NOTICE.md).
+Tous droits réservés — voir [LICENSE](LICENSE) et [NOTICE.md](NOTICE.md). Les versions antérieures, dans l'historique git, contenaient du code sous GPL v3 (voir NOTICE.md).

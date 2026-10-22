@@ -1,22 +1,25 @@
 # Avis et attributions
 
-## Code dérivé
-Une partie des effets holographiques de `index.html` est adaptée de **pokemon-cards-css**,
-© 2022 Simon Goellner (@simeydotme), publié sous **GNU General Public License v3.0** :
-<https://github.com/simeydotme/pokemon-cards-css>
+## Effets holographiques
+Tous les effets holographiques de `index.html` sont écrits pour cette application : holo classique, cadre étoilé,
+prisme, nébuleuse, mosaïque, aurore boréale, opale, paillettes, ondes, métallique et or.
 
-Effets concernés : holo régulier, cosmos, reverse holo « foil », V pleine illustration, rainbow,
-Shiny V, Amazing Rare, VMax. Les sélecteurs ont été adaptés à la structure de cette application,
-et les images du projet d'origine ont été remplacées par des textures générées dans le code.
+Jusqu'au commit `a3ea50d` inclus, huit effets (holo régulier, cosmos, reverse holo « foil », V pleine illustration,
+rainbow, Shiny V, Amazing Rare, VMax) étaient adaptés du projet **pokemon-cards-css** de Simon Goellner, publié sous
+GNU GPL v3 (<https://github.com/simeydotme/pokemon-cards-css>). Ce code a été **retiré** et remplacé par de nouveaux effets,
+écrits à partir du rendu voulu et non du code d'origine, sur un système de calques différent (`.fxa` / `.fxg`, variables
+`--px` `--py` `--pd` `--po`). Une comparaison automatique entre l'ancien bloc et le nouveau ne trouve en commun que des
+fragments de syntaxe CSS (noms de propriétés), aucune couleur, palette ni formule.
 
-Conséquence : le fichier `index.html` est une œuvre dérivée. Si tu le distribues (dépôt public,
-page publique, lien partagé), il doit l'être sous **GPL v3**, avec ce fichier `NOTICE.md` et le fichier
-`LICENSE`, et le code source doit rester accessible. Le texte de licence fourni est celui du projet d'origine.
+Les versions antérieures, présentes dans l'historique git, restent soumises à la GPL v3.
 
 ## Code original
-Les autres parties (bibliothèque, tri, personnalisation en étapes, effet « holo classique » et « reverse à étoiles »,
-gouverneur de fluidité, export d'image, stockage local) ont été écrites pour cette application.
+Le reste de l'application (bibliothèque, tri, personnalisation, concours, boutique, boosters, export d'image et GIF,
+stockage local, gouverneur de fluidité, mode modérateur) a été écrit pour cette application.
 Auteur / titulaire des droits : **à compléter**.
+
+## Polices
+Barlow et Barlow Condensed (Jeremy Dooley), Tajawal (Ahmed Bulbul) — SIL Open Font License, chargées depuis Google Fonts.
 
 ## Marques
 Projet non officiel. « Pokémon » et les noms et éléments associés sont des marques de leurs détenteurs.
