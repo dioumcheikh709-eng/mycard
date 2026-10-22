@@ -44,7 +44,7 @@ Tout reste **dans le navigateur** ; rien n'est envoyé à un serveur.
 | IndexedDB `mycard-media` | `img:<nom>:<id>`, `th:<nom>:<id>` | image importée, miniature |
 | `localStorage` | `mycard-user`, `mycard-sort`, `mycard-q` | dernier nom, tri choisi, palier de qualité |
 | `localStorage` | `mycard-theme`, `mycard-lang`, `mycard-mod` | thème, langue, mode modérateur (empreinte de la connexion) |
-| `localStorage` | `mycard-drop:<nom>`, `mycard-wallet:<nom>` | jour du dernier booster gratuit ouvert, solde de pièces |
+| `localStorage` | `mycard-drop:<nom>`, `mycard-wallet:<nom>` | jour du dernier booster gratuit ouvert, solde de Card Coins |
 | `localStorage` / IndexedDB | `mycard-cloud:*`, `ent:<id>`, `ext:<id>` | concours (démo) : participations, votes, résultats, images |
 
 Chaque nom d'utilisateur a sa bibliothèque propre **sur cet appareil**. Les anciennes sauvegardes (clé `mycard-deck:<nom>`) sont converties au lancement.
@@ -73,16 +73,32 @@ Pour en changer : calcule la nouvelle empreinte de `identifiant + "\n" + code` a
 
 L'image est incluse dans l'extrait (en `data:` URL). Si elle alourdit trop le fichier (l'application prévient au-delà de 300 Ko), héberge-la et remplace la valeur de `img` par son adresse.
 
-**Boutique et pièces.** L'onglet **Boutique** remplace l'ancien onglet Booster. Il contient le **booster gratuit du jour** (un par jour, comme dans Brawl Stars) et des **boosters à acheter avec des pièces** :
+**Boutique et Card Coins.** L'onglet **Boutique** contient le **booster gratuit du jour** (un par jour, comme dans Brawl Stars), des **boosters à acheter avec des Card Coins** et les **offres de Card Coins** (achetables avec de l'argent réel).
 
-| Booster | Prix | Contenu |
+| Booster | Prix (Card Coins) | Contenu |
 |---|---|---|
 | Normal | 100 | chances normales (de Commune à Légendaire, ≤ 1 légendaire) |
 | Peu commun | 180 | aucune carte en dessous de Peu commun, jamais de légendaire |
 | Rare | 450 | aucune carte en dessous de Rare, jamais de légendaire |
 | Épique | 1 500 | aucune carte en dessous d'Épique, jamais de légendaire |
 
-Il n'y a **pas de booster légendaire à vendre** : une légendaire ne sort que du booster du jour et du booster normal (1 % par carte). On commence avec 300 pièces. On en gagne avec les **doublons** (Commune 5 · Peu commune 12 · Rare 30 · Épique 80 · Légendaire 200) et **50 pièces** à la première inscription de la semaine au concours. Prix, gains et solde de départ se règlent en tête du bloc « pièces » dans `index.html` (`SHOP`, `DUP_COINS`, `CONTEST_COINS`, `START_COINS`). Les « Outils démo » de la boutique permettent d'ajouter 500 pièces. Comme il n'y a pas de serveur, le solde est stocké sur l'appareil (modifiable par le joueur) : un vrai solde demandera un backend.
+Les tuiles ne montrent que le nom et le prix : le détail de chaque booster, la règle « pas de booster légendaire » et les façons de gagner des Card Coins sont expliqués dans le menu **« i »**.
+
+**Offres de Card Coins** (modèle des gemmes de Brawl Stars : plus le paquet est gros, plus le bonus est grand ; étiquettes « Populaire » et « Meilleure offre ») :
+
+| Paquet | Card Coins | dont offerts | Prix |
+|---|---|---|---|
+| 1 | 100 | – | 0,99 € |
+| 2 | 330 | +10 % | 2,99 € |
+| 3 | 600 | +20 % | 4,99 € |
+| 4 | 1 300 | +30 % | 9,99 € |
+| 5 | 2 800 | +40 % | 19,99 € |
+| 6 | 7 500 | +50 % | 49,99 € |
+
+Quand le solde ne suffit pas pour un booster, une fenêtre propose directement l'offre la plus petite qui couvre le manque (et la suivante) ; après paiement, l'achat du booster se poursuit. Tout achat demande une confirmation. Les offres, prix et bonus sont dans `COIN_PACKS` (`index.html`).
+**Le paiement est simulé** : `payments.buy` (objet à remplacer) ne débite personne en mode démo. Pour de vrais paiements il faudra le serveur (Stripe, App Store, Google Play) qui vérifie le paiement et crédite le solde ; le solde actuel est sur l'appareil (modifiable par le joueur). Attention aussi aux règles des boutiques d'applications et à la loi sur les boosters aléatoires payants (certains pays les encadrent ou les interdisent) : les chances sont affichées dans le « i ».
+
+On commence avec 300 Card Coins. On en gagne avec les **doublons** (Commune 5 · Peu commune 12 · Rare 30 · Épique 80 · Légendaire 200) et **50 Card Coins** à la première inscription de la semaine au concours (`SHOP`, `DUP_COINS`, `CONTEST_COINS`, `START_COINS`). Les « Outils démo » permettent d'ajouter 500 Card Coins.
 
 **Booster du jour.** Un booster par jour (il se recharge à minuit, heure locale), de **5 cartes avec au plus 1 légendaire**.
 Chaque carte est tirée selon sa rareté ; dès qu'une légendaire sort, les cartes suivantes du booster ne peuvent plus l'être. Une carte n'apparaît pas deux fois dans le même booster tant que sa rareté a assez de cartes.

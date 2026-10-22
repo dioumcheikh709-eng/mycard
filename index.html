@@ -658,6 +658,30 @@ body.viewing .vbar{flex-direction:column;align-items:center}
 .shop-tile p{margin:0;font:400 12.5px/1.35 Barlow,sans-serif;opacity:.82}
 .shop-buy{display:inline-flex;align-items:center;gap:8px;font-weight:700}
 .shop-buy.poor{opacity:.55}
+#cc-modal{z-index:90}
+button.coins{cursor:pointer}
+.coins-plus{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#7dff8a,#25b34a);color:#06310f;font:800 16px/1 Barlow,sans-serif;margin-left:2px}
+.cc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.cc-tile{position:relative;display:grid;justify-items:center;gap:4px;padding:22px 8px 12px;border-radius:18px;border:1px solid rgba(255,214,102,.55);background:linear-gradient(180deg,rgba(255,200,60,.22),rgba(255,255,255,.06) 70%);color:inherit;font:inherit;cursor:pointer;text-align:center}
+.cc-tile.hl{box-shadow:0 0 0 2px #ffd866,0 0 22px rgba(255,200,60,.4)}
+.cc-tile .cc-amt{font:700 30px/1 'Barlow Condensed',sans-serif}
+.cc-tile small{font:600 12px Barlow,sans-serif;opacity:.8;margin-top:-2px}
+.cc-bonus{font:700 12px Barlow,sans-serif;color:#7dff8a;min-height:1.2em}
+.cc-price{margin-top:4px;padding:7px 16px;border-radius:999px;background:linear-gradient(180deg,#46d864,#1f9d40);color:#fff;font:700 16px Barlow,sans-serif;box-shadow:0 2px 0 rgba(0,0,0,.25)}
+.cc-tag{position:absolute;top:-1px;left:50%;transform:translateX(-50%);padding:2px 10px;border-radius:0 0 10px 10px;background:linear-gradient(135deg,#ffd866,#ff9d2e);color:#3a2300;font:700 11px/1.5 Barlow,sans-serif;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+.pile{display:flex;justify-content:center;height:34px;align-items:flex-end}
+.pile .coin{width:28px;height:28px;margin:0 -5px}
+.pile .coin:nth-child(2n){transform:translateY(-6px)}
+.cc-offers{display:grid;gap:10px;margin:12px 0}
+.cc-offers .cc-tile{grid-template-columns:auto 1fr auto;align-items:center;justify-items:start;padding:12px 14px;gap:2px 12px;text-align:left}
+.cc-offers .cc-tile .pile{grid-row:1/3}
+.cc-offers .cc-price{grid-column:3;grid-row:1/3;margin:0}
+.cc-msg{margin:6px 0 0;font:500 15px/1.45 Barlow,sans-serif}
+.cc-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.shop-info{margin:0 0 8px;padding-left:18px}
+.shop-info li{margin:6px 0}
+.shop-info .pr{display:inline-flex;align-items:center;gap:5px;font-weight:700}
+.shop-info .coin{width:14px;height:14px}
 </style>
 <script>try{var __t=localStorage.getItem('mycard-theme');if(__t&&/^(blue|red|black|white)$/.test(__t))document.documentElement.dataset.theme=__t}catch(e){}</script>
 </head>
@@ -740,7 +764,7 @@ body.viewing .vbar{flex-direction:column;align-items:center}
   </details>
 </section>
 <section id="shop" class="deck" hidden>
-  <header class="dk-head"><div><h1 data-i18n="shop.title">Boutique</h1></div><div class="shop-top"><span class="coins" id="shop-coins" role="status" aria-label="Tes pièces" data-i18n-aria="shop.coins"><i class="coin"></i><b id="coin-n">0</b></span><button type="button" id="bst-info" class="gbtn info-btn" aria-label="Chances et couleurs" data-i18n-aria="info.btn">i</button></div></header>
+  <header class="dk-head"><div><h1 data-i18n="shop.title">Boutique</h1></div><div class="shop-top"><button type="button" class="coins" id="shop-coins" aria-label="Acheter des Card Coins" data-i18n-aria="cc.plus"><i class="coin"></i><b id="coin-n" role="status">0</b><span class="coins-plus" aria-hidden="true">+</span></button><button type="button" id="bst-info" class="gbtn info-btn" aria-label="Chances et couleurs" data-i18n-aria="info.btn">i</button></div></header>
   <p class="demo-note" data-i18n="shop.demo">Mode démo : tes pièces sont gardées sur cet appareil.</p>
   <div class="shop-free">
     <div id="bst-pack"></div>
@@ -750,8 +774,9 @@ body.viewing .vbar{flex-direction:column;align-items:center}
   </div>
   <h2 class="set-h shop-h" data-i18n="shop.packs">Boosters à acheter</h2>
   <div class="shop-grid" id="shop-grid"></div>
-  <p class="set-p" data-i18n="shop.noLegend">Il n’existe pas de booster légendaire à acheter.</p>
-  <p class="set-p" id="shop-earn"></p>
+  <h2 class="set-h shop-h" id="cc-section" data-i18n="cc.store">Acheter des Card Coins</h2>
+  <div class="cc-grid" id="cc-grid"></div>
+  <p class="demo-note" data-i18n="cc.demoNote">Mode démo : aucun paiement réel.</p>
   <details class="set-block">
     <summary class="set-h" data-i18n="demo.tools">Outils démo</summary>
     <div class="ct-row"><button type="button" class="gbtn" id="dm-drop" data-i18n="demo.resetDrop">Réactiver le booster du jour</button><button type="button" class="gbtn" id="dm-coins" data-i18n="demo.addCoins">Ajouter 500 pièces</button></div>
@@ -827,6 +852,7 @@ body.viewing .vbar{flex-direction:column;align-items:center}
     <div class="pk-fin-btns"><button type="button" class="gbtn primary" id="pk-see" data-i18n="drop.see">Voir ma bibliothèque</button><button type="button" class="gbtn" id="pk-done" data-i18n="drop.close">Fermer</button></div>
   </div>
 </div>
+<div class="cfm" id="cc-modal" hidden><div class="info-box" role="dialog" aria-modal="true" aria-labelledby="cc-t"><button type="button" class="info-x" id="cc-x" aria-label="Fermer" data-i18n-aria="drop.close">✕</button><h3 id="cc-t"></h3><div id="cc-body"></div></div></div>
 <div class="cfm" id="uni-modal" hidden><div class="info-box" role="dialog" aria-modal="true" aria-labelledby="uni-t"><button type="button" class="info-x" id="uni-x" aria-label="Fermer" data-i18n-aria="drop.close">✕</button><h3 id="uni-t" data-i18n="uni.title">Ajouter à la bibliothèque universelle</h3>
   <div class="ct-row"><label style="flex:1;min-width:0"><span class="set-p" data-i18n="uni.rarity">Rareté</span><select id="uni-rar" style="width:100%"></select></label><label style="flex:1;min-width:0"><span class="set-p" data-i18n="uni.id">Identifiant</span><input id="uni-id" type="text" autocomplete="off" style="width:100%"></label></div>
   <textarea id="uni-ta" class="uni-ta" readonly rows="8" spellcheck="false"></textarea><p class="set-p" id="uni-size"></p><p class="set-p" data-i18n="uni.help">Copie ce texte et colle-le dans universal-cards.js, juste avant la ligne « ]; ».</p>
@@ -1023,8 +1049,8 @@ fr:{dir:'ltr',
  'mod.bioFail':'Vérification biométrique impossible ou annulée.',
  'mod.bioNone':'Cet appareil ou ce navigateur ne propose pas Touch ID / Face ID (il faut une adresse https).',
  'shop.title':'Boutique',
- 'shop.demo':'Mode démo : tes pièces sont gardées sur cet appareil.',
- 'shop.coins':'Tes pièces',
+ 'shop.demo':'Mode démo : tes Card Coins sont gardés sur cet appareil.',
+ 'shop.coins':'Tes Card Coins',
  'shop.daily':'Gratuit · 1 par jour',
  'shop.dailyName':'Booster du jour',
  'shop.packs':'Boosters à acheter',
@@ -1032,15 +1058,32 @@ fr:{dir:'ltr',
  'shop.normalD':'Chances normales, de Commune à Légendaire.',
  'shop.tier':'Booster {r}',
  'shop.tierD':'Aucune carte en dessous de {r}. Jamais de légendaire.',
- 'shop.buy':'Acheter pour {n} pièces',
- 'shop.noCoins':'Pas assez de pièces.',
+ 'shop.buy':'Acheter pour {n} Card Coins',
+ 'shop.noCoins':'Pas assez de Card Coins.',
  'shop.noLegend':'Il n’existe pas de booster légendaire à acheter : les cartes légendaires ne sortent que dans le booster du jour et le booster normal.',
- 'shop.earn':'Gagne des pièces avec tes doublons ({d}) et {c} pièces en inscrivant une carte au concours.',
- 'shop.dupGain':'+{n} pièces pour tes doublons',
- 'shop.contestGain':'+{n} pièces pour ta participation !',
+ 'shop.earn':'Tu gagnes aussi des Card Coins avec tes doublons ({d}) et {c} Card Coins en inscrivant une carte au concours (une fois par semaine).',
+ 'shop.dupGain':'+{n} Card Coins pour tes doublons',
+ 'shop.contestGain':'+{n} Card Coins pour ta participation !',
  'info.shopT':'Boosters de la boutique',
  'info.shopP':'Un booster d’une rareté donnée garantit que ses 5 cartes sont toutes de cette rareté ou mieux (jusqu’à Épique), sans jamais de légendaire. Le tableau ci-dessus décrit le booster du jour et le booster normal.',
- 'demo.addCoins':'Ajouter 500 pièces',
+ 'demo.addCoins':'Ajouter 500 Card Coins',
+ 'cc.store':'Acheter des Card Coins',
+ 'cc.shortT':'Pas assez de Card Coins',
+ 'cc.short':'Il te manque {n} Card Coins pour ce booster.',
+ 'cc.all':'Toutes les offres',
+ 'cc.bonus':'+{p} % offerts',
+ 'cc.popular':'Populaire',
+ 'cc.best':'Meilleure offre',
+ 'cc.confirmT':'Confirmer l’achat',
+ 'cc.confirmQ':'Acheter {n} Card Coins pour {p} ?',
+ 'cc.then':'Ton booster s’ouvrira juste après.',
+ 'cc.pay':'Payer {p}',
+ 'cc.cancel':'Annuler',
+ 'cc.demoNote':'Mode démo : aucun paiement réel. Les Card Coins sont ajoutés gratuitement pour tester ; le vrai paiement viendra avec le serveur.',
+ 'cc.bought':'+{n} Card Coins ajoutés !',
+ 'cc.failed':'Le paiement a échoué.',
+ 'cc.plus':'Acheter des Card Coins',
+ 'info.earnT':'Gagner des Card Coins',
  'settings.title':'Paramètres','settings.account':'Compte','settings.language':'Langue','settings.loggedAs':'Connecté en tant que {user}',
  'settings.privacyTitle':'Politique de confidentialité',
  'settings.privacy':"MyCard fonctionne entièrement dans ton navigateur. Il n'y a pas de serveur, et rien de ce que tu fais ici ne nous est envoyé, ni à personne d'autre.\n\nTon pseudo, tes cartes et tes réglages sont stockés uniquement sur cet appareil, dans le navigateur. Les photos que tu ajoutes à une carte restent aussi sur cet appareil et ne sont jamais envoyées ailleurs.\n\nCette page charge des polices depuis Google Fonts ; ce chargement peut partager ton adresse IP avec Google, comme pour tout site qui utilise Google Fonts.\n\nIl n'y a ni outil de mesure d'audience, ni publicité, ni cookie de suivi.\n\nSi tu effaces les données de ton navigateur, ou si tu ouvres l'appli sur un autre appareil ou un autre navigateur, tes cartes n'y seront pas accessibles : elles ne sont pas encore sauvegardées ailleurs.\n\nCette note sera mise à jour si la connexion par compte et le stockage en ligne sont ajoutés plus tard.",
@@ -1215,8 +1258,8 @@ en:{dir:'ltr',
  'mod.bioFail':'Biometric check failed or was cancelled.',
  'mod.bioNone':'This device or browser does not offer Touch ID / Face ID (an https address is required).',
  'shop.title':'Shop',
- 'shop.demo':'Demo mode: your coins are kept on this device.',
- 'shop.coins':'Your coins',
+ 'shop.demo':'Demo mode: your Card Coins are kept on this device.',
+ 'shop.coins':'Your Card Coins',
  'shop.daily':'Free · once a day',
  'shop.dailyName':'Daily booster',
  'shop.packs':'Boosters for sale',
@@ -1224,15 +1267,32 @@ en:{dir:'ltr',
  'shop.normalD':'Standard odds, from Common to Legendary.',
  'shop.tier':'{r} booster',
  'shop.tierD':'No card below {r}. Never a legendary.',
- 'shop.buy':'Buy for {n} coins',
- 'shop.noCoins':'Not enough coins.',
+ 'shop.buy':'Buy for {n} Card Coins',
+ 'shop.noCoins':'Not enough Card Coins.',
  'shop.noLegend':'There is no legendary booster for sale: legendary cards only come from the daily booster and the standard booster.',
- 'shop.earn':'Earn coins from your duplicates ({d}) and {c} coins for entering a card in the contest.',
- 'shop.dupGain':'+{n} coins for your duplicates',
- 'shop.contestGain':'+{n} coins for entering!',
+ 'shop.earn':'You also earn Card Coins from your duplicates ({d}) and {c} Card Coins for entering a card in the contest (once a week).',
+ 'shop.dupGain':'+{n} Card Coins for your duplicates',
+ 'shop.contestGain':'+{n} Card Coins for entering!',
  'info.shopT':'Shop boosters',
  'info.shopP':'A booster of a given rarity guarantees that all 5 of its cards are of that rarity or better (up to Epic), never a legendary. The table above describes the daily booster and the standard booster.',
- 'demo.addCoins':'Add 500 coins',
+ 'demo.addCoins':'Add 500 Card Coins',
+ 'cc.store':'Buy Card Coins',
+ 'cc.shortT':'Not enough Card Coins',
+ 'cc.short':'You need {n} more Card Coins for this booster.',
+ 'cc.all':'All offers',
+ 'cc.bonus':'+{p}% bonus',
+ 'cc.popular':'Popular',
+ 'cc.best':'Best value',
+ 'cc.confirmT':'Confirm purchase',
+ 'cc.confirmQ':'Buy {n} Card Coins for {p}?',
+ 'cc.then':'Your booster opens right after.',
+ 'cc.pay':'Pay {p}',
+ 'cc.cancel':'Cancel',
+ 'cc.demoNote':'Demo mode: no real payment. Card Coins are added for free to test; real payment will come with the server.',
+ 'cc.bought':'+{n} Card Coins added!',
+ 'cc.failed':'Payment failed.',
+ 'cc.plus':'Buy Card Coins',
+ 'info.earnT':'Earning Card Coins',
  'settings.title':'Settings','settings.account':'Account','settings.language':'Language','settings.loggedAs':'Signed in as {user}',
  'settings.privacyTitle':'Privacy policy',
  'settings.privacy':"MyCard runs entirely in your browser. There is no server, and nothing you do here is sent to us or to anyone else.\n\nYour username, your cards, and your settings are stored only on this device, in your browser's local storage. Photos you add to a card stay on this device too and are never uploaded.\n\nThis page loads fonts from Google Fonts; loading them may share your IP address with Google, as with any site that uses Google Fonts.\n\nThere is no analytics, no advertising, and no tracking cookies.\n\nClearing your browser data, or opening the app on a different device or browser, makes your cards inaccessible there — they aren't backed up anywhere else yet.\n\nThis notice will be updated if account sign-in and cloud storage are added later.",
@@ -1407,8 +1467,8 @@ es:{dir:'ltr',
  'mod.bioFail':'Verificación biométrica imposible o cancelada.',
  'mod.bioNone':'Este dispositivo o navegador no ofrece Touch ID / Face ID (hace falta una dirección https).',
  'shop.title':'Tienda',
- 'shop.demo':'Modo demo: tus monedas se guardan en este dispositivo.',
- 'shop.coins':'Tus monedas',
+ 'shop.demo':'Modo demo: tus Card Coins se guardan en este dispositivo.',
+ 'shop.coins':'Tus Card Coins',
  'shop.daily':'Gratis · 1 al día',
  'shop.dailyName':'Sobre del día',
  'shop.packs':'Sobres a la venta',
@@ -1416,15 +1476,32 @@ es:{dir:'ltr',
  'shop.normalD':'Probabilidades normales, de Común a Legendaria.',
  'shop.tier':'Sobre {r}',
  'shop.tierD':'Ninguna carta por debajo de {r}. Nunca una legendaria.',
- 'shop.buy':'Comprar por {n} monedas',
- 'shop.noCoins':'No tienes suficientes monedas.',
+ 'shop.buy':'Comprar por {n} Card Coins',
+ 'shop.noCoins':'No tienes suficientes Card Coins.',
  'shop.noLegend':'No hay sobres legendarios a la venta: las cartas legendarias solo salen en el sobre del día y en el sobre normal.',
- 'shop.earn':'Gana monedas con tus repetidas ({d}) y {c} monedas al inscribir una carta en el concurso.',
- 'shop.dupGain':'+{n} monedas por tus repetidas',
- 'shop.contestGain':'+{n} monedas por participar.',
+ 'shop.earn':'También ganas Card Coins con tus repetidas ({d}) y {c} Card Coins al inscribir una carta en el concurso (una vez por semana).',
+ 'shop.dupGain':'+{n} Card Coins por tus repetidas',
+ 'shop.contestGain':'+{n} Card Coins por participar.',
  'info.shopT':'Sobres de la tienda',
  'info.shopP':'Un sobre de una rareza dada garantiza que sus 5 cartas son de esa rareza o mejor (hasta Épica), nunca una legendaria. La tabla de arriba describe el sobre del día y el sobre normal.',
- 'demo.addCoins':'Añadir 500 monedas',
+ 'demo.addCoins':'Añadir 500 Card Coins',
+ 'cc.store':'Comprar Card Coins',
+ 'cc.shortT':'No tienes suficientes Card Coins',
+ 'cc.short':'Te faltan {n} Card Coins para este sobre.',
+ 'cc.all':'Todas las ofertas',
+ 'cc.bonus':'+{p} % de bonus',
+ 'cc.popular':'Popular',
+ 'cc.best':'Mejor oferta',
+ 'cc.confirmT':'Confirmar compra',
+ 'cc.confirmQ':'¿Comprar {n} Card Coins por {p}?',
+ 'cc.then':'Tu sobre se abrirá justo después.',
+ 'cc.pay':'Pagar {p}',
+ 'cc.cancel':'Cancelar',
+ 'cc.demoNote':'Modo demo: sin pago real. Los Card Coins se añaden gratis para probar; el pago real llegará con el servidor.',
+ 'cc.bought':'¡+{n} Card Coins añadidos!',
+ 'cc.failed':'El pago ha fallado.',
+ 'cc.plus':'Comprar Card Coins',
+ 'info.earnT':'Ganar Card Coins',
  'settings.title':'Ajustes','settings.account':'Cuenta','settings.language':'Idioma','settings.loggedAs':'Sesión iniciada como {user}',
  'settings.privacyTitle':'Política de privacidad',
  'settings.privacy':"MyCard funciona totalmente en tu navegador. No hay servidor, y nada de lo que hagas aquí se nos envía a nosotros ni a nadie más.\n\nTu nombre de usuario, tus cartas y tus ajustes se guardan solo en este dispositivo, en el almacenamiento local del navegador. Las fotos que añades a una carta también se quedan en este dispositivo y nunca se suben a ningún sitio.\n\nEsta página carga fuentes desde Google Fonts; esta carga puede compartir tu dirección IP con Google, como ocurre en cualquier sitio que use Google Fonts.\n\nNo hay analítica, ni publicidad, ni cookies de seguimiento.\n\nSi borras los datos del navegador, o abres la app en otro dispositivo o navegador, tus cartas no estarán disponibles allí: todavía no se respaldan en ningún otro sitio.\n\nEste aviso se actualizará si más adelante se añaden el inicio de sesión con cuenta y el almacenamiento en la nube.",
@@ -1599,8 +1676,8 @@ de:{dir:'ltr',
  'mod.bioFail':'Biometrische Prüfung nicht möglich oder abgebrochen.',
  'mod.bioNone':'Dieses Gerät oder dieser Browser bietet kein Touch ID / Face ID (https-Adresse nötig).',
  'shop.title':'Shop',
- 'shop.demo':'Demo-Modus: Deine Münzen werden auf diesem Gerät gespeichert.',
- 'shop.coins':'Deine Münzen',
+ 'shop.demo':'Demo-Modus: Deine Card Coins werden auf diesem Gerät gespeichert.',
+ 'shop.coins':'Deine Card Coins',
  'shop.daily':'Gratis · 1 pro Tag',
  'shop.dailyName':'Tages-Booster',
  'shop.packs':'Booster zu kaufen',
@@ -1608,15 +1685,32 @@ de:{dir:'ltr',
  'shop.normalD':'Normale Chancen, von Gewöhnlich bis Legendär.',
  'shop.tier':'{r}-Booster',
  'shop.tierD':'Keine Karte unter {r}. Nie eine Legendäre.',
- 'shop.buy':'Für {n} Münzen kaufen',
- 'shop.noCoins':'Nicht genug Münzen.',
+ 'shop.buy':'Für {n} Card Coins kaufen',
+ 'shop.noCoins':'Nicht genug Card Coins.',
  'shop.noLegend':'Es gibt keinen legendären Booster zu kaufen: Legendäre Karten kommen nur im Tages-Booster und im normalen Booster vor.',
- 'shop.earn':'Verdiene Münzen mit Duplikaten ({d}) und {c} Münzen für eine Karte im Wettbewerb.',
- 'shop.dupGain':'+{n} Münzen für deine Duplikate',
- 'shop.contestGain':'+{n} Münzen für deine Teilnahme!',
+ 'shop.earn':'Du verdienst auch Card Coins mit Duplikaten ({d}) und {c} Card Coins für eine Karte im Wettbewerb (einmal pro Woche).',
+ 'shop.dupGain':'+{n} Card Coins für deine Duplikate',
+ 'shop.contestGain':'+{n} Card Coins für deine Teilnahme!',
  'info.shopT':'Booster im Shop',
  'info.shopP':'Ein Booster einer bestimmten Seltenheit garantiert, dass alle 5 Karten diese Seltenheit oder besser haben (bis Episch), nie eine Legendäre. Die Tabelle oben beschreibt den Tages-Booster und den normalen Booster.',
- 'demo.addCoins':'500 Münzen hinzufügen',
+ 'demo.addCoins':'500 Card Coins hinzufügen',
+ 'cc.store':'Card Coins kaufen',
+ 'cc.shortT':'Nicht genug Card Coins',
+ 'cc.short':'Dir fehlen {n} Card Coins für diesen Booster.',
+ 'cc.all':'Alle Angebote',
+ 'cc.bonus':'+{p} % Bonus',
+ 'cc.popular':'Beliebt',
+ 'cc.best':'Bestes Angebot',
+ 'cc.confirmT':'Kauf bestätigen',
+ 'cc.confirmQ':'{n} Card Coins für {p} kaufen?',
+ 'cc.then':'Dein Booster öffnet sich gleich danach.',
+ 'cc.pay':'{p} bezahlen',
+ 'cc.cancel':'Abbrechen',
+ 'cc.demoNote':'Demo-Modus: keine echte Zahlung. Card Coins werden zum Testen gratis gutgeschrieben; die echte Zahlung kommt mit dem Server.',
+ 'cc.bought':'+{n} Card Coins gutgeschrieben!',
+ 'cc.failed':'Zahlung fehlgeschlagen.',
+ 'cc.plus':'Card Coins kaufen',
+ 'info.earnT':'Card Coins verdienen',
  'settings.title':'Einstellungen','settings.account':'Konto','settings.language':'Sprache','settings.loggedAs':'Angemeldet als {user}',
  'settings.privacyTitle':'Datenschutzerklärung',
  'settings.privacy':"MyCard läuft vollständig in deinem Browser. Es gibt keinen Server, und nichts von dem, was du hier tust, wird an uns oder sonst jemanden gesendet.\n\nDein Benutzername, deine Karten und deine Einstellungen werden nur auf diesem Gerät gespeichert, im lokalen Speicher des Browsers. Fotos, die du einer Karte hinzufügst, bleiben ebenfalls auf diesem Gerät und werden nie hochgeladen.\n\nDiese Seite lädt Schriftarten von Google Fonts; dabei kann deine IP-Adresse an Google übermittelt werden, wie bei jeder Website, die Google Fonts nutzt.\n\nEs gibt keine Analyse-Tools, keine Werbung und keine Tracking-Cookies.\n\nWenn du deine Browserdaten löschst oder die App auf einem anderen Gerät oder Browser öffnest, sind deine Karten dort nicht verfügbar: Sie werden bisher nirgendwo anders gesichert.\n\nDieser Hinweis wird aktualisiert, falls später eine Kontoanmeldung und Cloud-Speicherung hinzukommen.",
@@ -1791,8 +1885,8 @@ ar:{dir:'rtl',
  'mod.bioFail':'تعذّر التحقق الحيوي أو أُلغي.',
  'mod.bioNone':'لا يوفر هذا الجهاز أو المتصفح بصمة الإصبع / الوجه (يلزم عنوان https).',
  'shop.title':'المتجر',
- 'shop.demo':'وضع تجريبي: تُحفظ عملاتك على هذا الجهاز.',
- 'shop.coins':'عملاتك',
+ 'shop.demo':'وضع تجريبي: تُحفظ Card Coins الخاصة بك على هذا الجهاز.',
+ 'shop.coins':'Card Coins الخاصة بك',
  'shop.daily':'مجاني · مرة يوميًا',
  'shop.dailyName':'حزمة اليوم',
  'shop.packs':'حزم للبيع',
@@ -1800,15 +1894,32 @@ ar:{dir:'rtl',
  'shop.normalD':'احتمالات عادية، من شائعة إلى أسطورية.',
  'shop.tier':'حزمة {r}',
  'shop.tierD':'لا بطاقة أقل من {r}. ولا أسطورية أبدًا.',
- 'shop.buy':'اشترِ بـ {n} عملة',
- 'shop.noCoins':'عملاتك غير كافية.',
+ 'shop.buy':'اشترِ بـ {n} Card Coins',
+ 'shop.noCoins':'Card Coins غير كافية.',
  'shop.noLegend':'لا توجد حزمة أسطورية للبيع: البطاقات الأسطورية لا تخرج إلا من حزمة اليوم والحزمة العادية.',
- 'shop.earn':'اكسب عملات من البطاقات المكررة ({d}) و{c} عملة عند تسجيل بطاقة في المسابقة.',
- 'shop.dupGain':'+{n} عملة مقابل المكررات',
- 'shop.contestGain':'+{n} عملة مقابل مشاركتك!',
+ 'shop.earn':'تكسب أيضًا Card Coins من البطاقات المكررة ({d}) و{c} Card Coins عند تسجيل بطاقة في المسابقة (مرة في الأسبوع).',
+ 'shop.dupGain':'+{n} Card Coins مقابل المكررات',
+ 'shop.contestGain':'+{n} Card Coins مقابل مشاركتك!',
  'info.shopT':'حزم المتجر',
  'info.shopP':'تضمن حزمة من ندرة معينة أن بطاقاتها الخمس كلها من هذه الندرة أو أعلى (حتى ملحمية)، ولا أسطورية أبدًا. الجدول أعلاه يصف حزمة اليوم والحزمة العادية.',
- 'demo.addCoins':'إضافة 500 عملة',
+ 'demo.addCoins':'إضافة 500 Card Coins',
+ 'cc.store':'شراء Card Coins',
+ 'cc.shortT':'Card Coins غير كافية',
+ 'cc.short':'ينقصك {n} Card Coins لهذه الحزمة.',
+ 'cc.all':'كل العروض',
+ 'cc.bonus':'+{p}% مكافأة',
+ 'cc.popular':'الأكثر شعبية',
+ 'cc.best':'أفضل عرض',
+ 'cc.confirmT':'تأكيد الشراء',
+ 'cc.confirmQ':'شراء {n} Card Coins مقابل {p}؟',
+ 'cc.then':'ستُفتح حزمتك مباشرة بعد ذلك.',
+ 'cc.pay':'ادفع {p}',
+ 'cc.cancel':'إلغاء',
+ 'cc.demoNote':'وضع تجريبي: لا دفع حقيقي. تُضاف Card Coins مجانًا للتجربة؛ الدفع الحقيقي سيأتي مع الخادم.',
+ 'cc.bought':'تمت إضافة +{n} Card Coins!',
+ 'cc.failed':'فشل الدفع.',
+ 'cc.plus':'شراء Card Coins',
+ 'info.earnT':'كسب Card Coins',
  'settings.title':'الإعدادات','settings.account':'الحساب','settings.language':'اللغة','settings.loggedAs':'مسجّل الدخول باسم {user}',
  'settings.privacyTitle':'سياسة الخصوصية',
  'settings.privacy':"يعمل MyCard بالكامل داخل متصفحك. لا يوجد خادم، ولا يُرسَل أي شيء تفعله هنا إلينا أو إلى أي جهة أخرى.\n\nيُحفظ اسم المستخدم وبطاقاتك وإعداداتك على هذا الجهاز فقط، داخل التخزين المحلي للمتصفح. كما تبقى الصور التي تضيفها إلى بطاقة على هذا الجهاز ولا تُرفع إلى أي مكان.\n\nتُحمّل هذه الصفحة خطوطًا من Google Fonts؛ قد يشارك ذلك عنوان IP الخاص بك مع Google، كما هو الحال في أي موقع يستخدم Google Fonts.\n\nلا توجد أدوات تحليل، ولا إعلانات، ولا ملفات تعريف ارتباط للتتبع.\n\nعند مسح بيانات المتصفح، أو فتح التطبيق على جهاز أو متصفح آخر، لن تكون بطاقاتك متاحة هناك: فهي غير محفوظة بعد في أي مكان آخر.\n\nسيتم تحديث هذا الإشعار إذا أُضيف لاحقًا تسجيل الدخول بحساب والتخزين السحابي.",
@@ -2885,10 +2996,21 @@ const clock=ms=>{const s=Math.max(0,Math.floor(ms/1e3));return [Math.floor(s/360
 /* -- pièces : gagnées avec les doublons et le concours, dépensées dans la boutique (stockées sur l'appareil en mode démo) -- */
 const START_COINS=300,CONTEST_COINS=50,DUP_COINS={common:5,uncommon:12,rare:30,epic:80,legendary:200};
 const SHOP=[{k:'normal',price:100},{k:'uncommon',price:180,min:'uncommon'},{k:'rare',price:450,min:'rare'},{k:'epic',price:1500,min:'epic'}];   /* pas de booster légendaire à vendre */
+/* Card Coins achetables avec de l'argent réel : sur le modèle des gemmes de Brawl Stars (plus le paquet est gros, plus le bonus offert est grand).
+   Les prix sont en euros. En mode démo `payments.buy` ne débite personne : le vrai paiement (Stripe, App Store, Google Play) viendra avec le serveur. */
+const COIN_PACKS=[{id:'cc1',coins:100,bonus:0,eur:.99},{id:'cc2',coins:300,bonus:30,eur:2.99},{id:'cc3',coins:500,bonus:100,eur:4.99,tag:'popular'},
+  {id:'cc4',coins:1000,bonus:300,eur:9.99},{id:'cc5',coins:2000,bonus:800,eur:19.99},{id:'cc6',coins:5000,bonus:2500,eur:49.99,tag:'best'}];
+const packTotal=p=>p.coins+p.bonus,eurTxt=v=>new Intl.NumberFormat(lang,{style:'currency',currency:'EUR'}).format(v);
+const payments={async buy(pack){return true}};     /* à remplacer : doit renvoyer true seulement quand le paiement est confirmé, et créditer le solde côté serveur */
 const walletKey=()=>'mycard-wallet:'+uk();
 function coins(){try{const v=localStorage.getItem(walletKey());if(v===null){localStorage.setItem(walletKey(),START_COINS);return START_COINS}return Math.max(0,+v||0)}catch(e){return 0}}
 function setCoins(n,bump){try{localStorage.setItem(walletKey(),Math.max(0,Math.round(n)))}catch(e){}renderCoins(bump)}
 const addCoins=n=>setCoins(coins()+n,n>0);
+const shopName=p=>p.min?tr('shop.tier',{r:rarName(p.min)}):tr('shop.normal');
+const shopDesc=p=>p.min?tr('shop.tierD',{r:rarName(p.min)}):tr('shop.normalD');
+const pileHTML=i=>'<span class="pile" aria-hidden="true">'+'<i class="coin"></i>'.repeat(Math.min(5,i+1))+'</span>';
+function ccTile(p,i,cls){const bp=p.bonus?Math.round(p.bonus/p.coins*100):0;
+  return `<button type="button" class="cc-tile${cls||''}" data-cc="${p.id}">${p.tag&&!cls?`<span class="cc-tag">${tr('cc.'+p.tag)}</span>`:''}${pileHTML(i)}<b class="cc-amt">${packTotal(p).toLocaleString(lang)}</b><small>Card Coins</small><span class="cc-bonus">${bp?tr('cc.bonus',{p:bp}):''}</span><span class="cc-price">${eurTxt(p.eur)}</span></button>`}
 function renderCoins(bump){const el=$('coin-n');if(!el)return;el.textContent=coins().toLocaleString(lang);
   if(bump){const c=$('shop-coins');c.classList.remove('bump');void c.offsetWidth;c.classList.add('bump')}}
 const PACK_SIZE=5,rarIdx=k=>Math.max(0,RARITIES.findIndex(r=>r.k===k)),RN=RARITIES.length-1;
@@ -3016,7 +3138,7 @@ async function openBooster(kind){
   kind=typeof kind==='string'?kind:'daily';const prod=SHOP.find(p=>p.k===kind);
   if(bstBusy)return;
   if(!prod){if(!dropReady())return}
-  else if(coins()<prod.price){toast(tr('shop.noCoins'));return}
+  else if(coins()<prod.price){openCC('short',prod);return}
   const cat=await catalog();if(!cat.length)return renderShop();
   bstBusy=true;$('bst-open').disabled=true;
   const cards=rollPack(cat,prod&&prod.min);
@@ -3132,6 +3254,9 @@ async function renderInfo(){
     <dl><dt>${tr('info.colRar')}</dt><dd>${tr('info.dRar')}</dd><dt>${tr('info.colCards')}</dt><dd>${tr('info.dCards')}</dd><dt>${tr('info.colOdds')}</dt><dd>${tr('info.dOdds')}</dd><dt>${tr('info.colPack')}</dt><dd>${tr('info.dPack')}</dd></dl>
     <p>${tr('info.noCards')}</p>
     <h4>${tr('info.shopT')}</h4><p>${tr('info.shopP')}</p>
+    <ul class="shop-info">${SHOP.map(p=>`<li><b>${shopName(p)}</b> <span class="pr"><i class="coin"></i>${p.price}</span><br>${shopDesc(p)}</li>`).join('')}</ul>
+    <p>${tr('shop.noLegend')}</p>
+    <h4>${tr('info.earnT')}</h4><p>${tr('shop.earn',{d:RARITIES.map(r=>rarName(r.k)+' '+DUP_COINS[r.k]).join(' · '),c:CONTEST_COINS})}</p>
     <h4>${tr('info.colors')}</h4><p>${tr('info.c1')}</p><p>${tr('info.c2')}</p>
     <div class="lk-bar" style="background:linear-gradient(90deg,${RARITIES.map(r=>r.c).join(',')})"></div>
     <ul class="lk-list">${RARITIES.map((r,i)=>`<li><i style="--c:${r.c}"></i><span>${tr('info.lk'+i)}</span></li>`).join('')}</ul>`;
@@ -3141,6 +3266,7 @@ function closeInfo(){$('odds-modal').hidden=true}
 $('bst-info').addEventListener('click',openInfo);$('pk-info').addEventListener('click',openInfo);$('info-x').addEventListener('click',closeInfo);
 $('odds-modal').addEventListener('click',e=>{if(e.target===$('odds-modal'))closeInfo()});
 document.addEventListener('keydown',e=>{
+  if(!$('cc-modal').hidden){if(e.key==='Escape'){ccPending=null;closeCC()}return}
   if(!$('odds-modal').hidden){if(e.key==='Escape')closeInfo();return}
   if(!pk.on)return;if(e.key==='Escape')pkClose();else if((e.key==='Enter'||e.key===' ')&&!e.target.closest('button')){e.preventDefault();pkAdvance()}
 });
@@ -3161,13 +3287,46 @@ async function renderShop(){
   const me=coins();
   $('shop-grid').innerHTML=SHOP.map(p=>{const r=p.min?rarOf(p.min):null,rgb=r?hex2rgb(r.c):[140,170,255];
     return `<article class="shop-tile" style="--lc-rgb:${rgb.join(',')}"><div class="pk-mini"><div class="pk-pack">${packHTML(false)}</div></div>
-      <h3>${p.min?tr('shop.tier',{r:rarName(p.min)}):tr('shop.normal')}</h3><p>${p.min?tr('shop.tierD',{r:rarName(p.min)}):tr('shop.normalD')}</p>
+      <h3>${shopName(p)}</h3>
       <button type="button" class="gbtn primary shop-buy${me<p.price?' poor':''}" data-buy="${p.k}" aria-label="${tr('shop.buy',{n:p.price})}"${bstBusy||bstEmpty?' disabled':''}><i class="coin"></i>${p.price}</button></article>`}).join('');
   $('shop-grid').querySelectorAll('.pk-pack').forEach(el=>setPackVars(el));
-  $('shop-earn').textContent=tr('shop.earn',{d:RARITIES.map(r=>rarName(r.k)+' '+DUP_COINS[r.k]).join(' · '),c:CONTEST_COINS});
+  $('cc-grid').innerHTML=COIN_PACKS.map((p,i)=>ccTile(p,i)).join('');
   if(bstEmpty)$('bst-msg').textContent=tr('drop.empty');
   bstMsg();updateDropDot();
 }
+/* -- achat de Card Coins : manque de solde (propose l'offre qui suffit) ou confirmation d'un paquet -- */
+let ccPending=null;
+function closeCC(){$('cc-modal').hidden=true}
+function openCC(mode,arg){
+  const B=$('cc-body'),T=$('cc-t');
+  if(mode==='short'){                                           /* arg = booster qu'on voulait acheter */
+    ccPending=arg.k;const need=arg.price-coins();
+    const idx=COIN_PACKS.findIndex(p=>packTotal(p)>=need),first=idx<0?COIN_PACKS.length-1:idx,picks=COIN_PACKS.slice(first,first+2);
+    T.textContent=tr('cc.shortT');
+    B.innerHTML=`<p class="cc-msg">${tr('cc.short',{n:need.toLocaleString(lang)})}</p><div class="cc-offers">${picks.map((p,k)=>ccTile(p,COIN_PACKS.indexOf(p),k===0?' hl':' ')).join('')}</div><div class="cc-row"><button type="button" class="gbtn" id="cc-all">${tr('cc.all')}</button></div>`;
+  }else{                                                        /* arg = paquet à confirmer */
+    const p=arg;T.textContent=tr('cc.confirmT');
+    B.innerHTML=`<div class="cc-offers">${ccTile(p,COIN_PACKS.indexOf(p),' ')}</div><p class="cc-msg">${tr('cc.confirmQ',{n:packTotal(p).toLocaleString(lang),p:eurTxt(p.eur)})}${ccPending?' '+tr('cc.then'):''}</p><p class="set-p">${tr('cc.demoNote')}</p>
+      <div class="cc-row"><button type="button" class="gbtn primary" id="cc-pay" data-pay="${p.id}">${tr('cc.pay',{p:eurTxt(p.eur)})}</button><button type="button" class="gbtn" id="cc-cancel">${tr('cc.cancel')}</button></div>`;
+  }
+  $('cc-modal').hidden=false;
+}
+async function ccBuy(p){
+  const btn=$('cc-pay');if(btn)btn.disabled=true;let ok=false;
+  try{ok=await payments.buy(p)}catch(e){}
+  if(!ok){if(btn)btn.disabled=false;toast(tr('cc.failed'));return}
+  addCoins(packTotal(p));closeCC();toast(tr('cc.bought',{n:packTotal(p).toLocaleString(lang)}));
+  const k=ccPending;ccPending=null;renderShop();
+  if(k&&coins()>=SHOP.find(x=>x.k===k).price)openBooster(k);    /* l'achat du booster qu'il voulait se poursuit */
+}
+$('cc-modal').addEventListener('click',e=>{
+  if(e.target===$('cc-modal')||e.target.closest('#cc-x')||e.target.closest('#cc-cancel')){ccPending=null;return closeCC()}
+  if(e.target.closest('#cc-all')){ccPending=null;closeCC();$('cc-section').scrollIntoView({behavior:calm?'auto':'smooth',block:'start'});return}
+  const pay=e.target.closest('#cc-pay');if(pay)return ccBuy(COIN_PACKS.find(p=>p.id===pay.dataset.pay));
+  const t=e.target.closest('[data-cc]');if(t)openCC('confirm',COIN_PACKS.find(p=>p.id===t.dataset.cc));
+});
+$('cc-grid').addEventListener('click',e=>{const t=e.target.closest('[data-cc]');if(t){ccPending=null;openCC('confirm',COIN_PACKS.find(p=>p.id===t.dataset.cc))}});
+$('shop-coins').addEventListener('click',()=>{ccPending=null;$('cc-section').scrollIntoView({behavior:calm?'auto':'smooth',block:'start'})});
 $('shop-grid').addEventListener('click',e=>{const b=e.target.closest('[data-buy]');if(b)openBooster(b.dataset.buy)});
 $('bst-open').addEventListener('click',()=>openBooster('daily'));
 $('dm-coins').addEventListener('click',()=>{addCoins(500);renderShop()});
