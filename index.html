@@ -636,6 +636,28 @@ body.view-deck .toast{bottom:calc(104px + env(safe-area-inset-bottom,0px))}
 .v-uni select{font:500 15px Barlow,sans-serif;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:8px 12px}
 .v-uni select option{color:#111}
 body.viewing .vbar{flex-direction:column;align-items:center}
+.shop-top{display:flex;align-items:center;gap:10px}
+.coins{display:inline-flex;align-items:center;gap:7px;padding:6px 14px 6px 8px;border-radius:999px;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.22);font:700 17px Barlow,sans-serif;color:#fff;font-variant-numeric:tabular-nums}
+.coin{display:inline-block;position:relative;flex:none;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff6c2,#ffc233 46%,#c98a06);box-shadow:inset 0 0 0 2px rgba(120,70,0,.55),0 1px 3px rgba(0,0,0,.4)}
+.coin::after{content:"";position:absolute;inset:4px;border-radius:50%;border:1.5px solid rgba(120,70,0,.5)}
+.coins.bump{animation:coinbump .5s ease-out}
+@keyframes coinbump{40%{transform:scale(1.14)}}
+.shop-free{display:flex;align-items:center;gap:16px;margin:12px 0 18px;padding:16px;border-radius:20px;background:linear-gradient(135deg,rgba(255,255,255,.22),rgba(255,255,255,.07));border:1px solid rgba(255,255,255,.3)}
+.pk-mini{position:relative;flex:none;width:92px;height:165.6px}
+.pk-mini .pk-pack{position:absolute;left:0;top:0;width:220px;transform:scale(.4182);transform-origin:0 0}
+.pk-mini .pk-fan b{font-size:30px}.pk-mini .pk-logo{font-size:36px}.pk-mini .pk-sub{font-size:21px}.pk-mini .pk-five{font-size:13px}
+.shop-free .bst-mini{margin:0}
+.free-txt{display:grid;gap:7px;justify-items:start;min-width:0}
+.free-txt h2{margin:0;font:700 28px/1 'Barlow Condensed',sans-serif}
+.free-txt .bst-msg{text-align:left;font-size:15px;min-height:0}
+.shop-badge{padding:3px 10px;border-radius:999px;background:linear-gradient(135deg,#ffd866,#ff9d2e);color:#3a2300;font:700 12px/1.3 Barlow,sans-serif;letter-spacing:.04em;text-transform:uppercase}
+.shop-h{margin:4px 0 10px;font-size:22px}
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.shop-tile{display:grid;justify-items:center;align-content:start;gap:8px;padding:16px 10px 14px;border-radius:18px;text-align:center;background:linear-gradient(180deg,rgba(var(--lc-rgb),.28),rgba(255,255,255,.07) 65%);border:1px solid rgba(var(--lc-rgb),.7);box-shadow:0 0 22px rgba(var(--lc-rgb),.18)}
+.shop-tile h3{margin:0;font:700 21px/1.05 'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.03em}
+.shop-tile p{margin:0;font:400 12.5px/1.35 Barlow,sans-serif;opacity:.82}
+.shop-buy{display:inline-flex;align-items:center;gap:8px;font-weight:700}
+.shop-buy.poor{opacity:.55}
 </style>
 <script>try{var __t=localStorage.getItem('mycard-theme');if(__t&&/^(blue|red|black|white)$/.test(__t))document.documentElement.dataset.theme=__t}catch(e){}</script>
 </head>
@@ -717,17 +739,22 @@ body.viewing .vbar{flex-direction:column;align-items:center}
     <div class="ct-row"><button type="button" class="gbtn" id="dm-seed" data-i18n="demo.seed">Ajouter 3 participants de démo</button><button type="button" class="gbtn" id="dm-end" data-i18n="demo.endWeek">Simuler la fin de la semaine</button><button type="button" class="gbtn" id="dm-back" data-i18n="demo.backWeek">Revenir à la semaine réelle</button><button type="button" class="gbtn" id="dm-clear" data-i18n="demo.clear">Effacer les données du concours</button></div>
   </details>
 </section>
-<section id="booster" class="deck" hidden>
-  <header class="dk-head"><div><h1 data-i18n="drop.title">Booster du jour</h1></div><button type="button" id="bst-info" class="gbtn info-btn" aria-label="Chances et couleurs" data-i18n-aria="info.btn">i</button></header>
-  <p class="demo-note" data-i18n="drop.demo">Mode démo : le booster se recharge chaque jour sur cet appareil.</p>
-  <div class="bst-stage">
+<section id="shop" class="deck" hidden>
+  <header class="dk-head"><div><h1 data-i18n="shop.title">Boutique</h1></div><div class="shop-top"><span class="coins" id="shop-coins" role="status" aria-label="Tes pièces" data-i18n-aria="shop.coins"><i class="coin"></i><b id="coin-n">0</b></span><button type="button" id="bst-info" class="gbtn info-btn" aria-label="Chances et couleurs" data-i18n-aria="info.btn">i</button></div></header>
+  <p class="demo-note" data-i18n="shop.demo">Mode démo : tes pièces sont gardées sur cet appareil.</p>
+  <div class="shop-free">
     <div id="bst-pack"></div>
-    <p class="bst-msg" id="bst-msg" role="status"></p>
-    <button type="button" id="bst-open" class="gbtn primary" data-i18n="drop.open">Invoquer le booster</button>
+    <div class="free-txt"><span class="shop-badge" data-i18n="shop.daily">Gratuit · 1 par jour</span><h2 data-i18n="shop.dailyName">Booster du jour</h2>
+      <p class="bst-msg" id="bst-msg" role="status"></p>
+      <button type="button" id="bst-open" class="gbtn primary" data-i18n="drop.open">Invoquer le booster</button></div>
   </div>
+  <h2 class="set-h shop-h" data-i18n="shop.packs">Boosters à acheter</h2>
+  <div class="shop-grid" id="shop-grid"></div>
+  <p class="set-p" data-i18n="shop.noLegend">Il n’existe pas de booster légendaire à acheter.</p>
+  <p class="set-p" id="shop-earn"></p>
   <details class="set-block">
     <summary class="set-h" data-i18n="demo.tools">Outils démo</summary>
-    <div class="ct-row"><button type="button" class="gbtn" id="dm-drop" data-i18n="demo.resetDrop">Réactiver le booster du jour</button></div>
+    <div class="ct-row"><button type="button" class="gbtn" id="dm-drop" data-i18n="demo.resetDrop">Réactiver le booster du jour</button><button type="button" class="gbtn" id="dm-coins" data-i18n="demo.addCoins">Ajouter 500 pièces</button></div>
   </details>
 </section>
 <div class="who"><span id="who-n"></span> · <button type="button" id="u-change" data-i18n="stage.change">changer</button></div>
@@ -808,7 +835,7 @@ body.viewing .vbar{flex-direction:column;align-items:center}
 <nav class="tabbar" id="tabbar" aria-label="Navigation" data-i18n-aria="tab.nav"><div class="tabbar-in">
   <button type="button" class="tab" data-tab="library" aria-current="page"><span class="tab-ico" data-ico="library"></span><span data-i18n="tab.library">Bibliothèque</span></button>
   <button type="button" class="tab" data-tab="contest" aria-current="false"><span class="tab-ico" data-ico="contest"></span><span data-i18n="tab.contest">Concours</span></button>
-  <button type="button" class="tab" data-tab="booster" aria-current="false"><span class="tab-ico" data-ico="booster"></span><span data-i18n="tab.booster">Booster</span><i id="drop-dot" hidden></i></button>
+  <button type="button" class="tab" data-tab="shop" aria-current="false"><span class="tab-ico" data-ico="shop"></span><span data-i18n="tab.booster">Boutique</span><i id="drop-dot" hidden></i></button>
 </div></nav>
 <div class="toast" id="toast" role="status"></div>
 <div class="cfm" id="cfm" hidden><div class="cfm-box" role="alertdialog" aria-modal="true" aria-labelledby="cfm-t" aria-describedby="cfm-p"><h3 id="cfm-t"></h3><p id="cfm-p"></p><div class="cfm-b"><button type="button" id="cfm-no" class="gbtn" data-i18n="confirm.continue">Continuer</button><button type="button" id="cfm-yes" class="gbtn primary"></button></div></div></div>
@@ -966,7 +993,7 @@ fr:{dir:'ltr',
  'info.lk2':'Bleu : au mieux une rare',
  'info.lk3':'Violet : au mieux une épique',
  'info.lk4':'Or : une légendaire !',
- 'tab.library':'Bibliothèque','tab.contest':'Concours','tab.booster':'Booster','tab.nav':'Navigation',
+ 'tab.library':'Bibliothèque','tab.contest':'Concours','tab.booster':'Boutique','tab.nav':'Navigation',
  'uni.export':'Exporter pour la bibliothèque universelle',
  'uni.title':'Ajouter à la bibliothèque universelle',
  'uni.rarity':'Rareté',
@@ -995,6 +1022,25 @@ fr:{dir:'ltr',
  'mod.bioDone':'Touch ID / Face ID activé : tu pourras te connecter sans taper le code.',
  'mod.bioFail':'Vérification biométrique impossible ou annulée.',
  'mod.bioNone':'Cet appareil ou ce navigateur ne propose pas Touch ID / Face ID (il faut une adresse https).',
+ 'shop.title':'Boutique',
+ 'shop.demo':'Mode démo : tes pièces sont gardées sur cet appareil.',
+ 'shop.coins':'Tes pièces',
+ 'shop.daily':'Gratuit · 1 par jour',
+ 'shop.dailyName':'Booster du jour',
+ 'shop.packs':'Boosters à acheter',
+ 'shop.normal':'Booster normal',
+ 'shop.normalD':'Chances normales, de Commune à Légendaire.',
+ 'shop.tier':'Booster {r}',
+ 'shop.tierD':'Aucune carte en dessous de {r}. Jamais de légendaire.',
+ 'shop.buy':'Acheter pour {n} pièces',
+ 'shop.noCoins':'Pas assez de pièces.',
+ 'shop.noLegend':'Il n’existe pas de booster légendaire à acheter : les cartes légendaires ne sortent que dans le booster du jour et le booster normal.',
+ 'shop.earn':'Gagne des pièces avec tes doublons ({d}) et {c} pièces en inscrivant une carte au concours.',
+ 'shop.dupGain':'+{n} pièces pour tes doublons',
+ 'shop.contestGain':'+{n} pièces pour ta participation !',
+ 'info.shopT':'Boosters de la boutique',
+ 'info.shopP':'Un booster d’une rareté donnée garantit que ses 5 cartes sont toutes de cette rareté ou mieux (jusqu’à Épique), sans jamais de légendaire. Le tableau ci-dessus décrit le booster du jour et le booster normal.',
+ 'demo.addCoins':'Ajouter 500 pièces',
  'settings.title':'Paramètres','settings.account':'Compte','settings.language':'Langue','settings.loggedAs':'Connecté en tant que {user}',
  'settings.privacyTitle':'Politique de confidentialité',
  'settings.privacy':"MyCard fonctionne entièrement dans ton navigateur. Il n'y a pas de serveur, et rien de ce que tu fais ici ne nous est envoyé, ni à personne d'autre.\n\nTon pseudo, tes cartes et tes réglages sont stockés uniquement sur cet appareil, dans le navigateur. Les photos que tu ajoutes à une carte restent aussi sur cet appareil et ne sont jamais envoyées ailleurs.\n\nCette page charge des polices depuis Google Fonts ; ce chargement peut partager ton adresse IP avec Google, comme pour tout site qui utilise Google Fonts.\n\nIl n'y a ni outil de mesure d'audience, ni publicité, ni cookie de suivi.\n\nSi tu effaces les données de ton navigateur, ou si tu ouvres l'appli sur un autre appareil ou un autre navigateur, tes cartes n'y seront pas accessibles : elles ne sont pas encore sauvegardées ailleurs.\n\nCette note sera mise à jour si la connexion par compte et le stockage en ligne sont ajoutés plus tard.",
@@ -1139,7 +1185,7 @@ en:{dir:'ltr',
  'info.lk2':'Blue: a rare at best',
  'info.lk3':'Purple: an epic at best',
  'info.lk4':'Gold: a legendary!',
- 'tab.library':'Library','tab.contest':'Contest','tab.booster':'Booster','tab.nav':'Navigation',
+ 'tab.library':'Library','tab.contest':'Contest','tab.booster':'Shop','tab.nav':'Navigation',
  'uni.export':'Export for the universal library',
  'uni.title':'Add to the universal library',
  'uni.rarity':'Rarity',
@@ -1168,6 +1214,25 @@ en:{dir:'ltr',
  'mod.bioDone':'Touch ID / Face ID enabled: you can sign in without typing the code.',
  'mod.bioFail':'Biometric check failed or was cancelled.',
  'mod.bioNone':'This device or browser does not offer Touch ID / Face ID (an https address is required).',
+ 'shop.title':'Shop',
+ 'shop.demo':'Demo mode: your coins are kept on this device.',
+ 'shop.coins':'Your coins',
+ 'shop.daily':'Free · once a day',
+ 'shop.dailyName':'Daily booster',
+ 'shop.packs':'Boosters for sale',
+ 'shop.normal':'Standard booster',
+ 'shop.normalD':'Standard odds, from Common to Legendary.',
+ 'shop.tier':'{r} booster',
+ 'shop.tierD':'No card below {r}. Never a legendary.',
+ 'shop.buy':'Buy for {n} coins',
+ 'shop.noCoins':'Not enough coins.',
+ 'shop.noLegend':'There is no legendary booster for sale: legendary cards only come from the daily booster and the standard booster.',
+ 'shop.earn':'Earn coins from your duplicates ({d}) and {c} coins for entering a card in the contest.',
+ 'shop.dupGain':'+{n} coins for your duplicates',
+ 'shop.contestGain':'+{n} coins for entering!',
+ 'info.shopT':'Shop boosters',
+ 'info.shopP':'A booster of a given rarity guarantees that all 5 of its cards are of that rarity or better (up to Epic), never a legendary. The table above describes the daily booster and the standard booster.',
+ 'demo.addCoins':'Add 500 coins',
  'settings.title':'Settings','settings.account':'Account','settings.language':'Language','settings.loggedAs':'Signed in as {user}',
  'settings.privacyTitle':'Privacy policy',
  'settings.privacy':"MyCard runs entirely in your browser. There is no server, and nothing you do here is sent to us or to anyone else.\n\nYour username, your cards, and your settings are stored only on this device, in your browser's local storage. Photos you add to a card stay on this device too and are never uploaded.\n\nThis page loads fonts from Google Fonts; loading them may share your IP address with Google, as with any site that uses Google Fonts.\n\nThere is no analytics, no advertising, and no tracking cookies.\n\nClearing your browser data, or opening the app on a different device or browser, makes your cards inaccessible there — they aren't backed up anywhere else yet.\n\nThis notice will be updated if account sign-in and cloud storage are added later.",
@@ -1312,7 +1377,7 @@ es:{dir:'ltr',
  'info.lk2':'Azul: como mucho una rara',
  'info.lk3':'Violeta: como mucho una épica',
  'info.lk4':'Oro: ¡una legendaria!',
- 'tab.library':'Biblioteca','tab.contest':'Concurso','tab.booster':'Sobre','tab.nav':'Navegación',
+ 'tab.library':'Biblioteca','tab.contest':'Concurso','tab.booster':'Tienda','tab.nav':'Navegación',
  'uni.export':'Exportar para la biblioteca universal',
  'uni.title':'Añadir a la biblioteca universal',
  'uni.rarity':'Rareza',
@@ -1341,6 +1406,25 @@ es:{dir:'ltr',
  'mod.bioDone':'Touch ID / Face ID activado: podrás entrar sin escribir el código.',
  'mod.bioFail':'Verificación biométrica imposible o cancelada.',
  'mod.bioNone':'Este dispositivo o navegador no ofrece Touch ID / Face ID (hace falta una dirección https).',
+ 'shop.title':'Tienda',
+ 'shop.demo':'Modo demo: tus monedas se guardan en este dispositivo.',
+ 'shop.coins':'Tus monedas',
+ 'shop.daily':'Gratis · 1 al día',
+ 'shop.dailyName':'Sobre del día',
+ 'shop.packs':'Sobres a la venta',
+ 'shop.normal':'Sobre normal',
+ 'shop.normalD':'Probabilidades normales, de Común a Legendaria.',
+ 'shop.tier':'Sobre {r}',
+ 'shop.tierD':'Ninguna carta por debajo de {r}. Nunca una legendaria.',
+ 'shop.buy':'Comprar por {n} monedas',
+ 'shop.noCoins':'No tienes suficientes monedas.',
+ 'shop.noLegend':'No hay sobres legendarios a la venta: las cartas legendarias solo salen en el sobre del día y en el sobre normal.',
+ 'shop.earn':'Gana monedas con tus repetidas ({d}) y {c} monedas al inscribir una carta en el concurso.',
+ 'shop.dupGain':'+{n} monedas por tus repetidas',
+ 'shop.contestGain':'+{n} monedas por participar.',
+ 'info.shopT':'Sobres de la tienda',
+ 'info.shopP':'Un sobre de una rareza dada garantiza que sus 5 cartas son de esa rareza o mejor (hasta Épica), nunca una legendaria. La tabla de arriba describe el sobre del día y el sobre normal.',
+ 'demo.addCoins':'Añadir 500 monedas',
  'settings.title':'Ajustes','settings.account':'Cuenta','settings.language':'Idioma','settings.loggedAs':'Sesión iniciada como {user}',
  'settings.privacyTitle':'Política de privacidad',
  'settings.privacy':"MyCard funciona totalmente en tu navegador. No hay servidor, y nada de lo que hagas aquí se nos envía a nosotros ni a nadie más.\n\nTu nombre de usuario, tus cartas y tus ajustes se guardan solo en este dispositivo, en el almacenamiento local del navegador. Las fotos que añades a una carta también se quedan en este dispositivo y nunca se suben a ningún sitio.\n\nEsta página carga fuentes desde Google Fonts; esta carga puede compartir tu dirección IP con Google, como ocurre en cualquier sitio que use Google Fonts.\n\nNo hay analítica, ni publicidad, ni cookies de seguimiento.\n\nSi borras los datos del navegador, o abres la app en otro dispositivo o navegador, tus cartas no estarán disponibles allí: todavía no se respaldan en ningún otro sitio.\n\nEste aviso se actualizará si más adelante se añaden el inicio de sesión con cuenta y el almacenamiento en la nube.",
@@ -1485,7 +1569,7 @@ de:{dir:'ltr',
  'info.lk2':'Blau: höchstens eine Seltene',
  'info.lk3':'Violett: höchstens eine Epische',
  'info.lk4':'Gold: eine Legendäre!',
- 'tab.library':'Bibliothek','tab.contest':'Wettbewerb','tab.booster':'Booster','tab.nav':'Navigation',
+ 'tab.library':'Bibliothek','tab.contest':'Wettbewerb','tab.booster':'Shop','tab.nav':'Navigation',
  'uni.export':'Für die Universal-Bibliothek exportieren',
  'uni.title':'Zur Universal-Bibliothek hinzufügen',
  'uni.rarity':'Seltenheit',
@@ -1514,6 +1598,25 @@ de:{dir:'ltr',
  'mod.bioDone':'Touch ID / Face ID aktiviert: Du kannst dich ohne Code anmelden.',
  'mod.bioFail':'Biometrische Prüfung nicht möglich oder abgebrochen.',
  'mod.bioNone':'Dieses Gerät oder dieser Browser bietet kein Touch ID / Face ID (https-Adresse nötig).',
+ 'shop.title':'Shop',
+ 'shop.demo':'Demo-Modus: Deine Münzen werden auf diesem Gerät gespeichert.',
+ 'shop.coins':'Deine Münzen',
+ 'shop.daily':'Gratis · 1 pro Tag',
+ 'shop.dailyName':'Tages-Booster',
+ 'shop.packs':'Booster zu kaufen',
+ 'shop.normal':'Normaler Booster',
+ 'shop.normalD':'Normale Chancen, von Gewöhnlich bis Legendär.',
+ 'shop.tier':'{r}-Booster',
+ 'shop.tierD':'Keine Karte unter {r}. Nie eine Legendäre.',
+ 'shop.buy':'Für {n} Münzen kaufen',
+ 'shop.noCoins':'Nicht genug Münzen.',
+ 'shop.noLegend':'Es gibt keinen legendären Booster zu kaufen: Legendäre Karten kommen nur im Tages-Booster und im normalen Booster vor.',
+ 'shop.earn':'Verdiene Münzen mit Duplikaten ({d}) und {c} Münzen für eine Karte im Wettbewerb.',
+ 'shop.dupGain':'+{n} Münzen für deine Duplikate',
+ 'shop.contestGain':'+{n} Münzen für deine Teilnahme!',
+ 'info.shopT':'Booster im Shop',
+ 'info.shopP':'Ein Booster einer bestimmten Seltenheit garantiert, dass alle 5 Karten diese Seltenheit oder besser haben (bis Episch), nie eine Legendäre. Die Tabelle oben beschreibt den Tages-Booster und den normalen Booster.',
+ 'demo.addCoins':'500 Münzen hinzufügen',
  'settings.title':'Einstellungen','settings.account':'Konto','settings.language':'Sprache','settings.loggedAs':'Angemeldet als {user}',
  'settings.privacyTitle':'Datenschutzerklärung',
  'settings.privacy':"MyCard läuft vollständig in deinem Browser. Es gibt keinen Server, und nichts von dem, was du hier tust, wird an uns oder sonst jemanden gesendet.\n\nDein Benutzername, deine Karten und deine Einstellungen werden nur auf diesem Gerät gespeichert, im lokalen Speicher des Browsers. Fotos, die du einer Karte hinzufügst, bleiben ebenfalls auf diesem Gerät und werden nie hochgeladen.\n\nDiese Seite lädt Schriftarten von Google Fonts; dabei kann deine IP-Adresse an Google übermittelt werden, wie bei jeder Website, die Google Fonts nutzt.\n\nEs gibt keine Analyse-Tools, keine Werbung und keine Tracking-Cookies.\n\nWenn du deine Browserdaten löschst oder die App auf einem anderen Gerät oder Browser öffnest, sind deine Karten dort nicht verfügbar: Sie werden bisher nirgendwo anders gesichert.\n\nDieser Hinweis wird aktualisiert, falls später eine Kontoanmeldung und Cloud-Speicherung hinzukommen.",
@@ -1658,7 +1761,7 @@ ar:{dir:'rtl',
  'info.lk2':'أزرق: نادرة على الأكثر',
  'info.lk3':'بنفسجي: ملحمية على الأكثر',
  'info.lk4':'ذهبي: أسطورية!',
- 'tab.library':'المكتبة','tab.contest':'المسابقة','tab.booster':'الحزمة','tab.nav':'التنقل',
+ 'tab.library':'المكتبة','tab.contest':'المسابقة','tab.booster':'المتجر','tab.nav':'التنقل',
  'uni.export':'تصدير للمكتبة العامة',
  'uni.title':'إضافة إلى المكتبة العامة',
  'uni.rarity':'الندرة',
@@ -1687,6 +1790,25 @@ ar:{dir:'rtl',
  'mod.bioDone':'تم تفعيل البصمة / الوجه: يمكنك الدخول دون كتابة الرمز.',
  'mod.bioFail':'تعذّر التحقق الحيوي أو أُلغي.',
  'mod.bioNone':'لا يوفر هذا الجهاز أو المتصفح بصمة الإصبع / الوجه (يلزم عنوان https).',
+ 'shop.title':'المتجر',
+ 'shop.demo':'وضع تجريبي: تُحفظ عملاتك على هذا الجهاز.',
+ 'shop.coins':'عملاتك',
+ 'shop.daily':'مجاني · مرة يوميًا',
+ 'shop.dailyName':'حزمة اليوم',
+ 'shop.packs':'حزم للبيع',
+ 'shop.normal':'حزمة عادية',
+ 'shop.normalD':'احتمالات عادية، من شائعة إلى أسطورية.',
+ 'shop.tier':'حزمة {r}',
+ 'shop.tierD':'لا بطاقة أقل من {r}. ولا أسطورية أبدًا.',
+ 'shop.buy':'اشترِ بـ {n} عملة',
+ 'shop.noCoins':'عملاتك غير كافية.',
+ 'shop.noLegend':'لا توجد حزمة أسطورية للبيع: البطاقات الأسطورية لا تخرج إلا من حزمة اليوم والحزمة العادية.',
+ 'shop.earn':'اكسب عملات من البطاقات المكررة ({d}) و{c} عملة عند تسجيل بطاقة في المسابقة.',
+ 'shop.dupGain':'+{n} عملة مقابل المكررات',
+ 'shop.contestGain':'+{n} عملة مقابل مشاركتك!',
+ 'info.shopT':'حزم المتجر',
+ 'info.shopP':'تضمن حزمة من ندرة معينة أن بطاقاتها الخمس كلها من هذه الندرة أو أعلى (حتى ملحمية)، ولا أسطورية أبدًا. الجدول أعلاه يصف حزمة اليوم والحزمة العادية.',
+ 'demo.addCoins':'إضافة 500 عملة',
  'settings.title':'الإعدادات','settings.account':'الحساب','settings.language':'اللغة','settings.loggedAs':'مسجّل الدخول باسم {user}',
  'settings.privacyTitle':'سياسة الخصوصية',
  'settings.privacy':"يعمل MyCard بالكامل داخل متصفحك. لا يوجد خادم، ولا يُرسَل أي شيء تفعله هنا إلينا أو إلى أي جهة أخرى.\n\nيُحفظ اسم المستخدم وبطاقاتك وإعداداتك على هذا الجهاز فقط، داخل التخزين المحلي للمتصفح. كما تبقى الصور التي تضيفها إلى بطاقة على هذا الجهاز ولا تُرفع إلى أي مكان.\n\nتُحمّل هذه الصفحة خطوطًا من Google Fonts؛ قد يشارك ذلك عنوان IP الخاص بك مع Google، كما هو الحال في أي موقع يستخدم Google Fonts.\n\nلا توجد أدوات تحليل، ولا إعلانات، ولا ملفات تعريف ارتباط للتتبع.\n\nعند مسح بيانات المتصفح، أو فتح التطبيق على جهاز أو متصفح آخر، لن تكون بطاقاتك متاحة هناك: فهي غير محفوظة بعد في أي مكان آخر.\n\nسيتم تحديث هذا الإشعار إذا أُضيف لاحقًا تسجيل الدخول بحساب والتخزين السحابي.",
@@ -2671,8 +2793,8 @@ function thumbUrl(key,c,img){
   thumbQ=p;return p;
 }
 function paintThumbs(root,list){root.querySelectorAll('img[data-i]').forEach(im=>{const t=list[+im.dataset.i];if(t)Promise.resolve(t.img()).then(img=>thumbUrl(t.key,t.card,img)).then(u=>{if(u)im.src=u})})}
-const TAB_OF={deck:'library',settings:'library',contest:'contest',booster:'booster'};
-const openSub=id=>{saveNow();['deck','settings','contest','booster'].forEach(s=>$(s).hidden=s!==id);clearInterval(bstTick);window.scrollTo(0,0);
+const TAB_OF={deck:'library',settings:'library',contest:'contest',shop:'shop'};
+const openSub=id=>{saveNow();['deck','settings','contest','shop'].forEach(s=>$(s).hidden=s!==id);clearInterval(bstTick);window.scrollTo(0,0);
   document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-current',t.dataset.tab===TAB_OF[id]?'page':'false'))};
 function backToDeck(){openSub('deck');renderDeck()}
 
@@ -2723,7 +2845,9 @@ async function submitMine(){
   await hydrated;const img=c.img||(c.hasImg?await media.get('img:'+uk()+':'+c.id):null);
   const e={id:'e'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),uk:uk(),author:user,t:Date.now(),card:JSON.parse(JSON.stringify({...c,img:undefined,hasImg:!!img})),hasImg:!!img};
   if(img)await media.put('ent:'+e.id,img);
-  await cloud.submit(weekId(),e);toast(tr('contest.toastSubmitted'));renderContest();
+  const first=!(await cloud.entries(weekId())).some(x=>x.uk===uk());
+  await cloud.submit(weekId(),e);if(first)addCoins(CONTEST_COINS);
+  toast(tr('contest.toastSubmitted')+(first?' '+tr('shop.contestGain',{n:CONTEST_COINS}):''));renderContest();
 }
 async function moderate(wk,ok,rarity){
   const r=(await cloud.results())[wk];if(!r||r.status!=='pending')return;
@@ -2758,6 +2882,15 @@ const dayKey=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)
 const dropKey=()=>'mycard-drop:'+uk();
 const dropReady=()=>{try{return localStorage.getItem(dropKey())!==dayKey()}catch(e){return true}};
 const clock=ms=>{const s=Math.max(0,Math.floor(ms/1e3));return [Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(v=>String(v).padStart(2,'0')).join(':')};
+/* -- pièces : gagnées avec les doublons et le concours, dépensées dans la boutique (stockées sur l'appareil en mode démo) -- */
+const START_COINS=300,CONTEST_COINS=50,DUP_COINS={common:5,uncommon:12,rare:30,epic:80,legendary:200};
+const SHOP=[{k:'normal',price:100},{k:'uncommon',price:180,min:'uncommon'},{k:'rare',price:450,min:'rare'},{k:'epic',price:1500,min:'epic'}];   /* pas de booster légendaire à vendre */
+const walletKey=()=>'mycard-wallet:'+uk();
+function coins(){try{const v=localStorage.getItem(walletKey());if(v===null){localStorage.setItem(walletKey(),START_COINS);return START_COINS}return Math.max(0,+v||0)}catch(e){return 0}}
+function setCoins(n,bump){try{localStorage.setItem(walletKey(),Math.max(0,Math.round(n)))}catch(e){}renderCoins(bump)}
+const addCoins=n=>setCoins(coins()+n,n>0);
+function renderCoins(bump){const el=$('coin-n');if(!el)return;el.textContent=coins().toLocaleString(lang);
+  if(bump){const c=$('shop-coins');c.classList.remove('bump');void c.offsetWidth;c.classList.add('bump')}}
 const PACK_SIZE=5,rarIdx=k=>Math.max(0,RARITIES.findIndex(r=>r.k===k)),RN=RARITIES.length-1;
 let bstTick=0,bstBusy=false,bstEmpty=false;
 function updateDropDot(){const d=$('drop-dot');if(d)d.hidden=!user||!dropReady()}
@@ -2766,11 +2899,13 @@ function rollRarity(keys){                         /* tirage pondéré parmi les
   for(const r of pool)if((x-=r.w)<0)return r.k;
   return pool[pool.length-1].k;
 }
-function rollPack(cat){
+function rollPack(cat,min){                           /* min : rareté plancher d'un booster de la boutique (jamais de légendaire) */
   const by={};cat.forEach(c=>(by[c.rarity]=by[c.rarity]||[]).push(c));
-  const keys=Object.keys(by),out=[],used=new Set();let legend=false;
+  const keys=Object.keys(by),out=[],used=new Set();let legend=false,allowed=null;
+  if(min){const mi=rarIdx(min);allowed=keys.filter(k=>k!=='legendary'&&rarIdx(k)>=mi);
+    if(!allowed.length){const nl=keys.filter(k=>k!=='legendary').sort((a,b)=>rarIdx(b)-rarIdx(a));allowed=nl.length?[nl[0]]:keys}}   /* pas assez de cartes à cette rareté : la meilleure disponible */
   for(let i=0;i<PACK_SIZE;i++){
-    let ks=legend?keys.filter(k=>k!=='legendary'):keys;if(!ks.length)ks=keys;     /* une légendaire déjà tirée : plus d'autre dans ce booster */
+    let ks=allowed||(legend?keys.filter(k=>k!=='legendary'):keys);if(!ks.length)ks=keys;     /* une légendaire déjà tirée : plus d'autre dans ce booster */
     const rk=rollRarity(ks);if(rk==='legendary')legend=true;
     let pool=by[rk].filter(c=>!used.has(c.id));if(!pool.length)pool=by[rk];       /* pas deux fois la même carte si possible */
     const c=pool[Math.floor(Math.random()*pool.length)];used.add(c.id);out.push(c);
@@ -2877,17 +3012,22 @@ const TEARS={
     an(R,[{transform:'none',opacity:1},{transform:'rotate(64deg)',opacity:1,offset:.5},{transform:'rotate(100deg) translate(14%,-20%)',opacity:0}],{duration:DUR(900),easing:'cubic-bezier(.3,1.3,.5,1)'});return 800}},
   slash:{pre:'slash',cut:SLASH,run(top){top.style.transformOrigin='50% 14%';an(top,[{transform:'none',opacity:1},{transform:'translate(40%,-12%) rotate(-3deg)',opacity:1,offset:.3},{transform:'translate(125%,-22%) rotate(-10deg)',opacity:1,offset:.6},{transform:'translate(170%,300%) rotate(28deg)',opacity:0}],{duration:DUR(1000),easing:'ease-in'});return 750}}
 };
-async function openBooster(){
-  if(bstBusy||!dropReady())return;
-  const cat=await catalog();if(!cat.length)return renderBooster();
+async function openBooster(kind){
+  kind=typeof kind==='string'?kind:'daily';const prod=SHOP.find(p=>p.k===kind);
+  if(bstBusy)return;
+  if(!prod){if(!dropReady())return}
+  else if(coins()<prod.price){toast(tr('shop.noCoins'));return}
+  const cat=await catalog();if(!cat.length)return renderShop();
   bstBusy=true;$('bst-open').disabled=true;
-  const cards=rollPack(cat);
-  try{localStorage.setItem(dropKey(),dayKey())}catch(e){}                  /* le booster est consommé et les cartes ajoutées dès le tirage */
+  const cards=rollPack(cat,prod&&prod.min);
+  if(prod)setCoins(coins()-prod.price);                                    /* l'achat est débité dès le tirage */
+  else{try{localStorage.setItem(dropKey(),dayKey())}catch(e){}}           /* le booster est consommé et les cartes ajoutées dès le tirage */
   updateDropDot();
   const res=[];for(const c of cards)res.push(await unlockUniversal(c,c.rarity));
+  const gain=cards.reduce((a,c,i)=>a+(res[i].isNew?0:DUP_COINS[c.rarity]||0),0);if(gain)addCoins(gain);   /* les doublons se transforment en pièces */
   const urls=cards.map(c=>catImg(c).then(img=>thumbUrl('cat:'+c.id+':'+(c.upd||0),c,img)));
   const luck=packLuck(cards),rgb=luckRGB(luck);
-  Object.assign(pk,{on:true,stage:'summon',idx:0,cards,res,urls,luck,rgb,cur:null,until:Date.now()+1e9});
+  Object.assign(pk,{on:true,stage:'summon',idx:0,cards,res,urls,luck,rgb,gain,cur:null,until:Date.now()+1e9});
   const P=$('pk');P.hidden=false;P.classList.remove('on','legend');
   P.style.setProperty('--lc-rgb',rgb.join(','));P.style.setProperty('--lc',`rgb(${rgb.join(',')})`);P.style.setProperty('--cy','15%');P.style.setProperty('--rx','0deg');P.style.setProperty('--ry','0deg');P.style.setProperty('--sx','50');
   const pack=$('pk-pack');pack.className='pk-pack';pack.innerHTML=packHTML(true);setPackVars(pack);
@@ -2957,7 +3097,7 @@ function pkFinal(){
   $('pk-fin-t').textContent=tr('drop.pack');
   $('pk-fin-grid').innerHTML=pk.cards.map((c,i)=>`<figure style="--rc:${rarOf(c.rarity).c};animation-delay:${.08*i+.15}s"><img alt="${esc(c.name)}" data-i="${i}"><span class="rar" style="--rc:${rarOf(c.rarity).c}">${rarName(c.rarity)}</span><small>${pk.res[i].isNew?tr('drop.new'):tr('drop.dup',{n:pk.res[i].n})}</small></figure>`).join('');
   pk.urls.forEach((p,i)=>p.then(u=>{const im=$('pk-fin-grid').querySelector(`img[data-i="${i}"]`);if(im)im.src=u}));
-  $('pk-fin-msg').textContent=tr('drop.added',{n:pk.res.filter(r=>r.isNew).length,t:pk.cards.length});
+  $('pk-fin-msg').textContent=tr('drop.added',{n:pk.res.filter(r=>r.isNew).length,t:pk.cards.length})+(pk.gain?' · '+tr('shop.dupGain',{n:pk.gain}):'');
   $('pk-final').hidden=false;pk.cards.some(c=>c.rarity==='legendary')&&fx.burst(innerWidth/2,innerHeight*.45,pk.rgb,90,360);
 }
 function pkAdvance(){
@@ -2967,7 +3107,7 @@ function pkAdvance(){
 function pkClose(){
   if(!pk.on)return;pk.on=false;fx.stop();$('pk').classList.remove('on','legend');
   setTimeout(()=>{if(!pk.on){$('pk').hidden=true;$('pk-cardwrap').innerHTML=''}},450);
-  bstBusy=false;renderBooster();
+  bstBusy=false;renderShop();
 }
 $('pk').addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;pkAdvance()});
 $('pk').addEventListener('pointermove',e=>{                           /* le pack et les cartes suivent un peu le doigt : reflets et relief */
@@ -2991,6 +3131,7 @@ async function renderInfo(){
     <table class="odds"><thead><tr><th>${tr('info.colRar')}</th><th>${tr('info.colCards')}</th><th>${tr('info.colOdds')}</th><th>${tr('info.colPack')}</th></tr></thead><tbody>${rows}</tbody></table>
     <dl><dt>${tr('info.colRar')}</dt><dd>${tr('info.dRar')}</dd><dt>${tr('info.colCards')}</dt><dd>${tr('info.dCards')}</dd><dt>${tr('info.colOdds')}</dt><dd>${tr('info.dOdds')}</dd><dt>${tr('info.colPack')}</dt><dd>${tr('info.dPack')}</dd></dl>
     <p>${tr('info.noCards')}</p>
+    <h4>${tr('info.shopT')}</h4><p>${tr('info.shopP')}</p>
     <h4>${tr('info.colors')}</h4><p>${tr('info.c1')}</p><p>${tr('info.c2')}</p>
     <div class="lk-bar" style="background:linear-gradient(90deg,${RARITIES.map(r=>r.c).join(',')})"></div>
     <ul class="lk-list">${RARITIES.map((r,i)=>`<li><i style="--c:${r.c}"></i><span>${tr('info.lk'+i)}</span></li>`).join('')}</ul>`;
@@ -3006,41 +3147,50 @@ document.addEventListener('keydown',e=>{
 
 /* -- écran du booster -- */
 function bstMsg(){
-  if($('booster').hidden||bstBusy||bstEmpty)return;
+  if($('shop').hidden||bstBusy||bstEmpty)return;
   const ready=dropReady(),btn=$('bst-open');
   $('bst-msg').textContent=ready?tr('drop.ready'):tr('drop.wait',{t:clock((()=>{const d=new Date();d.setHours(24,0,0,0);return d-new Date()})())});
-  if(ready===btn.disabled)renderBooster();                                       /* minuit passé (ou autre onglet) : on remet à jour */
+  if(ready===btn.disabled)renderShop();                                       /* minuit passé (ou autre onglet) : on remet à jour */
 }
-async function renderBooster(){
-  if($('booster').hidden)return;
+async function renderShop(){
+  if($('shop').hidden)return;
   const cat=await catalog(),ready=dropReady(),off=!ready||!cat.length||bstBusy;
-  bstEmpty=!cat.length;$('bst-open').disabled=off;
-  if(!$('bst-pack').firstChild){$('bst-pack').innerHTML=`<div class="pk-pack bst-mini">${packHTML(false)}</div>`;setPackVars($('bst-pack').firstChild)}
+  bstEmpty=!cat.length;$('bst-open').disabled=off;renderCoins();
+  if(!$('bst-pack').firstChild){$('bst-pack').innerHTML=`<div class="pk-mini bst-mini"><div class="pk-pack">${packHTML(false)}</div></div>`;setPackVars($('bst-pack').querySelector('.pk-pack'))}
   $('bst-pack').firstChild.classList.toggle('off',!ready||bstEmpty);
+  const me=coins();
+  $('shop-grid').innerHTML=SHOP.map(p=>{const r=p.min?rarOf(p.min):null,rgb=r?hex2rgb(r.c):[140,170,255];
+    return `<article class="shop-tile" style="--lc-rgb:${rgb.join(',')}"><div class="pk-mini"><div class="pk-pack">${packHTML(false)}</div></div>
+      <h3>${p.min?tr('shop.tier',{r:rarName(p.min)}):tr('shop.normal')}</h3><p>${p.min?tr('shop.tierD',{r:rarName(p.min)}):tr('shop.normalD')}</p>
+      <button type="button" class="gbtn primary shop-buy${me<p.price?' poor':''}" data-buy="${p.k}" aria-label="${tr('shop.buy',{n:p.price})}"${bstBusy||bstEmpty?' disabled':''}><i class="coin"></i>${p.price}</button></article>`}).join('');
+  $('shop-grid').querySelectorAll('.pk-pack').forEach(el=>setPackVars(el));
+  $('shop-earn').textContent=tr('shop.earn',{d:RARITIES.map(r=>rarName(r.k)+' '+DUP_COINS[r.k]).join(' · '),c:CONTEST_COINS});
   if(bstEmpty)$('bst-msg').textContent=tr('drop.empty');
   bstMsg();updateDropDot();
 }
-$('bst-open').addEventListener('click',openBooster);
-$('dm-drop').addEventListener('click',()=>{try{localStorage.removeItem(dropKey())}catch(e){}renderBooster()});
+$('shop-grid').addEventListener('click',e=>{const b=e.target.closest('[data-buy]');if(b)openBooster(b.dataset.buy)});
+$('bst-open').addEventListener('click',()=>openBooster('daily'));
+$('dm-coins').addEventListener('click',()=>{addCoins(500);renderShop()});
+$('dm-drop').addEventListener('click',()=>{try{localStorage.removeItem(dropKey())}catch(e){}renderShop()});
 
 /* ---- icônes : dessinées ici en SVG (trait = couleur du texte). Pour utiliser vos propres fichiers, renseigner ICON_ASSETS
    (ex. ICON_ASSETS.library='assets/icons/library.png') : l'image remplace alors le dessin. ---- */
 const ICONS={
   library:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.6" y="7" width="10" height="13" rx="2" transform="rotate(-12 8.6 13.5)" opacity=".5"/><rect x="10.4" y="7" width="10" height="13" rx="2" transform="rotate(12 15.4 13.5)" opacity=".5"/><rect x="7" y="4.2" width="10" height="14.6" rx="2" fill="currentColor" fill-opacity=".16"/><path d="M12 8.6l.95 1.95 2.15.3-1.55 1.5.35 2.15L12 13.45 10.1 14.5l.35-2.15L8.9 10.85l2.15-.3z" fill="currentColor" stroke="none"/></svg>',
   contest:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8v5.2a4 4 0 0 1-8 0z" fill="currentColor" fill-opacity=".16"/><path d="M8 5.6H5.2c0 2.9 1 4.4 3 4.8M16 5.6h2.8c0 2.9-1 4.4-3 4.8"/><path d="M12 13.2V16.6M9 20h6M9.8 16.6h4.4l.7 3.4H9.1z"/></svg>',
-  booster:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 5.4l1 -1.2 l1 1.2 l1 -1.2 l1 1.2 l1 -1.2 l1 1.2 l1 -1.2 l1 1.2 l1 -1.2 l1 1.2 l1 -1.2 l1 1.2V18.6l-1 1.2 l-1 -1.2 l-1 1.2 l-1 -1.2 l-1 1.2 l-1 -1.2 l-1 1.2 l-1 -1.2 l-1 1.2 l-1 -1.2 l-1 1.2 l-1 -1.2z" fill="currentColor" fill-opacity=".16"/><path d="M12 9.2l.95 2.1 2.1.95-2.1.95-.95 2.1-.95-2.1-2.1-.95 2.1-.95z" fill="currentColor" stroke="none"/></svg>',
+  shop:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.2 8.2h13.6l-1.1 10.9a1.9 1.9 0 0 1-1.9 1.7H8.2a1.9 1.9 0 0 1-1.9-1.7z" fill="currentColor" fill-opacity=".16"/><path d="M9 8.2V6.9a3 3 0 0 1 6 0v1.3"/><path d="M9.3 12.4a2.7 2.7 0 0 0 5.4 0"/></svg>',
   gear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.11 4.95L10.50 2.52L13.50 2.52L13.89 4.95L15.65 5.68L17.64 4.23L19.77 6.36L18.32 8.35L19.05 10.11L21.48 10.50L21.48 13.50L19.05 13.89L18.32 15.65L19.77 17.64L17.64 19.77L15.65 18.32L13.89 19.05L13.50 21.48L10.50 21.48L10.11 19.05L8.35 18.32L6.36 19.77L4.23 17.64L5.68 15.65L4.95 13.89L2.52 13.50L2.52 10.50L4.95 10.11L5.68 8.35L4.23 6.36L6.36 4.23L8.35 5.68z" fill="currentColor" fill-opacity=".16"/><circle cx="12" cy="12" r="3.1"/></svg>',
   camera:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.3l1.1-1.6A1.5 1.5 0 0 1 10.1 4h3.8a1.5 1.5 0 0 1 1.2.4L16.2 6h1.3A2.5 2.5 0 0 1 20 8.5v8a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z" fill="currentColor" fill-opacity=".16"/><circle cx="12" cy="12.5" r="3.4"/></svg>',
   sparkle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4l1.6 4.4L16 10l-4.4 1.6L10 16l-1.6-4.4L4 10l4.4-1.6z" fill="currentColor" fill-opacity=".16"/><path d="M18 14l.8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8z"/></svg>'
 };
-const ICON_ASSETS={library:'',contest:'',booster:'',gear:'',camera:'',sparkle:''};
+const ICON_ASSETS={library:'',contest:'',shop:'',gear:'',camera:'',sparkle:''};
 const iconHTML=n=>ICON_ASSETS[n]?`<img src="${ICON_ASSETS[n]}" alt="">`:(ICONS[n]||'');
 document.querySelectorAll('[data-ico]').forEach(el=>{el.innerHTML=iconHTML(el.dataset.ico)});
 /* ---- barre d'onglets du bas ---- */
 function goTab(t){
   if(t==='library')backToDeck();
   else if(t==='contest'){openSub('contest');renderContest()}
-  else{openSub('booster');renderBooster();bstTick=setInterval(bstMsg,1000)}
+  else{openSub('shop');renderShop();bstTick=setInterval(bstMsg,1000)}
 }
 document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>goTab(b.dataset.tab)));
 
@@ -3157,7 +3307,7 @@ function applyI18n(){
   if(user)$('who-n').textContent=tr('deck.hello',{user});
   if(!$('settings').hidden)fillSettings();
   if(typeof renderContest==='function')renderContest();
-  if(typeof renderBooster==='function')renderBooster();
+  if(typeof renderShop==='function')renderShop();
   if(typeof renderInfo==='function')renderInfo();
   if(!$('exp-modal').hidden)openExpModal(expIntent);
 }

@@ -22,7 +22,7 @@ personnaliser et collectionner des cartes holographiques, pensée pour télépho
 - **Recherche** dans la bibliothèque (nom, type, évolution, talent, attaques), sans tenir compte des accents ni de la casse.
 - **Thèmes de couleur** (bleu, rouge, noir, blanc), au choix dans les Paramètres.
 - **Concours hebdomadaire** et **booster du jour** avec une **bibliothèque universelle** (voir plus bas).
-- **Barre d'onglets en bas** (Bibliothèque · Concours · Booster), icônes dessinées en SVG (voir « Icônes »).
+- **Barre d'onglets en bas** (Bibliothèque · Concours · Boutique), icônes dessinées en SVG (voir « Icônes »).
 
 ## Lancer
 Ouvrir `index.html` dans un navigateur, ou :
@@ -44,13 +44,13 @@ Tout reste **dans le navigateur** ; rien n'est envoyé à un serveur.
 | IndexedDB `mycard-media` | `img:<nom>:<id>`, `th:<nom>:<id>` | image importée, miniature |
 | `localStorage` | `mycard-user`, `mycard-sort`, `mycard-q` | dernier nom, tri choisi, palier de qualité |
 | `localStorage` | `mycard-theme`, `mycard-lang`, `mycard-mod` | thème, langue, mode modérateur (empreinte de la connexion) |
-| `localStorage` | `mycard-drop:<nom>` | jour du dernier booster ouvert |
+| `localStorage` | `mycard-drop:<nom>`, `mycard-wallet:<nom>` | jour du dernier booster gratuit ouvert, solde de pièces |
 | `localStorage` / IndexedDB | `mycard-cloud:*`, `ent:<id>`, `ext:<id>` | concours (démo) : participations, votes, résultats, images |
 
 Chaque nom d'utilisateur a sa bibliothèque propre **sur cet appareil**. Les anciennes sauvegardes (clé `mycard-deck:<nom>`) sont converties au lancement.
 
 ## Concours hebdomadaire, booster du jour et bibliothèque universelle
-Accessibles par les onglets du bas : **Concours** et **Booster**.
+Accessibles par les onglets du bas : **Concours** et **Boutique**.
 
 **Concours.** Chaque semaine (du lundi au dimanche), un joueur inscrit une de ses cartes et vote pour celle d'un autre (un seul vote par semaine, pas pour sa propre carte).
 À la fin de la semaine, la carte la plus votée est désignée n°1 et attend la **validation du modérateur**. Si elle est validée, le modérateur choisit sa rareté
@@ -72,6 +72,17 @@ Les cartes `exemple-…` sont des exemples à remplacer. Une carte débloquée e
 Pour en changer : calcule la nouvelle empreinte de `identifiant + "\n" + code` avec la même fonction (`modHash`) et remplace les deux constantes. C'est une protection **légère, côté navigateur** : sans serveur, elle empêche un joueur de tomber dessus par hasard, pas un attaquant déterminé (il peut modifier le code de la page chez lui — ce qui n'affecte que son propre appareil).
 
 L'image est incluse dans l'extrait (en `data:` URL). Si elle alourdit trop le fichier (l'application prévient au-delà de 300 Ko), héberge-la et remplace la valeur de `img` par son adresse.
+
+**Boutique et pièces.** L'onglet **Boutique** remplace l'ancien onglet Booster. Il contient le **booster gratuit du jour** (un par jour, comme dans Brawl Stars) et des **boosters à acheter avec des pièces** :
+
+| Booster | Prix | Contenu |
+|---|---|---|
+| Normal | 100 | chances normales (de Commune à Légendaire, ≤ 1 légendaire) |
+| Peu commun | 180 | aucune carte en dessous de Peu commun, jamais de légendaire |
+| Rare | 450 | aucune carte en dessous de Rare, jamais de légendaire |
+| Épique | 1 500 | aucune carte en dessous d'Épique, jamais de légendaire |
+
+Il n'y a **pas de booster légendaire à vendre** : une légendaire ne sort que du booster du jour et du booster normal (1 % par carte). On commence avec 300 pièces. On en gagne avec les **doublons** (Commune 5 · Peu commune 12 · Rare 30 · Épique 80 · Légendaire 200) et **50 pièces** à la première inscription de la semaine au concours. Prix, gains et solde de départ se règlent en tête du bloc « pièces » dans `index.html` (`SHOP`, `DUP_COINS`, `CONTEST_COINS`, `START_COINS`). Les « Outils démo » de la boutique permettent d'ajouter 500 pièces. Comme il n'y a pas de serveur, le solde est stocké sur l'appareil (modifiable par le joueur) : un vrai solde demandera un backend.
 
 **Booster du jour.** Un booster par jour (il se recharge à minuit, heure locale), de **5 cartes avec au plus 1 légendaire**.
 Chaque carte est tirée selon sa rareté ; dès qu'une légendaire sort, les cartes suivantes du booster ne peuvent plus l'être. Une carte n'apparaît pas deux fois dans le même booster tant que sa rareté a assez de cartes.
@@ -105,7 +116,7 @@ de simuler la fin de la semaine et de réactiver le booster.
 
 ## Icônes
 Les icônes (onglets du bas, engrenage des Paramètres, fenêtre d'export) sont **dessinées en SVG** dans `index.html` (objet `ICONS`), sans emoji. Pour utiliser vos propres images,
-renseigner `ICON_ASSETS` (par exemple `ICON_ASSETS.library='assets/icons/library.png'`) : l'image remplace alors le dessin. Noms disponibles : `library`, `contest`, `booster`, `gear`, `camera`, `sparkle`.
+renseigner `ICON_ASSETS` (par exemple `ICON_ASSETS.library='assets/icons/library.png'`) : l'image remplace alors le dessin. Noms disponibles : `library`, `contest`, `shop`, `gear`, `camera`, `sparkle`.
 
 ## Paramètres
 Accessible depuis la bibliothèque (icône ⚙️) : pseudo actuel avec bouton pour en changer, langue, **thème de couleur**, connexion **modérateur**, **politique de confidentialité** et **crédits** (chacun dans un volet repliable), traduits dans les 5 langues.
