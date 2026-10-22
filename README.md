@@ -143,10 +143,13 @@ Interface en **français, anglais, espagnol, allemand et arabe** (RTL pris en ch
 Limites connues : les chiffres de dimension du PNG peuvent s'afficher dans un ordre inhabituel en arabe (effet bidi standard, pas un bug) ; l'accord du pluriel arabe du compteur de cartes est simplifié (pas de forme duelle).
 
 ## Apparence des cartes
-La carte a sa propre mise en page (format 3:5), réglable dans **Paramètres → Apparence des cartes** :
-- **Forme** : coins coupés ou arche ;
-- **Police des titres** : Cinzel, Unbounded ou Fraunces (Google Fonts) ;
-- **Cadre de tes cartes** : Nuit, Ivoire, Corail ou Jade.
+La carte a sa propre mise en page (format 3:5). Dans **Paramètres → Apparence des cartes** :
+- **Forme** : coins coupés ou arche (s'applique aussi au dos de la carte et aux cartes des packs) ;
+- **Police des titres** : Cinzel, Unbounded ou Fraunces (Google Fonts).
+
+Le **cadre** (Nuit, Ivoire, Corail, Jade) se choisit **carte par carte**, dans l'étape « Carte » de la personnalisation.
+La forme est portée par une enveloppe intérieure (`.cin`) et reprise par chaque calque d'effet, jamais par l'élément incliné en 3D :
+Safari ne découpe pas toujours les calques animés d'un élément 3D.
 
 Les cartes de la bibliothèque universelle prennent automatiquement le **cadre de leur rareté** (Commune → Légendaire).
 Vocabulaire de la carte : Vitalité, Pouvoir, Attaque · Force, Charge (losanges aux couleurs des éléments), Série, Édition, Point faible,

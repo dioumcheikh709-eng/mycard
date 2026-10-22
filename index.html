@@ -58,7 +58,7 @@ body{margin:0;min-height:100vh;box-sizing:border-box;padding:24px 16px;backgroun
 /* ---- holographic layers ---- */
 .holo,.sparkle,.glare{inset:0;border-radius:inherit;pointer-events:none}
 .card{--tile:calc(min(340px,86vw)*.235)}
-.revwrap{inset:0;border-radius:inherit;pointer-events:none;mix-blend-mode:screen;display:none;-webkit-mask:linear-gradient(#000,#000) top/100% 3.4% no-repeat,linear-gradient(#000,#000) bottom/100% 3.4% no-repeat,linear-gradient(#000,#000) left/3.4% 100% no-repeat,linear-gradient(#000,#000) right/3.4% 100% no-repeat,linear-gradient(transparent 52%,#000 60%);mask:linear-gradient(#000,#000) top/100% 3.4% no-repeat,linear-gradient(#000,#000) bottom/100% 3.4% no-repeat,linear-gradient(#000,#000) left/3.4% 100% no-repeat,linear-gradient(#000,#000) right/3.4% 100% no-repeat,linear-gradient(transparent 52%,#000 60%)}
+.revwrap{inset:0;border-radius:inherit;pointer-events:none;mix-blend-mode:screen;display:none;-webkit-mask:linear-gradient(#000,#000) top/100% 4% no-repeat,linear-gradient(#000,#000) left/6.7% 100% no-repeat,linear-gradient(#000,#000) right/6.7% 100% no-repeat,linear-gradient(transparent 52.5%,#000 52.5%);mask:linear-gradient(#000,#000) top/100% 4% no-repeat,linear-gradient(#000,#000) left/6.7% 100% no-repeat,linear-gradient(#000,#000) right/6.7% 100% no-repeat,linear-gradient(transparent 52.5%,#000 52.5%)}
 .card[data-fx=reverse] .revwrap{display:block}
 .card[data-fx=reverse] .holo,.card[data-fx=reverse] .sparkle{display:none}
 .rev{position:absolute;inset:0;-webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2080%2080%27%3E%3Cpath%20d%3D%27M0%200L80%2080M80%200L0%2080%27%20stroke%3D%27%23fff%27%20stroke-opacity%3D%27.35%27%20stroke-width%3D%271.2%27%2F%3E%3Cg%20fill%3D%27%23fff%27%3E%3Cpolygon%20points%3D%2740.00%2C31.00%2042.02%2C37.22%2048.56%2C37.22%2043.27%2C41.06%2045.29%2C47.28%2040.00%2C43.44%2034.71%2C47.28%2036.73%2C41.06%2031.44%2C37.22%2037.98%2C37.22%27%2F%3E%3Cpolygon%20points%3D%270.00%2C-9.00%202.02%2C-2.78%208.56%2C-2.78%203.27%2C1.06%205.29%2C7.28%200.00%2C3.44%20-5.29%2C7.28%20-3.27%2C1.06%20-8.56%2C-2.78%20-2.02%2C-2.78%27%2F%3E%3Cpolygon%20points%3D%2780.00%2C-9.00%2082.02%2C-2.78%2088.56%2C-2.78%2083.27%2C1.06%2085.29%2C7.28%2080.00%2C3.44%2074.71%2C7.28%2076.73%2C1.06%2071.44%2C-2.78%2077.98%2C-2.78%27%2F%3E%3Cpolygon%20points%3D%270.00%2C71.00%202.02%2C77.22%208.56%2C77.22%203.27%2C81.06%205.29%2C87.28%200.00%2C83.44%20-5.29%2C87.28%20-3.27%2C81.06%20-8.56%2C77.22%20-2.02%2C77.22%27%2F%3E%3Cpolygon%20points%3D%2780.00%2C71.00%2082.02%2C77.22%2088.56%2C77.22%2083.27%2C81.06%2085.29%2C87.28%2080.00%2C83.44%2074.71%2C87.28%2076.73%2C81.06%2071.44%2C77.22%2077.98%2C77.22%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 0 0/var(--tile) var(--tile) repeat;mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2080%2080%27%3E%3Cpath%20d%3D%27M0%200L80%2080M80%200L0%2080%27%20stroke%3D%27%23fff%27%20stroke-opacity%3D%27.35%27%20stroke-width%3D%271.2%27%2F%3E%3Cg%20fill%3D%27%23fff%27%3E%3Cpolygon%20points%3D%2740.00%2C31.00%2042.02%2C37.22%2048.56%2C37.22%2043.27%2C41.06%2045.29%2C47.28%2040.00%2C43.44%2034.71%2C47.28%2036.73%2C41.06%2031.44%2C37.22%2037.98%2C37.22%27%2F%3E%3Cpolygon%20points%3D%270.00%2C-9.00%202.02%2C-2.78%208.56%2C-2.78%203.27%2C1.06%205.29%2C7.28%200.00%2C3.44%20-5.29%2C7.28%20-3.27%2C1.06%20-8.56%2C-2.78%20-2.02%2C-2.78%27%2F%3E%3Cpolygon%20points%3D%2780.00%2C-9.00%2082.02%2C-2.78%2088.56%2C-2.78%2083.27%2C1.06%2085.29%2C7.28%2080.00%2C3.44%2074.71%2C7.28%2076.73%2C1.06%2071.44%2C-2.78%2077.98%2C-2.78%27%2F%3E%3Cpolygon%20points%3D%270.00%2C71.00%202.02%2C77.22%208.56%2C77.22%203.27%2C81.06%205.29%2C87.28%200.00%2C83.44%20-5.29%2C87.28%20-3.27%2C81.06%20-8.56%2C77.22%20-2.02%2C77.22%27%2F%3E%3Cpolygon%20points%3D%2780.00%2C71.00%2082.02%2C77.22%2088.56%2C77.22%2083.27%2C81.06%2085.29%2C87.28%2080.00%2C83.44%2074.71%2C87.28%2076.73%2C81.06%2071.44%2C77.22%2077.98%2C77.22%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 0 0/var(--tile) var(--tile) repeat;
@@ -167,9 +167,13 @@ body{margin:0;min-height:100vh;box-sizing:border-box;padding:24px 16px;backgroun
 
 /* ---- carte : cadre, panneau, fenêtre d'illustration — formes « coins coupés » et « arche » (Paramètres) ----
    Les couleurs viennent du cadre choisi (--cfr, --cfp…) ; la police des titres de --tf. Unités : cqw = 1 % de la largeur. */
-.card[data-shape]{background:var(--cfr);border-radius:0}
-.card[data-shape=cut]{clip-path:polygon(8% 0,92% 0,100% 4.8%,100% 95.2%,92% 100%,8% 100%,0 95.2%,0 4.8%)}
-.card[data-shape=arch]{border-radius:50% 50% 6.5% 6.5% / 30% 30% 3.9% 3.9%}
+/* La carte inclinée en 3D ne découpe rien elle-même (Safari ne découpe pas toujours les calques animés d'un élément 3D) :
+   c'est l'enveloppe .cin qui porte la forme, et chaque calque d'effet la reprend aussi. */
+.card[data-shape]{background:none;border-radius:0;overflow:visible}
+.cin{position:absolute;inset:0;overflow:hidden;background:var(--cfr);isolation:isolate;will-change:transform}
+.cin>*{position:absolute}
+.card[data-shape=cut] :is(.cin,.holo,.sparkle,.glare,.revwrap,.fxa,.fxg){clip-path:polygon(8% 0,92% 0,100% 4.8%,100% 95.2%,92% 100%,8% 100%,0 95.2%,0 4.8%)}
+.card[data-shape=arch] :is(.cin,.holo,.sparkle,.glare,.revwrap,.fxa,.fxg){border-radius:50% 50% 6.5% 6.5% / 30% 30% 3.9% 3.9%;overflow:hidden}
 .pan{inset:1.8% 3%;background:var(--cfp)}
 .card[data-shape=cut] .pan{clip-path:polygon(7.5% 0,92.5% 0,100% 4.4%,100% 95.6%,92.5% 100%,7.5% 100%,0 95.6%,0 4.4%)}
 .card[data-shape=arch] .pan{border-radius:50% 50% 5% 5% / 29% 29% 3% 3%}
@@ -708,6 +712,23 @@ button.coins{cursor:pointer}
 .shop-info li{margin:6px 0}
 .shop-info .pr{display:inline-flex;align-items:center;gap:5px;font-weight:700}
 .shop-info .coin{width:14px;height:14px}
+/* la forme choisie (Paramètres) s'applique aussi au dos de la carte et aux cartes des packs */
+:root[data-shape] .cardback{border-radius:0}
+:root[data-shape=cut] :is(.cardback,.pk-card .bk,.pk-card::after){clip-path:polygon(8% 0,92% 0,100% 4.8%,100% 95.2%,92% 100%,8% 100%,0 95.2%,0 4.8%)}
+:root[data-shape=arch] :is(.cardback,.pk-card .bk,.pk-card::after){border-radius:50% 50% 6.5% 6.5% / 30% 30% 3.9% 3.9%}
+:root[data-shape=cut] .cardback::before{display:none}
+:root[data-shape=arch] .cardback::before{border-radius:50% 50% 5% 5% / 29% 29% 3% 3%}
+.pk-card{border-radius:0}
+.pk-card img{border-radius:0;box-shadow:none;filter:drop-shadow(0 0 1.5px var(--rc)) drop-shadow(0 0 14px var(--rc)) drop-shadow(0 14px 18px rgba(0,0,0,.5))}
+.pk-card.legend img{box-shadow:none;filter:drop-shadow(0 0 2px var(--rc)) drop-shadow(0 0 30px var(--rc)) drop-shadow(0 14px 18px rgba(0,0,0,.5))}
+.pk-row img{border-radius:0;box-shadow:none;object-fit:contain;filter:drop-shadow(0 0 1.5px var(--rc))}
+.pk-fin-grid img{border-radius:0;box-shadow:none;object-fit:contain;filter:drop-shadow(0 0 1.5px var(--rc)) drop-shadow(0 0 10px var(--rc))}
+.frgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.frgrid button{display:flex;align-items:center;gap:8px;font:500 13px Barlow,sans-serif;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:9px 12px;cursor:pointer}
+.frgrid button[aria-pressed=true]{background:#fff;color:var(--chip-on-ink);border-color:#fff}
+:root[data-theme=white] .frgrid button{color:var(--ink);background:rgba(20,24,46,.06);border-color:rgba(20,24,46,.2)}
+:root[data-theme=white] .frgrid button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.frnote{font:400 12px/1.4 Barlow,sans-serif;opacity:.75}
 </style>
 <script>try{var __t=localStorage.getItem('mycard-theme');if(__t&&/^(blue|red|black|white)$/.test(__t))document.documentElement.dataset.theme=__t}catch(e){}</script>
 </head>
@@ -759,8 +780,6 @@ button.coins{cursor:pointer}
     <h2 class="set-h" data-i18n="settings.look">Apparence des cartes</h2>
     <h3 class="set-h3" data-i18n="look.shape">Forme</h3><div class="lgrid" id="set-shape"></div>
     <h3 class="set-h3" data-i18n="look.font">Police des titres</h3><div class="lgrid" id="set-font"></div>
-    <h3 class="set-h3" data-i18n="look.frame">Cadre de tes cartes</h3><div class="lgrid" id="set-frame"></div>
-    <p class="set-p" data-i18n="look.note">Les cartes de la bibliothèque universelle gardent le cadre de leur rareté.</p>
   </div>
   <div class="set-block">
     <h2 class="set-h" data-i18n="settings.mod">Modérateur</h2>
@@ -839,6 +858,7 @@ button.coins{cursor:pointer}
     <label class="wide"><span data-i18n="panel.card.evo">Ligne « Evolves from » (vide = masquée)</span><input type="text" id="f-evo" maxlength="30"></label>
     <div class="wide en-row"><span data-i18n="panel.card.type">Type de la carte</span><div class="tgrid" id="tgrid"></div></div>
     <select id="f-type" hidden></select>
+    <div class="wide en-row"><span data-i18n="panel.card.frame">Cadre</span><div class="frgrid" id="frgrid"></div><small class="frnote" data-i18n="look.note">Les cartes de la bibliothèque universelle gardent le cadre de leur rareté.</small></div>
   </div>
   <div class="step editor" data-step="ability" hidden>
     <label class="wide chk"><input type="checkbox" id="f-ab-on"> <span data-i18n="panel.ability.show">Afficher un talent</span></label>
@@ -1133,6 +1153,7 @@ fr:{dir:'ltr',
  'card.force':'FORCE',
  'card.weak':'Point faible : {e}',
  'card.illus':'Illustration : {n}',
+ 'panel.card.frame':'Cadre',
  'settings.title':'Paramètres','settings.account':'Compte','settings.language':'Langue','settings.loggedAs':'Connecté en tant que {user}',
  'settings.privacyTitle':'Politique de confidentialité',
  'settings.privacy':"MyCard fonctionne entièrement dans ton navigateur. Il n'y a pas de serveur, et rien de ce que tu fais ici ne nous est envoyé, ni à personne d'autre.\n\nTon pseudo, tes cartes et tes réglages sont stockés uniquement sur cet appareil, dans le navigateur. Les photos que tu ajoutes à une carte restent aussi sur cet appareil et ne sont jamais envoyées ailleurs.\n\nCette page charge des polices depuis Google Fonts ; ce chargement peut partager ton adresse IP avec Google, comme pour tout site qui utilise Google Fonts.\n\nIl n'y a ni outil de mesure d'audience, ni publicité, ni cookie de suivi.\n\nSi tu effaces les données de ton navigateur, ou si tu ouvres l'appli sur un autre appareil ou un autre navigateur, tes cartes n'y seront pas accessibles : elles ne sont pas encore sauvegardées ailleurs.\n\nCette note sera mise à jour si la connexion par compte et le stockage en ligne sont ajoutés plus tard.",
@@ -1358,6 +1379,7 @@ en:{dir:'ltr',
  'card.force':'FORCE',
  'card.weak':'Weak point: {e}',
  'card.illus':'Illustration: {n}',
+ 'panel.card.frame':'Frame',
  'settings.title':'Settings','settings.account':'Account','settings.language':'Language','settings.loggedAs':'Signed in as {user}',
  'settings.privacyTitle':'Privacy policy',
  'settings.privacy':"MyCard runs entirely in your browser. There is no server, and nothing you do here is sent to us or to anyone else.\n\nYour username, your cards, and your settings are stored only on this device, in your browser's local storage. Photos you add to a card stay on this device too and are never uploaded.\n\nThis page loads fonts from Google Fonts; loading them may share your IP address with Google, as with any site that uses Google Fonts.\n\nThere is no analytics, no advertising, and no tracking cookies.\n\nClearing your browser data, or opening the app on a different device or browser, makes your cards inaccessible there — they aren't backed up anywhere else yet.\n\nThis notice will be updated if account sign-in and cloud storage are added later.",
@@ -1583,6 +1605,7 @@ es:{dir:'ltr',
  'card.force':'FUERZA',
  'card.weak':'Punto débil: {e}',
  'card.illus':'Ilustración: {n}',
+ 'panel.card.frame':'Marco',
  'settings.title':'Ajustes','settings.account':'Cuenta','settings.language':'Idioma','settings.loggedAs':'Sesión iniciada como {user}',
  'settings.privacyTitle':'Política de privacidad',
  'settings.privacy':"MyCard funciona totalmente en tu navegador. No hay servidor, y nada de lo que hagas aquí se nos envía a nosotros ni a nadie más.\n\nTu nombre de usuario, tus cartas y tus ajustes se guardan solo en este dispositivo, en el almacenamiento local del navegador. Las fotos que añades a una carta también se quedan en este dispositivo y nunca se suben a ningún sitio.\n\nEsta página carga fuentes desde Google Fonts; esta carga puede compartir tu dirección IP con Google, como ocurre en cualquier sitio que use Google Fonts.\n\nNo hay analítica, ni publicidad, ni cookies de seguimiento.\n\nSi borras los datos del navegador, o abres la app en otro dispositivo o navegador, tus cartas no estarán disponibles allí: todavía no se respaldan en ningún otro sitio.\n\nEste aviso se actualizará si más adelante se añaden el inicio de sesión con cuenta y el almacenamiento en la nube.",
@@ -1808,6 +1831,7 @@ de:{dir:'ltr',
  'card.force':'STÄRKE',
  'card.weak':'Schwachpunkt: {e}',
  'card.illus':'Illustration: {n}',
+ 'panel.card.frame':'Rahmen',
  'settings.title':'Einstellungen','settings.account':'Konto','settings.language':'Sprache','settings.loggedAs':'Angemeldet als {user}',
  'settings.privacyTitle':'Datenschutzerklärung',
  'settings.privacy':"MyCard läuft vollständig in deinem Browser. Es gibt keinen Server, und nichts von dem, was du hier tust, wird an uns oder sonst jemanden gesendet.\n\nDein Benutzername, deine Karten und deine Einstellungen werden nur auf diesem Gerät gespeichert, im lokalen Speicher des Browsers. Fotos, die du einer Karte hinzufügst, bleiben ebenfalls auf diesem Gerät und werden nie hochgeladen.\n\nDiese Seite lädt Schriftarten von Google Fonts; dabei kann deine IP-Adresse an Google übermittelt werden, wie bei jeder Website, die Google Fonts nutzt.\n\nEs gibt keine Analyse-Tools, keine Werbung und keine Tracking-Cookies.\n\nWenn du deine Browserdaten löschst oder die App auf einem anderen Gerät oder Browser öffnest, sind deine Karten dort nicht verfügbar: Sie werden bisher nirgendwo anders gesichert.\n\nDieser Hinweis wird aktualisiert, falls später eine Kontoanmeldung und Cloud-Speicherung hinzukommen.",
@@ -2033,6 +2057,7 @@ ar:{dir:'rtl',
  'card.force':'القوة',
  'card.weak':'نقطة الضعف: {e}',
  'card.illus':'الرسم: {n}',
+ 'panel.card.frame':'الإطار',
  'settings.title':'الإعدادات','settings.account':'الحساب','settings.language':'اللغة','settings.loggedAs':'مسجّل الدخول باسم {user}',
  'settings.privacyTitle':'سياسة الخصوصية',
  'settings.privacy':"يعمل MyCard بالكامل داخل متصفحك. لا يوجد خادم، ولا يُرسَل أي شيء تفعله هنا إلينا أو إلى أي جهة أخرى.\n\nيُحفظ اسم المستخدم وبطاقاتك وإعداداتك على هذا الجهاز فقط، داخل التخزين المحلي للمتصفح. كما تبقى الصور التي تضيفها إلى بطاقة على هذا الجهاز ولا تُرفع إلى أي مكان.\n\nتُحمّل هذه الصفحة خطوطًا من Google Fonts؛ قد يشارك ذلك عنوان IP الخاص بك مع Google، كما هو الحال في أي موقع يستخدم Google Fonts.\n\nلا توجد أدوات تحليل، ولا إعلانات، ولا ملفات تعريف ارتباط للتتبع.\n\nعند مسح بيانات المتصفح، أو فتح التطبيق على جهاز أو متصفح آخر، لن تكون بطاقاتك متاحة هناك: فهي غير محفوظة بعد في أي مكان آخر.\n\nسيتم تحديث هذا الإشعار إذا أُضيف لاحقًا تسجيل الدخول بحساب والتخزين السحابي.",
@@ -2091,11 +2116,12 @@ const FRAMES={
 const RFRAMES={common:{fr:['#c9ced8','#7d8596','#e3e6ec'],fp:'#151820',acc:'#c9ced8'},uncommon:{fr:['#9af0be','#2f9c62','#c8f7da'],fp:'#0b1d14',acc:'#7fe0a8'},
   rare:{fr:['#9ccbff','#2d6fd1','#cfe4ff'],fp:'#0b1630',acc:'#8cc2ff'},epic:{fr:['#e2b8ff','#7b3fd1','#f0dcff'],fp:'#180c2e',acc:'#d3a6ff'},
   legendary:{fr:['#fff2b0','#b9810f','#ffe17a'],fp:'#140f05',acc:'#ffd35a',ink:'#fff5dc',mute:'#e3c27a',soft:'#f1e2c0',line:'rgba(255,225,122,.22)'}};
-let LOOK={shape:'cut',font:'cinzel',frame:'night'};
-try{const s=JSON.parse(localStorage.getItem('mycard-look')||'{}');if(['cut','arch'].includes(s.shape))LOOK.shape=s.shape;if(TFONTS[s.font])LOOK.font=s.font;if(FRAMES[s.frame])LOOK.frame=s.frame}catch(e){}
-const lookSig=()=>LOOK.shape+'.'+LOOK.font+'.'+LOOK.frame;
+let LOOK={shape:'cut',font:'cinzel'};
+try{const s=JSON.parse(localStorage.getItem('mycard-look')||'{}');if(['cut','arch'].includes(s.shape))LOOK.shape=s.shape;if(TFONTS[s.font])LOOK.font=s.font}catch(e){}
+document.documentElement.dataset.shape=LOOK.shape;
+const lookSig=()=>LOOK.shape+'.'+LOOK.font;
 const rarKey=c=>{const k=c&&(c.rar||c.rarity);return RFRAMES[k]?k:null};
-function frameOf(c){const k=rarKey(c);if(!k)return FRAMES[LOOK.frame];const r=RFRAMES[k];return {...FRAMES.night,mute:'#b9c0d6',soft:'#dde2ef',...r,badge:r.acc,badgeInk:'#14110a'}}
+function frameOf(c){const k=rarKey(c);if(!k)return FRAMES[c&&c.frame]||FRAMES.night;const r=RFRAMES[k];return {...FRAMES.night,mute:'#b9c0d6',soft:'#dde2ef',...r,badge:r.acc,badgeInk:'#14110a'}}
 const cssLin=f=>`linear-gradient(160deg,${f.fr[0]},${f.fr[1]} 50%,${f.fr[2]})`;
 function lookVars(c){const f=frameOf(c);return {'--cfr':cssLin(f),'--cfp':f.fp,'--cink':f.ink,'--cmute':f.mute,'--csoft':f.soft,'--cacc':f.acc,'--caccink':f.accInk,'--cbox':f.box,'--cline':f.line,'--cbadge':f.badge,'--cbadgeink':f.badgeInk,'--tf':TFONTS[LOOK.font]}}
 /* anciens textes du modèle de carte → nouveaux textes (cartes déjà enregistrées) */
@@ -2156,11 +2182,11 @@ function render(c){
   cur=c;
   if(editing&&deck.includes(c))queueSave();
   Object.entries(c.pal).forEach(([k,v])=>{card.style.setProperty(k,v);card.closest('.stage').style.setProperty(k,v)});
-  card.dataset.shape=LOOK.shape;Object.entries(lookVars(c)).forEach(([k,v])=>card.style.setProperty(k,v));
+  card.dataset.shape=LOOK.shape;document.documentElement.dataset.shape=LOOK.shape;Object.entries(lookVars(c)).forEach(([k,v])=>card.style.setProperty(k,v));
   const rk=rarKey(c),ser=[c.evo,c.num?'№ '+c.num:''].filter(Boolean).join(' · ');
   const tags=(rk?`<span class="rb">${esc(rarName(rk))}</span>`:'')+(c.special?`<span>${esc(c.special)}</span>`:'');
   const chg=s=>`<span class="chg">${[...(s||'')].map(t=>`<i style="--c:${(TY[t]||TY.C).c}"></i>`).join('')}</span>`;
-  card.innerHTML=`
+  card.innerHTML=`<div class="cin">
   <div class="pan"></div>
   <div class="art"><i></i><b></b><em></em></div>
   <div class="holo"></div><div class="sparkle"></div><div class="revwrap"><div class="rev"></div><div class="rev spot"></div></div><div class="fxa"><i></i><i></i><i></i></div>
@@ -2176,7 +2202,7 @@ function render(c){
       <div class="foot"><span>${esc(tr('card.weak',{e:typeName(c.weak[0])+' '+(c.weak[1]||'')}))}</span><span>${esc(tr('card.illus',{n:user}))}</span></div>
     </div>
   </div>
-  <div class="glare"></div><div class="fxg"></div>`;
+  <div class="glare"></div><div class="fxg"></div></div>`;
   if(c.img){const a=card.querySelector('.art');a.classList.add('img');if(photoKey!==c.img){photoEl=new Image();photoEl.className='photo';photoEl.alt='';photoEl.src=c.img;photoKey=c.img}a.append(photoEl);frame()}
   card.querySelector('.holo').append(HG,HS);card.querySelector('.glare').append(GL);
   card.querySelector('.sparkle').append(SK);
@@ -2241,7 +2267,13 @@ rebuildFxGrid();
 fg.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$('f-fx').value=b.dataset.v;$('f-fx').dispatchEvent(new Event('change'));[...fg.children].forEach(x=>x.setAttribute('aria-pressed',x===b))});
 const txt=v=>esc(v).replace(/\n/g,'<br>');
 function frame(){const p=card.querySelector('.photo');if(p)p.style.transform=`translate(${cur.px||0}%,${cur.py||0}%) scale(${cur.zoom||1})`}
+function buildFrameGrid(){
+  const g=$('frgrid'),f=cur&&FRAMES[cur.frame]?cur.frame:'night';
+  g.innerHTML=Object.keys(FRAMES).map(v=>`<button type="button" data-v="${v}" aria-pressed="${v===f}"><i class="fsw" style="background:${cssLin(FRAMES[v])}" aria-hidden="true"></i>${tr('look.frame.'+v)}</button>`).join('');
+}
+$('frgrid').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||!cur)return;cur.frame=b.dataset.v;buildFrameGrid();render(cur);queueSave()});
 function fill(c){
+  buildFrameGrid();
   $('f-name').value=c.name;$('f-hp').value=c.hp;$('f-type').value=c.type;
   $('f-atk').value=c.mv[0].n;$('f-dmg').value=c.mv[0].d;$('f-atkt').value=plain(c.mv[0].t||'');
   $('f-ab-on').checked=!!c.ab.on;$('f-ab-n').value=c.ab.n;$('f-ab-t').value=plain(c.ab.t);
@@ -2403,8 +2435,7 @@ async function drawCard(c0,op){
     const T0=Math.round(W*.235),tile=document.createElement('canvas');tile.width=tile.height=T0;
     const t=tile.getContext('2d');t.scale(T0/80,T0/80);t.strokeStyle='rgba(255,255,255,.35)';t.lineWidth=1.2;t.beginPath();t.moveTo(0,0);t.lineTo(80,80);t.moveTo(80,0);t.lineTo(0,80);t.stroke();
     t.fillStyle='#fff';[[40,40],[0,0],[80,0],[0,80],[80,80]].forEach(([sx,sy])=>{t.beginPath();for(let i=0;i<10;i++){const r=i%2?3.44:9,a=-Math.PI/2+i*Math.PI/5;t.lineTo(sx+r*Math.cos(a),sy+r*Math.sin(a))}t.closePath();t.fill()});
-    const reg=mk(),r=reg.getContext('2d');r.fillStyle='#000';r.fillRect(0,0,W,3.4*v);r.fillRect(0,H-3.4*v,W,3.4*v);r.fillRect(0,0,3.4*u,H);r.fillRect(W-3.4*u,0,3.4*u,H);
-    const rg=r.createLinearGradient(0,H*.52,0,H*.6);rg.addColorStop(0,'rgba(0,0,0,0)');rg.addColorStop(1,'#000');r.fillStyle=rg;r.fillRect(0,H*.52,W,H*.48);
+    const reg=mk(),r=reg.getContext('2d');r.fillStyle='#000';r.fillRect(0,0,W,4*v);r.fillRect(0,0,6.7*u,H);r.fillRect(W-6.7*u,0,6.7*u,H);r.fillRect(0,H*.525,W,H*.475);
     const layer=(paint,alpha)=>{const q=mk(),g=q.getContext('2d');paint(g);
       g.globalCompositeOperation='destination-in';g.fillStyle=g.createPattern(tile,'repeat');g.fillRect(0,0,W,H);g.drawImage(reg,0,0);
       x.save();x.globalCompositeOperation='screen';x.globalAlpha=Math.min(1,alpha);x.drawImage(q,0,0);x.restore()};
@@ -2947,10 +2978,9 @@ function buildLookGrids(){
     g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>setLook(k,b.dataset.v)))};
   grid('set-shape',['cut','arch'],v=>tr('look.shape.'+v),v=>`<i class="shp ${v}" aria-hidden="true"></i>`,'shape');
   grid('set-font',Object.keys(TFONTS),v=>`<span style="font-family:${TFONTS[v].replace(/"/g,"'")};font-size:17px">${v[0].toUpperCase()+v.slice(1)}</span>`,()=>'','font');
-  grid('set-frame',Object.keys(FRAMES),v=>tr('look.frame.'+v),v=>`<i class="fsw" style="background:${cssLin(FRAMES[v])}" aria-hidden="true"></i>`,'frame');
 }
 function setLook(k,v){
-  LOOK[k]=v;try{localStorage.setItem('mycard-look',JSON.stringify(LOOK))}catch(e){}
+  LOOK[k]=v;document.documentElement.dataset.shape=LOOK.shape;try{localStorage.setItem('mycard-look',JSON.stringify(LOOK))}catch(e){}
   buildLookGrids();if(cur)render(cur);fxDirty=true;
   if(typeof fillThumbs==='function')fillThumbs();
 }
