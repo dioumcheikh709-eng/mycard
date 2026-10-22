@@ -43,7 +43,7 @@ Tout reste **dans le navigateur** ; rien n'est envoyé à un serveur.
 | `localStorage` | `mycard-c:<nom>:<id>` | une carte (sans son image) |
 | IndexedDB `mycard-media` | `img:<nom>:<id>`, `th:<nom>:<id>` | image importée, miniature |
 | `localStorage` | `mycard-user`, `mycard-sort`, `mycard-q` | dernier nom, tri choisi, palier de qualité |
-| `localStorage` | `mycard-theme`, `mycard-lang`, `mycard-mod` | thème, langue, mode modérateur (empreinte de la connexion) |
+| `localStorage` | `mycard-theme`, `mycard-lang`, `mycard-mod`, `mycard-look` | thème, langue, mode modérateur (empreinte de la connexion), apparence des cartes |
 | `localStorage` | `mycard-drop:<nom>`, `mycard-wallet:<nom>` | jour du dernier booster gratuit ouvert, solde de Card Coins |
 | `localStorage` / IndexedDB | `mycard-cloud:*`, `ent:<id>`, `ext:<id>` | concours (démo) : participations, votes, résultats, images |
 
@@ -141,6 +141,19 @@ Accessible depuis la bibliothèque (icône ⚙️) : pseudo actuel avec bouton p
 Interface en **français, anglais, espagnol, allemand et arabe** (RTL pris en charge). Après le pseudo, un écran propose de choisir la langue une seule fois ; elle reste modifiable ensuite via le bouton 🌐 (bibliothèque et fiche de carte). Le texte imprimé *sur* la carte (HP, Ability, weakness/resistance/retreat…) reste volontairement en anglais, comme une vraie carte à collectionner.
 
 Limites connues : les chiffres de dimension du PNG peuvent s'afficher dans un ordre inhabituel en arabe (effet bidi standard, pas un bug) ; l'accord du pluriel arabe du compteur de cartes est simplifié (pas de forme duelle).
+
+## Apparence des cartes
+La carte a sa propre mise en page (format 3:5), réglable dans **Paramètres → Apparence des cartes** :
+- **Forme** : coins coupés ou arche ;
+- **Police des titres** : Cinzel, Unbounded ou Fraunces (Google Fonts) ;
+- **Cadre de tes cartes** : Nuit, Ivoire, Corail ou Jade.
+
+Les cartes de la bibliothèque universelle prennent automatiquement le **cadre de leur rareté** (Commune → Légendaire).
+Vocabulaire de la carte : Vitalité, Pouvoir, Attaque · Force, Charge (losanges aux couleurs des éléments), Série, Édition, Point faible,
+Note du créateur, numéro « № ». Les 19 **éléments** ont leurs propres noms (Sève, Braise, Marée, Foudre, Songe, Givre, Ardeur, Venin, Argile,
+Zéphyr, Essaim, Granit, Brume, Mythe, Ombre, Alliage, Lueur, Brut, Cristal). Les cartes enregistrées avec les anciens textes du modèle
+sont mises à jour au chargement (`modernize`). L'écran (CSS) et l'export image / GIF (canvas) suivent la même géométrie : une modification de
+mise en page se fait aux deux endroits (`render` et `drawCard`).
 
 ## Effets
 Holo classique · Cadre étoilé · Prisme · Nébuleuse · Mosaïque · Aurore boréale · Opale · Paillettes · Ondes · Métallique (acier brossé) · Or.

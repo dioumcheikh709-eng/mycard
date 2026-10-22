@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MyCard holographique</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500&family=Tajawal:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500&family=Tajawal:wght@400;500;700&family=Cinzel:wght@700&family=Unbounded:wght@600;700&family=Fraunces:opsz,wght@9..144,700&display=swap">
 <style>
 :root{
   box-sizing:border-box;
@@ -32,7 +32,7 @@ body{margin:0;min-height:100vh;box-sizing:border-box;padding:24px 16px;backgroun
 .tabs button[aria-pressed=true]{background:var(--chip-on);color:var(--chip-on-ink)}
 .tabs button:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 
-.stage{perspective:900px;width:min(340px,86vw,58vh);aspect-ratio:63/88}
+.stage{perspective:900px;width:min(320px,82vw,46vh);aspect-ratio:3/5}
 .card{--k:1;--mx:50;--my:50;--rx:0;--ry:0;--o:0;
   position:relative;width:100%;height:100%;border-radius:4.5% / 3.3%;
   transform:rotateX(calc(var(--rx)*1deg)) rotateY(calc(var(--ry)*1deg));transform-style:preserve-3d;will-change:transform;
@@ -165,43 +165,57 @@ body{margin:0;min-height:100vh;box-sizing:border-box;padding:24px 16px;backgroun
 .card[data-fx=metal] .fxa>i:nth-child(3){mix-blend-mode:screen;background:radial-gradient(70% 45% at var(--at),rgba(235,242,255,.7),transparent 60%)}
 .glare{z-index:5;mix-blend-mode:overlay;opacity:.5;overflow:hidden}
 
-/* ---- card text ---- */
-.ui{inset:0;z-index:3;pointer-events:none;color:#fff;font-family:'Barlow Condensed',Impact,sans-serif;text-shadow:0 1px 2px #000b;container-type:inline-size;direction:ltr}
+/* ---- carte : cadre, panneau, fenêtre d'illustration — formes « coins coupés » et « arche » (Paramètres) ----
+   Les couleurs viennent du cadre choisi (--cfr, --cfp…) ; la police des titres de --tf. Unités : cqw = 1 % de la largeur. */
+.card[data-shape]{background:var(--cfr);border-radius:0}
+.card[data-shape=cut]{clip-path:polygon(8% 0,92% 0,100% 4.8%,100% 95.2%,92% 100%,8% 100%,0 95.2%,0 4.8%)}
+.card[data-shape=arch]{border-radius:50% 50% 6.5% 6.5% / 30% 30% 3.9% 3.9%}
+.pan{inset:1.8% 3%;background:var(--cfp)}
+.card[data-shape=cut] .pan{clip-path:polygon(7.5% 0,92.5% 0,100% 4.4%,100% 95.6%,92.5% 100%,7.5% 100%,0 95.6%,0 4.4%)}
+.card[data-shape=arch] .pan{border-radius:50% 50% 5% 5% / 29% 29% 3% 3%}
+.card[data-shape] .art{inset:4% 6.7% auto 6.7%;height:49%;border-radius:0}
+.card[data-shape=cut] .art{clip-path:polygon(5% 0,95% 0,100% 6%,100% 94%,95% 100%,5% 100%,0 94%,0 6%)}
+.card[data-shape=arch] .art{top:3.6%;height:47.6%;border-radius:50% 50% 3% 3% / 55% 55% 2% 2%}
+.ui{inset:0;z-index:3;pointer-events:none;color:var(--cink);font-family:Barlow,Tajawal,sans-serif;container-type:inline-size;direction:ltr}
 .ui>*{position:absolute}
-.vbadge{left:5%;top:3.6%;font:italic 700 3.4cqw/1 'Barlow Condensed';background:#fffd;color:#222;padding:.8cqw 2.2cqw;border-radius:99px 1cqw 1cqw 99px;text-shadow:none;letter-spacing:.02em}
-.name{left:19%;top:2.4%;font:700 9.2cqw/1.1 'Barlow Condensed';letter-spacing:-.01em;white-space:nowrap}
-.name u{font-size:.85em;text-decoration:none;font-style:italic;background:linear-gradient(90deg,#ff3d8f,#7a5cff,#2ad4ff);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;padding-right:1cqw}
-.hp{right:14%;top:3.4%;font:700 10cqw/1 'Barlow Condensed'}
-.hp small{font-size:4cqw;margin-right:.6cqw}
-.hp+.en{right:4.6%;top:3.6%;width:7.6cqw;height:7.6cqw}
-.evo{left:19%;top:12.5%;width:44%;padding:.6cqw 2cqw 1cqw;font:italic 500 3.3cqw/1.2 Barlow,sans-serif;background:linear-gradient(90deg,#fffd,#fff0);color:#222;text-shadow:none;border-radius:0 3cqw 3cqw 0}
-.evo span{display:block;font:italic 700 4cqw/1.1 'Barlow Condensed';color:#ee2c8a}
-.sbadge{right:4%;top:12.5%;font:700 4.6cqw/1 'Barlow Condensed';letter-spacing:.06em;background:linear-gradient(#ef5a3a,#b8201a);border:.5cqw solid #ffd9a0;border-radius:1cqw;padding:.8cqw 2.4cqw;text-transform:none;transform:skewX(-6deg)}
-.body{left:3.4%;right:3.4%;bottom:14.5%;padding:3cqw 4cqw 2cqw;background:linear-gradient(180deg,#0000,#000b 18%,#000c);display:flex;flex-direction:column;gap:2.2cqw}
-.mv{display:grid;grid-template-columns:auto 1fr auto;column-gap:3cqw;align-items:center}
-.mv h4{margin:0;font:700 6.4cqw/1.1 'Barlow Condensed'}
-.mv .dmg{font:700 6.6cqw/1 'Barlow Condensed'}
-.mv p{grid-column:1/-1;margin:.6cqw 0 0;font:400 3.5cqw/1.25 Barlow,sans-serif}
-.mv p i{opacity:.9}
-.ab{display:flex;align-items:center;gap:2.4cqw}
-.ab .tag{font:italic 700 4cqw/1 'Barlow Condensed';background:linear-gradient(90deg,#8b0c14,#e5222f);padding:.9cqw 5cqw .9cqw 3.6cqw;clip-path:polygon(0 0,92% 0,100% 100%,0 100%)}
-.ab h4{margin:0;font:700 6.6cqw/1.1 'Barlow Condensed';color:#ffd7d7}
-.cost{display:flex;gap:.8cqw}
-.e{background:radial-gradient(circle at 35% 30%,var(--l,#fff),var(--c,#ccc))}
+.elt{left:9.5%;top:6.4%;display:flex;align-items:center;gap:1.4cqw;padding:.9cqw 3cqw .9cqw 1.4cqw;border-radius:99px;background:rgba(11,16,36,.72);border:.3cqw solid rgba(255,255,255,.3);color:#fff;font:700 3.6cqw/1 Barlow,Tajawal,sans-serif;white-space:nowrap}
+.card[data-shape=arch] .elt{left:10%;top:43.5%}
+.e{background:radial-gradient(circle at 35% 30%,var(--l,#fff),var(--c,#ccc));width:5cqw;height:5cqw;border-radius:50%;display:grid;place-items:center;border:.3cqw solid #fff8;box-sizing:border-box}
 .e svg{width:64%;height:64%;display:block}
+.vit{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6cqw;background:var(--cbadge);color:var(--cbadgeink)}
+.vit small{font:700 2.7cqw/1 Barlow,Tajawal,sans-serif;letter-spacing:.12em}
+.vit b{font:700 6.2cqw/1 var(--tf)}
+.card[data-shape=cut] .vit{right:9.5%;top:40.8%;width:20cqw;height:17.6cqw;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)}
+.card[data-shape=arch] .vit{left:50%;top:51.2%;width:19cqw;height:19cqw;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 .8cqw var(--cfp)}
+.low{left:7.5%;right:7.5%;top:55%;bottom:3.2%;display:flex;flex-direction:column;gap:1.8cqw;overflow:hidden}
+.card[data-shape=arch] .low{top:58.6%;text-align:center}
+.tags{display:flex;gap:1.4cqw;flex-wrap:wrap}
+.card[data-shape=arch] .tags{justify-content:center}
+.tags span{font:700 2.8cqw/1 Barlow,Tajawal,sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:.8cqw 2cqw;border-radius:1cqw;border:.3cqw solid var(--cline);color:var(--cink)}
+.tags .rb{background:var(--cacc);border-color:var(--cacc);color:#14110a}
+.ttl{display:flex;flex-direction:column;gap:.6cqw;min-width:0}
+.ttl h3{margin:0;font:700 8cqw/1.05 var(--tf);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ser{font:600 3.2cqw/1.2 Barlow,Tajawal,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--cmute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pow{padding:2cqw 2.6cqw;border-radius:2cqw;background:var(--cbox);border:.3cqw solid var(--cline);display:flex;flex-direction:column;gap:.9cqw}
+.pow-h{display:flex;align-items:center;gap:2.2cqw;min-width:0}
+.card[data-shape=arch] .pow-h{justify-content:center}
+.pow-h span{flex:none;font:700 2.9cqw/1 Barlow,Tajawal,sans-serif;letter-spacing:.1em;padding:.7cqw 2cqw;border-radius:1cqw;background:var(--cacc);color:var(--caccink)}
+.pow-h h4{margin:0;min-width:0;font:700 4.6cqw/1.1 var(--tf);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pow p{margin:0;font:400 3.4cqw/1.35 Barlow,Tajawal,sans-serif;color:var(--csoft);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.atk{display:flex;flex-direction:column;gap:.6cqw}
+.atk-h{display:flex;align-items:center;gap:2.6cqw;min-width:0}
+.chg{display:flex;gap:1.2cqw;flex:none}
+.chg i{width:2.8cqw;height:2.8cqw;transform:rotate(45deg);background:var(--c)}
+.atk-h h4{margin:0;flex:1;min-width:0;font:700 4.8cqw/1.1 var(--tf);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
+.atk-h small{font:700 2.9cqw/1 Barlow,Tajawal,sans-serif;letter-spacing:.08em;color:var(--cmute)}
+.atk-h b{font:700 6.4cqw/1 var(--tf)}
+.atk p{margin:0;font:400 3.3cqw/1.35 Barlow,Tajawal,sans-serif;color:var(--csoft);text-align:left;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.note{font:italic 400 2.9cqw/1.35 Barlow,Tajawal,sans-serif;color:var(--csoft)}
+.note b{display:block;font-style:normal;font-weight:700;color:var(--cink)}
+.foot{margin-top:auto;display:flex;justify-content:space-between;gap:2cqw;padding-top:1.6cqw;border-top:.3cqw solid var(--cline);font:400 2.8cqw/1.2 Barlow,Tajawal,sans-serif;color:var(--cmute);text-align:left}
+.foot span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .en-row{display:grid;gap:4px;font:500 13px Barlow,sans-serif}
 #f-en{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.e{width:5.6cqw;height:5.6cqw;border-radius:50%;display:grid;place-items:center;font:700 3.4cqw/1 Barlow;border:.4cqw solid #fff8;color:#222;text-shadow:none}
-.hp+.en{position:absolute}
-.stats{left:3.4%;right:3.4%;bottom:10.4%;height:3.8%;display:flex;gap:1.6cqw;font:600 3cqw/1 Barlow;text-shadow:none;color:#fff}
-.stats div{flex:1;background:linear-gradient(90deg,#1c1d22,#4a4d58,#1c1d22);border-radius:99px;padding:0 3cqw;display:flex;align-items:center;gap:1.2cqw;white-space:nowrap}
-.stats .e{width:4.2cqw;height:4.2cqw}
-.rule{left:38%;right:3.4%;bottom:1.4%;height:8.4%;background:#fffe;color:#111;text-shadow:none;border-radius:2cqw;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:.6cqw;padding:0 3.4cqw;font:500 2.8cqw/1.15 Barlow}
-.rule b{font:italic 700 4.2cqw/1 'Barlow Condensed';color:#fff;background:#1a1a22;padding:.5cqw 2.4cqw;border-radius:1cqw;white-space:nowrap}
-.foot{left:6%;right:6%;bottom:1%;display:flex;justify-content:space-between;font:400 2.3cqw/1 Barlow}
-.illus{left:5%;bottom:6%;font:italic 400 2.5cqw/1 Barlow}
-.num{left:5%;bottom:2.4%;font:500 2.7cqw/1 Barlow}
-.num::before{content:"E";display:inline-block;border:.3cqw solid #fff;border-radius:.6cqw;padding:.3cqw .9cqw;margin-right:1.4cqw}
 .actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 .login{display:none;flex-direction:column;align-items:center;gap:12px;width:min(340px,86vw);text-align:center}
 .login h1{margin:0;font:700 40px 'Barlow Condensed',sans-serif}
@@ -313,8 +327,10 @@ body.view-deck :is(.who,.stage,.actions,.hint,#gyro,#gopen,.panel,#e-del){displa
 @media (min-width:560px){.dk-grid{grid-template-columns:repeat(3,1fr)}}
 .tile{display:grid;gap:3px;text-align:left;background:none;border:0;padding:0;color:#fff;cursor:pointer;font-family:Barlow,sans-serif;transition:transform .2s}
 .tile:active{transform:scale(.96)}
-.tile .tcov{display:block;aspect-ratio:63/88;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.1);box-shadow:0 10px 28px rgba(var(--shade-rgb),.45)}
+.tile .tcov{display:block;aspect-ratio:3/5;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.1);box-shadow:0 10px 28px rgba(var(--shade-rgb),.45)}
 .tile .tcov img{display:block;width:100%;height:100%;object-fit:cover}
+.tile:not(.new) .tcov{background:none;box-shadow:none;border-radius:0;overflow:visible}
+.tile:not(.new) .tcov img{object-fit:contain;filter:drop-shadow(0 10px 18px rgba(var(--shade-rgb),.45))}
 .tile b{font:600 15px/1.2 Barlow,sans-serif;margin-top:6px}
 .tile small{font:400 13px Barlow,sans-serif;opacity:.65}
 .tile.new .tcov{display:grid;place-items:center;border:2px dashed rgba(255,255,255,.4);background:rgba(255,255,255,.06);box-shadow:none}
@@ -404,6 +420,11 @@ body[data-q]:not([data-q="0"]) .card[data-fx=opal] .fxa>i:nth-child(1){filter:no
 .lang-pick .lgrid button,.set-block .lgrid button{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:14px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font:600 15px Barlow,sans-serif;cursor:pointer}
 .lang-pick .lgrid button:hover,.lang-pick .lgrid button:focus-visible,.set-block .lgrid button:hover,.set-block .lgrid button:focus-visible{background:rgba(255,255,255,.18);border-color:#fff;outline:none}
 .lang-pick .lgrid span.flag,.set-block .lgrid span.flag{font-size:22px}
+.set-h3{margin:14px 0 8px;font:600 14px Barlow,sans-serif;opacity:.85}
+.shp{flex:none;width:16px;height:26px;background:currentColor;opacity:.85}
+.shp.cut{clip-path:polygon(25% 0,75% 0,100% 15%,100% 85%,75% 100%,25% 100%,0 85%,0 15%)}
+.shp.arch{border-radius:8px 8px 3px 3px}
+.fsw{flex:none;width:22px;height:22px;border-radius:6px;box-shadow:0 0 0 1px rgba(255,255,255,.4) inset}
 .set-block .lgrid button[aria-pressed="true"]{background:rgba(255,255,255,.28);border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.35) inset}
 .iconbtn{display:inline-flex;align-items:center}
 .set-block{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:14px 16px}
@@ -457,7 +478,7 @@ details.set-block[open]>summary.set-h::after{transform:rotate(180deg)}
 .mod-item img{width:84px;border-radius:8px;display:block}
 .mod-item .ct-row{margin-top:6px}
 .chk-row{display:flex;gap:10px;align-items:center;margin-top:10px;font:500 15px Barlow,sans-serif}
-.tile.uni .tcov{box-shadow:0 0 0 2px var(--rc),0 10px 28px rgba(var(--shade-rgb),.45)}
+.tile.uni .tcov{box-shadow:none}
 body.uni-card #v-edit{display:none}
 .bst-stage{display:grid;justify-items:center;gap:14px;padding:8px 0}
 .bst-msg{margin:0;font:600 17px Barlow,sans-serif;text-align:center;min-height:1.4em}
@@ -497,7 +518,7 @@ body.uni-card #v-edit{display:none}
 .pk-art>*{position:absolute;pointer-events:none}
 .pk-fan{left:16%;right:16%;top:15%;height:31%}
 .pk-fan i,.pk-fan b{position:absolute}
-.pk-fan i{left:50%;bottom:0;width:46%;aspect-ratio:63/88;border-radius:5px;transform-origin:50% 100%;background:linear-gradient(155deg,rgba(var(--lc-rgb,170,200,255),1),rgba(16,26,110,.96) 72%);border:1.5px solid rgba(255,255,255,.8);box-shadow:0 5px 12px rgba(0,0,0,.45),inset 0 0 12px rgba(255,255,255,.28)}
+.pk-fan i{left:50%;bottom:0;width:46%;aspect-ratio:3/5;border-radius:5px;transform-origin:50% 100%;background:linear-gradient(155deg,rgba(var(--lc-rgb,170,200,255),1),rgba(16,26,110,.96) 72%);border:1.5px solid rgba(255,255,255,.8);box-shadow:0 5px 12px rgba(0,0,0,.45),inset 0 0 12px rgba(255,255,255,.28)}
 .pk-fan i:nth-child(1){transform:translateX(-50%) rotate(-19deg)}
 .pk-fan i:nth-child(2){transform:translateX(-50%) rotate(19deg)}
 .pk-fan i:nth-child(3){transform:translateX(-50%)}
@@ -550,7 +571,7 @@ body.uni-card #v-edit{display:none}
 .pk.on .pk-pack{animation:pkarrive 1.4s cubic-bezier(.2,.9,.25,1) .95s backwards}
 .pk-stage .pk-pack{position:absolute;inset:0;width:auto;z-index:3}
 .pk-cardwrap{position:absolute;inset:0;pointer-events:none;perspective:1100px}
-.pk-card{--rc:#9aa4b5;position:absolute;left:50%;top:50%;width:min(300px,76vw,44vh);aspect-ratio:63/88;z-index:1;transform:translate(-50%,-50%) scale(.45);border-radius:4.5%/3.2%;transform-style:preserve-3d;will-change:transform}
+.pk-card{--rc:#9aa4b5;position:absolute;left:50%;top:50%;width:min(280px,72vw,38vh);aspect-ratio:3/5;z-index:1;transform:translate(-50%,-50%) scale(.45);border-radius:4.5%/3.2%;transform-style:preserve-3d;will-change:transform}
 .pk-card img{display:block;width:100%;height:100%;border-radius:inherit;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 0 0 2px var(--rc),0 0 34px 2px var(--rc),0 14px 36px rgba(0,0,0,.5)}
 .pk-card .bk{position:absolute;inset:0;border-radius:inherit;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);display:grid;place-items:center;
   background:radial-gradient(circle at 28% 18%,rgba(143,170,255,.95) 0,rgba(143,170,255,0) 55%),repeating-linear-gradient(45deg,rgba(255,255,255,.06) 0 2px,transparent 2px 16px),linear-gradient(160deg,#2a4fe0,#14309f 62%,#0e2377);box-shadow:0 0 0 2px var(--rc),0 0 30px var(--rc)}
@@ -568,7 +589,7 @@ body.uni-card #v-edit{display:none}
 .pk-rar.legend .rar{font-size:20px;padding:6px 20px;box-shadow:0 0 30px var(--rc)}
 .pk-count{font:600 13px Barlow,sans-serif;opacity:.7;letter-spacing:.08em}
 .pk-row{position:absolute;left:0;right:0;bottom:calc(max(36px,env(safe-area-inset-bottom,0px)) + 48px);display:flex;justify-content:center;gap:7px;pointer-events:none;z-index:7}
-.pk-row img{width:30px;aspect-ratio:63/88;object-fit:cover;border-radius:4px;box-shadow:0 0 0 1.5px var(--rc);animation:pkpop .4s both}
+.pk-row img{width:30px;aspect-ratio:3/5;object-fit:cover;border-radius:4px;box-shadow:0 0 0 1.5px var(--rc);animation:pkpop .4s both}
 .pk-hint{position:absolute;left:0;right:0;bottom:calc(max(36px,env(safe-area-inset-bottom,0px)) + 6px);text-align:center;margin:0;font:600 19px 'Barlow Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#fff;text-shadow:0 0 14px rgba(var(--lc-rgb),.9);animation:pkpulse 1.6s ease-in-out infinite;pointer-events:none;z-index:7}
 .pk-close,.pk-skip,.pk-info{position:absolute;top:max(14px,env(safe-area-inset-top,0px));z-index:10;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.35);color:#fff;border-radius:99px;font:600 15px 'Barlow Condensed',sans-serif;letter-spacing:.05em;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .pk-close,.pk-info{width:40px;height:40px}
@@ -581,7 +602,7 @@ body.uni-card #v-edit{display:none}
 .pk-final h2{margin:0;font:700 38px/1 'Barlow Condensed',sans-serif;text-shadow:0 0 24px rgba(var(--lc-rgb),.9)}
 .pk-fin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:min(420px,92vw)}
 .pk-fin-grid figure{margin:0;display:grid;gap:5px;justify-items:center;text-align:center;animation:pkpop .5s both}
-.pk-fin-grid img{width:100%;aspect-ratio:63/88;object-fit:cover;border-radius:7px;box-shadow:0 0 0 2px var(--rc),0 0 22px var(--rc)}
+.pk-fin-grid img{width:100%;aspect-ratio:3/5;object-fit:cover;border-radius:7px;box-shadow:0 0 0 2px var(--rc),0 0 22px var(--rc)}
 .pk-fin-grid .rar{font-size:10px;padding:2px 8px}
 .pk-fin-grid small{font:600 11px Barlow,sans-serif;opacity:.85;color:#fff}
 .pk-fin-msg{margin:0;font:500 14px Barlow,sans-serif;opacity:.85;text-align:center;color:#fff}
@@ -735,6 +756,13 @@ button.coins{cursor:pointer}
     <div class="lgrid" id="set-theme"></div>
   </div>
   <div class="set-block">
+    <h2 class="set-h" data-i18n="settings.look">Apparence des cartes</h2>
+    <h3 class="set-h3" data-i18n="look.shape">Forme</h3><div class="lgrid" id="set-shape"></div>
+    <h3 class="set-h3" data-i18n="look.font">Police des titres</h3><div class="lgrid" id="set-font"></div>
+    <h3 class="set-h3" data-i18n="look.frame">Cadre de tes cartes</h3><div class="lgrid" id="set-frame"></div>
+    <p class="set-p" data-i18n="look.note">Les cartes de la bibliothèque universelle gardent le cadre de leur rareté.</p>
+  </div>
+  <div class="set-block">
     <h2 class="set-h" data-i18n="settings.mod">Modérateur</h2>
     <form id="mod-in" class="mod-form" autocomplete="off">
       <input id="mod-user" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Identifiant modérateur" aria-label="Identifiant modérateur" data-i18n-ph="mod.user" data-i18n-aria="mod.user">
@@ -823,7 +851,7 @@ button.coins{cursor:pointer}
     <label class="wide"><span data-i18n="panel.attack.text">Texte de l'attaque</span><textarea id="f-atkt" maxlength="260"></textarea></label>
     <div class="wide en-row"><span data-i18n="panel.attack.energies">Énergies de l'attaque</span><div id="f-en"><select></select><select></select><select></select><select></select></div></div>
     <label><span data-i18n="panel.attack.weakness">Faiblesse</span><select id="f-weak"></select></label>
-    <label><span data-i18n="panel.attack.resistance">Résistance</span><select id="f-res"></select></label>
+    <label hidden><span data-i18n="panel.attack.resistance">Résistance</span><select id="f-res"></select></label>
   </div>
   <div class="step editor" data-step="rule" hidden>
     <label class="wide"><span data-i18n="panel.rule.title">Titre de la règle</span><input type="text" id="f-rt" maxlength="20"></label>
@@ -906,18 +934,18 @@ fr:{dir:'ltr',
  'gyro.framed':" La page est affichée dans un cadre (l'app ou le site) qui bloque le capteur : ouvre-la seule dans ton navigateur avec le lien ci-dessous.",
  'gyro.reload':' Recharge la page, puis accepte la demande « mouvement et orientation ».','gyro.checkSettings':' Vérifie dans les réglages du site que les capteurs de mouvement sont autorisés.',
  'gyro.permissionDenied':'Autorisation refusée. Recharge la page pour que le navigateur te la redemande.','gyro.tiltNow':'Incline ton téléphone, ou touche la carte',
- 'panel.stepsAria':'Étapes','panel.step.image':'Image','panel.step.card':'Carte','panel.step.ability':'Talent','panel.step.attack':'Attaque','panel.step.rule':'Règle','panel.step.effect':'Effet',
+ 'panel.stepsAria':'Étapes','panel.step.image':'Image','panel.step.card':'Carte','panel.step.ability':'Pouvoir','panel.step.attack':'Attaque','panel.step.rule':'Note','panel.step.effect':'Effet',
  'panel.image.choose':'Choisis ton image','panel.image.zoom':'Zoom','panel.image.posH':'Position horizontale','panel.image.posV':'Position verticale','panel.image.recenter':'Recentrer','panel.image.remove':"Retirer l'image",
- 'panel.card.name':'Nom de la carte','panel.card.hp':'PV','panel.card.special':'Badge spécial','panel.card.evo':'Ligne « Evolves from » (vide = masquée)','panel.card.type':'Type de la carte',
- 'panel.ability.show':'Afficher un talent','panel.ability.name':'Nom du talent','panel.ability.text':'Texte du talent',
- 'panel.attack.name':"Nom de l'attaque",'panel.attack.damage':'Dégâts','panel.attack.text':"Texte de l'attaque",'panel.attack.energies':"Énergies de l'attaque",'panel.attack.weakness':'Faiblesse','panel.attack.resistance':'Résistance',
- 'panel.rule.title':'Titre de la règle','panel.rule.text':'Texte de la règle','panel.effect.label':'Effet holographique','panel.effect.intensity':"Intensité de l'effet :",
+ 'panel.card.name':'Nom de la carte','panel.card.hp':'Vitalité','panel.card.special':'Édition (étiquette)','panel.card.evo':'Série (vide = masquée)','panel.card.type':'Élément de la carte',
+ 'panel.ability.show':'Afficher un pouvoir','panel.ability.name':'Nom du pouvoir','panel.ability.text':'Texte du pouvoir',
+ 'panel.attack.name':"Nom de l'attaque",'panel.attack.damage':'Force','panel.attack.text':"Texte de l'attaque",'panel.attack.energies':'Charge (éléments)','panel.attack.weakness':'Point faible','panel.attack.resistance':'Résistance',
+ 'panel.rule.title':'Titre de la note','panel.rule.text':'Texte de la note','panel.effect.label':'Effet holographique','panel.effect.intensity':"Intensité de l'effet :",
  'panel.prev':'← Précédent','panel.next':'Suivant →','panel.done':'Terminé ✓','panel.deleteCard':'Supprimer cette carte','panel.confirmDelete':'Confirmer la suppression ?',
  'toast.saved':'Carte enregistrée ✓','toast.deleted':'Carte supprimée',
  'fx.classic':'Holo classique (diagonal)','fx.reverse':'Cadre étoilé','fx.prism':'Prisme','fx.nebula':'Nébuleuse','fx.mosaic':'Mosaïque','fx.aurora':'Aurore boréale','fx.opal':'Opale','fx.glitter':'Paillettes','fx.ripple':'Ondes','fx.gold':'Or',
  
- 'type.G':'Plante','type.R':'Feu','type.W':'Eau','type.L':'Électrik','type.P':'Psy','type.I':'Glace','type.F':'Combat','type.X':'Poison','type.O':'Sol','type.Y':'Vol',
- 'type.B':'Insecte','type.K':'Roche','type.H':'Spectre','type.A':'Dragon','type.D':'Ténèbres','type.S':'Acier','type.Z':'Fée','type.N':'Normal','type.C':'Incolore',
+ 'type.G':'Sève','type.R':'Braise','type.W':'Marée','type.L':'Foudre','type.P':'Songe','type.I':'Givre','type.F':'Ardeur','type.X':'Venin','type.O':'Argile','type.Y':'Zéphyr',
+ 'type.B':'Essaim','type.K':'Granit','type.H':'Brume','type.A':'Mythe','type.D':'Ombre','type.S':'Alliage','type.Z':'Lueur','type.N':'Brut','type.C':'Cristal',
  'confirm.cancelTitle':'Annuler la personnalisation ?','confirm.cancelNewText':'Cette nouvelle carte ne sera pas créée.','confirm.cancelEditText':'Les modifications faites sur cette carte seront perdues.',
  'confirm.cancelNewYes':'Annuler la création','confirm.cancelEditYes':'Annuler les modifications','confirm.continue':'Continuer',
  'export.downloadTitle':'Télécharger ma carte','export.shareTitle':'Partager ma carte','export.downloadDesc':'Choisis le format à télécharger :','export.shareDesc':'Choisis le format à partager :',
@@ -1089,6 +1117,22 @@ fr:{dir:'ltr',
  'cc.failed':'Le paiement a échoué.',
  'cc.plus':'Acheter des Card Coins',
  'info.earnT':'Gagner des Card Coins',
+ 'settings.look':'Apparence des cartes',
+ 'look.shape':'Forme',
+ 'look.shape.cut':'Coins coupés',
+ 'look.shape.arch':'Arche',
+ 'look.font':'Police des titres',
+ 'look.frame':'Cadre de tes cartes',
+ 'look.frame.night':'Nuit',
+ 'look.frame.ivory':'Ivoire',
+ 'look.frame.coral':'Corail',
+ 'look.frame.jade':'Jade',
+ 'look.note':'Les cartes de la bibliothèque universelle gardent le cadre de leur rareté.',
+ 'card.vit':'VITALITÉ',
+ 'card.power':'POUVOIR',
+ 'card.force':'FORCE',
+ 'card.weak':'Point faible : {e}',
+ 'card.illus':'Illustration : {n}',
  'settings.title':'Paramètres','settings.account':'Compte','settings.language':'Langue','settings.loggedAs':'Connecté en tant que {user}',
  'settings.privacyTitle':'Politique de confidentialité',
  'settings.privacy':"MyCard fonctionne entièrement dans ton navigateur. Il n'y a pas de serveur, et rien de ce que tu fais ici ne nous est envoyé, ni à personne d'autre.\n\nTon pseudo, tes cartes et tes réglages sont stockés uniquement sur cet appareil, dans le navigateur. Les photos que tu ajoutes à une carte restent aussi sur cet appareil et ne sont jamais envoyées ailleurs.\n\nCette page charge des polices depuis Google Fonts ; ce chargement peut partager ton adresse IP avec Google, comme pour tout site qui utilise Google Fonts.\n\nIl n'y a ni outil de mesure d'audience, ni publicité, ni cookie de suivi.\n\nSi tu effaces les données de ton navigateur, ou si tu ouvres l'appli sur un autre appareil ou un autre navigateur, tes cartes n'y seront pas accessibles : elles ne sont pas encore sauvegardées ailleurs.\n\nCette note sera mise à jour si la connexion par compte et le stockage en ligne sont ajoutés plus tard.",
@@ -1115,18 +1159,18 @@ en:{dir:'ltr',
  'gyro.framed':' The page is shown inside a frame (the app or site) that blocks the sensor: open it on its own in your browser using the link below.',
  'gyro.reload':' Reload the page, then accept the "motion & orientation" prompt.','gyro.checkSettings':' Check in the site settings that motion sensors are allowed.',
  'gyro.permissionDenied':'Permission denied. Reload the page so the browser asks again.','gyro.tiltNow':'Tilt your phone, or touch the card',
- 'panel.stepsAria':'Steps','panel.step.image':'Image','panel.step.card':'Card','panel.step.ability':'Ability','panel.step.attack':'Attack','panel.step.rule':'Rule','panel.step.effect':'Effect',
+ 'panel.stepsAria':'Steps','panel.step.image':'Image','panel.step.card':'Card','panel.step.ability':'Power','panel.step.attack':'Attack','panel.step.rule':'Note','panel.step.effect':'Effect',
  'panel.image.choose':'Choose your image','panel.image.zoom':'Zoom','panel.image.posH':'Horizontal position','panel.image.posV':'Vertical position','panel.image.recenter':'Recenter','panel.image.remove':'Remove image',
- 'panel.card.name':'Card name','panel.card.hp':'HP','panel.card.special':'Special badge','panel.card.evo':'"Evolves from" line (empty = hidden)','panel.card.type':'Card type',
- 'panel.ability.show':'Show an ability','panel.ability.name':'Ability name','panel.ability.text':'Ability text',
- 'panel.attack.name':'Attack name','panel.attack.damage':'Damage','panel.attack.text':'Attack text','panel.attack.energies':'Attack energy cost','panel.attack.weakness':'Weakness','panel.attack.resistance':'Resistance',
- 'panel.rule.title':'Rule title','panel.rule.text':'Rule text','panel.effect.label':'Holographic effect','panel.effect.intensity':'Effect intensity:',
+ 'panel.card.name':'Card name','panel.card.hp':'Vitality','panel.card.special':'Edition (label)','panel.card.evo':'Series (empty = hidden)','panel.card.type':'Card element',
+ 'panel.ability.show':'Show a power','panel.ability.name':'Power name','panel.ability.text':'Power text',
+ 'panel.attack.name':'Attack name','panel.attack.damage':'Force','panel.attack.text':'Attack text','panel.attack.energies':'Charge (elements)','panel.attack.weakness':'Weak point','panel.attack.resistance':'Resistance',
+ 'panel.rule.title':'Note title','panel.rule.text':'Note text','panel.effect.label':'Holographic effect','panel.effect.intensity':'Effect intensity:',
  'panel.prev':'← Previous','panel.next':'Next →','panel.done':'Done ✓','panel.deleteCard':'Delete this card','panel.confirmDelete':'Confirm deletion?',
  'toast.saved':'Card saved ✓','toast.deleted':'Card deleted',
  'fx.classic':'Classic holo (diagonal)','fx.reverse':'Starry frame','fx.prism':'Prism','fx.nebula':'Nebula','fx.mosaic':'Mosaic','fx.aurora':'Aurora','fx.opal':'Opal','fx.glitter':'Glitter','fx.ripple':'Ripples','fx.gold':'Gold',
  
- 'type.G':'Grass','type.R':'Fire','type.W':'Water','type.L':'Electric','type.P':'Psychic','type.I':'Ice','type.F':'Fighting','type.X':'Poison','type.O':'Ground','type.Y':'Flying',
- 'type.B':'Bug','type.K':'Rock','type.H':'Ghost','type.A':'Dragon','type.D':'Dark','type.S':'Steel','type.Z':'Fairy','type.N':'Normal','type.C':'Colorless',
+ 'type.G':'Sap','type.R':'Ember','type.W':'Tide','type.L':'Thunder','type.P':'Dream','type.I':'Frost','type.F':'Valor','type.X':'Venom','type.O':'Clay','type.Y':'Zephyr',
+ 'type.B':'Swarm','type.K':'Granite','type.H':'Mist','type.A':'Myth','type.D':'Shadow','type.S':'Alloy','type.Z':'Glimmer','type.N':'Raw','type.C':'Crystal',
  'confirm.cancelTitle':'Cancel customization?','confirm.cancelNewText':'This new card will not be created.','confirm.cancelEditText':'Changes made to this card will be lost.',
  'confirm.cancelNewYes':'Cancel creation','confirm.cancelEditYes':'Discard changes','confirm.continue':'Keep editing',
  'export.downloadTitle':'Download my card','export.shareTitle':'Share my card','export.downloadDesc':'Choose a format to download:','export.shareDesc':'Choose a format to share:',
@@ -1298,6 +1342,22 @@ en:{dir:'ltr',
  'cc.failed':'Payment failed.',
  'cc.plus':'Buy Card Coins',
  'info.earnT':'Earning Card Coins',
+ 'settings.look':'Card style',
+ 'look.shape':'Shape',
+ 'look.shape.cut':'Cut corners',
+ 'look.shape.arch':'Arch',
+ 'look.font':'Title font',
+ 'look.frame':'Frame for your cards',
+ 'look.frame.night':'Night',
+ 'look.frame.ivory':'Ivory',
+ 'look.frame.coral':'Coral',
+ 'look.frame.jade':'Jade',
+ 'look.note':'Universal library cards keep the frame of their rarity.',
+ 'card.vit':'VITALITY',
+ 'card.power':'POWER',
+ 'card.force':'FORCE',
+ 'card.weak':'Weak point: {e}',
+ 'card.illus':'Illustration: {n}',
  'settings.title':'Settings','settings.account':'Account','settings.language':'Language','settings.loggedAs':'Signed in as {user}',
  'settings.privacyTitle':'Privacy policy',
  'settings.privacy':"MyCard runs entirely in your browser. There is no server, and nothing you do here is sent to us or to anyone else.\n\nYour username, your cards, and your settings are stored only on this device, in your browser's local storage. Photos you add to a card stay on this device too and are never uploaded.\n\nThis page loads fonts from Google Fonts; loading them may share your IP address with Google, as with any site that uses Google Fonts.\n\nThere is no analytics, no advertising, and no tracking cookies.\n\nClearing your browser data, or opening the app on a different device or browser, makes your cards inaccessible there — they aren't backed up anywhere else yet.\n\nThis notice will be updated if account sign-in and cloud storage are added later.",
@@ -1324,18 +1384,18 @@ es:{dir:'ltr',
  'gyro.framed':' La página se muestra dentro de un marco (la app o el sitio) que bloquea el sensor: ábrela sola en tu navegador con el enlace de abajo.',
  'gyro.reload':' Recarga la página y acepta la solicitud de «movimiento y orientación».','gyro.checkSettings':' Comprueba en los ajustes del sitio que los sensores de movimiento estén permitidos.',
  'gyro.permissionDenied':'Permiso denegado. Recarga la página para que el navegador lo vuelva a pedir.','gyro.tiltNow':'Inclina tu teléfono, o toca la carta',
- 'panel.stepsAria':'Pasos','panel.step.image':'Imagen','panel.step.card':'Carta','panel.step.ability':'Habilidad','panel.step.attack':'Ataque','panel.step.rule':'Regla','panel.step.effect':'Efecto',
+ 'panel.stepsAria':'Pasos','panel.step.image':'Imagen','panel.step.card':'Carta','panel.step.ability':'Poder','panel.step.attack':'Ataque','panel.step.rule':'Nota','panel.step.effect':'Efecto',
  'panel.image.choose':'Elige tu imagen','panel.image.zoom':'Zoom','panel.image.posH':'Posición horizontal','panel.image.posV':'Posición vertical','panel.image.recenter':'Recentrar','panel.image.remove':'Quitar la imagen',
- 'panel.card.name':'Nombre de la carta','panel.card.hp':'PS','panel.card.special':'Insignia especial','panel.card.evo':'Línea «Evoluciona de» (vacía = oculta)','panel.card.type':'Tipo de la carta',
- 'panel.ability.show':'Mostrar una habilidad','panel.ability.name':'Nombre de la habilidad','panel.ability.text':'Texto de la habilidad',
- 'panel.attack.name':'Nombre del ataque','panel.attack.damage':'Daño','panel.attack.text':'Texto del ataque','panel.attack.energies':'Coste de energía del ataque','panel.attack.weakness':'Debilidad','panel.attack.resistance':'Resistencia',
- 'panel.rule.title':'Título de la regla','panel.rule.text':'Texto de la regla','panel.effect.label':'Efecto holográfico','panel.effect.intensity':'Intensidad del efecto:',
+ 'panel.card.name':'Nombre de la carta','panel.card.hp':'Vitalidad','panel.card.special':'Edición (etiqueta)','panel.card.evo':'Serie (vacía = oculta)','panel.card.type':'Elemento de la carta',
+ 'panel.ability.show':'Mostrar un poder','panel.ability.name':'Nombre del poder','panel.ability.text':'Texto del poder',
+ 'panel.attack.name':'Nombre del ataque','panel.attack.damage':'Fuerza','panel.attack.text':'Texto del ataque','panel.attack.energies':'Carga (elementos)','panel.attack.weakness':'Punto débil','panel.attack.resistance':'Resistencia',
+ 'panel.rule.title':'Título de la nota','panel.rule.text':'Texto de la nota','panel.effect.label':'Efecto holográfico','panel.effect.intensity':'Intensidad del efecto:',
  'panel.prev':'← Anterior','panel.next':'Siguiente →','panel.done':'Listo ✓','panel.deleteCard':'Eliminar esta carta','panel.confirmDelete':'¿Confirmar eliminación?',
  'toast.saved':'Carta guardada ✓','toast.deleted':'Carta eliminada',
  'fx.classic':'Holo clásico (diagonal)','fx.reverse':'Marco estrellado','fx.prism':'Prisma','fx.nebula':'Nebulosa','fx.mosaic':'Mosaico','fx.aurora':'Aurora boreal','fx.opal':'Ópalo','fx.glitter':'Purpurina','fx.ripple':'Ondas','fx.gold':'Oro',
  
- 'type.G':'Planta','type.R':'Fuego','type.W':'Agua','type.L':'Eléctrico','type.P':'Psíquico','type.I':'Hielo','type.F':'Lucha','type.X':'Veneno','type.O':'Tierra','type.Y':'Volador',
- 'type.B':'Bicho','type.K':'Roca','type.H':'Fantasma','type.A':'Dragón','type.D':'Siniestro','type.S':'Acero','type.Z':'Hada','type.N':'Normal','type.C':'Incoloro',
+ 'type.G':'Savia','type.R':'Brasa','type.W':'Marea','type.L':'Rayo','type.P':'Sueño','type.I':'Escarcha','type.F':'Ardor','type.X':'Veneno','type.O':'Arcilla','type.Y':'Céfiro',
+ 'type.B':'Enjambre','type.K':'Granito','type.H':'Bruma','type.A':'Mito','type.D':'Sombra','type.S':'Aleación','type.Z':'Destello','type.N':'Bruto','type.C':'Cristal',
  'confirm.cancelTitle':'¿Cancelar la personalización?','confirm.cancelNewText':'Esta nueva carta no se creará.','confirm.cancelEditText':'Se perderán los cambios hechos en esta carta.',
  'confirm.cancelNewYes':'Cancelar creación','confirm.cancelEditYes':'Descartar cambios','confirm.continue':'Seguir editando',
  'export.downloadTitle':'Descargar mi carta','export.shareTitle':'Compartir mi carta','export.downloadDesc':'Elige el formato para descargar:','export.shareDesc':'Elige el formato para compartir:',
@@ -1507,6 +1567,22 @@ es:{dir:'ltr',
  'cc.failed':'El pago ha fallado.',
  'cc.plus':'Comprar Card Coins',
  'info.earnT':'Ganar Card Coins',
+ 'settings.look':'Estilo de las cartas',
+ 'look.shape':'Forma',
+ 'look.shape.cut':'Esquinas cortadas',
+ 'look.shape.arch':'Arco',
+ 'look.font':'Fuente de los títulos',
+ 'look.frame':'Marco de tus cartas',
+ 'look.frame.night':'Noche',
+ 'look.frame.ivory':'Marfil',
+ 'look.frame.coral':'Coral',
+ 'look.frame.jade':'Jade',
+ 'look.note':'Las cartas de la biblioteca universal conservan el marco de su rareza.',
+ 'card.vit':'VITALIDAD',
+ 'card.power':'PODER',
+ 'card.force':'FUERZA',
+ 'card.weak':'Punto débil: {e}',
+ 'card.illus':'Ilustración: {n}',
  'settings.title':'Ajustes','settings.account':'Cuenta','settings.language':'Idioma','settings.loggedAs':'Sesión iniciada como {user}',
  'settings.privacyTitle':'Política de privacidad',
  'settings.privacy':"MyCard funciona totalmente en tu navegador. No hay servidor, y nada de lo que hagas aquí se nos envía a nosotros ni a nadie más.\n\nTu nombre de usuario, tus cartas y tus ajustes se guardan solo en este dispositivo, en el almacenamiento local del navegador. Las fotos que añades a una carta también se quedan en este dispositivo y nunca se suben a ningún sitio.\n\nEsta página carga fuentes desde Google Fonts; esta carga puede compartir tu dirección IP con Google, como ocurre en cualquier sitio que use Google Fonts.\n\nNo hay analítica, ni publicidad, ni cookies de seguimiento.\n\nSi borras los datos del navegador, o abres la app en otro dispositivo o navegador, tus cartas no estarán disponibles allí: todavía no se respaldan en ningún otro sitio.\n\nEste aviso se actualizará si más adelante se añaden el inicio de sesión con cuenta y el almacenamiento en la nube.",
@@ -1533,18 +1609,18 @@ de:{dir:'ltr',
  'gyro.framed':' Die Seite wird in einem Rahmen (App oder Website) angezeigt, der den Sensor blockiert: öffne sie über den Link unten allein im Browser.',
  'gyro.reload':' Lade die Seite neu und erlaube dann „Bewegung und Ausrichtung“.','gyro.checkSettings':' Prüfe in den Website-Einstellungen, ob Bewegungssensoren erlaubt sind.',
  'gyro.permissionDenied':'Zugriff verweigert. Lade die Seite neu, damit der Browser erneut fragt.','gyro.tiltNow':'Neige dein Handy oder berühre die Karte',
- 'panel.stepsAria':'Schritte','panel.step.image':'Bild','panel.step.card':'Karte','panel.step.ability':'Fähigkeit','panel.step.attack':'Attacke','panel.step.rule':'Regel','panel.step.effect':'Effekt',
+ 'panel.stepsAria':'Schritte','panel.step.image':'Bild','panel.step.card':'Karte','panel.step.ability':'Kraft','panel.step.attack':'Attacke','panel.step.rule':'Notiz','panel.step.effect':'Effekt',
  'panel.image.choose':'Bild auswählen','panel.image.zoom':'Zoom','panel.image.posH':'Horizontale Position','panel.image.posV':'Vertikale Position','panel.image.recenter':'Zentrieren','panel.image.remove':'Bild entfernen',
- 'panel.card.name':'Kartenname','panel.card.hp':'KP','panel.card.special':'Spezial-Badge','panel.card.evo':'„Entwickelt sich aus“-Zeile (leer = ausgeblendet)','panel.card.type':'Kartentyp',
- 'panel.ability.show':'Fähigkeit anzeigen','panel.ability.name':'Name der Fähigkeit','panel.ability.text':'Text der Fähigkeit',
- 'panel.attack.name':'Name der Attacke','panel.attack.damage':'Schaden','panel.attack.text':'Text der Attacke','panel.attack.energies':'Energiekosten der Attacke','panel.attack.weakness':'Schwäche','panel.attack.resistance':'Resistenz',
- 'panel.rule.title':'Titel der Regel','panel.rule.text':'Text der Regel','panel.effect.label':'Holo-Effekt','panel.effect.intensity':'Effektstärke:',
+ 'panel.card.name':'Kartenname','panel.card.hp':'Vitalität','panel.card.special':'Edition (Etikett)','panel.card.evo':'Serie (leer = ausgeblendet)','panel.card.type':'Element der Karte',
+ 'panel.ability.show':'Eine Kraft anzeigen','panel.ability.name':'Name der Kraft','panel.ability.text':'Text der Kraft',
+ 'panel.attack.name':'Name der Attacke','panel.attack.damage':'Stärke','panel.attack.text':'Text der Attacke','panel.attack.energies':'Ladung (Elemente)','panel.attack.weakness':'Schwachpunkt','panel.attack.resistance':'Resistenz',
+ 'panel.rule.title':'Titel der Notiz','panel.rule.text':'Text der Notiz','panel.effect.label':'Holo-Effekt','panel.effect.intensity':'Effektstärke:',
  'panel.prev':'← Zurück','panel.next':'Weiter →','panel.done':'Fertig ✓','panel.deleteCard':'Diese Karte löschen','panel.confirmDelete':'Löschen bestätigen?',
  'toast.saved':'Karte gespeichert ✓','toast.deleted':'Karte gelöscht',
  'fx.classic':'Klassisches Holo (diagonal)','fx.reverse':'Sternenrahmen','fx.prism':'Prisma','fx.nebula':'Nebel','fx.mosaic':'Mosaik','fx.aurora':'Polarlicht','fx.opal':'Opal','fx.glitter':'Glitzer','fx.ripple':'Wellen','fx.gold':'Gold',
  
- 'type.G':'Pflanze','type.R':'Feuer','type.W':'Wasser','type.L':'Elektro','type.P':'Psycho','type.I':'Eis','type.F':'Kampf','type.X':'Gift','type.O':'Boden','type.Y':'Flug',
- 'type.B':'Käfer','type.K':'Gestein','type.H':'Geist','type.A':'Drache','type.D':'Unlicht','type.S':'Stahl','type.Z':'Fee','type.N':'Normal','type.C':'Farblos',
+ 'type.G':'Saft','type.R':'Glut','type.W':'Gezeiten','type.L':'Donner','type.P':'Traum','type.I':'Frost','type.F':'Eifer','type.X':'Gift','type.O':'Lehm','type.Y':'Zephyr',
+ 'type.B':'Schwarm','type.K':'Granit','type.H':'Dunst','type.A':'Mythos','type.D':'Schatten','type.S':'Legierung','type.Z':'Schimmer','type.N':'Roh','type.C':'Kristall',
  'confirm.cancelTitle':'Anpassung abbrechen?','confirm.cancelNewText':'Diese neue Karte wird nicht erstellt.','confirm.cancelEditText':'Änderungen an dieser Karte gehen verloren.',
  'confirm.cancelNewYes':'Erstellung abbrechen','confirm.cancelEditYes':'Änderungen verwerfen','confirm.continue':'Weiter bearbeiten',
  'export.downloadTitle':'Karte herunterladen','export.shareTitle':'Karte teilen','export.downloadDesc':'Format zum Herunterladen wählen:','export.shareDesc':'Format zum Teilen wählen:',
@@ -1716,6 +1792,22 @@ de:{dir:'ltr',
  'cc.failed':'Zahlung fehlgeschlagen.',
  'cc.plus':'Card Coins kaufen',
  'info.earnT':'Card Coins verdienen',
+ 'settings.look':'Kartenstil',
+ 'look.shape':'Form',
+ 'look.shape.cut':'Abgeschrägte Ecken',
+ 'look.shape.arch':'Bogen',
+ 'look.font':'Titelschrift',
+ 'look.frame':'Rahmen deiner Karten',
+ 'look.frame.night':'Nacht',
+ 'look.frame.ivory':'Elfenbein',
+ 'look.frame.coral':'Koralle',
+ 'look.frame.jade':'Jade',
+ 'look.note':'Karten der Universal-Bibliothek behalten den Rahmen ihrer Seltenheit.',
+ 'card.vit':'VITALITÄT',
+ 'card.power':'KRAFT',
+ 'card.force':'STÄRKE',
+ 'card.weak':'Schwachpunkt: {e}',
+ 'card.illus':'Illustration: {n}',
  'settings.title':'Einstellungen','settings.account':'Konto','settings.language':'Sprache','settings.loggedAs':'Angemeldet als {user}',
  'settings.privacyTitle':'Datenschutzerklärung',
  'settings.privacy':"MyCard läuft vollständig in deinem Browser. Es gibt keinen Server, und nichts von dem, was du hier tust, wird an uns oder sonst jemanden gesendet.\n\nDein Benutzername, deine Karten und deine Einstellungen werden nur auf diesem Gerät gespeichert, im lokalen Speicher des Browsers. Fotos, die du einer Karte hinzufügst, bleiben ebenfalls auf diesem Gerät und werden nie hochgeladen.\n\nDiese Seite lädt Schriftarten von Google Fonts; dabei kann deine IP-Adresse an Google übermittelt werden, wie bei jeder Website, die Google Fonts nutzt.\n\nEs gibt keine Analyse-Tools, keine Werbung und keine Tracking-Cookies.\n\nWenn du deine Browserdaten löschst oder die App auf einem anderen Gerät oder Browser öffnest, sind deine Karten dort nicht verfügbar: Sie werden bisher nirgendwo anders gesichert.\n\nDieser Hinweis wird aktualisiert, falls später eine Kontoanmeldung und Cloud-Speicherung hinzukommen.",
@@ -1742,18 +1834,18 @@ ar:{dir:'rtl',
  'gyro.framed':' تُعرض الصفحة داخل إطار (تطبيق أو موقع) يمنع المستشعر: افتحها وحدها في متصفحك عبر الرابط أدناه.',
  'gyro.reload':' أعد تحميل الصفحة ثم اقبل طلب «الحركة والاتجاه».','gyro.checkSettings':' تحقق في إعدادات الموقع أن مستشعرات الحركة مسموح بها.',
  'gyro.permissionDenied':'تم رفض الإذن. أعد تحميل الصفحة ليطلبها المتصفح مجددًا.','gyro.tiltNow':'أمِل هاتفك، أو المس البطاقة',
- 'panel.stepsAria':'الخطوات','panel.step.image':'الصورة','panel.step.card':'البطاقة','panel.step.ability':'القدرة','panel.step.attack':'الهجوم','panel.step.rule':'القاعدة','panel.step.effect':'التأثير',
+ 'panel.stepsAria':'الخطوات','panel.step.image':'الصورة','panel.step.card':'البطاقة','panel.step.ability':'القدرة','panel.step.attack':'الهجوم','panel.step.rule':'ملاحظة','panel.step.effect':'التأثير',
  'panel.image.choose':'اختر صورتك','panel.image.zoom':'التكبير','panel.image.posH':'الموضع الأفقي','panel.image.posV':'الموضع الرأسي','panel.image.recenter':'إعادة التوسيط','panel.image.remove':'إزالة الصورة',
- 'panel.card.name':'اسم البطاقة','panel.card.hp':'نقاط الحياة','panel.card.special':'شارة خاصة','panel.card.evo':'سطر «يتطور من» (فارغ = مخفي)','panel.card.type':'نوع البطاقة',
+ 'panel.card.name':'اسم البطاقة','panel.card.hp':'الحيوية','panel.card.special':'إصدار (وسم)','panel.card.evo':'السلسلة (فارغ = مخفي)','panel.card.type':'عنصر البطاقة',
  'panel.ability.show':'إظهار قدرة','panel.ability.name':'اسم القدرة','panel.ability.text':'نص القدرة',
- 'panel.attack.name':'اسم الهجوم','panel.attack.damage':'الضرر','panel.attack.text':'نص الهجوم','panel.attack.energies':'تكلفة طاقة الهجوم','panel.attack.weakness':'الضعف','panel.attack.resistance':'المقاومة',
- 'panel.rule.title':'عنوان القاعدة','panel.rule.text':'نص القاعدة','panel.effect.label':'التأثير الهولوغرافي','panel.effect.intensity':'شدة التأثير:',
+ 'panel.attack.name':'اسم الهجوم','panel.attack.damage':'القوة','panel.attack.text':'نص الهجوم','panel.attack.energies':'الشحنة (عناصر)','panel.attack.weakness':'نقطة الضعف','panel.attack.resistance':'المقاومة',
+ 'panel.rule.title':'عنوان الملاحظة','panel.rule.text':'نص الملاحظة','panel.effect.label':'التأثير الهولوغرافي','panel.effect.intensity':'شدة التأثير:',
  'panel.prev':'→ السابق','panel.next':'التالي ←','panel.done':'تم ✓','panel.deleteCard':'حذف هذه البطاقة','panel.confirmDelete':'تأكيد الحذف؟',
  'toast.saved':'تم حفظ البطاقة ✓','toast.deleted':'تم حذف البطاقة',
  'fx.classic':'هولو كلاسيكي (قطري)','fx.reverse':'إطار مرصّع بالنجوم','fx.prism':'منشور','fx.nebula':'سديم','fx.mosaic':'فسيفساء','fx.aurora':'شفق قطبي','fx.opal':'أوبال','fx.glitter':'لمعان','fx.ripple':'تموّجات','fx.gold':'ذهبي',
  
- 'type.G':'نبات','type.R':'نار','type.W':'ماء','type.L':'كهرباء','type.P':'خارق','type.I':'جليد','type.F':'قتال','type.X':'سم','type.O':'أرض','type.Y':'طيران',
- 'type.B':'حشرة','type.K':'صخر','type.H':'شبح','type.A':'تنين','type.D':'ظلام','type.S':'فولاذ','type.Z':'جنّية','type.N':'عادي','type.C':'عديم اللون',
+ 'type.G':'نسغ','type.R':'جمر','type.W':'مدّ','type.L':'رعد','type.P':'حلم','type.I':'صقيع','type.F':'حماسة','type.X':'سمّ','type.O':'طين','type.Y':'نسيم',
+ 'type.B':'سرب','type.K':'غرانيت','type.H':'ضباب','type.A':'أسطورة','type.D':'ظل','type.S':'سبيكة','type.Z':'وميض','type.N':'خام','type.C':'بلّور',
  'confirm.cancelTitle':'إلغاء التخصيص؟','confirm.cancelNewText':'لن يتم إنشاء هذه البطاقة الجديدة.','confirm.cancelEditText':'ستُفقد التعديلات التي أجريتها على هذه البطاقة.',
  'confirm.cancelNewYes':'إلغاء الإنشاء','confirm.cancelEditYes':'تجاهل التعديلات','confirm.continue':'متابعة التعديل',
  'export.downloadTitle':'تنزيل بطاقتي','export.shareTitle':'مشاركة بطاقتي','export.downloadDesc':'اختر صيغة التنزيل:','export.shareDesc':'اختر صيغة المشاركة:',
@@ -1925,6 +2017,22 @@ ar:{dir:'rtl',
  'cc.failed':'فشل الدفع.',
  'cc.plus':'شراء Card Coins',
  'info.earnT':'كسب Card Coins',
+ 'settings.look':'مظهر البطاقات',
+ 'look.shape':'الشكل',
+ 'look.shape.cut':'زوايا مقطوعة',
+ 'look.shape.arch':'قوس',
+ 'look.font':'خط العناوين',
+ 'look.frame':'إطار بطاقاتك',
+ 'look.frame.night':'ليل',
+ 'look.frame.ivory':'عاجي',
+ 'look.frame.coral':'مرجاني',
+ 'look.frame.jade':'يشم',
+ 'look.note':'تحتفظ بطاقات المكتبة العامة بإطار ندرتها.',
+ 'card.vit':'الحيوية',
+ 'card.power':'القدرة',
+ 'card.force':'القوة',
+ 'card.weak':'نقطة الضعف: {e}',
+ 'card.illus':'الرسم: {n}',
  'settings.title':'الإعدادات','settings.account':'الحساب','settings.language':'اللغة','settings.loggedAs':'مسجّل الدخول باسم {user}',
  'settings.privacyTitle':'سياسة الخصوصية',
  'settings.privacy':"يعمل MyCard بالكامل داخل متصفحك. لا يوجد خادم، ولا يُرسَل أي شيء تفعله هنا إلينا أو إلى أي جهة أخرى.\n\nيُحفظ اسم المستخدم وبطاقاتك وإعداداتك على هذا الجهاز فقط، داخل التخزين المحلي للمتصفح. كما تبقى الصور التي تضيفها إلى بطاقة على هذا الجهاز ولا تُرفع إلى أي مكان.\n\nتُحمّل هذه الصفحة خطوطًا من Google Fonts؛ قد يشارك ذلك عنوان IP الخاص بك مع Google، كما هو الحال في أي موقع يستخدم Google Fonts.\n\nلا توجد أدوات تحليل، ولا إعلانات، ولا ملفات تعريف ارتباط للتتبع.\n\nعند مسح بيانات المتصفح، أو فتح التطبيق على جهاز أو متصفح آخر، لن تكون بطاقاتك متاحة هناك: فهي غير محفوظة بعد في أي مكان آخر.\n\nسيتم تحديث هذا الإشعار إذا أُضيف لاحقًا تسجيل الدخول بحساب والتخزين السحابي.",
@@ -1946,7 +2054,7 @@ const LANGS=[['fr','\u{1F1EB}\u{1F1F7}','Fran\u00e7ais'],['en','\u{1F1EC}\u{1F1E
 /* anciens identifiants d'effets (avant la réécriture) → nouveaux effets */
 const FX_OLD={regular:'prism',cosmos:'nebula',sitereverse:'mosaic',vfull:'aurora',rainbow:'opal',shinyv:'glitter',amazing:'ripple',vmax:'gold'};
 const fxOf=v=>FX_OLD[v]||v||'classic';
-let user='';const Bd=document.body;let deck=[];let editing=false,photoEl=null,photoKey=null,needSave=false,FX={},fxDirty=true,CW=340,CH=475;
+let user='';const Bd=document.body;let deck=[];let editing=false,photoEl=null,photoKey=null,needSave=false,FX={},fxDirty=true,CW=320,CH=533;
 const lite=h=>{const n=parseInt(h.slice(1),16);return '#'+[16,8,0].map(q=>{const v=(n>>q)&255;return Math.round(v+(255-v)*.55).toString(16).padStart(2,'0')}).join('')};
 const ICON={
 G:'<path d="M4.5 19.5C3.5 10 9 4 20 3.5C20.5 14 14.5 20 4.5 19.5Z"/><path d="M5 19L15 9" stroke="rgba(0,0,0,.28)" stroke-width="1.5" stroke-linecap="round" fill="none"/>',
@@ -1969,20 +2077,51 @@ Z:'<path d="M12 2C12.7 8.2 15.8 11.3 22 12C15.8 12.7 12.7 15.8 12 22C11.3 15.8 8
 N:'<circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="3.2"/>',
 C:'<path d="M12 2.8L14.7 9L21.4 9.6L16.3 14L17.9 20.6L12 17.1L6.1 20.6L7.7 14L2.6 9.6L9.3 9Z"/>'};
 const TY={};
-[['G','Plante','#4CAF50'],['R','Feu','#FF7043'],['W','Eau','#42A5F5'],['L','Électrik','#FDD835'],['P','Psy','#AB47BC'],['I','Glace','#4DD0E1'],['F','Combat','#EF5350'],['X','Poison','#AB47BC'],['O','Sol','#BCAAA4'],['Y','Vol','#90CAF9'],['B','Insecte','#9CCC65'],['K','Roche','#BDBDBD'],['H','Spectre','#9575CD'],['A','Dragon','#5C6BC0'],['D','Ténèbres','#616161'],['S','Acier','#90A4AE'],['Z','Fée','#F48FB1'],['N','Normal','#D7CCC8'],['C','Incolore','#C8C8C8']]
+[['G','Sève','#4CAF50'],['R','Braise','#FF7043'],['W','Marée','#42A5F5'],['L','Foudre','#FDD835'],['P','Songe','#AB47BC'],['I','Givre','#4DD0E1'],['F','Ardeur','#EF5350'],['X','Venin','#AB47BC'],['O','Argile','#BCAAA4'],['Y','Zéphyr','#90CAF9'],['B','Essaim','#9CCC65'],['K','Granit','#BDBDBD'],['H','Brume','#9575CD'],['A','Mythe','#5C6BC0'],['D','Ombre','#616161'],['S','Alliage','#90A4AE'],['Z','Lueur','#F48FB1'],['N','Brut','#D7CCC8'],['C','Cristal','#C8C8C8']]
  .forEach(([k,n,c])=>TY[k]={n,c,l:lite(c),ink:(k==='L'||k==='C')?'#222':'#fff'});
 TY.C.l='#FFFFFF';
+/* ---- apparence des cartes (Paramètres) : forme, police des titres, cadre. Les cartes universelles prennent le cadre de leur rareté. ---- */
+const TFONTS={cinzel:"'Cinzel',Tajawal,Georgia,serif",unbounded:"'Unbounded',Tajawal,system-ui,sans-serif",fraunces:"'Fraunces',Tajawal,Georgia,serif"};
+const TFLOAD={cinzel:'700 20px Cinzel',unbounded:'700 20px Unbounded',fraunces:'700 20px Fraunces'};
+const FRAMES={
+  night:{fr:['#4f6bd8','#24315f','#4fd1c5'],fp:'#0b1024',ink:'#f4f1ff',mute:'#9fb0e8',soft:'#d5dbf5',acc:'#c9b6ff',accInk:'#1b1240',box:'rgba(255,255,255,.06)',line:'rgba(255,255,255,.14)',badge:'#f4f1ff',badgeInk:'#141a3a'},
+  ivory:{fr:['#f3ead6','#c9b48a','#f8f2e4'],fp:'#fbf7ee',ink:'#2a2418',mute:'#7a6a4c',soft:'#4a4232',acc:'#9a6b1f',accInk:'#fffaf0',box:'rgba(42,36,24,.05)',line:'rgba(42,36,24,.16)',badge:'#2a2418',badgeInk:'#fbf7ee'},
+  coral:{fr:['#ff8a7a','#c2405a','#ffc08a'],fp:'#2a0f17',ink:'#ffe9e4',mute:'#f3a99c',soft:'#f6d3cb',acc:'#ff8a7a',accInk:'#2a0f17',box:'rgba(255,255,255,.06)',line:'rgba(255,233,228,.16)',badge:'#ffe9e4',badgeInk:'#2a0f17'},
+  jade:{fr:['#6fe0b0','#1d7a62','#b7f5d9'],fp:'#071f19',ink:'#e4fff3',mute:'#8fd8b8',soft:'#c9efdf',acc:'#6fe0b0',accInk:'#04261b',box:'rgba(255,255,255,.06)',line:'rgba(228,255,243,.16)',badge:'#e4fff3',badgeInk:'#071f19'}};
+const RFRAMES={common:{fr:['#c9ced8','#7d8596','#e3e6ec'],fp:'#151820',acc:'#c9ced8'},uncommon:{fr:['#9af0be','#2f9c62','#c8f7da'],fp:'#0b1d14',acc:'#7fe0a8'},
+  rare:{fr:['#9ccbff','#2d6fd1','#cfe4ff'],fp:'#0b1630',acc:'#8cc2ff'},epic:{fr:['#e2b8ff','#7b3fd1','#f0dcff'],fp:'#180c2e',acc:'#d3a6ff'},
+  legendary:{fr:['#fff2b0','#b9810f','#ffe17a'],fp:'#140f05',acc:'#ffd35a',ink:'#fff5dc',mute:'#e3c27a',soft:'#f1e2c0',line:'rgba(255,225,122,.22)'}};
+let LOOK={shape:'cut',font:'cinzel',frame:'night'};
+try{const s=JSON.parse(localStorage.getItem('mycard-look')||'{}');if(['cut','arch'].includes(s.shape))LOOK.shape=s.shape;if(TFONTS[s.font])LOOK.font=s.font;if(FRAMES[s.frame])LOOK.frame=s.frame}catch(e){}
+const lookSig=()=>LOOK.shape+'.'+LOOK.font+'.'+LOOK.frame;
+const rarKey=c=>{const k=c&&(c.rar||c.rarity);return RFRAMES[k]?k:null};
+function frameOf(c){const k=rarKey(c);if(!k)return FRAMES[LOOK.frame];const r=RFRAMES[k];return {...FRAMES.night,mute:'#b9c0d6',soft:'#dde2ef',...r,badge:r.acc,badgeInk:'#14110a'}}
+const cssLin=f=>`linear-gradient(160deg,${f.fr[0]},${f.fr[1]} 50%,${f.fr[2]})`;
+function lookVars(c){const f=frameOf(c);return {'--cfr':cssLin(f),'--cfp':f.fp,'--cink':f.ink,'--cmute':f.mute,'--csoft':f.soft,'--cacc':f.acc,'--caccink':f.accInk,'--cbox':f.box,'--cline':f.line,'--cbadge':f.badge,'--cbadgeink':f.badgeInk,'--tf':TFONTS[LOOK.font]}}
+/* anciens textes du modèle de carte → nouveaux textes (cartes déjà enregistrées) */
+const OLD_TXT={evo:{'Evolves from MyCard':'Série Origine'},special:{'SPECIAL CARD':''},abn:{'Dark Signal':'Signal obscur'},
+  abt:{"When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may switch 1 of your opponent's Benched Pokémon with their Active Pokémon.":'Quand cette carte arrive, échange la place de deux cartes de ton choix.'},
+  mvn:{'Max Darkness':'Nuit totale'},rt:{'MyCard rule':'Note du créateur'},rx:{'When your MyCard is Knocked Out, your opponent takes 3 Prize cards.':'Une carte créée avec MyCard.'},num:{'215/203':'0001'}};
+function modernize(c){
+  if(!c||typeof c!=='object')return c;const o=(t,v)=>Object.prototype.hasOwnProperty.call(OLD_TXT[t],v)?OLD_TXT[t][v]:v;
+  if(c.evo!=null)c.evo=o('evo',c.evo);if(c.special!=null)c.special=o('special',c.special);
+  if(c.ab){c.ab.n=o('abn',c.ab.n);c.ab.t=o('abt',c.ab.t)}
+  if(Array.isArray(c.mv))c.mv.forEach(m=>{m.n=o('mvn',m.n)});
+  if(c.rule){c.rule.t=o('rt',c.rule.t);c.rule.x=o('rx',c.rule.x)}
+  if(c.num!=null)c.num=o('num',String(c.num));if(c.ill==='Keiichiro Ito')c.ill='';
+  return c;
+}
 const svgOf=(k,sz)=>`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'${sz?` width='${sz}' height='${sz}'`:''} fill='currentColor' color='${(TY[k]||TY.C).ink}'>${ICON[k]||ICON.C}</svg>`;
 const typeName=k=>tr('type.'+(TY[k]?k:'C'));
 const E=(t)=>{const y=TY[t]||TY.C;return `<span class="e" style="--c:${y.c};--l:${y.l}">${svgOf(t)}</span>`};
 const CARDS=[
- {id:'c3',name:'MyCard',hp:310,type:'D',evo:'Evolves from MyCard',special:'SPECIAL CARD',
-  ab:{on:true,n:'Dark Signal',t:"When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may switch 1 of your opponent's Benched Pokémon with their Active Pokémon."},
-  mv:[{c:'DCC',n:'Max Darkness',d:'160',t:''}],
-  weak:['G','×2'],res:null,ret:2,ill:'Keiichiro Ito',num:'215/203',
+ {id:'c3',name:'MyCard',hp:310,type:'D',evo:'Série Origine',special:'',
+  ab:{on:true,n:'Signal obscur',t:"Quand cette carte arrive, échange la place de deux cartes de ton choix."},
+  mv:[{c:'DCC',n:'Nuit totale',d:'160',t:''}],
+  weak:['G','×2'],res:null,ret:2,ill:'',num:'0001',
   pal:{'--a1':'#0f6b5a','--a2':'#1f4f9a','--a3':'#150f3a','--a4':'#ffe95a','--glow':'#4ee0b0','--moonx':'32%','--tx':'14%'}}
 ];
-CARDS.forEach(c=>c.rule={t:'MyCard rule',x:'When your MyCard is Knocked Out, your opponent takes 3 Prize cards.'});
+CARDS.forEach(c=>c.rule={t:'Note du créateur',x:'Une carte créée avec MyCard.'});
 const $=id=>document.getElementById(id);
 const esc=x=>String(x).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
 const plain=h=>{const d=document.createElement('div');d.innerHTML=h;return d.textContent};
@@ -2017,27 +2156,25 @@ function render(c){
   cur=c;
   if(editing&&deck.includes(c))queueSave();
   Object.entries(c.pal).forEach(([k,v])=>{card.style.setProperty(k,v);card.closest('.stage').style.setProperty(k,v)});
+  card.dataset.shape=LOOK.shape;Object.entries(lookVars(c)).forEach(([k,v])=>card.style.setProperty(k,v));
+  const rk=rarKey(c),ser=[c.evo,c.num?'№ '+c.num:''].filter(Boolean).join(' · ');
+  const tags=(rk?`<span class="rb">${esc(rarName(rk))}</span>`:'')+(c.special?`<span>${esc(c.special)}</span>`:'');
+  const chg=s=>`<span class="chg">${[...(s||'')].map(t=>`<i style="--c:${(TY[t]||TY.C).c}"></i>`).join('')}</span>`;
   card.innerHTML=`
+  <div class="pan"></div>
   <div class="art"><i></i><b></b><em></em></div>
   <div class="holo"></div><div class="sparkle"></div><div class="revwrap"><div class="rev"></div><div class="rev spot"></div></div><div class="fxa"><i></i><i></i><i></i></div>
   <div class="ui">
-    <div class="vbadge">MyCard</div>
-    <div class="name">${esc(c.name)}</div>
-    <div class="hp"><small>HP</small>${esc(c.hp)}</div>${E(c.type).replace('class="e','class="en e')}
-    ${c.evo?`<div class="evo">${esc(c.evo)}</div>`:''}
-    ${c.special?`<div class="sbadge">${esc(c.special)}</div>`:''}
-    <div class="body">
-      ${c.ab.on?`<div><div class="ab"><span class="tag">Ability</span><h4>${esc(c.ab.n)}</h4></div><div class="mv"><p>${c.ab.t}</p></div></div>`:''}
-      ${c.mv.map(m=>`<div class="mv">${cost(m.c)}<h4>${esc(m.n)}</h4><span class="dmg">${esc(m.d)}</span>${m.t?`<p>${m.t}</p>`:''}</div>`).join('')}
+    <div class="elt">${E(c.type)}<span>${esc(typeName(c.type))}</span></div>
+    <div class="vit"><small>${tr('card.vit')}</small><b>${esc(c.hp)}</b></div>
+    <div class="low">
+      ${tags?`<div class="tags">${tags}</div>`:''}
+      <div class="ttl"><h3 class="name">${esc(c.name)}</h3>${ser?`<div class="ser">${esc(ser)}</div>`:''}</div>
+      ${c.ab.on?`<div class="pow"><div class="pow-h"><span>${tr('card.power')}</span><h4>${esc(c.ab.n)}</h4></div>${c.ab.t?`<p>${c.ab.t}</p>`:''}</div>`:''}
+      ${c.mv.map(m=>`<div class="atk"><div class="atk-h">${m.c?chg(m.c):''}<h4>${esc(m.n)}</h4>${m.d?`<small>${tr('card.force')}</small><b>${esc(m.d)}</b>`:''}</div>${m.t?`<p>${m.t}</p>`:''}</div>`).join('')}
+      ${c.rule&&(c.rule.t||c.rule.x)?`<div class="note"><b>${esc(c.rule.t)}</b>${esc(c.rule.x)}</div>`:''}
+      <div class="foot"><span>${esc(tr('card.weak',{e:typeName(c.weak[0])+' '+(c.weak[1]||'')}))}</span><span>${esc(tr('card.illus',{n:user}))}</span></div>
     </div>
-    <div class="stats">
-      <div>weakness ${E(c.weak[0])}${c.weak[1]}</div>
-      <div>resistance ${c.res?E(c.res[0])+c.res[1]:''}</div>
-      <div>retreat ${cost('C'.repeat(c.ret))}</div>
-    </div>
-    <div class="illus">${esc(user)}</div>
-    <div class="num">${c.num} ★</div>
-    <div class="rule"><b>${esc(c.rule.t)}</b><span>${esc(c.rule.x)}</span></div>
   </div>
   <div class="glare"></div><div class="fxg"></div>`;
   if(c.img){const a=card.querySelector('.art');a.classList.add('img');if(photoKey!==c.img){photoEl=new Image();photoEl.className='photo';photoEl.alt='';photoEl.src=c.img;photoKey=c.img}a.append(photoEl);frame()}
@@ -2221,8 +2358,8 @@ function wrap(c,str,maxW){
 const ICO={};let icoP=null;
 function loadIcons(){return icoP||(icoP=Promise.all(Object.keys(TY).map(k=>new Promise(ok=>{const im=new Image();im.onload=()=>{ICO[k]=im;ok()};im.onerror=()=>ok();im.src='data:image/svg+xml,'+encodeURIComponent(svgOf(k,96))}))))}
 async function drawCard(c0,op){
-  op=op||{};const c=c0||cur,W=op.W||840,H=Math.round(W*1174/840),u=W/100,v=H/100,S=op.state||{...s},k=op.k!=null?op.k:+$('f-k').value,fxm=fxOf(op.fx||card.dataset.fx),o=S.o,mx=S.mx,my=S.my;
-  await Promise.all(['700 20px "Barlow Condensed"','500 20px Barlow','400 20px Barlow'].map(f=>document.fonts.load(f).catch(()=>0)));
+  op=op||{};const c=c0||cur,W=op.W||840,H=Math.round(W*5/3),u=W/100,v=H/100,S=op.state||{...s},k=op.k!=null?op.k:+$('f-k').value,fxm=fxOf(op.fx||card.dataset.fx),o=S.o,mx=S.mx,my=S.my;
+  await Promise.all(['700 20px "Barlow Condensed"','500 20px Barlow','400 20px Barlow','600 20px Barlow','700 20px Barlow',TFLOAD[LOOK.font]].map(f=>document.fonts.load(f).catch(()=>0)));
   await loadIcons();
   const cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');
   const fnt=(w,sz,fam,it)=>x.font=`${it?'italic ':''}${w} ${sz*u}px ${fam}`;
@@ -2230,11 +2367,20 @@ async function drawCard(c0,op){
   const ico=(cx,cy,r,ty)=>{x.save();const tp=TY[ty]||TY.C,g=x.createRadialGradient(cx-r*.3,cy-r*.4,0,cx,cy,r);g.addColorStop(0,tp.l);g.addColorStop(1,tp.c);
     x.fillStyle=g;x.beginPath();x.arc(cx,cy,r,0,7);x.fill();x.strokeStyle='rgba(255,255,255,.55)';x.lineWidth=.4*u;x.stroke();
     const im=ICO[ty]||ICO.C;if(im)x.drawImage(im,cx-r*.64,cy-r*.64,r*1.28,r*1.28);x.restore()};
-  /* carte */
-  rr(x,0,0,W,H,W*.045);x.clip();x.fillStyle='#25262b';x.fillRect(0,0,W,H);
+  /* carte : cadre, panneau, fenêtre d'illustration — même géométrie que le CSS */
+  const F=frameOf(c),shape=LOOK.shape,hv=H/100;
+  const shapePath=(X,Y,w,hh,kind)=>{x.beginPath();
+    if(shape==='cut'){const cx=w*{card:.08,pan:.075,art:.05}[kind],cy=hh*{card:.048,pan:.044,art:.06}[kind];
+      [[X+cx,Y],[X+w-cx,Y],[X+w,Y+cy],[X+w,Y+hh-cy],[X+w-cx,Y+hh],[X+cx,Y+hh],[X,Y+hh-cy],[X,Y+cy]].forEach(([px,py],i)=>i?x.lineTo(px,py):x.moveTo(px,py))}
+    else{const r=w/2,br=w*{card:.065,pan:.05,art:.03}[kind];x.moveTo(X,Y+r);x.arc(X+r,Y+r,r,Math.PI,0,false);x.lineTo(X+w,Y+hh-br);x.arcTo(X+w,Y+hh,X+w-br,Y+hh,br);x.lineTo(X+br,Y+hh);x.arcTo(X,Y+hh,X,Y+hh-br,br)}
+    x.closePath()};
+  shapePath(0,0,W,H,'card');x.clip();
+  {const an=160*Math.PI/180,dx=Math.sin(an),dy=-Math.cos(an),L=Math.abs(W*dx)+Math.abs(H*dy),g=x.createLinearGradient(W/2-dx*L/2,H/2-dy*L/2,W/2+dx*L/2,H/2+dy*L/2);
+    g.addColorStop(0,F.fr[0]);g.addColorStop(.5,F.fr[1]);g.addColorStop(1,F.fr[2]);x.fillStyle=g;x.fillRect(0,0,W,H)}
+  shapePath(3*u,1.8*hv,W-6*u,H-3.6*hv,'pan');x.fillStyle=F.fp;x.fill();
   /* illustration */
-  const ax=3.4*u,ay=2.6*v,aw=93.2*u,ah=95*v;
-  x.save();rr(x,ax,ay,aw,ah,W*.03);x.clip();
+  const ax=6.7*u,ay=(shape==='arch'?3.6:4)*hv,aw=W-13.4*u,ah=(shape==='arch'?47.6:49)*hv;
+  x.save();shapePath(ax,ay,aw,ah,'art');x.clip();
   if(c.img){
     const im=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=c.img});
     const sc=Math.max(aw/im.width,ah/im.height)*(c.zoom||1),dw=im.width*sc,dh=im.height*sc;
@@ -2325,63 +2471,59 @@ async function drawCard(c0,op){
     if(near<=0)continue;x.globalAlpha=Math.min(1,o*.9*k*near);x.beginPath();x.arc(px,py,.8+(i%3)*.6,0,7);x.fill();
   }
   x.restore();}
-  /* textes */
-  x.shadowColor='rgba(0,0,0,.7)';x.shadowBlur=4;x.shadowOffsetY=1;x.textBaseline='top';x.textAlign='left';
+  /* textes : même mise en page que l'écran (u = 1 % de la largeur, comme cqw) */
+  const TFc=TFONTS[LOOK.font],FBc='Barlow,Tajawal,Arial,sans-serif';
+  x.shadowColor='transparent';x.shadowBlur=0;x.shadowOffsetY=0;
   const T=(str,X,Y,col,al)=>{x.fillStyle=col;x.textAlign=al||'left';x.fillText(str,X,Y)};
-  fnt(700,3.4,FC,1);x.shadowColor='transparent';let w=x.measureText('MyCard').width;
-  x.fillStyle='rgba(255,255,255,.88)';rr(x,5*u,3.6*v,w+4.4*u,5.2*u,2.6*u);x.fill();T('MyCard',7.2*u,3.6*v+.9*u,'#222');
-  x.shadowColor='rgba(0,0,0,.7)';
-  fnt(700,10,FC);const hw=x.measureText(String(c.hp)).width;
-  const nx0=Math.max(19*u,5*u+w+5.6*u);fit(c.name,700,9.2,FC,0,W-14*u-hw-8*u-nx0);T(c.name,nx0,2.4*v,'#fff');
-  fnt(700,10,FC);T(String(c.hp),W-14*u,3.4*v,'#fff','right');
-  fnt(700,4,FC);T('HP',W-14*u-hw-.6*u,3.4*v+4.6*u,'#fff','right');
-  x.shadowColor='transparent';ico(W-4.6*u-3.8*u,3.6*v+3.8*u,3.8*u,c.type);
-  const eg=x.createLinearGradient(19*u,0,63*u,0);eg.addColorStop(0,'rgba(255,255,255,.88)');eg.addColorStop(1,'rgba(255,255,255,0)');
-  if(c.evo){x.fillStyle=eg;rr(x,19*u,12.5*v,44*u,5.6*u,2.8*u);x.fill();fit(c.evo,500,3.3,FB,1,40*u);T(c.evo,21*u,12.5*v+1.4*u,'#222')}
-  if(c.special){fnt(700,4.6,FC);w=x.measureText(c.special).width;const bx=W-4*u-w-4.8*u,bg=x.createLinearGradient(0,12.5*v,0,12.5*v+6.4*u);bg.addColorStop(0,'#ef5a3a');bg.addColorStop(1,'#b8201a');
-    x.fillStyle=bg;rr(x,bx,12.5*v,w+4.8*u,6.4*u,u);x.fill();x.strokeStyle='#ffd9a0';x.lineWidth=.5*u;x.stroke();T(c.special,bx+2.4*u,12.5*v+.9*u,'#fff')}
-  /* corps */
-  const maxW=85.2*u,X0=7.4*u,items=[];
-  fnt(400,3.5,FB);
-  if(c.ab.on)items.push({ab:1,lines:wrap(x,c.ab.t,maxW),h0:7.3*u});
-  c.mv.forEach(m=>items.push({m,lines:m.t?wrap(x,m.t,maxW):[],h0:7.1*u}));
-  items.forEach(it=>it.h=it.h0+(it.lines.length?.6*u+it.lines.length*4.4*u:0));
-  const total=5*u+items.reduce((a,i)=>a+i.h,0)+2.2*u*(items.length-1),bot=H-14.5*v,top=bot-total;
-  const bg2=x.createLinearGradient(0,top,0,bot);bg2.addColorStop(0,'rgba(0,0,0,0)');const ba=fxm==='reverse'?[.42,.5]:[.72,.8];bg2.addColorStop(.18,`rgba(0,0,0,${ba[0]})`);bg2.addColorStop(1,`rgba(0,0,0,${ba[1]})`);
-  x.fillStyle=bg2;x.fillRect(3.4*u,top,93.2*u,total);
-  let y=top+3*u;
-  items.forEach(it=>{
-    x.textBaseline='middle';
-    if(it.ab){
-      fnt(700,4,FC,1);w=x.measureText('Ability').width;const pg=x.createLinearGradient(X0,0,X0+w,0);pg.addColorStop(0,'#8b0c14');pg.addColorStop(1,'#e5222f');
-      x.shadowColor='transparent';x.fillStyle=pg;rr(x,X0,y+(it.h0-5.8*u)/2,w+8.6*u,5.8*u,2.2*u);x.fill();x.shadowColor='rgba(0,0,0,.7)';
-      T('Ability',X0+3.6*u,y+it.h0/2,'#fff');fnt(700,6.6,FC);T(c.ab.n,X0+w+8.6*u+2.4*u,y+it.h0/2,'#ffd7d7');
-    }else{
-      const n=it.m.c.length;x.shadowColor='transparent';[...it.m.c].forEach((t,i)=>ico(X0+2.8*u+i*6.4*u,y+it.h0/2,2.8*u,t));x.shadowColor='rgba(0,0,0,.7)';
-      fnt(700,6.6,FC);const dw=x.measureText(it.m.d).width,nx=X0+n*6.4*u+3*u;T(it.m.d,W-X0,y+it.h0/2,'#fff','right');fit(it.m.n,700,6.4,FC,0,W-X0-dw-3*u-nx);T(it.m.n,nx,y+it.h0/2,'#fff');
-    }
-    x.textBaseline='top';fnt(400,3.5,FB);it.lines.forEach((l,i)=>T(l,X0,y+it.h0+.6*u+i*4.4*u,'#fff'));
-    y+=it.h+2.2*u;
+  const font=(w,sz,fam,it)=>x.font=`${it?'italic ':''}${w} ${sz*u}px ${fam}`;
+  const ell=(str,maxW)=>{str=String(str==null?'':str);if(x.measureText(str).width<=maxW)return str;while(str.length&&x.measureText(str+'…').width>maxW)str=str.slice(0,-1);return str+'…'};
+  const lines=(str,maxW,n)=>str?wrap(x,str,maxW).slice(0,n):[];
+  /* pastille d'élément */
+  {const en=typeName(c.type),cx0=(shape==='arch'?10:9.5)*u,cy0=(shape==='arch'?43.5:6.4)*hv;font(700,3.6,FBc);
+    const cw=1.4*u+5*u+1.4*u+x.measureText(en).width+3*u+.6*u,ch=7.4*u;
+    x.fillStyle='rgba(11,16,36,.72)';rr(x,cx0,cy0,cw,ch,ch/2);x.fill();x.strokeStyle='rgba(255,255,255,.3)';x.lineWidth=.3*u;x.stroke();
+    ico(cx0+1.7*u+2.5*u,cy0+ch/2,2.5*u,c.type);x.textBaseline='middle';font(700,3.6,FBc);T(en,cx0+1.7*u+5*u+1.4*u,cy0+ch/2,'#fff')}
+  /* vitalité */
+  {const arch=shape==='arch',vw=(arch?19:20)*u,vh=(arch?19:17.6)*u,vx=arch?W/2-vw/2:W-9.5*u-vw,vy=arch?51.2*hv-vh/2:40.8*hv;
+    if(arch){x.beginPath();x.arc(W/2,51.2*hv,vw/2+.8*u,0,7);x.fillStyle=F.fp;x.fill();x.beginPath();x.arc(W/2,51.2*hv,vw/2,0,7)}
+    else{x.beginPath();[[.25,0],[.75,0],[1,.5],[.75,1],[.25,1],[0,.5]].forEach(([px,py],i)=>i?x.lineTo(vx+px*vw,vy+py*vh):x.moveTo(vx+px*vw,vy+py*vh));x.closePath()}
+    x.fillStyle=F.badge;x.fill();x.textBaseline='alphabetic';
+    font(700,2.7,FBc);T(tr('card.vit'),vx+vw/2,vy+vh/2-1.1*u,F.badgeInk,'center');font(700,6.2,TFc);T(String(c.hp),vx+vw/2,vy+vh/2+5*u,F.badgeInk,'center')}
+  /* bloc du bas */
+  const LX=7.5*u,LW=W-15*u,cen=shape==='arch',X0=cen?W/2:LX,AL=cen?'center':'left',bottom=H-3.2*hv;
+  let y=(cen?58.6:55)*hv;
+  {const rk=rarKey(c),tg=[];if(rk)tg.push([rarName(rk),1]);if(c.special)tg.push([c.special,0]);
+    if(tg.length){font(700,2.8,FBc);const ws=tg.map(t=>x.measureText(String(t[0]).toUpperCase()).width+4.6*u),tw=ws.reduce((a,b)=>a+b,0)+1.4*u*(tg.length-1);let tx=cen?W/2-tw/2:LX;
+      tg.forEach((t,i)=>{rr(x,tx,y,ws[i],4.4*u,u);if(t[1]){x.fillStyle=F.acc;x.fill()}else{x.strokeStyle=F.line;x.lineWidth=.3*u;x.stroke()}
+        x.textBaseline='middle';T(String(t[0]).toUpperCase(),tx+2.3*u,y+2.2*u,t[1]?'#14110a':F.ink);tx+=ws[i]+1.4*u});
+      y+=4.4*u+1.8*u}}
+  x.textBaseline='alphabetic';font(700,8,TFc);T(ell(c.name,LW),X0,y+6.6*u,F.ink,AL);y+=8.4*u;
+  {const ser=[c.evo,c.num?'№ '+c.num:''].filter(Boolean).join(' · ');if(ser){y+=.6*u;font(600,3.2,FBc);T(ell(ser.toUpperCase(),LW),X0,y+3*u,F.mute,AL);y+=3.84*u}}
+  y+=1.8*u;
+  if(c.ab.on){
+    font(400,3.4,FBc);const ls=lines(c.ab.t,LW-5.8*u,4),bh=2*u+4.6*u+(ls.length?.9*u+ls.length*4.6*u:0)+2*u;
+    x.fillStyle=F.box;rr(x,LX,y,LW,bh,2*u);x.fill();x.strokeStyle=F.line;x.lineWidth=.3*u;x.stroke();
+    font(700,2.9,FBc);const pt=tr('card.power'),pw=x.measureText(pt).width+4*u;font(700,4.6,TFc);const nm=ell(c.ab.n,LW-pw-8*u),nw=x.measureText(nm).width;
+    const hx=cen?W/2-(pw+2.2*u+nw)/2:LX+2.6*u,hy=y+2*u+2.3*u;
+    x.fillStyle=F.acc;rr(x,hx,hy-2.15*u,pw,4.3*u,u);x.fill();x.textBaseline='middle';font(700,2.9,FBc);T(pt,hx+2*u,hy,F.accInk);font(700,4.6,TFc);T(nm,hx+pw+2.2*u,hy,F.ink);
+    x.textBaseline='alphabetic';font(400,3.4,FBc);ls.forEach((l,i)=>T(l,cen?W/2:LX+2.6*u,y+2*u+4.6*u+.9*u+i*4.6*u+3.5*u,F.soft,AL));
+    y+=bh+1.8*u;
+  }
+  c.mv.forEach(m=>{
+    const hy=y+3.2*u,cs=[...(m.c||'')];
+    cs.forEach((t,i)=>{const d=2.8*u;x.save();x.translate(LX+1.4*u+i*4*u,hy);x.rotate(Math.PI/4);x.fillStyle=(TY[t]||TY.C).c;x.fillRect(-d/2,-d/2,d,d);x.restore()});
+    const nx=LX+(cs.length?cs.length*2.8*u+(cs.length-1)*1.2*u+2.6*u:0);let rx=W-LX;x.textBaseline='middle';
+    if(m.d){font(700,6.4,TFc);const dw=x.measureText(m.d).width;T(m.d,rx,hy,F.ink,'right');font(700,2.9,FBc);const fl=tr('card.force');T(fl,rx-dw-2.6*u,hy,F.mute,'right');rx-=dw+2.6*u+x.measureText(fl).width+2.6*u}
+    font(700,4.8,TFc);T(ell(m.n,rx-nx),nx,hy,F.ink);y+=6.4*u;
+    if(m.t){font(400,3.3,FBc);const ls=lines(m.t,LW,3);x.textBaseline='alphabetic';ls.forEach((l,i)=>T(l,LX,y+.6*u+i*4.45*u+3.4*u,F.soft));y+=.6*u+ls.length*4.45*u}
+    y+=1.8*u;
   });
-  /* barre de stats */
-  const sy=H-10.4*v-3.8*v,sh=3.8*v,sw=(93.2*u-3.2*u)/3;x.textBaseline='middle';
-  [0,1,2].forEach(i=>{
-    const sx=3.4*u+i*(sw+1.6*u),sg=x.createLinearGradient(sx,0,sx+sw,0);sg.addColorStop(0,'#1c1d22');sg.addColorStop(.5,'#4a4d58');sg.addColorStop(1,'#1c1d22');
-    x.shadowColor='transparent';x.fillStyle=sg;rr(x,sx,sy,sw,sh,sh/2);x.fill();
-    const lab=['weakness','resistance','retreat'][i];fnt(600,3,FB);let px=sx+3*u;T(lab,px,sy+sh/2,'#fff');px+=x.measureText(lab).width+1.2*u+2.1*u;
-    if(i===0){ico(px,sy+sh/2,2.1*u,c.weak[0]);T(c.weak[1],px+3.1*u,sy+sh/2,'#fff')}
-    if(i===1&&c.res){ico(px,sy+sh/2,2.1*u,c.res[0]);T(c.res[1],px+3.1*u,sy+sh/2,'#fff')}
-    if(i===2)for(let j=0;j<c.ret;j++)ico(px+j*3.8*u,sy+sh/2,2.1*u,'C');
-  });
-  /* règle + pied de carte */
-  const rx=38*u,rw=W-3.4*u-rx,ry=H-1.4*v-8.4*v,rh=8.4*v;
-  x.fillStyle='rgba(255,255,255,.93)';rr(x,rx,ry,rw,rh,2*u);x.fill();
-  fnt(700,4,FC,1);w=x.measureText(c.rule.t).width;
-  fnt(500,2.8,FB);const rl=wrap(x,esc(c.rule.x),rw-7*u).slice(0,3),bh=4.6*u,gh=bh+.6*u+rl.length*3.2*u,gy=ry+(rh-gh)/2;
-  x.fillStyle='#1a1a22';rr(x,rx+3.4*u,gy,w+4.8*u,bh,u);x.fill();fnt(700,4,FC,1);x.textBaseline='middle';T(c.rule.t,rx+3.4*u+2.4*u,gy+bh/2,'#fff');
-  x.textBaseline='top';fnt(500,2.8,FB);rl.forEach((l,i)=>T(l,rx+3.4*u,gy+bh+.6*u+i*3.2*u,'#111'));
-  x.shadowColor='rgba(0,0,0,.7)';x.shadowBlur=3;x.textBaseline='alphabetic';fnt(400,2.5,FB,1);T(user,5*u,H-6*v,'#fff');
-  fnt(500,2.7,FB);x.strokeStyle='#fff';x.lineWidth=.3*u;x.strokeRect(5*u,H-2.4*v-3.2*u,3.4*u,3.4*u);T('E',5.7*u,H-2.4*v-.5*u,'#fff');T(c.num+' ★',10*u,H-2.4*v-.5*u,'#fff');
+  if(c.rule&&(c.rule.t||c.rule.x)){
+    x.textBaseline='alphabetic';if(c.rule.t){font(700,2.9,FBc);T(ell(c.rule.t,LW),X0,y+3*u,F.ink,AL);y+=3.9*u}
+    font(400,2.9,FBc,1);lines(c.rule.x,LW,2).forEach(l=>{T(l,X0,y+3*u,F.soft,AL);y+=3.9*u});
+  }
+  {const fy=bottom-3.4*u;x.strokeStyle=F.line;x.lineWidth=.3*u;x.beginPath();x.moveTo(LX,fy-1.6*u);x.lineTo(W-LX,fy-1.6*u);x.stroke();
+    font(400,2.8,FBc);x.textBaseline='top';T(ell(tr('card.weak',{e:typeName(c.weak[0])+' '+(c.weak[1]||'')}),LW*.55),LX,fy,F.mute);T(ell(tr('card.illus',{n:user}),LW*.42),W-LX,fy,F.mute,'right')}
   /* reflet */
   x.save();x.shadowColor='transparent';x.globalCompositeOperation='overlay';
   const gx=mx/100*W,gy2=my/100*H,gr=Math.hypot(Math.max(gx,W-gx),Math.max(gy2,H-gy2)),gg=x.createRadialGradient(gx,gy2,0,gx,gy2,gr);
@@ -2590,7 +2732,7 @@ $('dl').addEventListener('click',()=>openExpModal('download'));
 /* ---- GIF animé : montre l'effet holo choisi en train de bouger, pour le partage ---- */
 const gifName=()=>((cur.name||'MyCard').replace(/[^\w\-]+/g,'_')||'MyCard')+'.gif';
 async function gifFrames(onProgress){
-  const N=11,W=260,H=Math.round(W*1174/840),fx=card.dataset.fx,k=+$('f-k').value,frames=[];
+  const N=11,W=260,H=Math.round(W*5/3),fx=card.dataset.fx,k=+$('f-k').value,frames=[];
   for(let i=0;i<N;i++){
     const t=i/N,ang=2*Math.PI*t,mx=50+42*Math.sin(ang),my=50+34*Math.cos(ang*0.82+1);
     const state={mx,my,rx:-(my-50)/50*13,ry:(mx-50)/50*13,o:Math.min(1,.78+.3*Math.max(0,Math.sin(ang+.4)))};
@@ -2645,12 +2787,13 @@ function loadDeck(){
       deck=JSON.parse(old);deck.forEach(saveCard);saveIdx();localStorage.removeItem(deckKey);
     }else JSON.parse(localStorage.getItem(idxKey())||'[]').forEach(id=>{const j=localStorage.getItem(cKey(id));if(j)deck.push(JSON.parse(j))});
   }catch(e){deck=[]}
+  deck.forEach(modernize);
 }
 function hydrate(){                          /* recharge images et miniatures depuis IndexedDB */
   const u=uk();
   return Promise.all([...deck].map(async c=>{
     if(c.hasImg&&c.img===undefined){const v=await media.get('img:'+u+':'+c.id);if(v){c.img=v;imgSaved[c.id]=v}else c.hasImg=false}
-    const th=await media.get('th:'+u+':'+c.id);if(th&&th.t===c.t)thumbs[c.id]=th;
+    const th=await media.get('th:'+u+':'+c.id);if(th&&th.t===c.t&&th.l===lookSig())thumbs[c.id]=th;
   })).catch(()=>{});
 }
 function queueSave(){if(!deck.includes(cur))return;cur.t=Date.now();needSave=true;clearTimeout(sv);sv=setTimeout(()=>{needSave=false;saveCard(cur)},500)}
@@ -2745,9 +2888,9 @@ async function fillThumbs(){
   try{
     for(const c of deck){
       const th=thumbs[c.id];
-      if(!th||th.t!==c.t){
+      if(!th||th.t!==c.t||th.l!==lookSig()){
         const cv=await drawCard(c,{W:340,fx:c.fx||'classic',k:c.k!=null?c.k:1,state:{mx:55,my:30,rx:0,ry:0,o:.7}});
-        thumbs[c.id]={t:c.t,url:cv.toDataURL('image/jpeg',.82)};media.put('th:'+uk()+':'+c.id,thumbs[c.id]);paint();
+        thumbs[c.id]={t:c.t,l:lookSig(),url:cv.toDataURL('image/webp',.86)};media.put('th:'+uk()+':'+c.id,thumbs[c.id]);paint();
         await new Promise(r=>window.requestIdleCallback?requestIdleCallback(r,{timeout:400}):setTimeout(r,0));
       }
     }
@@ -2798,7 +2941,21 @@ function buildThemeGrid(){
   g.innerHTML=THEMES.map(c=>`<button type="button" data-t="${c}" aria-pressed="${c===theme}"><span class="tsw" data-t="${c}" aria-hidden="true"></span>${tr('theme.'+c)}</button>`).join('');
   g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>applyTheme(b.dataset.t)));
 }
+function buildLookGrids(){
+  const grid=(id,vals,label,deco,k)=>{const g=$(id);
+    g.innerHTML=vals.map(v=>`<button type="button" data-v="${v}" aria-pressed="${LOOK[k]===v}">${deco(v)}<span>${label(v)}</span></button>`).join('');
+    g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>setLook(k,b.dataset.v)))};
+  grid('set-shape',['cut','arch'],v=>tr('look.shape.'+v),v=>`<i class="shp ${v}" aria-hidden="true"></i>`,'shape');
+  grid('set-font',Object.keys(TFONTS),v=>`<span style="font-family:${TFONTS[v].replace(/"/g,"'")};font-size:17px">${v[0].toUpperCase()+v.slice(1)}</span>`,()=>'','font');
+  grid('set-frame',Object.keys(FRAMES),v=>tr('look.frame.'+v),v=>`<i class="fsw" style="background:${cssLin(FRAMES[v])}" aria-hidden="true"></i>`,'frame');
+}
+function setLook(k,v){
+  LOOK[k]=v;try{localStorage.setItem('mycard-look',JSON.stringify(LOOK))}catch(e){}
+  buildLookGrids();if(cur)render(cur);fxDirty=true;
+  if(typeof fillThumbs==='function')fillThumbs();
+}
 function fillSettings(){
+  buildLookGrids();
   $('set-loggedas').textContent=tr('settings.loggedAs',{user});
   $('set-privacy').textContent=tr('settings.privacy');
   $('set-credits').textContent=tr('settings.credits');
@@ -2929,15 +3086,16 @@ const cloud=(()=>{
     async clear(){const ks=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('mycard-cloud:'))ks.push(k)}ks.forEach(k=>localStorage.removeItem(k))}
   };
 })();
-const catalog=async()=>[...UNIVERSAL,...await cloud.extras()].map(c=>({...c,rarity:RARITIES.some(r=>r.k===c.rarity)?c.rarity:'common'}));
+const catalog=async()=>[...UNIVERSAL,...await cloud.extras()].map(c=>modernize(JSON.parse(JSON.stringify(c)))).map(c=>({...c,rarity:RARITIES.some(r=>r.k===c.rarity)?c.rarity:'common'}));
 const catImg=async c=>c.img||(c.hasImg?await media.get('ext:'+c.id):null);
 const wait=ms=>new Promise(r=>setTimeout(r,calm?0:ms));
 /* miniatures : une à la fois (le dessin d'une carte est coûteux), avec mémoire */
 const thumbMem=new Map();let thumbQ=Promise.resolve();
 function thumbUrl(key,c,img){
+  key=lookSig()+'|'+key;
   if(thumbMem.has(key))return Promise.resolve(thumbMem.get(key));
   const p=thumbQ.then(async()=>{const cv=await drawCard({...c,img:img||undefined},{W:340,fx:c.fx||'classic',k:c.k!=null?c.k:1,state:{mx:55,my:30,rx:0,ry:0,o:.7}});
-    const u=cv.toDataURL('image/jpeg',.82);thumbMem.set(key,u);return u}).catch(()=>'');
+    const u=cv.toDataURL('image/webp',.86);thumbMem.set(key,u);return u}).catch(()=>'');
   thumbQ=p;return p;
 }
 function paintThumbs(root,list){root.querySelectorAll('img[data-i]').forEach(im=>{const t=list[+im.dataset.i];if(t)Promise.resolve(t.img()).then(img=>thumbUrl(t.key,t.card,img)).then(u=>{if(u)im.src=u})})}
