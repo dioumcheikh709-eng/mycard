@@ -169,8 +169,8 @@ body{margin:0;min-height:100vh;box-sizing:border-box;padding:24px 16px;backgroun
    Les couleurs viennent du cadre choisi (--cfr, --cfp…) ; la police des titres de --tf. Unités : cqw = 1 % de la largeur. */
 /* La carte inclinée en 3D ne découpe rien elle-même (Safari ne découpe pas toujours les calques animés d'un élément 3D) :
    c'est l'enveloppe .cin qui porte la forme, et chaque calque d'effet la reprend aussi. */
-.card[data-shape]{background:none;border-radius:0;overflow:visible}
-.cin{position:absolute;inset:0;overflow:hidden;background:var(--cfr);isolation:isolate;will-change:transform}
+.card[data-shape]{background:none;border-radius:0;overflow:visible;transform-style:flat}   /* rien en 3D à l'intérieur : la face avant se cache bien quand la carte est retournée */
+.cin{position:absolute;inset:0;overflow:hidden;background:var(--cfr);isolation:isolate;will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 .cin>*{position:absolute}
 .card[data-shape=cut] :is(.cin,.holo,.sparkle,.glare,.revwrap,.fxa,.fxg){clip-path:polygon(8% 0,92% 0,100% 4.8%,100% 95.2%,92% 100%,8% 100%,0 95.2%,0 4.8%)}
 .card[data-shape=arch] :is(.cin,.holo,.sparkle,.glare,.revwrap,.fxa,.fxg){border-radius:50% 50% 6.5% 6.5% / 30% 30% 3.9% 3.9%;overflow:hidden}
