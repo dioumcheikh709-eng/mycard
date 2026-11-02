@@ -173,13 +173,14 @@ body{margin:0;min-height:100vh;box-sizing:border-box;padding:24px 16px;backgroun
 .cin{position:absolute;inset:0;overflow:hidden;background:var(--cfr);isolation:isolate;will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 .cin>*{position:absolute}
 .card[data-shape=cut] :is(.cin,.holo,.sparkle,.glare,.revwrap,.fxa,.fxg){clip-path:polygon(8% 0,92% 0,100% 4.8%,100% 95.2%,92% 100%,8% 100%,0 95.2%,0 4.8%)}
-.card[data-shape=arch] :is(.cin,.holo,.sparkle,.glare,.revwrap,.fxa,.fxg){border-radius:50% 50% 6.5% 6.5% / 30% 30% 3.9% 3.9%;overflow:hidden}
+/* arche : clip-path (et pas seulement border-radius), que Safari applique aussi aux calques animés */
+.card[data-shape=arch] :is(.cin,.holo,.sparkle,.glare,.revwrap,.fxa,.fxg){border-radius:50% 50% 6.5% 6.5% / 30% 30% 3.9% 3.9%;overflow:hidden;clip-path:inset(0 round 50% 50% 6.5% 6.5% / 30% 30% 3.9% 3.9%)}
 .pan{inset:1.8% 3%;background:var(--cfp)}
 .card[data-shape=cut] .pan{clip-path:polygon(7.5% 0,92.5% 0,100% 4.4%,100% 95.6%,92.5% 100%,7.5% 100%,0 95.6%,0 4.4%)}
-.card[data-shape=arch] .pan{border-radius:50% 50% 5% 5% / 29% 29% 3% 3%}
+.card[data-shape=arch] .pan{border-radius:50% 50% 5% 5% / 29% 29% 3% 3%;clip-path:inset(0 round 50% 50% 5% 5% / 29% 29% 3% 3%)}
 .card[data-shape] .art{inset:4% 6.7% auto 6.7%;height:49%;border-radius:0}
 .card[data-shape=cut] .art{clip-path:polygon(5% 0,95% 0,100% 6%,100% 94%,95% 100%,5% 100%,0 94%,0 6%)}
-.card[data-shape=arch] .art{top:3.6%;height:47.6%;border-radius:50% 50% 3% 3% / 55% 55% 2% 2%}
+.card[data-shape=arch] .art{top:3.6%;height:47.6%;border-radius:50% 50% 3% 3% / 55% 55% 2% 2%;clip-path:inset(0 round 50% 50% 3% 3% / 55% 55% 2% 2%)}
 .ui{inset:0;z-index:3;pointer-events:none;color:var(--cink);font-family:Barlow,Tajawal,sans-serif;container-type:inline-size;direction:ltr}
 .ui>*{position:absolute}
 .elt{left:9.5%;top:6.4%;display:flex;align-items:center;gap:1.4cqw;padding:.9cqw 3cqw .9cqw 1.4cqw;border-radius:99px;background:rgba(11,16,36,.72);border:.3cqw solid rgba(255,255,255,.3);color:#fff;font:700 3.6cqw/1 Barlow,Tajawal,sans-serif;white-space:nowrap}
@@ -715,7 +716,7 @@ button.coins{cursor:pointer}
 /* la forme choisie (Paramètres) s'applique aussi au dos de la carte et aux cartes des packs */
 :root[data-shape] .cardback{border-radius:0}
 :root[data-shape=cut] :is(.cardback,.pk-card .bk,.pk-card::after){clip-path:polygon(8% 0,92% 0,100% 4.8%,100% 95.2%,92% 100%,8% 100%,0 95.2%,0 4.8%)}
-:root[data-shape=arch] :is(.cardback,.pk-card .bk,.pk-card::after){border-radius:50% 50% 6.5% 6.5% / 30% 30% 3.9% 3.9%}
+:root[data-shape=arch] :is(.cardback,.pk-card .bk,.pk-card::after){border-radius:50% 50% 6.5% 6.5% / 30% 30% 3.9% 3.9%;clip-path:inset(0 round 50% 50% 6.5% 6.5% / 30% 30% 3.9% 3.9%)}
 :root[data-shape=cut] .cardback::before{display:none}
 :root[data-shape=arch] .cardback::before{border-radius:50% 50% 5% 5% / 29% 29% 3% 3%}
 .pk-card{border-radius:0}
