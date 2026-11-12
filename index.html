@@ -26,6 +26,7 @@
   --acc1:#8fa4ff;--acc2:#3453ee;--acc-rgb:52,83,238;--deep-rgb:20,24,46;--panel-rgb:30,36,70;--shade-rgb:20,24,46;--hello:#2a3f9e;
   --bg-grad:linear-gradient(180deg,#ffffff 0%,#eef1fa 30%,#dfe5f5 58%,#e9edf7 82%,#f6f7fb 100%);--b1:#c9d4ff;--b2:#ffd9e6;--b3:#d3f0f5;--b4:#e6e9f2}
 html{margin:0}
+html,body{overflow-x:hidden;overflow-x:clip}
 body{margin:0;min-height:100vh;box-sizing:border-box;padding:24px 16px;background:var(--bg);color:var(--ink);font-family:Barlow,system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;overflow-x:hidden}
 .tabs{display:flex;gap:8px}
 .tabs button{font:600 15px 'Barlow Condensed',sans-serif;letter-spacing:.04em;border:0;border-radius:99px;padding:8px 18px;background:var(--chip);color:var(--ink);cursor:pointer}
@@ -170,7 +171,7 @@ body{margin:0;min-height:100vh;box-sizing:border-box;padding:24px 16px;backgroun
 /* La carte inclinée en 3D ne découpe rien elle-même (Safari ne découpe pas toujours les calques animés d'un élément 3D) :
    c'est l'enveloppe .cin qui porte la forme, et chaque calque d'effet la reprend aussi. */
 .card[data-shape]{background:none;border-radius:0;overflow:visible;transform-style:flat}   /* rien en 3D à l'intérieur : la face avant se cache bien quand la carte est retournée */
-.cin{position:absolute;inset:0;overflow:hidden;background:var(--cfr);isolation:isolate;will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.cin{position:absolute;inset:0;overflow:hidden;background:var(--cfr);isolation:isolate;container-type:inline-size;will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 .cin>*{position:absolute}
 .card[data-shape=cut] :is(.cin,.holo,.sparkle,.glare,.revwrap,.fxa,.fxg){clip-path:polygon(8% 0,92% 0,100% 4.8%,100% 95.2%,92% 100%,8% 100%,0 95.2%,0 4.8%)}
 /* arche : clip-path (et pas seulement border-radius), que Safari applique aussi aux calques animés */
@@ -412,6 +413,8 @@ body[data-q]:not([data-q="0"]) .card[data-fx=opal] .fxa>i:nth-child(1){filter:no
 .exp-track{height:7px;background:rgba(255,255,255,.15);border-radius:99px;overflow:hidden}
 .exp-fill{height:100%;width:0%;background:linear-gradient(90deg,#6bd6ff,#ff6bd6);transition:width .12s linear;border-radius:99px}
 .exp-lbl{font:500 12px Barlow,sans-serif;text-align:center;margin:7px 0 0;opacity:.8}
+[dir=rtl] .card .ui :is(h3,h4,b){font-family:var(--tf)}
+[dir=rtl] .card .ui :is(p,span,small,div){font-family:Barlow,Tajawal,sans-serif}
 [dir=rtl] body,[dir=rtl] button,[dir=rtl] input,[dir=rtl] select,[dir=rtl] textarea,[dir=rtl] h1,[dir=rtl] h2,[dir=rtl] h3,[dir=rtl] p,[dir=rtl] span,[dir=rtl] small,[dir=rtl] strong,[dir=rtl] label,[dir=rtl] output{font-family:'Tajawal',Barlow,system-ui,sans-serif}
 [dir=rtl] .dk-tools,[dir=rtl] .who,[dir=rtl] .cfm-b,[dir=rtl] .actions,[dir=rtl] .nav,[dir=rtl] .exp-opts,[dir=rtl] .ask{direction:rtl}
 [dir=rtl] .dk-menu{right:auto;left:0}
@@ -837,7 +840,7 @@ button.coins{cursor:pointer}
 </section>
 <div class="who"><span id="who-n"></span> · <button type="button" id="u-change" data-i18n="stage.change">changer</button></div>
 <div class="stage" id="stage"><div class="shadow" id="shadow"></div><div class="glow" id="glow"></div><div class="flipper" id="flipper"><div class="card" id="card"></div><div class="cardback"><div class="logo">MyCard</div></div></div></div>
-<div class="actions"><button type="button" id="dl" class="gbtn" data-i18n="stage.download">Télécharger en image</button><button type="button" id="sh" class="gbtn" data-i18n="stage.share">Partager</button></div>
+<div class="actions"><button type="button" id="dl" class="gbtn" data-i18n="stage.download">Télécharger en image</button><button type="button" id="sh-ready" class="gbtn primary" hidden data-i18n="export.shareNow">Partager maintenant</button><button type="button" id="sh" class="gbtn" data-i18n="stage.share">Partager</button></div>
 <div class="vbar"><button type="button" id="v-edit" class="gbtn primary" data-i18n="stage.personalize">Personnaliser</button><div class="v-uni" id="v-uni-box" hidden><select id="v-uni-rar" aria-label="Rareté" data-i18n-aria="uni.rarity"></select><button type="button" id="v-uni" class="gbtn primary" data-i18n="uni.add">Ajouter à la bibliothèque universelle</button><button type="button" id="v-uni-file" class="linkbtn" data-i18n="uni.fileBtn">Copier pour le fichier</button></div></div>
 <div class="hint" id="hint" data-i18n="stage.hintDefault">Bouge la souris ou le doigt sur la carte</div>
 <button type="button" id="gyro" class="gbtn" hidden aria-pressed="false" data-i18n="stage.gyroActivate">Activer le gyroscope</button>
@@ -1155,6 +1158,9 @@ fr:{dir:'ltr',
  'card.weak':'Point faible : {e}',
  'card.illus':'Illustration : {n}',
  'panel.card.frame':'Cadre',
+ 'export.shareTap':'Ton fichier est prêt : appuie sur « Partager maintenant ».',
+ 'export.shareNow':'Partager maintenant',
+ 'panel.image.bad':'Cette image ne peut pas être lue. Essaie un fichier JPEG ou PNG.',
  'settings.title':'Paramètres','settings.account':'Compte','settings.language':'Langue','settings.loggedAs':'Connecté en tant que {user}',
  'settings.privacyTitle':'Politique de confidentialité',
  'settings.privacy':"MyCard fonctionne entièrement dans ton navigateur. Il n'y a pas de serveur, et rien de ce que tu fais ici ne nous est envoyé, ni à personne d'autre.\n\nTon pseudo, tes cartes et tes réglages sont stockés uniquement sur cet appareil, dans le navigateur. Les photos que tu ajoutes à une carte restent aussi sur cet appareil et ne sont jamais envoyées ailleurs.\n\nCette page charge des polices depuis Google Fonts ; ce chargement peut partager ton adresse IP avec Google, comme pour tout site qui utilise Google Fonts.\n\nIl n'y a ni outil de mesure d'audience, ni publicité, ni cookie de suivi.\n\nSi tu effaces les données de ton navigateur, ou si tu ouvres l'appli sur un autre appareil ou un autre navigateur, tes cartes n'y seront pas accessibles : elles ne sont pas encore sauvegardées ailleurs.\n\nCette note sera mise à jour si la connexion par compte et le stockage en ligne sont ajoutés plus tard.",
@@ -1381,6 +1387,9 @@ en:{dir:'ltr',
  'card.weak':'Weak point: {e}',
  'card.illus':'Illustration: {n}',
  'panel.card.frame':'Frame',
+ 'export.shareTap':'Your file is ready: tap “Share now”.',
+ 'export.shareNow':'Share now',
+ 'panel.image.bad':'This image can’t be read. Try a JPEG or PNG file.',
  'settings.title':'Settings','settings.account':'Account','settings.language':'Language','settings.loggedAs':'Signed in as {user}',
  'settings.privacyTitle':'Privacy policy',
  'settings.privacy':"MyCard runs entirely in your browser. There is no server, and nothing you do here is sent to us or to anyone else.\n\nYour username, your cards, and your settings are stored only on this device, in your browser's local storage. Photos you add to a card stay on this device too and are never uploaded.\n\nThis page loads fonts from Google Fonts; loading them may share your IP address with Google, as with any site that uses Google Fonts.\n\nThere is no analytics, no advertising, and no tracking cookies.\n\nClearing your browser data, or opening the app on a different device or browser, makes your cards inaccessible there — they aren't backed up anywhere else yet.\n\nThis notice will be updated if account sign-in and cloud storage are added later.",
@@ -1607,6 +1616,9 @@ es:{dir:'ltr',
  'card.weak':'Punto débil: {e}',
  'card.illus':'Ilustración: {n}',
  'panel.card.frame':'Marco',
+ 'export.shareTap':'Tu archivo está listo: toca «Compartir ahora».',
+ 'export.shareNow':'Compartir ahora',
+ 'panel.image.bad':'No se puede leer esta imagen. Prueba con un archivo JPEG o PNG.',
  'settings.title':'Ajustes','settings.account':'Cuenta','settings.language':'Idioma','settings.loggedAs':'Sesión iniciada como {user}',
  'settings.privacyTitle':'Política de privacidad',
  'settings.privacy':"MyCard funciona totalmente en tu navegador. No hay servidor, y nada de lo que hagas aquí se nos envía a nosotros ni a nadie más.\n\nTu nombre de usuario, tus cartas y tus ajustes se guardan solo en este dispositivo, en el almacenamiento local del navegador. Las fotos que añades a una carta también se quedan en este dispositivo y nunca se suben a ningún sitio.\n\nEsta página carga fuentes desde Google Fonts; esta carga puede compartir tu dirección IP con Google, como ocurre en cualquier sitio que use Google Fonts.\n\nNo hay analítica, ni publicidad, ni cookies de seguimiento.\n\nSi borras los datos del navegador, o abres la app en otro dispositivo o navegador, tus cartas no estarán disponibles allí: todavía no se respaldan en ningún otro sitio.\n\nEste aviso se actualizará si más adelante se añaden el inicio de sesión con cuenta y el almacenamiento en la nube.",
@@ -1833,6 +1845,9 @@ de:{dir:'ltr',
  'card.weak':'Schwachpunkt: {e}',
  'card.illus':'Illustration: {n}',
  'panel.card.frame':'Rahmen',
+ 'export.shareTap':'Deine Datei ist bereit: Tippe auf „Jetzt teilen“.',
+ 'export.shareNow':'Jetzt teilen',
+ 'panel.image.bad':'Dieses Bild kann nicht gelesen werden. Versuche eine JPEG- oder PNG-Datei.',
  'settings.title':'Einstellungen','settings.account':'Konto','settings.language':'Sprache','settings.loggedAs':'Angemeldet als {user}',
  'settings.privacyTitle':'Datenschutzerklärung',
  'settings.privacy':"MyCard läuft vollständig in deinem Browser. Es gibt keinen Server, und nichts von dem, was du hier tust, wird an uns oder sonst jemanden gesendet.\n\nDein Benutzername, deine Karten und deine Einstellungen werden nur auf diesem Gerät gespeichert, im lokalen Speicher des Browsers. Fotos, die du einer Karte hinzufügst, bleiben ebenfalls auf diesem Gerät und werden nie hochgeladen.\n\nDiese Seite lädt Schriftarten von Google Fonts; dabei kann deine IP-Adresse an Google übermittelt werden, wie bei jeder Website, die Google Fonts nutzt.\n\nEs gibt keine Analyse-Tools, keine Werbung und keine Tracking-Cookies.\n\nWenn du deine Browserdaten löschst oder die App auf einem anderen Gerät oder Browser öffnest, sind deine Karten dort nicht verfügbar: Sie werden bisher nirgendwo anders gesichert.\n\nDieser Hinweis wird aktualisiert, falls später eine Kontoanmeldung und Cloud-Speicherung hinzukommen.",
@@ -2059,6 +2074,9 @@ ar:{dir:'rtl',
  'card.weak':'نقطة الضعف: {e}',
  'card.illus':'الرسم: {n}',
  'panel.card.frame':'الإطار',
+ 'export.shareTap':'ملفك جاهز: اضغط على «مشاركة الآن».',
+ 'export.shareNow':'مشاركة الآن',
+ 'panel.image.bad':'تعذّرت قراءة هذه الصورة. جرّب ملف JPEG أو PNG.',
  'settings.title':'الإعدادات','settings.account':'الحساب','settings.language':'اللغة','settings.loggedAs':'مسجّل الدخول باسم {user}',
  'settings.privacyTitle':'سياسة الخصوصية',
  'settings.privacy':"يعمل MyCard بالكامل داخل متصفحك. لا يوجد خادم، ولا يُرسَل أي شيء تفعله هنا إلينا أو إلى أي جهة أخرى.\n\nيُحفظ اسم المستخدم وبطاقاتك وإعداداتك على هذا الجهاز فقط، داخل التخزين المحلي للمتصفح. كما تبقى الصور التي تضيفها إلى بطاقة على هذا الجهاز ولا تُرفع إلى أي مكان.\n\nتُحمّل هذه الصفحة خطوطًا من Google Fonts؛ قد يشارك ذلك عنوان IP الخاص بك مع Google، كما هو الحال في أي موقع يستخدم Google Fonts.\n\nلا توجد أدوات تحليل، ولا إعلانات، ولا ملفات تعريف ارتباط للتتبع.\n\nعند مسح بيانات المتصفح، أو فتح التطبيق على جهاز أو متصفح آخر، لن تكون بطاقاتك متاحة هناك: فهي غير محفوظة بعد في أي مكان آخر.\n\nسيتم تحديث هذا الإشعار إذا أُضيف لاحقًا تسجيل الدخول بحساب والتخزين السحابي.",
@@ -2122,7 +2140,7 @@ try{const s=JSON.parse(localStorage.getItem('mycard-look')||'{}');if(['cut','arc
 document.documentElement.dataset.shape=LOOK.shape;
 const lookSig=()=>LOOK.shape+'.'+LOOK.font;
 /* miniatures (bibliothèque, boosters, concours) : assez de pixels pour un écran 2× ou 3× */
-const THUMB_W=Math.round(Math.min(760,Math.max(480,240*(window.devicePixelRatio||1)))),thumbSig=()=>lookSig()+'@'+THUMB_W;
+const THUMB_W=Math.round(Math.min(760,Math.max(480,240*(window.devicePixelRatio||1)))),thumbSig=()=>lookSig()+'@'+THUMB_W+'.'+lang;
 const rarKey=c=>{const k=c&&(c.rar||c.rarity);return RFRAMES[k]?k:null};
 function frameOf(c){const k=rarKey(c);if(!k)return FRAMES[c&&c.frame]||FRAMES.night;const r=RFRAMES[k];return {...FRAMES.night,mute:'#b9c0d6',soft:'#dde2ef',...r,badge:r.acc,badgeInk:'#14110a'}}
 const cssLin=f=>`linear-gradient(160deg,${f.fr[0]},${f.fr[1]} 50%,${f.fr[2]})`;
@@ -2132,7 +2150,7 @@ const OLD_TXT={evo:{'Evolves from MyCard':'Série Origine'},special:{'SPECIAL CA
   abt:{"When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may switch 1 of your opponent's Benched Pokémon with their Active Pokémon.":'Quand cette carte arrive, échange la place de deux cartes de ton choix.'},
   mvn:{'Max Darkness':'Nuit totale'},rt:{'MyCard rule':'Note du créateur'},rx:{'When your MyCard is Knocked Out, your opponent takes 3 Prize cards.':'Une carte créée avec MyCard.'},num:{'215/203':'0001'}};
 function modernize(c){
-  if(!c||typeof c!=='object')return c;const o=(t,v)=>Object.prototype.hasOwnProperty.call(OLD_TXT[t],v)?OLD_TXT[t][v]:v;
+  if(!c||typeof c!=='object'||c.m2)return c;c.m2=1;const o=(t,v)=>Object.prototype.hasOwnProperty.call(OLD_TXT[t],v)?OLD_TXT[t][v]:v;
   if(c.evo!=null)c.evo=o('evo',c.evo);if(c.special!=null)c.special=o('special',c.special);
   if(c.ab){c.ab.n=o('abn',c.ab.n);c.ab.t=o('abt',c.ab.t)}
   if(Array.isArray(c.mv))c.mv.forEach(m=>{m.n=o('mvn',m.n)});
@@ -2153,7 +2171,9 @@ const CARDS=[
 CARDS.forEach(c=>c.rule={t:'Note du créateur',x:'Une carte créée avec MyCard.'});
 const $=id=>document.getElementById(id);
 const esc=x=>String(x).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
-const plain=h=>{const d=document.createElement('div');d.innerHTML=h;return d.textContent};
+/* les textes de pouvoir et d'attaque sont stockés en HTML échappé avec des <br> : on les relit sans innerHTML, et on ne réinjecte que du texte échappé */
+const plain=h=>String(h==null?'':h).replace(/<br\s*\/?>/gi,'\n').replace(/<[^>]*>/g,'').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&amp;/g,'&');
+const safeRich=h=>esc(plain(h)).replace(/\n/g,'<br>');
 const card=document.getElementById('card');
 const cost=s=>`<span class="cost">${[...s].map(E).join('')}</span>`;
 let cur;
@@ -2199,10 +2219,10 @@ function render(c){
     <div class="low">
       ${tags?`<div class="tags">${tags}</div>`:''}
       <div class="ttl"><h3 class="name">${esc(c.name)}</h3>${ser?`<div class="ser">${esc(ser)}</div>`:''}</div>
-      ${c.ab.on?`<div class="pow"><div class="pow-h"><span>${tr('card.power')}</span><h4>${esc(c.ab.n)}</h4></div>${c.ab.t?`<p>${c.ab.t}</p>`:''}</div>`:''}
-      ${c.mv.map(m=>`<div class="atk"><div class="atk-h">${m.c?chg(m.c):''}<h4>${esc(m.n)}</h4>${m.d?`<small>${tr('card.force')}</small><b>${esc(m.d)}</b>`:''}</div>${m.t?`<p>${m.t}</p>`:''}</div>`).join('')}
+      ${c.ab.on?`<div class="pow"><div class="pow-h"><span>${tr('card.power')}</span><h4>${esc(c.ab.n)}</h4></div>${c.ab.t?`<p>${safeRich(c.ab.t)}</p>`:''}</div>`:''}
+      ${c.mv.map(m=>`<div class="atk"><div class="atk-h">${m.c?chg(m.c):''}<h4>${esc(m.n)}</h4>${m.d?`<small>${tr('card.force')}</small><b>${esc(m.d)}</b>`:''}</div>${m.t?`<p>${safeRich(m.t)}</p>`:''}</div>`).join('')}
       ${c.rule&&(c.rule.t||c.rule.x)?`<div class="note"><b>${esc(c.rule.t)}</b>${esc(c.rule.x)}</div>`:''}
-      <div class="foot"><span>${esc(tr('card.weak',{e:typeName(c.weak[0])+' '+(c.weak[1]||'')}))}</span><span>${esc(tr('card.illus',{n:user}))}</span></div>
+      <div class="foot"><span>${esc(tr('card.weak',{e:typeName(c.weak[0])+' '+(c.weak[1]||'')}))}</span><span>${esc(tr('card.illus',{n:c.ill||user}))}</span></div>
     </div>
   </div>
   <div class="glare"></div><div class="fxg"></div></div>`;
@@ -2304,7 +2324,12 @@ const recenter=()=>{cur.zoom=1;cur.px=0;cur.py=0;$('f-zoom').value=1;$('f-x').va
 $('f-center').addEventListener('click',recenter);
 $('f-img').addEventListener('change',e=>{
   const f=e.target.files[0];if(!f)return;
-  const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const kk=Math.min(1,1600/Math.max(im.width,im.height)),cv=document.createElement('canvas');cv.width=Math.round(im.width*kk);cv.height=Math.round(im.height*kk);cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);cur.img=cv.toDataURL('image/jpeg',.9);recenter();render(cur)};im.src=r.result};r.readAsDataURL(f);
+  const bad=()=>{toast(tr('panel.image.bad'));$('f-img').value=''};
+  const r=new FileReader();r.onerror=bad;r.onload=()=>{const im=new Image();im.onerror=bad;im.onload=()=>{
+    const kk=Math.min(1,1600/Math.max(im.width,im.height)),cv=document.createElement('canvas');cv.width=Math.round(im.width*kk);cv.height=Math.round(im.height*kk);
+    const g=cv.getContext('2d');g.drawImage(im,0,0,cv.width,cv.height);
+    let alpha=false;if(/png|webp|gif/i.test(f.type)){const d=g.getImageData(0,0,cv.width,cv.height).data;for(let i=3;i<d.length;i+=16)if(d[i]<250){alpha=true;break}}
+    cur.img=alpha?cv.toDataURL('image/png'):cv.toDataURL('image/jpeg',.9);recenter();render(cur)};im.src=r.result};r.readAsDataURL(f);
 });
 $('f-reset').addEventListener('click',()=>{cur.img=null;$('f-img').value='';recenter();render(cur)});
 fill(cur);
@@ -2315,7 +2340,8 @@ stepEls.forEach((el,i)=>{const b=document.createElement('button');b.type='button
 function goStep(i){
   si=Math.max(0,Math.min(stepEls.length-1,i));
   stepEls.forEach((el,k)=>el.hidden=k!==si);
-  [...stepNav.children].forEach((b,k)=>{b.setAttribute('aria-pressed',k===si);if(k===si)stepNav.scrollTo({left:b.offsetLeft-stepNav.clientWidth/2+b.offsetWidth/2,behavior:'smooth'})});
+  [...stepNav.children].forEach((b,k)=>{b.setAttribute('aria-pressed',k===si);if(k===si){const nb=stepNav.getBoundingClientRect(),bb=b.getBoundingClientRect();   /* défilement dans la barre seulement, juste aussi en arabe (droite à gauche) */
+    stepNav.scrollBy({left:(bb.left+bb.width/2)-(nb.left+nb.width/2),behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})}});
   $('s-prev').disabled=si===0;$('s-next').textContent=si===stepEls.length-1?tr('panel.done'):tr('panel.next');
 }
 $('s-prev').addEventListener('click',()=>goStep(si-1));
@@ -2336,7 +2362,7 @@ card.addEventListener('pointermove',e=>{active=true;aim(e)});
 addEventListener('scroll',()=>{R=null},{passive:true});addEventListener('resize',()=>{R=null});
 card.dataset.fx='classic';
 $('f-fx').addEventListener('change',e=>{card.dataset.fx=e.target.value;cur.fx=e.target.value;queueSave()});
-$('f-k').addEventListener('input',e=>{card.style.setProperty('--k',e.target.value);$('kv').textContent=Math.round(e.target.value*100)+'%';cur.k=+e.target.value;queueSave()});
+$('f-k').addEventListener('input',e=>{card.style.setProperty('--k',e.target.value);$('kv').textContent=Math.round(e.target.value*100)+'%';cur.k=+e.target.value;fxDirty=true;queueSave()});
 
 /* ---- gyroscope (téléphone) ---- */
 let gyroOn=false,gyroWanted=false,g0=null,lastShow=0;
@@ -2349,7 +2375,7 @@ addEventListener('deviceorientation',e=>{
   if(!gyroWanted||e.beta==null||e.gamma==null)return;
   gyroOn=true;
   const now=performance.now();
-  if(now-lastShow>250){lastShow=now;hint.textContent=tr('gyro.sensorActive',{b:e.beta.toFixed(0),g:e.gamma.toFixed(0)})}
+  if(now-lastShow>250&&now>msgUntil){lastShow=now;hint.textContent=tr('gyro.sensorActive',{b:e.beta.toFixed(0),g:e.gamma.toFixed(0)})}
   if(!g0)g0={b:e.beta,g:e.gamma};
   g0.b+=(e.beta-g0.b)*.002;g0.g+=(e.gamma-g0.g)*.002;   /* le point neutre suit doucement ta posture */
   const dx=clamp(e.gamma-g0.g),dy=clamp(e.beta-g0.b);
@@ -2384,7 +2410,7 @@ if(touchy){
 const TYPES=TY;
 const FC="'Barlow Condensed','Arial Narrow',Impact,sans-serif",FB="Barlow,Arial,sans-serif";
 const rr=(c,X,Y,w,h,r)=>{c.beginPath();c.moveTo(X+r,Y);c.arcTo(X+w,Y,X+w,Y+h,r);c.arcTo(X+w,Y+h,X,Y+h,r);c.arcTo(X,Y+h,X,Y,r);c.arcTo(X,Y,X+w,Y,r);c.closePath()};
-const rich=h=>plain(String(h||'').replace(/<br\s*\/?>/g,'\n'));
+const rich=h=>plain(h);
 function wrap(c,str,maxW){
   const out=[];
   rich(str).split('\n').forEach(par=>{let line='';par.split(/\s+/).filter(Boolean).forEach(w=>{const t=line?line+' '+w:w;if(c.measureText(t).width>maxW&&line){out.push(line);line=w}else line=t});out.push(line)});
@@ -2511,7 +2537,7 @@ async function drawCard(c0,op){
   const T=(str,X,Y,col,al)=>{x.fillStyle=col;x.textAlign=al||'left';x.fillText(str,X,Y)};
   const font=(w,sz,fam,it)=>x.font=`${it?'italic ':''}${w} ${sz*u}px ${fam}`;
   const ell=(str,maxW)=>{str=String(str==null?'':str);if(x.measureText(str).width<=maxW)return str;while(str.length&&x.measureText(str+'…').width>maxW)str=str.slice(0,-1);return str+'…'};
-  const lines=(str,maxW,n)=>str?wrap(x,str,maxW).slice(0,n):[];
+  const lines=(str,maxW,n)=>{if(!str)return [];const a=wrap(x,str,maxW);if(a.length<=n)return a;const b=a.slice(0,n);b[n-1]=ell(b[n-1]+' …',maxW);return b};
   /* pastille d'élément */
   {const en=typeName(c.type),cx0=(shape==='arch'?10:9.5)*u,cy0=(shape==='arch'?43.5:6.4)*hv;font(700,3.6,FBc);
     const cw=1.4*u+5*u+1.4*u+x.measureText(en).width+3*u+.6*u,ch=7.4*u;
@@ -2526,6 +2552,7 @@ async function drawCard(c0,op){
   /* bloc du bas */
   const LX=7.5*u,LW=W-15*u,cen=shape==='arch',X0=cen?W/2:LX,AL=cen?'center':'left',bottom=H-3.2*hv;
   let y=(cen?58.6:55)*hv;
+  const lowTop=y,limit=bottom-3.4*u-1.6*u-.8*u;x.save();x.beginPath();x.rect(0,lowTop,W,limit-lowTop);x.clip();   /* comme à l'écran : rien ne déborde sur le pied */
   {const rk=rarKey(c),tg=[];if(rk)tg.push([rarName(rk),1]);if(c.special)tg.push([c.special,0]);
     if(tg.length){font(700,2.8,FBc);const ws=tg.map(t=>x.measureText(String(t[0]).toUpperCase()).width+4.6*u),tw=ws.reduce((a,b)=>a+b,0)+1.4*u*(tg.length-1);let tx=cen?W/2-tw/2:LX;
       tg.forEach((t,i)=>{rr(x,tx,y,ws[i],4.4*u,u);if(t[1]){x.fillStyle=F.acc;x.fill()}else{x.strokeStyle=F.line;x.lineWidth=.3*u;x.stroke()}
@@ -2554,10 +2581,11 @@ async function drawCard(c0,op){
   });
   if(c.rule&&(c.rule.t||c.rule.x)){
     x.textBaseline='alphabetic';if(c.rule.t){font(700,2.9,FBc);T(ell(c.rule.t,LW),X0,y+3*u,F.ink,AL);y+=3.9*u}
-    font(400,2.9,FBc,1);lines(c.rule.x,LW,2).forEach(l=>{T(l,X0,y+3*u,F.soft,AL);y+=3.9*u});
+    font(400,2.9,FBc,1);lines(c.rule.x,LW,3).forEach(l=>{T(l,X0,y+3*u,F.soft,AL);y+=3.9*u});
   }
+  x.restore();
   {const fy=bottom-3.4*u;x.strokeStyle=F.line;x.lineWidth=.3*u;x.beginPath();x.moveTo(LX,fy-1.6*u);x.lineTo(W-LX,fy-1.6*u);x.stroke();
-    font(400,2.8,FBc);x.textBaseline='top';T(ell(tr('card.weak',{e:typeName(c.weak[0])+' '+(c.weak[1]||'')}),LW*.55),LX,fy,F.mute);T(ell(tr('card.illus',{n:user}),LW*.42),W-LX,fy,F.mute,'right')}
+    font(400,2.8,FBc);x.textBaseline='top';T(ell(tr('card.weak',{e:typeName(c.weak[0])+' '+(c.weak[1]||'')}),LW*.55),LX,fy,F.mute);T(ell(tr('card.illus',{n:c.ill||user}),LW*.42),W-LX,fy,F.mute,'right')}
   /* reflet */
   x.save();x.shadowColor='transparent';x.globalCompositeOperation='overlay';
   const gx=mx/100*W,gy2=my/100*H,gr=Math.hypot(Math.max(gx,W-gx),Math.max(gy2,H-gy2)),gg=x.createRadialGradient(gx,gy2,0,gx,gy2,gr);
@@ -2692,6 +2720,7 @@ function buildGIF(frames, w, h, delayCs, loop, maxColors) {
   // frames: tableau de Uint8ClampedArray RGBA (m\u00eame taille w x h)
   maxColors = maxColors || 200;
   const palette = quantizeMedianCut(frames, maxColors);
+  const tIdx = palette.length; palette.push([0, 0, 0]);   // couleur réservée à la transparence (hors de la forme de la carte)
   const bits = Math.max(2, Math.ceil(Math.log2(palette.length)));
   const tableSize = 1 << bits;
   while (palette.length < tableSize) palette.push([0, 0, 0]);
@@ -2705,7 +2734,8 @@ function buildGIF(frames, w, h, delayCs, loop, maxColors) {
   push(0x21, 0xFF, 0x0B); for (const c of 'NETSCAPE2.0') push(c.charCodeAt(0)); push(3, 1, loop & 255, (loop >> 8) & 255, 0);
   for (const frame of frames) {
     const idx = ditherToIndices(frame, w, h, palette, lut);
-    push(0x21, 0xF9, 4, 0x04, delayCs & 255, delayCs >> 8, 0, 0); // disposal "restore to background" (4<<2) pour \u00e9viter les trâines
+    for (let p = 0, n = w * h; p < n; p++) if (frame[p * 4 + 3] < 128) idx[p] = tIdx;
+    push(0x21, 0xF9, 4, (2 << 2) | 1, delayCs & 255, delayCs >> 8, tIdx, 0); // disposition 2 (effacer avant l'image suivante) + couleur transparente
     push(0x2C, 0, 0, 0, 0, w & 255, w >> 8, h & 255, h >> 8, 0);
     push(bits);
     const lzw = lzwEncode(idx, bits);
@@ -2716,14 +2746,15 @@ function buildGIF(frames, w, h, delayCs, loop, maxColors) {
 }
 
 
-const xmsg=m=>{hint.textContent=m};
-const fileName=()=>((cur.name||'MyCard').replace(/[^\w\-]+/g,'_')||'MyCard')+'.png';
+let msgUntil=0;const xmsg=m=>{hint.textContent=m;msgUntil=performance.now()+6000};
+const baseName=()=>String(cur.name||'').normalize('NFC').replace(/[^\p{L}\p{N}\-]+/gu,'_').replace(/^_+|_+$/g,'')||'MyCard';
+const fileName=()=>baseName()+'.png';
 async function pngBlob(){const cv=await drawCard();return new Promise(ok=>cv.toBlob(ok,'image/png'))}
 async function saveBlob(b,name){
   name=name||fileName();
   const d=window.claude&&claude.use?await claude.use('downloads'):null;
   if(d){try{await d.save({filename:name,data:b})}catch(e){if(e&&e.code!=='declined')xmsg(tr('export.dlError',{err:e.code||'?'}))}return}
-  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.append(a);a.click();a.remove();
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),60000);
 }
 /* ---- modale d'export : choix Image fixe (PNG) / Animation holo (GIF) ---- */
 let expIntent='download';
@@ -2742,7 +2773,8 @@ addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('exp-modal').hidden)close
 async function deliver(blob,name,type,title){
   if(expIntent==='share'){
     const f=new File([blob],name,{type});
-    if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title});return}catch(e){if(e.name==='AbortError')return}}
+    if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title});return}catch(e){if(e.name==='AbortError')return;
+      if(e.name==='NotAllowedError'){shareReady={f,title};$('sh-ready').hidden=false;xmsg(tr('export.shareTap'));return}}}
     xmsg(tr('export.shareUnavailable'));
   }
   await saveBlob(blob,name);
@@ -2784,6 +2816,9 @@ async function gifBlob(onProgress){
   return new Blob([bytes],{type:'image/gif'});
 }
 $('sh').addEventListener('click',()=>openExpModal('share'));
+let shareReady=null;
+$('sh-ready').addEventListener('click',async()=>{const s=shareReady;$('sh-ready').hidden=true;shareReady=null;if(!s)return;
+  try{await navigator.share({files:[s.f],title:s.title})}catch(e){if(e.name!=='AbortError'){xmsg(tr('export.shareUnavailable'));await saveBlob(s.f,s.f.name)}}});
 
 
 /* ---- deck : bibliothèque + éventail, sauvegarde dans le navigateur ---- */
@@ -2797,14 +2832,15 @@ const media=(()=>{
   const mem=new Map();let dbp=null,bad=false;
   const open=()=>dbp||(dbp=new Promise((ok,no)=>{try{const r=indexedDB.open('mycard-media',1);r.onupgradeneeded=()=>r.result.createObjectStore('m');r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)}catch(e){no(e)}}));
   const run=async(mode,fn)=>{const d=await open();return new Promise((ok,no)=>{const t=d.transaction('m',mode),q=fn(t.objectStore('m'));t.oncomplete=()=>ok(q&&q.result);t.onerror=t.onabort=()=>no(t.error)})};
-  const g=(fn,mf)=>async(...a)=>{if(!bad){try{return await fn(...a)}catch(e){bad=true}}return mf(...a)};
+  /* base indisponible (navigation privée…) : tout en mémoire. Une écriture refusée (quota) n'échoue que pour elle-même. */
+  const g=(fn,mf)=>async(...a)=>{if(!bad){try{return await fn(...a)}catch(e){try{await open()}catch(_){bad=true}if(!bad){console.warn('MyCard : stockage refusé',e&&e.name);return mf(...a)}}}return mf(...a)};
   return {get:g(k=>run('readonly',o=>o.get(k)),k=>mem.get(k)),put:g((k,v)=>run('readwrite',o=>o.put(v,k)),(k,v)=>{mem.set(k,v)}),del:g(k=>run('readwrite',o=>o.delete(k)),k=>{mem.delete(k)})};
 })();
 const uk=()=>user.toLowerCase(),idxKey=()=>'mycard-idx:'+uk(),cKey=id=>'mycard-c:'+uk()+':'+id,imgSaved={};
 const lsSet=(k,v)=>{try{localStorage.setItem(k,v);return true}catch(e){toast('Stockage plein : essaie avec des images plus petites.');return false}};
 function saveIdx(){lsSet(idxKey(),JSON.stringify(deck.map(c=>c.id)))}
 function saveCard(c){                       /* n'écrit que cette carte ; l'image seulement si elle a changé */
-  const {img,...rest}=c,pending=img===undefined&&c.hasImg;rest.hasImg=pending?true:!!img;
+  const {img,...rest}=c,pending=img===undefined&&c.hasImg;rest.hasImg=pending?true:!!img;rest.m2=1;   /* une carte enregistrée n'a plus besoin de la migration des anciens textes */
   lsSet(cKey(c.id),JSON.stringify(rest));
   if(!pending&&img!==imgSaved[c.id]){imgSaved[c.id]=img;if(img)media.put('img:'+uk()+':'+c.id,img);else media.del('img:'+uk()+':'+c.id)}
 }
@@ -2818,7 +2854,8 @@ function loadDeck(){
   try{
     const old=localStorage.getItem(deckKey);
     if(old&&!localStorage.getItem(idxKey())){               /* ancien format (tout dans une clé) : migration */
-      deck=JSON.parse(old);deck.forEach(saveCard);saveIdx();localStorage.removeItem(deckKey);
+      deck=JSON.parse(old);deck.forEach(saveCard);saveIdx();
+      if(localStorage.getItem(idxKey())&&deck.every(c=>localStorage.getItem(cKey(c.id))))localStorage.removeItem(deckKey);   /* l'ancienne copie n'est effacée que si tout est bien réécrit */
     }else JSON.parse(localStorage.getItem(idxKey())||'[]').forEach(id=>{const j=localStorage.getItem(cKey(id));if(j)deck.push(JSON.parse(j))});
   }catch(e){deck=[]}
   deck.forEach(modernize);
@@ -2839,7 +2876,7 @@ function syncFx(c){
   $('f-k').value=kk;card.style.setProperty('--k',kk);$('kv').textContent=Math.round(kk*100)+'%';
 }
 function startDeck(){
-  $('u-err').textContent='';deckKey='mycard-deck:'+user.toLowerCase();loadDeck();hydrated=hydrate();showDeck();
+  $('u-err').textContent='';deckKey='mycard-deck:'+user.toLowerCase();for(const k in imgSaved)delete imgSaved[k];thumbMem.clear();loadDeck();hydrated=hydrate();showDeck();
 }
 function showDeck(){
   saveNow();clearTimeout(introT);
@@ -2858,7 +2895,7 @@ function openEditor(c,isNew){               /* personnalisation (panneau visible
   if(isNew)playIntro();else quickOpen();
 }
 function openCard(c){                        /* affichage en grand, sans le panneau */
-  Bd.classList.remove('view-deck');Bd.classList.add('view-edit','viewing');Bd.classList.toggle('uni-card',!!c.uni);$('v-uni-box').hidden=!(isMod()&&!c.uni);if(!$('v-uni-rar').options.length){$('v-uni-rar').innerHTML=RARITIES.map(r=>`<option value="${r.k}">${rarName(r.k)}</option>`).join('')}try{$('v-uni-rar').value=localStorage.getItem('mycard-uni-rar')||'rare'}catch(e){}
+  Bd.classList.remove('view-deck');Bd.classList.add('view-edit','viewing');Bd.classList.toggle('uni-card',!!c.uni);$('v-uni-box').hidden=!(isMod()&&!c.uni);{$('v-uni-rar').innerHTML=RARITIES.map(r=>`<option value="${r.k}">${rarName(r.k)}</option>`).join('')}try{$('v-uni-rar').value=localStorage.getItem('mycard-uni-rar')||'rare'}catch(e){}
   editing=false;render(c);fill(c);goStep(0);editNew=false;editSnap=null;
   const d=$('e-del');delete d.dataset.arm;d.textContent=tr('panel.deleteCard');
   quickOpen();
@@ -2920,10 +2957,13 @@ async function fillThumbs(){
   if(thumbBusy){thumbAgain=true;return}
   thumbBusy=true;
   try{
-    for(const c of deck){
+    const u0=uk();
+    for(const c of [...deck]){
+      if(uk()!==u0)break;if(!deck.includes(c))continue;
       const th=thumbs[c.id];
       if(!th||th.t!==c.t||th.l!==thumbSig()){
         const cv=await drawCard(c,{W:THUMB_W,fx:c.fx||'classic',k:c.k!=null?c.k:1,state:{mx:55,my:30,rx:0,ry:0,o:.7}});
+        if(uk()!==u0||!deck.includes(c))continue;
         thumbs[c.id]={t:c.t,l:thumbSig(),url:cv.toDataURL('image/webp',.9)};media.put('th:'+uk()+':'+c.id,thumbs[c.id]);paint();
         await new Promise(r=>window.requestIdleCallback?requestIdleCallback(r,{timeout:400}):setTimeout(r,0));
       }
@@ -3184,11 +3224,13 @@ async function submitMine(){
   await hydrated;const img=c.img||(c.hasImg?await media.get('img:'+uk()+':'+c.id):null);
   const e={id:'e'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),uk:uk(),author:user,t:Date.now(),card:JSON.parse(JSON.stringify({...c,img:undefined,hasImg:!!img})),hasImg:!!img};
   if(img)await media.put('ent:'+e.id,img);
-  const first=!(await cloud.entries(weekId())).some(x=>x.uk===uk());
-  await cloud.submit(weekId(),e);if(first)addCoins(CONTEST_COINS);
+  const wkKey='mycard-ccweek:'+uk(),first=(()=>{try{return localStorage.getItem(wkKey)!==weekId()}catch(_){return false}})();
+  await cloud.submit(weekId(),e);if(first){addCoins(CONTEST_COINS);try{localStorage.setItem(wkKey,weekId())}catch(_){}}
   toast(tr('contest.toastSubmitted')+(first?' '+tr('shop.contestGain',{n:CONTEST_COINS}):''));renderContest();
 }
+let moderating=false;
 async function moderate(wk,ok,rarity){
+  if(moderating)return;moderating=true;try{
   const r=(await cloud.results())[wk];if(!r||r.status!=='pending')return;
   if(ok){
     const e=(await cloud.entries(wk)).find(x=>x.id===r.entryId);if(!e)return;
@@ -3198,6 +3240,7 @@ async function moderate(wk,ok,rarity){
   }
   await cloud.setResult(wk,{...r,status:ok?'approved':'rejected',rarity:ok?rarity:undefined});
   toast(tr(ok?'contest.toastApproved':'contest.toastRejected'));renderContest();
+  }finally{moderating=false}
 }
 $('contest').addEventListener('click',async e=>{
   const b=e.target.closest('button');if(!b)return;
@@ -3213,7 +3256,7 @@ $('contest').addEventListener('click',async e=>{
   }
   if(b.id==='dm-end'){try{localStorage.setItem('mycard-demo-off',demoOff()+1)}catch(_){}return renderContest()}
   if(b.id==='dm-back'){try{localStorage.setItem('mycard-demo-off',0)}catch(_){}return renderContest()}
-  if(b.id==='dm-clear'){const all=await cloud.allEntries();Object.values(all).flat().forEach(x=>media.del('ent:'+x.id));await cloud.clear();return renderContest()}
+  if(b.id==='dm-clear'){const all=await cloud.allEntries();Object.values(all).flat().forEach(x=>media.del('ent:'+x.id));(await cloud.extras()).forEach(x=>media.del('ext:'+x.id));await cloud.clear();return renderContest()}
 });
 
 /* -- booster du jour : 5 cartes, au plus 1 légendaire -- */
@@ -3602,7 +3645,7 @@ async function addToUniversal(c){                       /* l'ajout est immédiat
   await hydrated;const img=c.img||(c.hasImg?await media.get('img:'+uk()+':'+c.id):null);
   const id='x-'+c.id,existed=(await cloud.extras()).some(x=>x.id===id);
   const o=JSON.parse(JSON.stringify({...c,img:undefined}));['t','c','dup','uni','rar','hasImg','id'].forEach(k=>delete o[k]);
-  Object.assign(o,{id,rarity:rar,hasImg:!!img,upd:Date.now()});
+  Object.assign(o,{id,rarity:rar,hasImg:!!img,upd:Date.now(),ill:c.ill||user});
   if(img)await media.put('ext:'+id,img);else await media.del('ext:'+id);
   await cloud.addExtra(o);toast(tr(existed?'uni.updated':'uni.added',{r:rarName(rar)}));
 }
