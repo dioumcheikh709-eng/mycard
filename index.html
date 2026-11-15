@@ -400,6 +400,9 @@ body[data-q]:not([data-q="0"]) .card[data-fx=opal] .fxa>i:nth-child(1){filter:no
 .sso.a small{background:rgba(255,255,255,.2)}
 .sso small[hidden]{display:none}
 .sso:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.sso[hidden]{display:none}
+.g-btn{display:flex;justify-content:center;width:100%;min-height:44px}
+.g-btn[hidden]{display:none}
 .exp-box{max-width:380px;text-align:left}
 .exp-opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
 .exp-opt{display:flex;flex-direction:column;align-items:center;text-align:center;padding:18px 10px;border-radius:16px;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:#fff;cursor:pointer;transition:transform .15s,background .15s,border-color .15s;font-family:Barlow,sans-serif}
@@ -746,6 +749,7 @@ button.coins{cursor:pointer}
   <div class="ask"><input id="u-name" type="text" maxlength="24" placeholder="Ton nom d'utilisateur" autocomplete="username" aria-label="Nom d'utilisateur" data-i18n-ph="login.namePlaceholder" data-i18n-aria="login.nameAria"><button type="button" id="u-go" class="send" aria-label="Continuer" data-i18n-aria="login.continueAria"><svg viewBox="0 0 24 24"><path d="M3 11.5L21 3L13.5 21L11 13Z" fill="#fff"/></svg></button></div>
   <div class="or" role="separator"><span data-i18n="login.or">ou</span></div>
   <button type="button" id="sso-google" class="sso g" aria-label="Se connecter avec Google (bientôt disponible)" data-i18n-aria="login.googleAria"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.98-3.09z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.98 3.09C6.22 6.86 8.87 4.75 12 4.75z"/></svg><span data-i18n="login.googleBtn">Se connecter avec Google</span><small data-i18n="login.soon">bientôt</small></button>
+  <div id="g-btn" class="g-btn" hidden></div>
   <button type="button" id="sso-apple" class="sso a" aria-label="Se connecter avec Apple (bientôt disponible)" data-i18n-aria="login.appleAria"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span data-i18n="login.appleBtn">Se connecter avec Apple</span><small data-i18n="login.soon">bientôt</small></button>
   <div class="hint" id="u-err" role="status"></div>
   <p class="hint" style="margin-top:2px" data-i18n="login.uniqueNote"></p>
@@ -770,6 +774,8 @@ button.coins{cursor:pointer}
   <div class="set-block">
     <h2 class="set-h" data-i18n="settings.account">Compte</h2>
     <p class="set-p" id="set-loggedas"></p>
+    <p class="set-p" id="set-gacct" hidden></p>
+    <button type="button" id="set-gout" class="gbtn" hidden data-i18n="auth.signOut">Se déconnecter de Google</button>
     <button type="button" id="set-change" class="gbtn" data-i18n="deck.changeUser">changer d'utilisateur</button>
   </div>
   <div class="set-block">
@@ -1163,6 +1169,11 @@ fr:{dir:'ltr',
  'panel.image.bad':'Cette image ne peut pas être lue. Essaie un fichier JPEG ou PNG.',
  'perf.live':'écran {hz} Hz · visé {fps} img/s · affiché {got} img/s · palier {tier}',
  'perf.saver':' · économie (repos > 1 min)',
+ 'auth.failed':'La connexion Google a échoué. Réessaie dans un instant.',
+ 'auth.errGsi':'Impossible de joindre Google. Vérifie ta connexion internet.',
+ 'auth.signOut':'Se déconnecter de Google',
+ 'auth.linked':'Compte Google relié : {name} ({email})',
+ 'auth.signedAs':'Connecté avec Google : {name}. Touche la flèche pour continuer.',
  'settings.title':'Paramètres','settings.account':'Compte','settings.language':'Langue','settings.loggedAs':'Connecté en tant que {user}',
  'settings.privacyTitle':'Politique de confidentialité',
  'settings.privacy':"MyCard fonctionne entièrement dans ton navigateur. Il n'y a pas de serveur, et rien de ce que tu fais ici ne nous est envoyé, ni à personne d'autre.\n\nTon pseudo, tes cartes et tes réglages sont stockés uniquement sur cet appareil, dans le navigateur. Les photos que tu ajoutes à une carte restent aussi sur cet appareil et ne sont jamais envoyées ailleurs.\n\nCette page charge des polices depuis Google Fonts ; ce chargement peut partager ton adresse IP avec Google, comme pour tout site qui utilise Google Fonts.\n\nIl n'y a ni outil de mesure d'audience, ni publicité, ni cookie de suivi.\n\nSi tu effaces les données de ton navigateur, ou si tu ouvres l'appli sur un autre appareil ou un autre navigateur, tes cartes n'y seront pas accessibles : elles ne sont pas encore sauvegardées ailleurs.\n\nCette note sera mise à jour si la connexion par compte et le stockage en ligne sont ajoutés plus tard.",
@@ -1394,6 +1405,11 @@ en:{dir:'ltr',
  'panel.image.bad':'This image can’t be read. Try a JPEG or PNG file.',
  'perf.live':'screen {hz} Hz · target {fps} fps · shown {got} fps · tier {tier}',
  'perf.saver':' · saver (idle > 1 min)',
+ 'auth.failed':'Google sign-in failed. Please try again in a moment.',
+ 'auth.errGsi':'Couldn\'t reach Google. Check your internet connection.',
+ 'auth.signOut':'Sign out of Google',
+ 'auth.linked':'Linked Google account: {name} ({email})',
+ 'auth.signedAs':'Signed in with Google: {name}. Tap the arrow to continue.',
  'settings.title':'Settings','settings.account':'Account','settings.language':'Language','settings.loggedAs':'Signed in as {user}',
  'settings.privacyTitle':'Privacy policy',
  'settings.privacy':"MyCard runs entirely in your browser. There is no server, and nothing you do here is sent to us or to anyone else.\n\nYour username, your cards, and your settings are stored only on this device, in your browser's local storage. Photos you add to a card stay on this device too and are never uploaded.\n\nThis page loads fonts from Google Fonts; loading them may share your IP address with Google, as with any site that uses Google Fonts.\n\nThere is no analytics, no advertising, and no tracking cookies.\n\nClearing your browser data, or opening the app on a different device or browser, makes your cards inaccessible there — they aren't backed up anywhere else yet.\n\nThis notice will be updated if account sign-in and cloud storage are added later.",
@@ -1625,6 +1641,11 @@ es:{dir:'ltr',
  'panel.image.bad':'No se puede leer esta imagen. Prueba con un archivo JPEG o PNG.',
  'perf.live':'pantalla {hz} Hz · objetivo {fps} img/s · mostradas {got} img/s · nivel {tier}',
  'perf.saver':' · ahorro (inactivo > 1 min)',
+ 'auth.failed':'Ha fallado el inicio de sesión con Google. Inténtalo de nuevo en un momento.',
+ 'auth.errGsi':'No se pudo contactar con Google. Revisa tu conexión a internet.',
+ 'auth.signOut':'Cerrar sesión de Google',
+ 'auth.linked':'Cuenta de Google vinculada: {name} ({email})',
+ 'auth.signedAs':'Sesión iniciada con Google: {name}. Toca la flecha para continuar.',
  'settings.title':'Ajustes','settings.account':'Cuenta','settings.language':'Idioma','settings.loggedAs':'Sesión iniciada como {user}',
  'settings.privacyTitle':'Política de privacidad',
  'settings.privacy':"MyCard funciona totalmente en tu navegador. No hay servidor, y nada de lo que hagas aquí se nos envía a nosotros ni a nadie más.\n\nTu nombre de usuario, tus cartas y tus ajustes se guardan solo en este dispositivo, en el almacenamiento local del navegador. Las fotos que añades a una carta también se quedan en este dispositivo y nunca se suben a ningún sitio.\n\nEsta página carga fuentes desde Google Fonts; esta carga puede compartir tu dirección IP con Google, como ocurre en cualquier sitio que use Google Fonts.\n\nNo hay analítica, ni publicidad, ni cookies de seguimiento.\n\nSi borras los datos del navegador, o abres la app en otro dispositivo o navegador, tus cartas no estarán disponibles allí: todavía no se respaldan en ningún otro sitio.\n\nEste aviso se actualizará si más adelante se añaden el inicio de sesión con cuenta y el almacenamiento en la nube.",
@@ -1856,6 +1877,11 @@ de:{dir:'ltr',
  'panel.image.bad':'Dieses Bild kann nicht gelesen werden. Versuche eine JPEG- oder PNG-Datei.',
  'perf.live':'Bildschirm {hz} Hz · Ziel {fps} B/s · angezeigt {got} B/s · Stufe {tier}',
  'perf.saver':' · Sparmodus (inaktiv > 1 min)',
+ 'auth.failed':'Die Google-Anmeldung ist fehlgeschlagen. Versuche es gleich noch einmal.',
+ 'auth.errGsi':'Google ist nicht erreichbar. Prüfe deine Internetverbindung.',
+ 'auth.signOut':'Von Google abmelden',
+ 'auth.linked':'Verknüpftes Google-Konto: {name} ({email})',
+ 'auth.signedAs':'Mit Google angemeldet: {name}. Tippe auf den Pfeil, um fortzufahren.',
  'settings.title':'Einstellungen','settings.account':'Konto','settings.language':'Sprache','settings.loggedAs':'Angemeldet als {user}',
  'settings.privacyTitle':'Datenschutzerklärung',
  'settings.privacy':"MyCard läuft vollständig in deinem Browser. Es gibt keinen Server, und nichts von dem, was du hier tust, wird an uns oder sonst jemanden gesendet.\n\nDein Benutzername, deine Karten und deine Einstellungen werden nur auf diesem Gerät gespeichert, im lokalen Speicher des Browsers. Fotos, die du einer Karte hinzufügst, bleiben ebenfalls auf diesem Gerät und werden nie hochgeladen.\n\nDiese Seite lädt Schriftarten von Google Fonts; dabei kann deine IP-Adresse an Google übermittelt werden, wie bei jeder Website, die Google Fonts nutzt.\n\nEs gibt keine Analyse-Tools, keine Werbung und keine Tracking-Cookies.\n\nWenn du deine Browserdaten löschst oder die App auf einem anderen Gerät oder Browser öffnest, sind deine Karten dort nicht verfügbar: Sie werden bisher nirgendwo anders gesichert.\n\nDieser Hinweis wird aktualisiert, falls später eine Kontoanmeldung und Cloud-Speicherung hinzukommen.",
@@ -2087,6 +2113,11 @@ ar:{dir:'rtl',
  'panel.image.bad':'تعذّرت قراءة هذه الصورة. جرّب ملف JPEG أو PNG.',
  'perf.live':'الشاشة {hz} هرتز · المستهدف {fps} إطار/ث · المعروض {got} إطار/ث · المستوى {tier}',
  'perf.saver':' · توفير (خمول > دقيقة)',
+ 'auth.failed':'فشل تسجيل الدخول عبر Google. حاول مجددًا بعد قليل.',
+ 'auth.errGsi':'تعذّر الوصول إلى Google. تحقق من اتصالك بالإنترنت.',
+ 'auth.signOut':'تسجيل الخروج من Google',
+ 'auth.linked':'حساب Google المرتبط: {name} ({email})',
+ 'auth.signedAs':'تم تسجيل الدخول عبر Google: {name}. المس السهم للمتابعة.',
  'settings.title':'الإعدادات','settings.account':'الحساب','settings.language':'اللغة','settings.loggedAs':'مسجّل الدخول باسم {user}',
  'settings.privacyTitle':'سياسة الخصوصية',
  'settings.privacy':"يعمل MyCard بالكامل داخل متصفحك. لا يوجد خادم، ولا يُرسَل أي شيء تفعله هنا إلينا أو إلى أي جهة أخرى.\n\nيُحفظ اسم المستخدم وبطاقاتك وإعداداتك على هذا الجهاز فقط، داخل التخزين المحلي للمتصفح. كما تبقى الصور التي تضيفها إلى بطاقة على هذا الجهاز ولا تُرفع إلى أي مكان.\n\nتُحمّل هذه الصفحة خطوطًا من Google Fonts؛ قد يشارك ذلك عنوان IP الخاص بك مع Google، كما هو الحال في أي موقع يستخدم Google Fonts.\n\nلا توجد أدوات تحليل، ولا إعلانات، ولا ملفات تعريف ارتباط للتتبع.\n\nعند مسح بيانات المتصفح، أو فتح التطبيق على جهاز أو متصفح آخر، لن تكون بطاقاتك متاحة هناك: فهي غير محفوظة بعد في أي مكان آخر.\n\nسيتم تحديث هذا الإشعار إذا أُضيف لاحقًا تسجيل الدخول بحساب والتخزين السحابي.",
@@ -2266,16 +2297,63 @@ function enterUser(){
   $('u-err').textContent='';$('who-n').textContent=tr('deck.hello',{user});startDeck();
 }
 $('u-go').addEventListener('click',enterUser);
-/* ---- connexion Google / Apple : l'interface est prête ; le branchement réel viendra avec les identifiants et le serveur ---- */
+/* ---- connexion Google : active seulement si le serveur MyCard répond et annonce un ID client (sinon le bouton reste « bientôt ») ---- */
 const AUTH={google:{ready:false,label:'Google'},apple:{ready:false,label:'Apple'}};   /* ready:true une fois l'authentification réellement en place */
+let gAcct=null,gsiOk=false,gWidth=280;                                                /* gAcct : compte Google relié {name,email,picture} */
 function signInWith(provider){
   const a=AUTH[provider];
   if(!a.ready){$('u-err').textContent=tr('login.errProviderNotReady',{provider:a.label});return}
-  /* À brancher : lancer la connexion réelle (redirection OAuth ou SDK), puis appeler enterUser() avec le profil reçu */
+  if(provider==='google'&&!gsiOk)$('u-err').textContent=tr('auth.errGsi');       /* le script de Google n'a pas pu être chargé */
 }
 $('sso-google').addEventListener('click',()=>signInWith('google'));
 $('sso-apple').addEventListener('click',()=>signInWith('apple'));
-for(const k in AUTH)$('sso-'+(k))&&($('sso-'+k).querySelector('small').hidden=AUTH[k].ready);
+function refreshSso(){for(const k in AUTH){const s=$('sso-'+k).querySelector('small');if(s)s.hidden=AUTH[k].ready}}
+refreshSso();
+function refreshAccount(){
+  const on=!!gAcct;
+  $('set-gacct').hidden=!on;$('set-gout').hidden=!on;
+  if(on)$('set-gacct').textContent=tr('auth.linked',{name:gAcct.name,email:gAcct.email});
+}
+const jpost=(url,body)=>fetch(url,{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify(body||{})});
+async function onGoogleCredential(resp){
+  try{
+    const r=await jpost('/api/auth/google',{credential:resp&&resp.credential});
+    const j=await r.json().catch(()=>null);
+    if(!r.ok||!j||!j.user){$('u-err').textContent=tr('auth.failed');return}
+    gAcct=j.user;refreshAccount();
+    uin.value=String(gAcct.name||'').slice(0,24);
+    enterUser();
+  }catch(e){$('u-err').textContent=tr('auth.failed')}
+}
+function renderGoogleBtn(){
+  if(!gsiOk||!window.google||!google.accounts)return;
+  const box=$('g-btn');box.innerHTML='';
+  try{google.accounts.id.renderButton(box,{type:'standard',theme:'outline',size:'large',shape:'pill',text:'signin_with',width:gWidth,locale:lang})}catch(e){}
+}
+function loadGsi(){return new Promise((ok,ko)=>{
+  if(window.google&&google.accounts&&google.accounts.id)return ok();
+  const s=document.createElement('script');s.src='https://accounts.google.com/gsi/client';s.async=true;s.onload=ok;s.onerror=()=>ko(new Error('gsi'));document.head.appendChild(s)})}
+async function initGoogle(){
+  if(!/^https?:$/.test(location.protocol))return;                                  /* ouvert comme simple fichier : pas de serveur */
+  let cfg;
+  try{const r=await fetch('/api/config',{credentials:'same-origin'});if(!r.ok)return;cfg=await r.json()}catch(e){return}
+  if(!cfg||typeof cfg.googleClientId!=='string'||!/^[\w.-]+\.apps\.googleusercontent\.com$/.test(cfg.googleClientId))return;
+  AUTH.google.ready=true;refreshSso();
+  try{const r=await fetch('/api/me',{credentials:'same-origin'});const j=await r.json();gAcct=j&&j.user||null}catch(e){}
+  if(gAcct){if(!uin.value)uin.value=String(gAcct.name||'').slice(0,24);$('u-err').textContent=tr('auth.signedAs',{name:gAcct.name})}
+  refreshAccount();
+  try{await loadGsi()}catch(e){return}                                              /* hors ligne : le bouton « Google » reste affiché avec son message */
+  gsiOk=true;
+  gWidth=Math.max(200,Math.min(400,Math.round($('sso-google').getBoundingClientRect().width)||280));
+  google.accounts.id.initialize({client_id:cfg.googleClientId,callback:onGoogleCredential,auto_select:false,cancel_on_tap_outside:true});
+  $('sso-google').hidden=true;$('g-btn').hidden=false;renderGoogleBtn();
+}
+$('set-gout').addEventListener('click',async()=>{
+  try{await jpost('/api/logout')}catch(e){}
+  gAcct=null;refreshAccount();try{if(window.google&&google.accounts)google.accounts.id.disableAutoSelect()}catch(e){}
+  $('u-err').textContent='';
+});
+initGoogle();
 $('u-name').addEventListener('input',()=>{$('u-err').textContent=''});
 uin.addEventListener('keydown',e=>{if(e.key==='Enter')enterUser()});
 $('u-change').addEventListener('click',()=>{saveNow();clearTimeout(introT);document.body.classList.add('locked');document.body.classList.remove('introing','introshow','view-deck','view-edit','viewing');document.documentElement.classList.remove('introing');uin.focus()});
@@ -3051,7 +3129,7 @@ function setLook(k,v){
 }
 function fillSettings(){
   buildLookGrids();
-  $('set-loggedas').textContent=tr('settings.loggedAs',{user});
+  $('set-loggedas').textContent=tr('settings.loggedAs',{user});refreshAccount();
   $('set-privacy').textContent=tr('settings.privacy');
   $('set-credits').textContent=tr('settings.credits');
   buildSettingsLangGrid();buildThemeGrid();
@@ -3786,7 +3864,7 @@ function applyI18n(){
 }
 function setLang(code){
   if(!I18N[code])return;lang=code;try{localStorage.setItem('mycard-lang',code)}catch(e){}
-  applyI18n();
+  applyI18n();if(typeof renderGoogleBtn==='function')renderGoogleBtn();
 }
 function buildSettingsLangGrid(){
   const g=$('set-lgrid');
