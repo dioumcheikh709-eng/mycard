@@ -167,9 +167,14 @@ quatre variables posées à chaque image : `--px` / `--py` (position de la lumi�
 Les cartes enregistrées avec les anciens effets (holo régulier, cosmos, etc.) passent automatiquement au nouvel effet le plus proche (`FX_OLD`).
 
 ## Performance
-- Appuyer **5 fois vite** sur « Bonjour, … » dans la bibliothèque affiche un encart : fréquence d'écran détectée, durée des images, palier.
-- Paliers : 0 complet · 1 couches secondaires retirées · 2 effet une image sur deux · 3 une image sur trois.
+- Appuyer **5 fois vite** sur « Bonjour, … » dans la bibliothèque affiche un encart : fréquence d'écran détectée, cadence visée, images réellement affichées par seconde, palier.
+- Le régulateur mesure la fréquence réelle de l'écran (120 / 100 / 90 / 60 Hz, ou 30 si le navigateur bride lui-même) et vise d'abord cette fréquence.
+  S'il n'y arrive pas, il descend par étapes **120 → 100 → 90 → 60 images/s en gardant l'effet complet**, et seulement ensuite simplifie l'effet :
+  palier 1 couches secondaires retirées · 2 effet une image sur deux · 3 une image sur trois. Il remonte tout seul quand il a de la marge.
   L'inclinaison de la carte reste toujours à la cadence de l'écran.
+- Économie d'énergie : après 1 minute sans toucher la carte (ni gyroscope), l'animation de repos passe à 30 images/s.
+- Le holo classique n'utilise plus de filtre CSS recalculé à chaque image : luminosité, contraste et saturation sont appliqués une fois au dessin des calques.
+- Limites : iPhone/Safari plafonne en général à 60 Hz, et le mode économie d'énergie du téléphone ou une page affichée dans une app (iframe) peut brider à 30 Hz.
 
 ## À faire / limites connues
 - **Connexion Google / Apple** : demande des identifiants OAuth, un serveur de vérification et une page hébergée

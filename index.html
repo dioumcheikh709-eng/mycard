@@ -68,7 +68,7 @@ body{margin:0;min-height:100vh;box-sizing:border-box;padding:24px 16px;backgroun
   background-size:150% 150%;background-position:calc(var(--mx)*1%) calc(var(--my)*1%)}
 .card[data-fx=reverse] .body{background:linear-gradient(180deg,#0000,#0007 18%,#0008)}
 .rev.spot{background:radial-gradient(circle at calc(var(--mx)*1%) calc(var(--my)*1%),#fff 0,#ffffff88 14%,transparent 32%);background-size:100% 100%;background-position:0 0;opacity:calc((.1 + var(--o)*.7)*var(--k))}
-.holo{mix-blend-mode:color-dodge;opacity:.5;overflow:hidden;filter:brightness(calc(.55 + var(--k)*.2)) contrast(calc(1.05 + var(--k)*.2)) saturate(calc(.9 + var(--k)*.4))}
+.holo{mix-blend-mode:color-dodge;opacity:.5;overflow:hidden}   /* luminosité, contraste et saturation sont appliqués au dessin des calques (paintFx), pas par un filtre à chaque image */
 .hg{position:absolute;left:0;top:0;width:260%;height:260%;will-change:transform;pointer-events:none}
 .hs{position:absolute;left:0;top:0;width:300%;height:300%;mix-blend-mode:soft-light;opacity:.9;will-change:transform;pointer-events:none}
 .gl{position:absolute;left:0;top:0;will-change:transform;pointer-events:none}
@@ -1161,6 +1161,8 @@ fr:{dir:'ltr',
  'export.shareTap':'Ton fichier est prêt : appuie sur « Partager maintenant ».',
  'export.shareNow':'Partager maintenant',
  'panel.image.bad':'Cette image ne peut pas être lue. Essaie un fichier JPEG ou PNG.',
+ 'perf.live':'écran {hz} Hz · visé {fps} img/s · affiché {got} img/s · palier {tier}',
+ 'perf.saver':' · économie (repos > 1 min)',
  'settings.title':'Paramètres','settings.account':'Compte','settings.language':'Langue','settings.loggedAs':'Connecté en tant que {user}',
  'settings.privacyTitle':'Politique de confidentialité',
  'settings.privacy':"MyCard fonctionne entièrement dans ton navigateur. Il n'y a pas de serveur, et rien de ce que tu fais ici ne nous est envoyé, ni à personne d'autre.\n\nTon pseudo, tes cartes et tes réglages sont stockés uniquement sur cet appareil, dans le navigateur. Les photos que tu ajoutes à une carte restent aussi sur cet appareil et ne sont jamais envoyées ailleurs.\n\nCette page charge des polices depuis Google Fonts ; ce chargement peut partager ton adresse IP avec Google, comme pour tout site qui utilise Google Fonts.\n\nIl n'y a ni outil de mesure d'audience, ni publicité, ni cookie de suivi.\n\nSi tu effaces les données de ton navigateur, ou si tu ouvres l'appli sur un autre appareil ou un autre navigateur, tes cartes n'y seront pas accessibles : elles ne sont pas encore sauvegardées ailleurs.\n\nCette note sera mise à jour si la connexion par compte et le stockage en ligne sont ajoutés plus tard.",
@@ -1390,6 +1392,8 @@ en:{dir:'ltr',
  'export.shareTap':'Your file is ready: tap “Share now”.',
  'export.shareNow':'Share now',
  'panel.image.bad':'This image can’t be read. Try a JPEG or PNG file.',
+ 'perf.live':'screen {hz} Hz · target {fps} fps · shown {got} fps · tier {tier}',
+ 'perf.saver':' · saver (idle > 1 min)',
  'settings.title':'Settings','settings.account':'Account','settings.language':'Language','settings.loggedAs':'Signed in as {user}',
  'settings.privacyTitle':'Privacy policy',
  'settings.privacy':"MyCard runs entirely in your browser. There is no server, and nothing you do here is sent to us or to anyone else.\n\nYour username, your cards, and your settings are stored only on this device, in your browser's local storage. Photos you add to a card stay on this device too and are never uploaded.\n\nThis page loads fonts from Google Fonts; loading them may share your IP address with Google, as with any site that uses Google Fonts.\n\nThere is no analytics, no advertising, and no tracking cookies.\n\nClearing your browser data, or opening the app on a different device or browser, makes your cards inaccessible there — they aren't backed up anywhere else yet.\n\nThis notice will be updated if account sign-in and cloud storage are added later.",
@@ -1619,6 +1623,8 @@ es:{dir:'ltr',
  'export.shareTap':'Tu archivo está listo: toca «Compartir ahora».',
  'export.shareNow':'Compartir ahora',
  'panel.image.bad':'No se puede leer esta imagen. Prueba con un archivo JPEG o PNG.',
+ 'perf.live':'pantalla {hz} Hz · objetivo {fps} img/s · mostradas {got} img/s · nivel {tier}',
+ 'perf.saver':' · ahorro (inactivo > 1 min)',
  'settings.title':'Ajustes','settings.account':'Cuenta','settings.language':'Idioma','settings.loggedAs':'Sesión iniciada como {user}',
  'settings.privacyTitle':'Política de privacidad',
  'settings.privacy':"MyCard funciona totalmente en tu navegador. No hay servidor, y nada de lo que hagas aquí se nos envía a nosotros ni a nadie más.\n\nTu nombre de usuario, tus cartas y tus ajustes se guardan solo en este dispositivo, en el almacenamiento local del navegador. Las fotos que añades a una carta también se quedan en este dispositivo y nunca se suben a ningún sitio.\n\nEsta página carga fuentes desde Google Fonts; esta carga puede compartir tu dirección IP con Google, como ocurre en cualquier sitio que use Google Fonts.\n\nNo hay analítica, ni publicidad, ni cookies de seguimiento.\n\nSi borras los datos del navegador, o abres la app en otro dispositivo o navegador, tus cartas no estarán disponibles allí: todavía no se respaldan en ningún otro sitio.\n\nEste aviso se actualizará si más adelante se añaden el inicio de sesión con cuenta y el almacenamiento en la nube.",
@@ -1848,6 +1854,8 @@ de:{dir:'ltr',
  'export.shareTap':'Deine Datei ist bereit: Tippe auf „Jetzt teilen“.',
  'export.shareNow':'Jetzt teilen',
  'panel.image.bad':'Dieses Bild kann nicht gelesen werden. Versuche eine JPEG- oder PNG-Datei.',
+ 'perf.live':'Bildschirm {hz} Hz · Ziel {fps} B/s · angezeigt {got} B/s · Stufe {tier}',
+ 'perf.saver':' · Sparmodus (inaktiv > 1 min)',
  'settings.title':'Einstellungen','settings.account':'Konto','settings.language':'Sprache','settings.loggedAs':'Angemeldet als {user}',
  'settings.privacyTitle':'Datenschutzerklärung',
  'settings.privacy':"MyCard läuft vollständig in deinem Browser. Es gibt keinen Server, und nichts von dem, was du hier tust, wird an uns oder sonst jemanden gesendet.\n\nDein Benutzername, deine Karten und deine Einstellungen werden nur auf diesem Gerät gespeichert, im lokalen Speicher des Browsers. Fotos, die du einer Karte hinzufügst, bleiben ebenfalls auf diesem Gerät und werden nie hochgeladen.\n\nDiese Seite lädt Schriftarten von Google Fonts; dabei kann deine IP-Adresse an Google übermittelt werden, wie bei jeder Website, die Google Fonts nutzt.\n\nEs gibt keine Analyse-Tools, keine Werbung und keine Tracking-Cookies.\n\nWenn du deine Browserdaten löschst oder die App auf einem anderen Gerät oder Browser öffnest, sind deine Karten dort nicht verfügbar: Sie werden bisher nirgendwo anders gesichert.\n\nDieser Hinweis wird aktualisiert, falls später eine Kontoanmeldung und Cloud-Speicherung hinzukommen.",
@@ -2077,6 +2085,8 @@ ar:{dir:'rtl',
  'export.shareTap':'ملفك جاهز: اضغط على «مشاركة الآن».',
  'export.shareNow':'مشاركة الآن',
  'panel.image.bad':'تعذّرت قراءة هذه الصورة. جرّب ملف JPEG أو PNG.',
+ 'perf.live':'الشاشة {hz} هرتز · المستهدف {fps} إطار/ث · المعروض {got} إطار/ث · المستوى {tier}',
+ 'perf.saver':' · توفير (خمول > دقيقة)',
  'settings.title':'الإعدادات','settings.account':'الحساب','settings.language':'اللغة','settings.loggedAs':'مسجّل الدخول باسم {user}',
  'settings.privacyTitle':'سياسة الخصوصية',
  'settings.privacy':"يعمل MyCard بالكامل داخل متصفحك. لا يوجد خادم، ولا يُرسَل أي شيء تفعله هنا إلينا أو إلى أي جهة أخرى.\n\nيُحفظ اسم المستخدم وبطاقاتك وإعداداتك على هذا الجهاز فقط، داخل التخزين المحلي للمتصفح. كما تبقى الصور التي تضيفها إلى بطاقة على هذا الجهاز ولا تُرفع إلى أي مكان.\n\nتُحمّل هذه الصفحة خطوطًا من Google Fonts؛ قد يشارك ذلك عنوان IP الخاص بك مع Google، كما هو الحال في أي موقع يستخدم Google Fonts.\n\nلا توجد أدوات تحليل، ولا إعلانات، ولا ملفات تعريف ارتباط للتتبع.\n\nعند مسح بيانات المتصفح، أو فتح التطبيق على جهاز أو متصفح آخر، لن تكون بطاقاتك متاحة هناك: فهي غير محفوظة بعد في أي مكان آخر.\n\nسيتم تحديث هذا الإشعار إذا أُضيف لاحقًا تسجيل الدخول بحساب والتخزين السحابي.",
@@ -2193,14 +2203,26 @@ function buildSpark(){                          /* grains de paillettes : dessin
 tileImg.onload=()=>{spkDims='';buildSpark()};tileImg.src="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27220%27%20height%3D%27220%27%3E%3Cfilter%20id%3D%27n%27%20x%3D%270%27%20y%3D%270%27%20width%3D%27100%25%27%20height%3D%27100%25%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%27.85%27%20numOctaves%3D%272%27%20stitchTiles%3D%27stitch%27%2F%3E%3CfeColorMatrix%20values%3D%270%200%200%200%201%200%200%200%200%201%200%200%200%200%201%200%200%2016%200%20-9.6%27%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%27220%27%20height%3D%27220%27%20filter%3D%27url(%23n)%27%2F%3E%3C%2Fsvg%3E";
 function sizeFx(){const R=Math.hypot(CW,CH);GL.style.width=GL.style.height=(2*R)+'px';buildSpark()}
 HG.className='hg';HS.className='hs';GL.className='gl';
-(function paintFx(){                         /* dessinés une seule fois, ensuite seulement déplacés par la carte graphique */
+/* calques du holo classique : dessinés une fois (et à chaque changement d'intensité), ensuite seulement déplacés par la carte graphique.
+   Les réglages de couleur selon l'intensité k (luminosité, contraste, saturation) sont calculés ici, comme le ferait un filtre CSS. */
+const toneRGB=(r,g,b,k)=>{const cl=v=>Math.max(0,Math.min(1,v)),Br=.55+k*.2,Co=1.05+k*.2,S=.9+k*.4;
+  let c=[r,g,b].map(v=>cl(v/255*Br)).map(v=>cl((v-.5)*Co+.5));
+  const M=[[.213+.787*S,.715-.715*S,.072-.072*S],[.213-.213*S,.715+.285*S,.072-.072*S],[.213-.213*S,.715-.715*S,.072+.928*S]];
+  c=M.map(m=>cl(m[0]*c[0]+m[1]*c[1]+m[2]*c[2]));return c.map(v=>Math.round(v*255))};
+let paintedK=null;
+function paintFx(k){
+  k=+k;if(!(k>=0))k=1;if(k===paintedK)return;paintedK=k;
   const th=115*Math.PI/180,dx=Math.sin(th),dy=-Math.cos(th);
-  const lin=(cv,w,h,stops)=>{cv.width=w;cv.height=h;const g=cv.getContext('2d'),L=w*Math.abs(dx)+h*Math.abs(dy),gr=g.createLinearGradient(w/2-dx*L/2,h/2-dy*L/2,w/2+dx*L/2,h/2+dy*L/2);stops.forEach(([q,c])=>gr.addColorStop(q,c));g.fillStyle=gr;g.fillRect(0,0,w,h)};
+  const lin=(cv,w,h,stops)=>{cv.width=w;cv.height=h;const g=cv.getContext('2d'),L=w*Math.abs(dx)+h*Math.abs(dy),gr=g.createLinearGradient(w/2-dx*L/2,h/2-dy*L/2,w/2+dx*L/2,h/2+dy*L/2);stops.forEach(([q,c])=>gr.addColorStop(q,c));g.fillStyle=gr;g.fillRect(0,0,w,h);
+    try{const im=g.getImageData(0,0,w,h),d=im.data,memo=new Map();          /* réglage appliqué à chaque pixel, comme le faisait le filtre */
+      for(let i=0;i<d.length;i+=4){const key=d[i]<<16|d[i+1]<<8|d[i+2];let t=memo.get(key);if(!t){t=toneRGB(d[i],d[i+1],d[i+2],k);memo.set(key,t)}d[i]=t[0];d[i+1]=t[1];d[i+2]=t[2]}
+      g.putImageData(im,0,0)}catch(e){}};
   lin(HG,128,179,[[0,'#ff6b6b'],[.18,'#ffd86b'],[.36,'#6bffa8'],[.54,'#6bd6ff'],[.72,'#8f7bff'],[.9,'#ff6bd6'],[1,'#ff6b6b']]);
   const bd=.16/3;lin(HS,128,179,[[.5-bd,'rgba(255,255,255,0)'],[.5,'#fff'],[.5+bd,'rgba(255,255,255,0)']]);
-  GL.width=GL.height=128;const g=GL.getContext('2d'),r=g.createRadialGradient(64,64,0,64,64,64);
-  r.addColorStop(0,'#fff');r.addColorStop(.25,'rgba(255,255,255,.333)');r.addColorStop(.6,'rgba(255,255,255,0)');r.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=r;g.fillRect(0,0,128,128);
-})();
+}
+paintFx(1);
+GL.width=GL.height=128;{const g=GL.getContext('2d'),r=g.createRadialGradient(64,64,0,64,64,64);
+  r.addColorStop(0,'#fff');r.addColorStop(.25,'rgba(255,255,255,.333)');r.addColorStop(.6,'rgba(255,255,255,0)');r.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=r;g.fillRect(0,0,128,128)}
 function render(c){
   cur=c;
   if(editing&&deck.includes(c))queueSave();
@@ -2362,7 +2384,7 @@ card.addEventListener('pointermove',e=>{active=true;aim(e)});
 addEventListener('scroll',()=>{R=null},{passive:true});addEventListener('resize',()=>{R=null});
 card.dataset.fx='classic';
 $('f-fx').addEventListener('change',e=>{card.dataset.fx=e.target.value;cur.fx=e.target.value;queueSave()});
-$('f-k').addEventListener('input',e=>{card.style.setProperty('--k',e.target.value);$('kv').textContent=Math.round(e.target.value*100)+'%';cur.k=+e.target.value;fxDirty=true;queueSave()});
+$('f-k').addEventListener('input',e=>{card.style.setProperty('--k',e.target.value);$('kv').textContent=Math.round(e.target.value*100)+'%';cur.k=+e.target.value;paintFx(cur.k);fxDirty=true;queueSave()});
 
 /* ---- gyroscope (téléphone) ---- */
 let gyroOn=false,gyroWanted=false,g0=null,lastShow=0;
@@ -2873,7 +2895,7 @@ function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clear
 function syncFx(c){
   const f=fxOf(c.fx),kk=c.k!=null?c.k:1;if(c.fx&&c.fx!==f)c.fx=f;
   card.dataset.fx=f;$('f-fx').value=f;[...fg.children].forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===f));
-  $('f-k').value=kk;card.style.setProperty('--k',kk);$('kv').textContent=Math.round(kk*100)+'%';
+  $('f-k').value=kk;card.style.setProperty('--k',kk);$('kv').textContent=Math.round(kk*100)+'%';paintFx(kk);
 }
 function startDeck(){
   $('u-err').textContent='';deckKey='mycard-deck:'+user.toLowerCase();for(const k in imgSaved)delete imgSaved[k];thumbMem.clear();loadDeck();hydrated=hydrate();showDeck();
@@ -3043,22 +3065,35 @@ $('set-change').addEventListener('click',()=>{hideSettings();$('u-change').click
 
 const calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const stage=card.closest('.stage'),glowEl=$('glow'),shEl=$('shadow');
-let lastNow=0,prevT=performance.now(),idleT=0,lastFx='',lastRaf=0,liveRun=0,fxFrame=0,sparkFrame=0,stride=1,fxPending=false;
-const gov={hz:60,tt:16.7,ema:16.7,tier:0,bad:0,good:0,floor:0,justUp:0,s:[],n:0};
-/* Le gouverneur mesure le rythme réel de l'écran (120 / 90 / 60 Hz) puis surveille la durée des images :
-   si le téléphone ne tient pas la cadence, il simplifie l'effet par paliers ; il remonte tout seul quand il a de la marge. */
-function setTier(n,save){
-  gov.tier=n;Bd.dataset.q=n;
-  stride=n>=3?Math.max(3,Math.round(gov.hz/40)):n===2?Math.max(2,Math.round(gov.hz/60)):1;
-  fxDirty=true;if(save){try{localStorage.setItem('mycard-q',n)}catch(e){}}
+let lastNow=0,prevT=performance.now(),idleT=0,lastFx='',lastRaf=0,liveRun=0,fxFrame=0,sparkFrame=0,stride=1,fxPending=false,pace=0,lastActive=performance.now(),saver=false,drawn=0;
+const gov={hz:60,fps:60,tt:16.7,ema:16.7,tier:0,lvl:0,levels:[],bad:0,good:0,floor:0,justUp:0,s:[],n:0};
+const SAVER_MS=60000;   /* au repos depuis 1 minute (sans toucher ni gyroscope) : 30 images/s pour ménager la batterie */
+/* Le régulateur mesure la fréquence réelle de l'écran (120 / 100 / 90 / 60, ou 30 si le navigateur bride lui-même),
+   vise d'abord cette fréquence, puis descend par étapes (100, 90, 60 images/s) en gardant l'effet complet ;
+   seulement ensuite il simplifie l'effet (paliers 1 à 3). Il remonte tout seul quand il a de la marge. */
+function buildLevels(){
+  const hz=gov.hz,L=[120,100,90,60].filter(f=>f<=hz+1).map(fps=>({fps,q:0}));if(!L.length)L.push({fps:hz,q:0});
+  const low=Math.min(60,hz);[1,2,3].forEach(q=>L.push({fps:low,q}));gov.levels=L;
+}
+function setLevel(i,save){
+  i=Math.max(0,Math.min(gov.levels.length-1,i));const L=gov.levels[i];
+  gov.lvl=i;gov.fps=L.fps;gov.tt=1000/L.fps;gov.tier=L.q;Bd.dataset.q=L.q;stride=L.q>=3?3:L.q===2?2:1;gov.ema=gov.tt;pace=0;
+  fxDirty=true;if(save){try{localStorage.setItem('mycard-lvl',JSON.stringify({fps:L.fps,q:L.q}))}catch(e){}}
+}
+function levelFor(fps,q){const i=gov.levels.findIndex(L=>L.fps<=fps&&L.q>=q);return i<0?gov.levels.length-1:i}
+function setTier(n,save){setLevel(levelFor(n>0?60:gov.hz,n),save)}          /* compatibilité : palier de qualité 0 à 3 */
+function setHz(hz){
+  if(hz===gov.hz&&gov.levels.length)return;const cur_=gov.levels[gov.lvl];gov.hz=hz;buildLevels();
+  setLevel(cur_?levelFor(Math.min(cur_.fps,hz),cur_.q):0);
 }
 function govern(dt){
   gov.ema=gov.ema*.9+dt*.1;if(gov.justUp>0)gov.justUp--;
-  if(gov.ema>gov.tt*1.4){gov.bad++;gov.good=0}else if(gov.ema<gov.tt*1.12){gov.good++;gov.bad=0}else{gov.bad=0;gov.good=0}
-  if(gov.bad>=30&&gov.tier<3){if(gov.justUp>0)gov.floor=gov.tier+1;setTier(gov.tier+1,true);gov.bad=gov.good=0;gov.ema=gov.tt}
-  else if(gov.good>=360&&gov.tier>gov.floor){setTier(gov.tier-1,true);gov.justUp=900;gov.bad=gov.good=0;gov.ema=gov.tt}
+  if(gov.ema>gov.tt*1.3){gov.bad++;gov.good=0}else if(gov.ema<gov.tt*1.1){gov.good++;gov.bad=0}else{gov.bad=0;gov.good=0}
+  if(gov.bad>=Math.round(gov.fps/4)&&gov.lvl<gov.levels.length-1){if(gov.justUp>0)gov.floor=gov.lvl+1;setLevel(gov.lvl+1,true);gov.bad=gov.good=0}
+  else if(gov.good>=gov.fps*3&&gov.lvl>gov.floor){setLevel(gov.lvl-1,true);gov.justUp=gov.fps*8;gov.bad=gov.good=0}
 }
-try{setTier(Math.min(3,+localStorage.getItem('mycard-q')||0))}catch(e){setTier(0)}
+buildLevels();
+try{const sv=JSON.parse(localStorage.getItem('mycard-lvl')||'null');setLevel(sv?levelFor(sv.fps,sv.q):0)}catch(e){setLevel(0)}
 const sv_=(els,o)=>{for(const el of els)if(el)for(const q in o)el.style.setProperty(q,o[q])};
 function applyClassic(fx,o,k,mx,my){         /* calques pré-dessinés : seulement des transform et des opacités */
   const px=mx/100*CW,py=my/100*CH;
@@ -3082,17 +3117,25 @@ function applyClassic(fx,o,k,mx,my){         /* calques pré-dessinés : seuleme
 addEventListener('resize',()=>{CW=card.offsetWidth||CW;CH=card.offsetHeight||CH;sizeFx();fxDirty=true});
 let perfEl=null;
 function togglePerf(){if(perfEl){perfEl.remove();perfEl=null;return}perfEl=document.createElement('div');perfEl.style.cssText='position:fixed;right:8px;top:8px;z-index:99;font:600 11px/1.3 ui-monospace,monospace;background:rgba(0,0,0,.65);color:#9f9;padding:4px 8px;border-radius:8px;pointer-events:none';document.body.append(perfEl)}
-setInterval(()=>{if(perfEl)perfEl.textContent='écran '+gov.hz+' Hz · '+gov.ema.toFixed(1)+' ms · palier '+gov.tier+(stride>1?' (effet ÷'+stride+')':'')},400);
+{let d0=0,t1=performance.now();setInterval(()=>{const n=performance.now(),got=Math.round((drawn-d0)*1000/(n-t1));d0=drawn;t1=n;
+  if(perfEl)perfEl.textContent=tr('perf.live',{hz:gov.hz,fps:gov.fps,got,tier:gov.tier})+(stride>1?tr('perf.stride',{n:stride}):'')+(saver?tr('perf.saver'):'')},1000)}
 {let pt=[];$('dk-hello').addEventListener('click',()=>{const n=performance.now();pt=pt.filter(x=>n-x<2000);pt.push(n);if(pt.length>=5){pt=[];togglePerf()}})}
 (function loop(now){
   requestAnimationFrame(loop);
   const rd=now-lastRaf;lastRaf=now;
-  if(gov.n<60&&rd>2&&rd<60){gov.s.push(rd);if(++gov.n===60){gov.s.sort((x,y)=>x-y);const m=gov.s[30];gov.hz=m<9.6?120:m<12.8?90:60;gov.tt=1000/gov.hz;gov.ema=gov.tt;setTier(gov.tier)}}
-  if(!Bd.classList.contains('view-edit')||document.hidden){liveRun=0;return}
-  const live=active||gyroOn;
-  if(!live){liveRun=0;if(now-idleT<33)return;idleT=now}                       /* au repos : 30 images/s */
-  else{if(liveRun>0){const dt=now-lastNow;if(dt>0&&dt<200)govern(dt)}liveRun++}
-  lastNow=now;
+  const viewing=Bd.classList.contains('view-edit')&&!document.hidden;
+  if(!viewing||gov.n<60){                                 /* images légères (hors carte) : on mesure la vraie fréquence de l'écran */
+    if(rd>2&&rd<60){gov.s.push(rd);if(gov.s.length>60)gov.s.shift();if(++gov.n%60===0){const m=[...gov.s].sort((x,y)=>x-y)[30];setHz(m<9?120:m<10.6?100:m<12.4?90:m<22?60:30)}}
+  }
+  if(!viewing){liveRun=0;lastActive=now;return}
+  const live=active||gyroOn;if(live)lastActive=now;
+  saver=!live&&now-lastActive>SAVER_MS;
+  if(saver){liveRun=0;if(now-idleT<33)return;idleT=now}                       /* au repos depuis 1 min : 30 images/s */
+  else{
+    pace+=Math.min(rd,100);if(pace+1.5<gov.tt)return;pace=Math.min(pace-gov.tt,gov.tt);   /* rythme visé : 120, 100, 90 ou 60 images/s */
+    if(liveRun>0){const dt=now-lastNow;if(dt>0&&dt<200)govern(dt)}liveRun++;
+  }
+  lastNow=now;drawn++;
   if(!live){
     const kk=calm?0:(now-t0)/1600;
     t={mx:50+Math.sin(kk)*40,my:50+Math.cos(kk*.8)*30,rx:Math.cos(kk*.8)*6,ry:Math.sin(kk)*8,o:.35};
