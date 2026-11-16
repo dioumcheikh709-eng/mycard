@@ -1,0 +1,50 @@
+name: Aurora Visualizer build
+
+on:
+  push:
+    paths: ['aurora-visualizer/**', '.github/workflows/aurora-visualizer.yml']
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            name: Windows
+          - os: macos-latest
+            name: macOS
+          - os: ubuntu-latest
+            name: Linux
+    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.name }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Dépendances Linux
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev libx11-dev libxrandr-dev libxinerama-dev \
+            libxcursor-dev libgl1-mesa-dev libfreetype-dev libcurl4-openssl-dev
+
+      - name: Configurer
+        working-directory: aurora-visualizer
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Compiler
+        working-directory: aurora-visualizer
+        run: cmake --build build --config Release --parallel 4
+
+      - name: Récupérer les plugins
+        shell: bash
+        run: |
+          mkdir out
+          cp -R aurora-visualizer/build/AuroraVisualizer_artefacts/Release/VST3 out/ || true
+          cp -R aurora-visualizer/build/AuroraVisualizer_artefacts/Release/AU out/ || true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Aurora-Visualizer-${{ matrix.name }}
+          path: out
