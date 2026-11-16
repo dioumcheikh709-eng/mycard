@@ -48,3 +48,31 @@ jobs:
         with:
           name: Aurora-Visualizer-${{ matrix.name }}
           path: out
+
+  release:
+    needs: build
+    if: ${{ !cancelled() && github.ref_type == 'branch' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Zipper
+        run: |
+          mkdir dist
+          for d in artifacts/*/; do
+            n=$(basename "$d")
+            (cd "$d" && zip -qr "../../dist/$n.zip" .)
+          done
+          ls -la dist
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: aurora-latest
+          name: Aurora Visualizer (dernier build)
+          prerelease: true
+          target_commitish: ${{ github.sha }}
+          files: dist/*.zip
