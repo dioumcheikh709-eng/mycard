@@ -27,7 +27,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libasound2-dev libx11-dev libxrandr-dev libxinerama-dev \
-            libxcursor-dev libgl1-mesa-dev libfreetype-dev libcurl4-openssl-dev
+            libxcursor-dev libgl1-mesa-dev libfreetype-dev libfontconfig1-dev libcurl4-openssl-dev
 
       - name: Configurer
         working-directory: aurora-visualizer
