@@ -1,38 +1,62 @@
 # MyCard — cartes holographiques
 
-Application web, **un seul fichier** (`index.html`, sans installation ni compilation) pour créer,
-personnaliser et collectionner des cartes holographiques, pensée pour téléphone.
+Application **React** pour créer, personnaliser et collectionner des cartes holographiques, pensée comme une
+**application mobile** (iPhone et Android via Capacitor) et utilisable aussi dans un navigateur.
 
 > Projet non officiel. Voir [NOTICE.md](NOTICE.md) pour les attributions et [LICENSE](LICENSE) pour la licence.
 
-## Fonctions
-- **Connexion par nom d'utilisateur.** Les boutons « Se connecter avec Google / Apple » sont présents mais **pas encore branchés** (voir « À faire »).
-- **Bibliothèque** (« Ma bibliothèque ») : grille de cartes avec miniatures, sauvegarde automatique, tri en 5 critères
-  (ajout récent, **rareté** (les plus rares d'abord), nom A→Z, PV, type ; les cartes sans rareté, créées par le joueur, restent à la fin).
-- **Affichage en grand** d'une carte (voile irisé à l'ouverture), puis **personnalisation en 6 étapes** :
-  Image · Carte · Talent · Attaque · Règle · Effet.
-- **19 types** avec icônes (18 types + incolore), image importée recadrable (zoom, position).
-- **11 effets holographiques** (dont le **métallique**), effet à l'inclinaison au doigt ou à la souris, **gyroscope** (iPhone : autorisation demandée).
-- **Export en image** (PNG 840 × 1174, bouton « Télécharger en image »).
-- **Fenêtre d'export unifiée** : les boutons « Télécharger en image » et « Partager » ouvrent la même fenêtre, avec le choix entre **Image fixe** (PNG) et **Animation holo** (GIF), une vraie barre de progression pendant la génération du GIF, puis le partage natif du navigateur si disponible, sinon le téléchargement.
-- **GIF animé** : un petit encodeur GIF89a écrit pour ce projet (quantification median-cut, LZW, sans dépendance ni worker) génère une boucle de 11 images montrant l'effet holo choisi en mouvement. Peut prendre plusieurs secondes sur téléphone.
-- **Fluidité adaptative** : l'effet par défaut est composé de calques pré-dessinés simplement déplacés ;
-  un gouverneur mesure le rythme de l'écran (120 / 90 / 60 Hz) et simplifie l'effet par paliers si besoin.
+## Organisation du dépôt
+| Dossier | Contenu |
+|---|---|
+| `app/` | **Code source** de l'application (React + Vite). C'est ici qu'on travaille. |
+| `app/src/screens/` | Écrans : accueil, bibliothèque, studio (carte + personnalisation), concours, boutique, profil. |
+| `app/src/lib/` | Moteurs sans React : effets holo et fluidité (`fxEngine.js`), dessin PNG/GIF (`draw.js`, `gif.js`), ouverture des boosters (`packOpen.js`), stockage, concours. |
+| `app/ios/`, `app/android/` | Projets natifs générés par Capacitor (à ouvrir dans Xcode / Android Studio). |
+| `index.html` | **Version construite** (un seul fichier), générée par `npm run build`. Ne pas modifier à la main. |
+| `universal-cards.js` | Cartes de la bibliothèque universelle (les modérateurs y collent les nouvelles cartes). |
+| `server/` | Serveur Node : connexion Google (voir `server/README.md`). |
+| `legacy/` | Ancienne version (HTML/JS sans framework), gardée pour référence. |
 
-- **Recherche** dans la bibliothèque (nom, type, évolution, talent, attaques), sans tenir compte des accents ni de la casse.
-- **Thèmes de couleur** (bleu, rouge, noir, blanc), au choix dans les Paramètres.
-- **Concours hebdomadaire** et **booster du jour** avec une **bibliothèque universelle** (voir plus bas).
-- **Barre d'onglets en bas** (Bibliothèque · Concours · Boutique), icônes dessinées en SVG (voir « Icônes »).
+## Fonctions
+- **Interface d'appli** : l'écran ne défile jamais en entier. En-tête fixe, zone qui défile seule, barre d'onglets en bas
+  (Bibliothèque · Concours · **Créer** · Boutique · Profil), choix secondaires dans des **feuilles qui montent du bas**.
+- **Studio** : la carte reste toujours visible et s'adapte à la place ; la personnalisation en 6 étapes
+  (Image · Carte · Pouvoir · Attaque · Note · Effet) est dans un panneau en bas qui défile seul.
+- **Connexion** par nom d'utilisateur ou **Google** (avec le serveur et un ID client).
+- **Bibliothèque** avec miniatures, recherche, tri en 5 critères ; **11 effets holographiques**, inclinaison au doigt, **gyroscope**.
+- **Export** PNG 840 × 1174 ou **GIF animé** (encodeur écrit pour le projet), partage natif.
+- **Fluidité** : vise 120, puis 100, 90, 60 images/s avant de simplifier l'effet ; 30 images/s au repos après 1 minute.
+- **Boutique** (booster gratuit du jour, boosters à acheter, Card Coins), **concours hebdomadaire**, **modérateur** (code ou Touch ID / Face ID).
+- **5 langues** (français, anglais, espagnol, allemand, arabe de droite à gauche), **4 thèmes**.
+- Les cartes créées avec l'ancienne version sont **retrouvées telles quelles** (mêmes clés de stockage).
 
 ## Lancer
-Ouvrir `index.html` dans un navigateur, ou :
-
+Version construite, sans rien installer : ouvrir `index.html`, ou servir le dossier :
 ```bash
-python3 -m http.server 8000   # puis http://localhost:8000
+python3 -m http.server 8000          # puis http://localhost:8000
+node server/server.js                # avec la connexion Google (voir server/README.md)
 ```
 
-Hébergement : page statique, compatible **GitHub Pages** (Settings → Pages → branche `main`, dossier racine).
-Le gyroscope exige HTTPS.
+Développer (Node 20 ou plus) :
+```bash
+cd app
+npm install
+npm run dev        # http://localhost:5173, rechargement à chaud
+npm run build      # construit et publie index.html à la racine
+```
+
+## iPhone et Android (Capacitor)
+Capacitor emballe l'application dans une vraie appli native (même code).
+```bash
+cd app
+npm run cap:ios        # construit, copie dans ios/ et ouvre Xcode (Mac obligatoire)
+npm run cap:android    # construit, copie dans android/ et ouvre Android Studio
+```
+- iPhone : Xcode sur Mac, un compte Apple Developer (99 $/an) pour publier sur l'App Store.
+- Android : Android Studio, un compte Google Play Console (25 $ une fois) pour publier.
+- Dans l'appli native, la connexion Google et les futurs échanges avec le serveur demanderont l'adresse publique du serveur
+  (aujourd'hui l'appli appelle `/api/...` sur la même adresse que la page).
+- Les achats de Card Coins devront passer par les achats intégrés d'Apple et de Google dans les applis natives.
 
 ## Données et stockage
 Tout reste **dans le navigateur** ; rien n'est envoyé à un serveur.
@@ -68,7 +92,7 @@ Les cartes `exemple-…` sont des exemples à remplacer. Une carte débloquée e
 
 **Touch ID / Face ID.** Une fois connecté (identifiant + code), « Activer Touch ID / Face ID sur cet appareil » enregistre une clé WebAuthn de l'appareil (Touch ID du Mac, Face ID de l'iPhone, Windows Hello, empreinte Android). Ensuite, « Se connecter avec Touch ID / Face ID » suffit, sans retaper le code. L'application vérifie la signature avec la clé publique gardée sur l'appareil et exige la vérification biométrique. Il faut une adresse **https** (ou `localhost`) : le fichier ouvert directement (`file://`) ou une page intégrée dans un cadre peut ne pas le proposer. Chaque appareil s'active séparément ; l'identifiant + code restent la méthode de secours.
 
-**Identifiant et code modérateur.** Seule leur empreinte (PBKDF2-SHA256, 210 000 itérations, sel aléatoire : constantes `MOD_SALT` / `MOD_HASH` dans `index.html`) est dans le code, jamais le code lui-même ; 5 essais ratés bloquent le formulaire 60 s.
+**Identifiant et code modérateur.** Seule leur empreinte (PBKDF2-SHA256, 210 000 itérations, sel aléatoire : constantes `MOD_SALT` / `MOD_HASH` dans `app/src/lib/cloud.js`) est dans le code, jamais le code lui-même ; 5 essais ratés bloquent le formulaire 60 s.
 Pour en changer : calcule la nouvelle empreinte de `identifiant + "\n" + code` avec la même fonction (`modHash`) et remplace les deux constantes. C'est une protection **légère, côté navigateur** : sans serveur, elle empêche un joueur de tomber dessus par hasard, pas un attaquant déterminé (il peut modifier le code de la page chez lui — ce qui n'affecte que son propre appareil).
 
 L'image est incluse dans l'extrait (en `data:` URL). Si elle alourdit trop le fichier (l'application prévient au-delà de 300 Ko), héberge-la et remplace la valeur de `img` par son adresse.
@@ -95,7 +119,7 @@ Les tuiles ne montrent que le nom et le prix : le détail de chaque booster, la 
 | 5 | 2 800 | +40 % | 19,99 € |
 | 6 | 7 500 | +50 % | 49,99 € |
 
-Quand le solde ne suffit pas pour un booster, une fenêtre propose directement l'offre la plus petite qui couvre le manque (et la suivante) ; après paiement, l'achat du booster se poursuit. Tout achat demande une confirmation. Les offres, prix et bonus sont dans `COIN_PACKS` (`index.html`).
+Quand le solde ne suffit pas pour un booster, une fenêtre propose directement l'offre la plus petite qui couvre le manque (et la suivante) ; après paiement, l'achat du booster se poursuit. Tout achat demande une confirmation. Les offres, prix et bonus sont dans `COIN_PACKS` (`app/src/lib/shop.js`).
 **Le paiement est simulé** : `payments.buy` (objet à remplacer) ne débite personne en mode démo. Pour de vrais paiements il faudra le serveur (Stripe, App Store, Google Play) qui vérifie le paiement et crédite le solde ; le solde actuel est sur l'appareil (modifiable par le joueur). Attention aussi aux règles des boutiques d'applications et à la loi sur les boosters aléatoires payants (certains pays les encadrent ou les interdisent) : les chances sont affichées dans le « i ».
 
 On commence avec 300 Card Coins. On en gagne avec les **doublons** (Commune 5 · Peu commune 12 · Rare 30 · Épique 80 · Légendaire 200) et **50 Card Coins** à la première inscription de la semaine au concours (`SHOP`, `DUP_COINS`, `CONTEST_COINS`, `START_COINS`). Les « Outils démo » permettent d'ajouter 500 Card Coins.
@@ -111,7 +135,7 @@ Chaque carte est tirée selon sa rareté ; dès qu'une légendaire sort, les car
 | Épique | 4 % |
 | Légendaire | 1 % (≈ 4,9 % d'avoir une légendaire dans un booster) |
 
-Les pourcentages se règlent dans `index.html` (`const RARITIES`). Une rareté qui n'a aucune carte est retirée du tirage et ses chances sont redistribuées ; le tableau « Tes chances » affiche les chances réelles.
+Les pourcentages se règlent dans `app/src/lib/cards.js` (`RARITIES`). Une rareté qui n'a aucune carte est retirée du tirage et ses chances sont redistribuées ; le tableau « Tes chances » affiche les chances réelles.
 
 *Les chances* : le petit bouton **i** (sur l'écran du booster et pendant l'invocation) ouvre une fenêtre qui explique le tableau (rareté, nombre de cartes, chance par carte, chance par booster)
 et la couleur du pack.
@@ -126,13 +150,12 @@ Un récapitulatif des 5 cartes termine l'ouverture ; « Tout révéler » permet
 La meilleure carte compte le plus, les autres font glisser la couleur un peu plus loin. Les cartes sont ajoutées à la bibliothèque dès le tirage, même si on ferme l'animation avant la fin.
 
 **Mode démo (état actuel).** Il n'y a pas de serveur : participations, votes, résultats et validations sont stockés dans le navigateur (`mycard-cloud:*`), donc **rien n'est partagé entre joueurs ni entre appareils**.
-Tout passe par un seul objet `cloud` dans `index.html` : pour un vrai concours en ligne, il suffit de le remplacer par un client serveur (mêmes méthodes). Côté serveur, il faudra aussi faire le tirage du booster,
+Tout passe par un seul objet `cloud` dans `app/src/lib/cloud.js` : pour un vrai concours en ligne, il suffit de le remplacer par un client serveur (mêmes méthodes). Côté serveur, il faudra aussi faire le tirage du booster,
 désigner le n°1 de la semaine et gérer le rôle de modérateur (aujourd'hui une connexion identifiant + code vérifiée dans le navigateur). Des « Outils démo » permettent d'ajouter des participants fictifs,
 de simuler la fin de la semaine et de réactiver le booster.
 
 ## Icônes
-Les icônes (onglets du bas, engrenage des Paramètres, fenêtre d'export) sont **dessinées en SVG** dans `index.html` (objet `ICONS`), sans emoji. Pour utiliser vos propres images,
-renseigner `ICON_ASSETS` (par exemple `ICON_ASSETS.library='assets/icons/library.png'`) : l'image remplace alors le dessin. Noms disponibles : `library`, `contest`, `shop`, `gear`, `camera`, `sparkle`.
+Les icônes (onglets du bas, studio, boutique) sont **dessinées en SVG** dans `app/src/components/icons.jsx`, sans emoji.
 
 ## Paramètres
 Accessible depuis la bibliothèque (icône ⚙️) : pseudo actuel avec bouton pour en changer, langue, **thème de couleur**, connexion **modérateur**, **politique de confidentialité** et **crédits** (chacun dans un volet repliable), traduits dans les 5 langues.

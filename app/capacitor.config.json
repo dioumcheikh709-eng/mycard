@@ -1,0 +1,8 @@
+{
+  "appId": "com.mycard.app",
+  "appName": "MyCard",
+  "webDir": "dist",
+  "backgroundColor": "#14309f",
+  "ios": { "contentInset": "never", "scrollEnabled": false },
+  "android": { "allowMixedContent": false }
+}

@@ -2,7 +2,7 @@
 
    Chaque carte a le même format qu'une carte de la bibliothèque, plus « rarity » :
      common (60 %) · uncommon (25 %) · rare (10 %) · epic (4 %) · legendary (1 %)
-   Les pourcentages se règlent dans index.html (const RARITIES).
+   Les pourcentages se règlent dans app/src/lib/cards.js (RARITIES).
    Un booster contient 5 cartes, avec au plus 1 légendaire.
 
    « img » (facultatif) : image de la carte, de préférence en data: URL.

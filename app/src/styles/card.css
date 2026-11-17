@@ -1,0 +1,236 @@
+/* Carte, calques holographiques et effets « lumière » (repris de la version d'origine). */
+:root{
+  box-sizing:border-box;
+  color-scheme:dark;--field:rgba(255,255,255,.12);--line:rgba(255,255,255,.28);--bg:#0b1a5c;--ink:#fff;--chip:rgba(255,255,255,.14);--chip-on:#fff;--chip-on-ink:#10236b;
+  --acc1:#8fa4ff;--acc2:#3453ee;--acc-rgb:52,83,238;--deep-rgb:10,24,110;--panel-rgb:22,44,160;--shade-rgb:5,12,70;--hello:#bfd3ff;
+  --bg-grad:linear-gradient(180deg,#14309f 0%,#2547cf 30%,#3d63b8 58%,#1f4a4a 82%,#16322c 100%);--b1:#2f55ff;--b2:#9fa8f5;--b3:#1fa7b0;--b4:#1d3a2d;
+}
+:root[data-theme=red]{--bg:#3a0a0e;--chip-on-ink:#5a0f14;--acc1:#ff9a9a;--acc2:#e0212b;--acc-rgb:224,33,43;--deep-rgb:60,8,12;--panel-rgb:110,18,26;--shade-rgb:70,5,10;--hello:#ffc9c9;
+  --bg-grad:linear-gradient(180deg,#5c0f14 0%,#a01822 30%,#b8404a 58%,#4a1e1e 82%,#2a1010 100%);--b1:#ff3b3b;--b2:#f5a0a0;--b3:#b0361f;--b4:#3a1010}
+:root[data-theme=black]{--bg:#050507;--chip-on-ink:#111;--acc1:#d0d0dc;--acc2:#4a4a58;--acc-rgb:90,90,110;--deep-rgb:0,0,0;--panel-rgb:24,24,30;--shade-rgb:0,0,0;--hello:#c8c8d6;
+  --bg-grad:linear-gradient(180deg,#0c0c10 0%,#17171d 30%,#25252d 58%,#14141a 82%,#08080a 100%);--b1:#3a3a48;--b2:#6b6b80;--b3:#222230;--b4:#0e0e14}
+:root[data-theme=white]{color-scheme:light;--bg:#f1f3f9;--ink:#14182e;--field:rgba(20,24,46,.06);--line:rgba(20,24,46,.25);--chip:rgba(20,24,46,.08);--chip-on:#14182e;--chip-on-ink:#fff;
+  --acc1:#8fa4ff;--acc2:#3453ee;--acc-rgb:52,83,238;--deep-rgb:20,24,46;--panel-rgb:30,36,70;--shade-rgb:20,24,46;--hello:#2a3f9e;
+  --bg-grad:linear-gradient(180deg,#ffffff 0%,#eef1fa 30%,#dfe5f5 58%,#e9edf7 82%,#f6f7fb 100%);--b1:#c9d4ff;--b2:#ffd9e6;--b3:#d3f0f5;--b4:#e6e9f2}
+.stage{perspective:900px;width:min(320px,82vw,46vh);aspect-ratio:3/5}
+.card{--k:1;--mx:50;--my:50;--rx:0;--ry:0;--o:0;
+  position:relative;width:100%;height:100%;border-radius:4.5% / 3.3%;
+  transform:rotateX(calc(var(--rx)*1deg)) rotateY(calc(var(--ry)*1deg));transform-style:preserve-3d;will-change:transform;
+  background:#25262b;overflow:hidden;touch-action:none;user-select:none;cursor:grab}
+.card>*{position:absolute}
+.stage{position:relative}
+.glow{position:absolute;inset:-12% -14%;background:radial-gradient(closest-side,var(--glow,#fff) 55%,transparent 100%);pointer-events:none;opacity:0;will-change:opacity}
+.shadow{position:absolute;inset:6% -8% -8% -8%;background:radial-gradient(closest-side,rgba(0,0,0,.7) 40%,rgba(0,0,0,0) 100%);pointer-events:none;will-change:transform,opacity;transform:translate(0,22px);opacity:.95}
+.frame{inset:0;border:3.4% solid transparent}
+.art{inset:2.6% 3.4% 2.4%;border-radius:3% / 2.2%;overflow:hidden;
+  background:
+   radial-gradient(circle at var(--moonx) 17%,#fff 0 7%,#ffffffaa 8%,transparent 17%),
+   radial-gradient(ellipse at 50% 100%,var(--a3),transparent 60%),
+   linear-gradient(180deg,var(--a1),var(--a2) 55%,var(--a3))}
+.art i{position:absolute;inset:0;background:
+   radial-gradient(1.5px 1.5px at 12% 30%,#fff,transparent),radial-gradient(1.5px 1.5px at 30% 12%,#fff,transparent),
+   radial-gradient(1px 1px at 55% 40%,#fff,transparent),radial-gradient(1.5px 1.5px at 80% 28%,#fff,transparent),
+   radial-gradient(1px 1px at 68% 8%,#fff,transparent),radial-gradient(1px 1px at 20% 52%,#fff,transparent);opacity:.8}
+.art b{position:absolute;left:var(--tx);bottom:28%;width:15%;height:44%;background:#0b0a18;clip-path:polygon(50% 0,100% 100%,0 100%);filter:drop-shadow(0 0 6px var(--a4))}
+.art em{position:absolute;right:12%;bottom:30%;width:46%;height:36%;background:#0b0a18;border-radius:50% 50% 40% 40%;box-shadow:0 0 0 2px var(--a4),0 0 24px var(--a4);
+  clip-path:polygon(0 100%,8% 30%,18% 38%,22% 0,38% 28%,70% 24%,100% 60%,92% 100%)}
+
+/* ---- holographic layers ---- */
+.holo,.sparkle,.glare{inset:0;border-radius:inherit;pointer-events:none}
+.card{--tile:calc(min(340px,86vw)*.235)}
+.revwrap{inset:0;border-radius:inherit;pointer-events:none;mix-blend-mode:screen;display:none;-webkit-mask:linear-gradient(#000,#000) top/100% 4% no-repeat,linear-gradient(#000,#000) left/6.7% 100% no-repeat,linear-gradient(#000,#000) right/6.7% 100% no-repeat,linear-gradient(transparent 52.5%,#000 52.5%);mask:linear-gradient(#000,#000) top/100% 4% no-repeat,linear-gradient(#000,#000) left/6.7% 100% no-repeat,linear-gradient(#000,#000) right/6.7% 100% no-repeat,linear-gradient(transparent 52.5%,#000 52.5%)}
+.card[data-fx=reverse] .revwrap{display:block}
+.card[data-fx=reverse] .holo,.card[data-fx=reverse] .sparkle{display:none}
+.rev{position:absolute;inset:0;-webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2080%2080%27%3E%3Cpath%20d%3D%27M0%200L80%2080M80%200L0%2080%27%20stroke%3D%27%23fff%27%20stroke-opacity%3D%27.35%27%20stroke-width%3D%271.2%27%2F%3E%3Cg%20fill%3D%27%23fff%27%3E%3Cpolygon%20points%3D%2740.00%2C31.00%2042.02%2C37.22%2048.56%2C37.22%2043.27%2C41.06%2045.29%2C47.28%2040.00%2C43.44%2034.71%2C47.28%2036.73%2C41.06%2031.44%2C37.22%2037.98%2C37.22%27%2F%3E%3Cpolygon%20points%3D%270.00%2C-9.00%202.02%2C-2.78%208.56%2C-2.78%203.27%2C1.06%205.29%2C7.28%200.00%2C3.44%20-5.29%2C7.28%20-3.27%2C1.06%20-8.56%2C-2.78%20-2.02%2C-2.78%27%2F%3E%3Cpolygon%20points%3D%2780.00%2C-9.00%2082.02%2C-2.78%2088.56%2C-2.78%2083.27%2C1.06%2085.29%2C7.28%2080.00%2C3.44%2074.71%2C7.28%2076.73%2C1.06%2071.44%2C-2.78%2077.98%2C-2.78%27%2F%3E%3Cpolygon%20points%3D%270.00%2C71.00%202.02%2C77.22%208.56%2C77.22%203.27%2C81.06%205.29%2C87.28%200.00%2C83.44%20-5.29%2C87.28%20-3.27%2C81.06%20-8.56%2C77.22%20-2.02%2C77.22%27%2F%3E%3Cpolygon%20points%3D%2780.00%2C71.00%2082.02%2C77.22%2088.56%2C77.22%2083.27%2C81.06%2085.29%2C87.28%2080.00%2C83.44%2074.71%2C87.28%2076.73%2C81.06%2071.44%2C77.22%2077.98%2C77.22%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 0 0/var(--tile) var(--tile) repeat;mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2080%2080%27%3E%3Cpath%20d%3D%27M0%200L80%2080M80%200L0%2080%27%20stroke%3D%27%23fff%27%20stroke-opacity%3D%27.35%27%20stroke-width%3D%271.2%27%2F%3E%3Cg%20fill%3D%27%23fff%27%3E%3Cpolygon%20points%3D%2740.00%2C31.00%2042.02%2C37.22%2048.56%2C37.22%2043.27%2C41.06%2045.29%2C47.28%2040.00%2C43.44%2034.71%2C47.28%2036.73%2C41.06%2031.44%2C37.22%2037.98%2C37.22%27%2F%3E%3Cpolygon%20points%3D%270.00%2C-9.00%202.02%2C-2.78%208.56%2C-2.78%203.27%2C1.06%205.29%2C7.28%200.00%2C3.44%20-5.29%2C7.28%20-3.27%2C1.06%20-8.56%2C-2.78%20-2.02%2C-2.78%27%2F%3E%3Cpolygon%20points%3D%2780.00%2C-9.00%2082.02%2C-2.78%2088.56%2C-2.78%2083.27%2C1.06%2085.29%2C7.28%2080.00%2C3.44%2074.71%2C7.28%2076.73%2C1.06%2071.44%2C-2.78%2077.98%2C-2.78%27%2F%3E%3Cpolygon%20points%3D%270.00%2C71.00%202.02%2C77.22%208.56%2C77.22%203.27%2C81.06%205.29%2C87.28%200.00%2C83.44%20-5.29%2C87.28%20-3.27%2C81.06%20-8.56%2C77.22%20-2.02%2C77.22%27%2F%3E%3Cpolygon%20points%3D%2780.00%2C71.00%2082.02%2C77.22%2088.56%2C77.22%2083.27%2C81.06%2085.29%2C87.28%2080.00%2C83.44%2074.71%2C87.28%2076.73%2C81.06%2071.44%2C77.22%2077.98%2C77.22%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 0 0/var(--tile) var(--tile) repeat;
+  opacity:calc((.35 + var(--o)*.55)*var(--k));
+  background:repeating-linear-gradient(115deg,#ff0080 0%,#ff8c00 7%,#ffe600 14%,#00ff9d 21%,#00c8ff 28%,#7a5cff 35%,#ff0080 42%);
+  background-size:150% 150%;background-position:calc(var(--mx)*1%) calc(var(--my)*1%)}
+.card[data-fx=reverse] .body{background:linear-gradient(180deg,#0000,#0007 18%,#0008)}
+.rev.spot{background:radial-gradient(circle at calc(var(--mx)*1%) calc(var(--my)*1%),#fff 0,#ffffff88 14%,transparent 32%);background-size:100% 100%;background-position:0 0;opacity:calc((.1 + var(--o)*.7)*var(--k))}
+.holo{mix-blend-mode:color-dodge;opacity:.5;overflow:hidden}   /* luminosité, contraste et saturation sont appliqués au dessin des calques (paintFx), pas par un filtre à chaque image */
+.hg{position:absolute;left:0;top:0;width:260%;height:260%;will-change:transform;pointer-events:none}
+.hs{position:absolute;left:0;top:0;width:300%;height:300%;mix-blend-mode:soft-light;opacity:.9;will-change:transform;pointer-events:none}
+.gl{position:absolute;left:0;top:0;will-change:transform;pointer-events:none}
+.sparkle{mix-blend-mode:color-dodge;opacity:.5;overflow:hidden}
+.spk{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform;pointer-events:none;-webkit-mask:linear-gradient(90deg,transparent,#000 50%,transparent);mask:linear-gradient(90deg,transparent,#000 50%,transparent)}
+.spk canvas{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+
+/* ---- effets « calques de lumière » (écrits pour MyCard) ----
+   .fxa : trois calques <i> sous les textes · .fxg : le reflet au-dessus de tout.
+   Variables posées par la boucle d'animation : --px / --py = position de la lumière (0 → 1), --pd = distance au centre (0 → 1),
+   --po = intensité du geste (0 → 1). --k = intensité choisie dans la personnalisation. */
+.fxa,.fxg{position:absolute;inset:0;border-radius:inherit;pointer-events:none;display:none;--px:.5;--py:.5;--pd:0;--po:0;
+  --at:calc(var(--px)*100%) calc(var(--py)*100%);--anti:calc(100% - var(--px)*100%) calc(100% - var(--py)*100%)}
+.fxa{isolation:isolate;opacity:calc(var(--k)*(.5 + var(--po)*.5))}
+.fxa>i{position:absolute;inset:0;border-radius:inherit}
+.fxg{z-index:5;mix-blend-mode:soft-light;opacity:calc(var(--k)*(.15 + var(--po)*.65));
+  background:radial-gradient(circle at var(--at),rgba(255,255,255,.95),rgba(255,255,255,.3) 20%,rgba(255,255,255,0) 50%)}
+.card:is([data-fx=prism],[data-fx=nebula],[data-fx=mosaic],[data-fx=aurora],[data-fx=opal],[data-fx=glitter],[data-fx=ripple],[data-fx=gold],[data-fx=metal]) :is(.fxa,.fxg){display:block}
+
+/* PRISME : réseau de fines lignes qui décompose la lumière en arc-en-ciel */
+.card[data-fx=prism] .fxa{mix-blend-mode:color-dodge}
+.card[data-fx=prism] .fxa>i:nth-child(1){opacity:.6;background:repeating-linear-gradient(100deg,#ff5f6d 0,#ffc371 2.2cqw,#47ffb2 4.4cqw,#3ec9ff 6.6cqw,#a46bff 8.8cqw,#ff5f6d 11cqw);
+  background-size:320% 320%;background-position:var(--at)}
+.card[data-fx=prism] .fxa>i:nth-child(2){mix-blend-mode:multiply;background:repeating-linear-gradient(12deg,rgba(0,0,0,.6) 0 .3cqw,transparent .3cqw 1.05cqw)}
+.card[data-fx=prism] .fxa>i:nth-child(3){mix-blend-mode:screen;background:linear-gradient(118deg,transparent 32%,rgba(255,255,255,.7) 48%,transparent 64%);
+  background-size:260% 260%;background-position:calc(var(--px)*100%) calc(var(--py)*60% + 20%)}
+
+/* NÉBULEUSE : nuages colorés et étoiles en parallaxe */
+.card[data-fx=nebula] .fxa{mix-blend-mode:screen}
+.card[data-fx=nebula] .fxa>i:nth-child(1){opacity:.85;background:
+   radial-gradient(38% 28% at 24% 30%,hsla(285,90%,62%,.6),transparent 70%),radial-gradient(44% 34% at 76% 58%,hsla(195,95%,56%,.55),transparent 70%),
+   radial-gradient(34% 26% at 40% 84%,hsla(330,90%,62%,.5),transparent 70%),radial-gradient(28% 22% at 86% 16%,hsla(42,95%,62%,.4),transparent 70%);
+  background-size:135% 135%;background-position:calc(var(--px)*35%) calc(var(--py)*35%)}
+.card[data-fx=nebula] .fxa>i:nth-child(2){inset:-5%;opacity:calc(.35 + var(--po)*.65);
+  transform:translate(calc((var(--px) - .5)*-4cqw),calc((var(--py) - .5)*-4cqw));background:
+   radial-gradient(circle,#fff 0 .22cqw,transparent .42cqw) 0 0/7.3cqw 8.1cqw,radial-gradient(circle,#fff 0 .16cqw,transparent .34cqw) 2.1cqw 3.7cqw/5.3cqw 6.7cqw,
+   radial-gradient(circle,#d4ebff 0 .3cqw,transparent .56cqw) 4.4cqw 1.2cqw/11.9cqw 13.1cqw,radial-gradient(circle,#ffe2f5 0 .2cqw,transparent .4cqw) 6.2cqw 9.4cqw/9.7cqw 10.3cqw}
+.card[data-fx=nebula] .fxa>i:nth-child(3){background:linear-gradient(calc(55deg + var(--px)*70deg),transparent 36%,hsla(262,100%,76%,.38) 50%,transparent 64%)}
+
+/* MOSAÏQUE : petits carreaux-prismes qui tournent avec la lumière */
+.card[data-fx=mosaic] .fxa{mix-blend-mode:overlay}
+.card[data-fx=mosaic] .fxa>i:nth-child(1){background:repeating-conic-gradient(from calc(var(--px)*300deg + var(--py)*140deg),#ff6b9e 0 30deg,#ffd36b 30deg 60deg,#6bffb8 60deg 90deg,#6bc8ff 90deg 120deg,#b36bff 120deg 150deg,#ff6b9e 150deg 180deg) 0 0/6cqw 6cqw;
+  -webkit-mask:radial-gradient(circle at var(--at),#000 8%,rgba(0,0,0,.4) 62%);mask:radial-gradient(circle at var(--at),#000 8%,rgba(0,0,0,.4) 62%)}
+.card[data-fx=mosaic] .fxa>i:nth-child(2){mix-blend-mode:multiply;background:linear-gradient(90deg,rgba(0,0,0,.55) .28cqw,transparent .28cqw) 0 0/6cqw 6cqw,linear-gradient(0deg,rgba(0,0,0,.55) .28cqw,transparent .28cqw) 0 0/6cqw 6cqw}
+.card[data-fx=mosaic] .fxa>i:nth-child(3){mix-blend-mode:screen;background:radial-gradient(circle at var(--at),rgba(255,255,255,.55),transparent 34%)}
+
+/* AURORE : rideaux de lumière verts et violets qui ondulent */
+.card[data-fx=aurora] .fxa{mix-blend-mode:screen}
+.card[data-fx=aurora] .fxa>i:nth-child(1){transform-origin:50% 0;transform:skewX(calc((var(--px) - .5)*-18deg));
+  background:repeating-linear-gradient(90deg,hsla(150,100%,60%,0) 0,hsla(150,100%,62%,.7) 4cqw,hsla(175,100%,60%,0) 9cqw,hsla(275,100%,70%,.55) 14cqw,hsla(300,100%,70%,0) 19cqw);
+  background-size:200% 100%;background-position:calc(var(--px)*100%) 0;
+  -webkit-mask:linear-gradient(180deg,transparent 2%,#000 22%,rgba(0,0,0,.6) 55%,transparent 85%);mask:linear-gradient(180deg,transparent 2%,#000 22%,rgba(0,0,0,.6) 55%,transparent 85%)}
+.card[data-fx=aurora] .fxa>i:nth-child(2){opacity:.6;transform-origin:50% 0;transform:skewX(calc((var(--px) - .5)*10deg));
+  background:repeating-linear-gradient(90deg,hsla(185,100%,62%,0) 0,hsla(185,100%,64%,.65) 3cqw,hsla(320,100%,72%,0) 7cqw,hsla(320,100%,72%,.5) 11cqw,hsla(185,100%,62%,0) 15cqw);
+  background-size:250% 100%;background-position:calc(100% - var(--px)*100%) 0;
+  -webkit-mask:linear-gradient(180deg,transparent 8%,#000 28%,transparent 70%);mask:linear-gradient(180deg,transparent 8%,#000 28%,transparent 70%)}
+.card[data-fx=aurora] .fxa>i:nth-child(3){background:radial-gradient(70% 22% at 50% calc(12% + var(--py)*22%),hsla(150,100%,65%,.35),transparent 70%)}
+
+/* OPALE : reflets laiteux pastel qui changent de teinte selon l'angle */
+.card[data-fx=opal] .fxa{mix-blend-mode:screen}
+.card[data-fx=opal] .fxa>i:nth-child(1){opacity:.55;filter:hue-rotate(calc(var(--px)*160deg - var(--py)*90deg)) saturate(1.3);background:
+   radial-gradient(22% 18% at 18% 22%,hsl(330,90%,78%),transparent 70%),radial-gradient(25% 20% at 62% 18%,hsl(190,90%,76%),transparent 70%),
+   radial-gradient(20% 16% at 82% 48%,hsl(140,80%,76%),transparent 70%),radial-gradient(24% 20% at 35% 58%,hsl(260,90%,80%),transparent 70%),
+   radial-gradient(22% 18% at 70% 82%,hsl(45,95%,76%),transparent 70%),radial-gradient(20% 16% at 15% 85%,hsl(170,85%,74%),transparent 70%)}
+.card[data-fx=opal] .fxa>i:nth-child(2){background:linear-gradient(135deg,transparent 22%,rgba(255,255,255,.45) 50%,transparent 78%);background-size:240% 240%;background-position:var(--at)}
+.card[data-fx=opal] .fxa>i:nth-child(3){background:radial-gradient(circle,#fff 0 .2cqw,transparent .34cqw) 0 0/4.7cqw 5.3cqw,radial-gradient(circle,#ffd9f2 0 .18cqw,transparent .3cqw) 2.3cqw 1.9cqw/6.1cqw 5.9cqw;
+  -webkit-mask:radial-gradient(circle at var(--at),#000 0,transparent 40%);mask:radial-gradient(circle at var(--at),#000 0,transparent 40%)}
+
+/* PAILLETTES : grains qui s'allument là où tombe la lumière (et en reflet de l'autre côté) */
+.card[data-fx=glitter] .fxa{mix-blend-mode:screen}
+.card[data-fx=glitter] .fxa>i:nth-child(1){background:linear-gradient(120deg,rgba(200,210,255,0) 25%,rgba(222,226,255,.3) 50%,rgba(255,255,255,0) 75%);background-size:250% 250%;background-position:var(--at)}
+.card[data-fx=glitter] .fxa>i:nth-child(2){background:
+   radial-gradient(circle,#fff 0 .22cqw,transparent .32cqw) 0 0/3.1cqw 3.7cqw,radial-gradient(circle,#ffe6a8 0 .2cqw,transparent .3cqw) 1.3cqw 2.2cqw/4.3cqw 3.3cqw,
+   radial-gradient(circle,#bfe9ff 0 .18cqw,transparent .28cqw) 2.6cqw .9cqw/5.9cqw 4.9cqw,radial-gradient(circle,#ffc4ec 0 .2cqw,transparent .3cqw) .7cqw 3.1cqw/6.7cqw 7.3cqw;
+  -webkit-mask:radial-gradient(circle at var(--at),#000 0,rgba(0,0,0,.55) 18%,transparent 48%);mask:radial-gradient(circle at var(--at),#000 0,rgba(0,0,0,.55) 18%,transparent 48%)}
+.card[data-fx=glitter] .fxa>i:nth-child(3){opacity:.7;background:radial-gradient(circle,#fff 0 .2cqw,transparent .3cqw) 1.7cqw .4cqw/3.9cqw 4.1cqw,radial-gradient(circle,#e7d9ff 0 .18cqw,transparent .28cqw) .2cqw 2.8cqw/5.1cqw 4.5cqw;
+  -webkit-mask:radial-gradient(circle at var(--anti),#000 0,transparent 34%);mask:radial-gradient(circle at var(--anti),#000 0,transparent 34%)}
+
+/* ONDES : anneaux arc-en-ciel qui partent du doigt, comme sur un disque */
+.card[data-fx=ripple] .fxa{mix-blend-mode:color-dodge}
+.card[data-fx=ripple] .fxa>i:nth-child(1){opacity:.55;background:repeating-radial-gradient(circle at var(--at),hsl(0,95%,65%) 0,hsl(50,95%,62%) 1.6cqw,hsl(120,85%,58%) 3.2cqw,hsl(190,95%,60%) 4.8cqw,hsl(260,90%,68%) 6.4cqw,hsl(320,90%,65%) 8cqw,hsl(0,95%,65%) 9.6cqw)}
+.card[data-fx=ripple] .fxa>i:nth-child(2){mix-blend-mode:multiply;background:radial-gradient(circle at var(--at),transparent 12%,rgba(0,0,0,.8) 72%)}
+.card[data-fx=ripple] .fxa>i:nth-child(3){mix-blend-mode:screen;background:radial-gradient(circle at var(--at),rgba(255,255,255,.6),transparent 16%)}
+
+/* OR : feuille d'or brossée */
+.card[data-fx=gold] .fxa{mix-blend-mode:hard-light;opacity:calc(var(--k)*(.42 + var(--po)*.33))}
+.card[data-fx=gold] .fxa>i:nth-child(1){background:linear-gradient(115deg,#5b3a07 0%,#c8961e 18%,#fff1a8 32%,#b07a12 46%,#ffe27a 60%,#7a5208 76%,#f4cf5b 90%,#5b3a07 100%);background-size:260% 260%;background-position:var(--at)}
+.card[data-fx=gold] .fxa>i:nth-child(2){mix-blend-mode:soft-light;background:repeating-linear-gradient(0deg,rgba(255,255,255,.1) 0 .2cqw,rgba(0,0,0,.1) .2cqw .45cqw),repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 .1cqw,transparent .1cqw .7cqw)}
+.card[data-fx=gold] .fxa>i:nth-child(3){mix-blend-mode:screen;background:radial-gradient(circle at var(--at),rgba(255,240,190,.75),transparent 40%)}
+
+/* MÉTALLIQUE : acier brossé */
+.card[data-fx=metal] .fxa{mix-blend-mode:overlay}
+.card[data-fx=metal] .fxa>i:nth-child(1){background:linear-gradient(115deg,#4a4d55 0%,#e6e9f0 15%,#7b808b 30%,#fafbfd 45%,#5a5f6b 60%,#d5d9e2 75%,#868b97 90%,#4a4d55 100%);background-size:260% 260%;background-position:var(--at)}
+.card[data-fx=metal] .fxa>i:nth-child(2){mix-blend-mode:soft-light;background:repeating-linear-gradient(90deg,rgba(255,255,255,.12) 0 .15cqw,rgba(0,0,0,.12) .15cqw .4cqw)}
+.card[data-fx=metal] .fxa>i:nth-child(3){mix-blend-mode:screen;background:radial-gradient(70% 45% at var(--at),rgba(235,242,255,.7),transparent 60%)}
+.glare{z-index:5;mix-blend-mode:overlay;opacity:.5;overflow:hidden}
+
+/* ---- carte : cadre, panneau, fenêtre d'illustration — formes « coins coupés » et « arche » (Paramètres) ----
+   Les couleurs viennent du cadre choisi (--cfr, --cfp…) ; la police des titres de --tf. Unités : cqw = 1 % de la largeur. */
+/* La carte inclinée en 3D ne découpe rien elle-même (Safari ne découpe pas toujours les calques animés d'un élément 3D) :
+   c'est l'enveloppe .cin qui porte la forme, et chaque calque d'effet la reprend aussi. */
+.card[data-shape]{background:none;border-radius:0;overflow:visible;transform-style:flat}   /* rien en 3D à l'intérieur : la face avant se cache bien quand la carte est retournée */
+.cin{position:absolute;inset:0;overflow:hidden;background:var(--cfr);isolation:isolate;container-type:inline-size;will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.cin>*{position:absolute}
+.card[data-shape=cut] :is(.cin,.holo,.sparkle,.glare,.revwrap,.fxa,.fxg){clip-path:polygon(8% 0,92% 0,100% 4.8%,100% 95.2%,92% 100%,8% 100%,0 95.2%,0 4.8%)}
+/* arche : clip-path (et pas seulement border-radius), que Safari applique aussi aux calques animés */
+.card[data-shape=arch] :is(.cin,.holo,.sparkle,.glare,.revwrap,.fxa,.fxg){border-radius:50% 50% 6.5% 6.5% / 30% 30% 3.9% 3.9%;overflow:hidden;clip-path:inset(0 round 50% 50% 6.5% 6.5% / 30% 30% 3.9% 3.9%)}
+.pan{inset:1.8% 3%;background:var(--cfp)}
+.card[data-shape=cut] .pan{clip-path:polygon(7.5% 0,92.5% 0,100% 4.4%,100% 95.6%,92.5% 100%,7.5% 100%,0 95.6%,0 4.4%)}
+.card[data-shape=arch] .pan{border-radius:50% 50% 5% 5% / 29% 29% 3% 3%;clip-path:inset(0 round 50% 50% 5% 5% / 29% 29% 3% 3%)}
+.card[data-shape] .art{inset:4% 6.7% auto 6.7%;height:49%;border-radius:0}
+.card[data-shape=cut] .art{clip-path:polygon(5% 0,95% 0,100% 6%,100% 94%,95% 100%,5% 100%,0 94%,0 6%)}
+.card[data-shape=arch] .art{top:3.6%;height:47.6%;border-radius:50% 50% 3% 3% / 55% 55% 2% 2%;clip-path:inset(0 round 50% 50% 3% 3% / 55% 55% 2% 2%)}
+.ui{inset:0;z-index:3;pointer-events:none;color:var(--cink);font-family:Barlow,Tajawal,sans-serif;container-type:inline-size;direction:ltr}
+.ui>*{position:absolute}
+.elt{left:9.5%;top:6.4%;display:flex;align-items:center;gap:1.4cqw;padding:.9cqw 3cqw .9cqw 1.4cqw;border-radius:99px;background:rgba(11,16,36,.72);border:.3cqw solid rgba(255,255,255,.3);color:#fff;font:700 3.6cqw/1 Barlow,Tajawal,sans-serif;white-space:nowrap}
+.card[data-shape=arch] .elt{left:10%;top:43.5%}
+.e{background:radial-gradient(circle at 35% 30%,var(--l,#fff),var(--c,#ccc));width:5cqw;height:5cqw;border-radius:50%;display:grid;place-items:center;border:.3cqw solid #fff8;box-sizing:border-box}
+.e svg{width:64%;height:64%;display:block}
+.vit{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6cqw;background:var(--cbadge);color:var(--cbadgeink)}
+.vit small{font:700 2.7cqw/1 Barlow,Tajawal,sans-serif;letter-spacing:.12em}
+.vit b{font:700 6.2cqw/1 var(--tf)}
+.card[data-shape=cut] .vit{right:9.5%;top:40.8%;width:20cqw;height:17.6cqw;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)}
+.card[data-shape=arch] .vit{left:50%;top:51.2%;width:19cqw;height:19cqw;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 .8cqw var(--cfp)}
+.low{left:7.5%;right:7.5%;top:55%;bottom:3.2%;display:flex;flex-direction:column;gap:1.8cqw;overflow:hidden}
+.card[data-shape=arch] .low{top:58.6%;text-align:center}
+.tags{display:flex;gap:1.4cqw;flex-wrap:wrap}
+.card[data-shape=arch] .tags{justify-content:center}
+.tags span{font:700 2.8cqw/1 Barlow,Tajawal,sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:.8cqw 2cqw;border-radius:1cqw;border:.3cqw solid var(--cline);color:var(--cink)}
+.tags .rb{background:var(--cacc);border-color:var(--cacc);color:#14110a}
+.ttl{display:flex;flex-direction:column;gap:.6cqw;min-width:0}
+.ttl h3{margin:0;font:700 8cqw/1.05 var(--tf);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ser{font:600 3.2cqw/1.2 Barlow,Tajawal,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--cmute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pow{padding:2cqw 2.6cqw;border-radius:2cqw;background:var(--cbox);border:.3cqw solid var(--cline);display:flex;flex-direction:column;gap:.9cqw}
+.pow-h{display:flex;align-items:center;gap:2.2cqw;min-width:0}
+.card[data-shape=arch] .pow-h{justify-content:center}
+.pow-h span{flex:none;font:700 2.9cqw/1 Barlow,Tajawal,sans-serif;letter-spacing:.1em;padding:.7cqw 2cqw;border-radius:1cqw;background:var(--cacc);color:var(--caccink)}
+.pow-h h4{margin:0;min-width:0;font:700 4.6cqw/1.1 var(--tf);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pow p{margin:0;font:400 3.4cqw/1.35 Barlow,Tajawal,sans-serif;color:var(--csoft);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.atk{display:flex;flex-direction:column;gap:.6cqw}
+.atk-h{display:flex;align-items:center;gap:2.6cqw;min-width:0}
+.chg{display:flex;gap:1.2cqw;flex:none}
+.chg i{width:2.8cqw;height:2.8cqw;transform:rotate(45deg);background:var(--c)}
+.atk-h h4{margin:0;flex:1;min-width:0;font:700 4.8cqw/1.1 var(--tf);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
+.atk-h small{font:700 2.9cqw/1 Barlow,Tajawal,sans-serif;letter-spacing:.08em;color:var(--cmute)}
+.atk-h b{font:700 6.4cqw/1 var(--tf)}
+.atk p{margin:0;font:400 3.3cqw/1.35 Barlow,Tajawal,sans-serif;color:var(--csoft);text-align:left;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card .note{font:italic 400 2.9cqw/1.35 Barlow,Tajawal,sans-serif;color:var(--csoft)}
+.card .note b{display:block;font-style:normal;font-weight:700;color:var(--cink)}
+.foot{margin-top:auto;display:flex;justify-content:space-between;gap:2cqw;padding-top:1.6cqw;border-top:.3cqw solid var(--cline);font:400 2.8cqw/1.2 Barlow,Tajawal,sans-serif;color:var(--cmute);text-align:left}
+.foot span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.art.img i,.art.img b,.art.img em{display:none}
+.photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:center;pointer-events:none}
+/* ---- motion design : arrivée de la carte, flou, texte, retournement ---- */
+.card{backface-visibility:hidden;-webkit-backface-visibility:hidden;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}
+.flipper{position:relative;width:100%;height:100%;transform-style:preserve-3d}
+.flipper.back{transform:rotateY(180deg)}
+.flipper.flipping{animation:flipin 1.05s cubic-bezier(.45,.05,.2,1) both}
+@keyframes flipin{0%{transform:rotateY(180deg) scale(1)}50%{transform:rotateY(90deg) scale(1.09)}100%{transform:rotateY(0) scale(1)}}
+.stage.rise{animation:rise .95s cubic-bezier(.2,.9,.25,1) both}
+@keyframes rise{from{transform:translateY(105vh) rotate(-5deg)}to{transform:none}}
+.cardback{pointer-events:none;position:absolute;inset:0;transform:rotateY(180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:4.5%/3.3%;overflow:hidden;display:grid;place-items:center;
+  background:radial-gradient(circle at 28% 18%,rgba(143,170,255,.95) 0,rgba(143,170,255,0) 55%),radial-gradient(circle at 78% 88%,rgba(31,167,176,.8) 0,rgba(31,167,176,0) 52%),repeating-linear-gradient(45deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px),linear-gradient(160deg,#2a4fe0,#14309f 62%,#0e2377);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
+.cardback::before{content:"";position:absolute;inset:3.4%;border:2px solid rgba(255,255,255,.35);border-radius:3%/2.2%}
+.cardback .logo{font-size:min(15vw,50px);padding:10px 28px 10px 24px;margin:0;position:relative}
+.stage.flipping .shadow,.stage.flipping .glow{visibility:hidden}
+@keyframes shin{from{opacity:0}}
+.stage.settle .shadow,.stage.settle .glow{animation:shin .6s ease backwards}
+@media (prefers-reduced-motion:reduce){.stage.rise,.stage.dropin,.flipper.flipping{animation:none}}
+/* ---- gouverneur de fluidité : paliers de qualité (0 = complet) ---- */
+body[data-q]:not([data-q="0"]) .sparkle,body[data-q]:not([data-q="0"]) .rev.spot,body[data-q]:not([data-q="0"]) .fxa>i:nth-child(3){display:none}
+body[data-q]:not([data-q="0"]) .card[data-fx=opal] .fxa>i:nth-child(1){filter:none}
+[dir=rtl] .card .ui :is(h3,h4,b){font-family:var(--tf)}
+[dir=rtl] .card .ui :is(p,span,small,div){font-family:Barlow,Tajawal,sans-serif}
+/* la forme choisie (Paramètres) s'applique aussi au dos de la carte et aux cartes des packs */
+:root[data-shape] .cardback{border-radius:0}
+:root[data-shape=cut] :is(.cardback,.pk-card .bk,.pk-card::after){clip-path:polygon(8% 0,92% 0,100% 4.8%,100% 95.2%,92% 100%,8% 100%,0 95.2%,0 4.8%)}
+:root[data-shape=arch] :is(.cardback,.pk-card .bk,.pk-card::after){border-radius:50% 50% 6.5% 6.5% / 30% 30% 3.9% 3.9%;clip-path:inset(0 round 50% 50% 6.5% 6.5% / 30% 30% 3.9% 3.9%)}
+:root[data-shape=cut] .cardback::before{display:none}
+:root[data-shape=arch] .cardback::before{border-radius:50% 50% 5% 5% / 29% 29% 3% 3%}
+.pk-card{border-radius:0}
+.pk-card img{border-radius:0;box-shadow:none;filter:drop-shadow(0 0 1.5px var(--rc)) drop-shadow(0 0 14px var(--rc)) drop-shadow(0 14px 18px rgba(0,0,0,.5))}
+.pk-card.legend img{box-shadow:none;filter:drop-shadow(0 0 2px var(--rc)) drop-shadow(0 0 30px var(--rc)) drop-shadow(0 14px 18px rgba(0,0,0,.5))}
+.pk-row img{border-radius:0;box-shadow:none;object-fit:contain;filter:drop-shadow(0 0 1.5px var(--rc))}
+.pk-fin-grid img{border-radius:0;box-shadow:none;object-fit:contain;filter:drop-shadow(0 0 1.5px var(--rc)) drop-shadow(0 0 10px var(--rc))}
