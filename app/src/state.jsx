@@ -34,7 +34,11 @@ export function AppProvider({ children }) {
 
   const toast = useCallback(m => { setToastMsg({ m, k: Date.now() }); clearTimeout(toastT.current); toastT.current = setTimeout(() => setToastMsg(null), 3200); }, []);
   useEffect(() => { setStorageFullHandler(() => toast(tr('toast.storageFull') !== 'toast.storageFull' ? tr('toast.storageFull') : 'Stockage plein : essaie avec des images plus petites.')); }, [toast]);
-  useEffect(() => { document.documentElement.dataset.theme = theme; }, [theme]);
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    const m = document.querySelector('meta[name=theme-color]');               /* barre d'état du téléphone : même couleur que le haut de l'appli */
+    if (m) m.content = getComputedStyle(document.documentElement).getPropertyValue('--top').trim() || '#2443d4';
+  }, [theme]);
 
   const ask = useCallback((title, text, yes, danger) => new Promise(res => setAlert({ title, text, yes, danger, res })), []);
   const answer = useCallback(v => { setAlert(a => { if (a) a.res(v); return null; }); }, []);

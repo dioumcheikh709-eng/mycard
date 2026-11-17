@@ -8,14 +8,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
-<meta name="theme-color" content="#14309f">
+<meta name="theme-color" content="#2443d4">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="MyCard">
 <title>MyCard</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&family=Tajawal:wght@400;500;700&family=Cinzel:wght@700&family=Unbounded:wght@600;700&family=Fraunces:opsz,wght@9..144,700&display=swap">
-<script>try{var t=localStorage.getItem('mycard-theme');if(t&&/^(blue|red|black|white)$/.test(t))document.documentElement.dataset.theme=t;var l=JSON.parse(localStorage.getItem('mycard-look')||'{}');document.documentElement.dataset.shape=l.shape==='arch'?'arch':'cut'}catch(e){}</script>
+<script>try{var t=localStorage.getItem('mycard-theme');if(t&&/^(blue|red|black|white)$/.test(t)){document.documentElement.dataset.theme=t;document.querySelector('meta[name=theme-color]').content={blue:'#2443d4',red:'#ad1e28',black:'#2b2b33',white:'#eef1fa'}[t]}var l=JSON.parse(localStorage.getItem('mycard-look')||'{}');document.documentElement.dataset.shape=l.shape==='arch'?'arch':'cut'}catch(e){}</script>
 <script src="./universal-cards.js"></script>
 </head>
 <body>

@@ -7,8 +7,14 @@
 :root[data-theme=white]{--glass:rgba(20,24,46,.06);--glass2:rgba(20,24,46,.11);--stroke:rgba(20,24,46,.16);--mute:rgba(20,24,46,.6)}
 *{box-sizing:border-box}
 html,body,#root{height:100%;margin:0}
-html{background:var(--bg);overscroll-behavior:none;-webkit-text-size-adjust:100%}
-body{position:fixed;inset:0;overflow:hidden;color:var(--ink);background:none;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;overscroll-behavior:none}
+/* Haut d'écran : une seule couleur par thème, utilisée pour le fond de la page, la barre d'état (theme-color) et le
+   haut du fond animé. Ainsi la zone de l'heure et de la batterie se fond dans l'appli, sans bande séparée. */
+:root{--top:#2443d4}
+:root[data-theme=red]{--top:#ad1e28}
+:root[data-theme=black]{--top:#2b2b33}
+:root[data-theme=white]{--top:#eef1fa}
+html{background:var(--top);overscroll-behavior:none;-webkit-text-size-adjust:100%}
+body{position:fixed;inset:0;overflow:hidden;color:var(--ink);background:var(--top);-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;overscroll-behavior:none}
 button{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 button:not(:disabled){cursor:pointer}
 input,select,textarea{font:400 16px Barlow,Tajawal,sans-serif;color:var(--ink)}   /* 16 px : pas de zoom automatique sur iPhone */
@@ -18,6 +24,7 @@ input,select,textarea{font:400 16px Barlow,Tajawal,sans-serif;color:var(--ink)} 
 
 /* ---- fond animé ---- */
 .bg{position:fixed;inset:0;z-index:0;overflow:hidden;background:var(--bg-grad);transition:filter .6s,transform .6s}
+.bg::after{content:"";position:absolute;left:0;right:0;top:0;height:calc(var(--sat) + 120px);background:linear-gradient(180deg,var(--top) 0,var(--top) calc(var(--sat) + 8px),transparent);pointer-events:none}
 .app.studio-on .bg{filter:blur(18px);transform:scale(1.15)}
 .app.studio-on .bg i{animation-play-state:paused}
 
