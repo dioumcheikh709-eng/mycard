@@ -37,7 +37,9 @@ export function AppProvider({ children }) {
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     const m = document.querySelector('meta[name=theme-color]');               /* barre d'état du téléphone : même couleur que le haut de l'appli */
-    if (m) m.content = getComputedStyle(document.documentElement).getPropertyValue('--top').trim() || '#2443d4';
+    const top = getComputedStyle(document.documentElement).getPropertyValue('--top').trim() || '#2443d4';
+    if (m) m.content = top;
+    document.documentElement.style.backgroundColor = top; document.body.style.backgroundColor = top;
   }, [theme]);
 
   const ask = useCallback((title, text, yes, danger) => new Promise(res => setAlert({ title, text, yes, danger, res })), []);

@@ -44,10 +44,12 @@ export function renderGoogleBtn(box) {
   try { google.accounts.id.renderButton(box, { type: 'standard', theme: 'outline', size: 'large', shape: 'pill', text: 'signin_with', width: w, locale: lang }); } catch (e) { /* ignoré */ }
 }
 export async function googleLogout() {
+  meP = null;
   try { await jpost('/api/logout'); } catch (e) { /* ignoré */ }
   try { if (window.google && google.accounts) google.accounts.id.disableAutoSelect(); } catch (e) { /* ignoré */ }
 }
-export async function googleMe() {
-  if (!/^https?:$/.test(location.protocol)) return null;
-  try { const r = await fetch('/api/me', { credentials: 'same-origin' }); const j = await r.json(); return j && j.user || null; } catch (e) { return null; }
+let meP = null;   /* une seule demande par session (l'écran Profil peut être reconstruit, ex. changement de thème) */
+export function googleMe() {
+  if (!/^https?:$/.test(location.protocol)) return Promise.resolve(null);
+  return meP || (meP = fetch('/api/me', { credentials: 'same-origin' }).then(r => r.ok ? r.json() : null).then(j => j && j.user || null).catch(() => null));
 }

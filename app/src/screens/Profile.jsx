@@ -6,15 +6,14 @@ import { TFONTS, LOOK } from '../lib/cards.js';
 import { isMod, modHash, MOD_HASH, bioGet, bioSupported, bioEnroll, bioVerify, BIO_KEY } from '../lib/cloud.js';
 import { lsSet, lsDel } from '../lib/store.js';
 import { googleLogout, googleMe } from '../lib/auth.js';
+import { Screen } from '../components/ui.jsx';
 
 export function Profile() {
   const { user, logout, lang, setLang, theme, THEMES, setTheme, setLook, gAcct, setGAcct, ver } = useApp();
   const [mod, setMod] = useState(isMod());
   useEffect(() => { if (!gAcct) googleMe().then(a => a && setGAcct(a)); }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
-    <section className="screen" id="settings">
-      <header className="top"><div className="tt"><p className="hello">{tr('deck.hello', { user })}</p><h1>{tr('settings.title')}</h1></div></header>
-      <div className="scroll"><div className="wrap">
+    <Screen id="settings" hello={tr('deck.hello', { user })} title={tr('settings.title')}>
         <div>
           <p className="group-h">{tr('settings.account')}</p>
           <div className="group">
@@ -49,8 +48,7 @@ export function Profile() {
           <div className="group pad"><p className="note" id="set-privacy">{tr('settings.privacy')}</p></div>
         </div>
         <div className="group pad"><p className="note" id="set-credits">{tr('settings.credits')}</p></div>
-      </div></div>
-    </section>
+    </Screen>
   );
 }
 

@@ -2,11 +2,11 @@ import I18N from './i18n-data.js';
 
 /* Textes ajoutés par la nouvelle interface (onglets « Créer » et « Profil »). */
 const EXTRA = {
-  fr: { 'tab.create': 'Créer', 'tab.profile': 'Profil', 'studio.gyro': 'Gyroscope', 'studio.more': 'Plus', 'deck.sortTitle': 'Trier par' },
-  en: { 'tab.create': 'Create', 'tab.profile': 'Profile', 'studio.gyro': 'Gyroscope', 'studio.more': 'More', 'deck.sortTitle': 'Sort by' },
-  es: { 'tab.create': 'Crear', 'tab.profile': 'Perfil', 'studio.gyro': 'Giroscopio', 'studio.more': 'Más', 'deck.sortTitle': 'Ordenar por' },
-  de: { 'tab.create': 'Erstellen', 'tab.profile': 'Profil', 'studio.gyro': 'Gyroskop', 'studio.more': 'Mehr', 'deck.sortTitle': 'Sortieren nach' },
-  ar: { 'tab.create': 'إنشاء', 'tab.profile': 'الملف', 'studio.gyro': 'الجيروسكوب', 'studio.more': 'المزيد', 'deck.sortTitle': 'ترتيب حسب' },
+  fr: { 'deck.dense': 'Affichage serré', 'deck.denseHint': 'Astuce : touche deux fois le bouton de tri.', 'deck.denseOn': 'Affichage serré', 'deck.denseOff': 'Affichage normal', 'tab.create': 'Créer', 'tab.profile': 'Profil', 'studio.gyro': 'Gyroscope', 'studio.more': 'Plus', 'deck.sortTitle': 'Trier par' },
+  en: { 'deck.dense': 'Compact view', 'deck.denseHint': 'Tip: double-tap the sort button.', 'deck.denseOn': 'Compact view', 'deck.denseOff': 'Normal view', 'tab.create': 'Create', 'tab.profile': 'Profile', 'studio.gyro': 'Gyroscope', 'studio.more': 'More', 'deck.sortTitle': 'Sort by' },
+  es: { 'deck.dense': 'Vista compacta', 'deck.denseHint': 'Consejo: toca dos veces el botón de ordenar.', 'deck.denseOn': 'Vista compacta', 'deck.denseOff': 'Vista normal', 'tab.create': 'Crear', 'tab.profile': 'Perfil', 'studio.gyro': 'Giroscopio', 'studio.more': 'Más', 'deck.sortTitle': 'Ordenar por' },
+  de: { 'deck.dense': 'Kompakte Ansicht', 'deck.denseHint': 'Tipp: Tippe zweimal auf die Sortier-Taste.', 'deck.denseOn': 'Kompakte Ansicht', 'deck.denseOff': 'Normale Ansicht', 'tab.create': 'Erstellen', 'tab.profile': 'Profil', 'studio.gyro': 'Gyroskop', 'studio.more': 'Mehr', 'deck.sortTitle': 'Sortieren nach' },
+  ar: { 'deck.dense': 'عرض مضغوط', 'deck.denseHint': 'نصيحة: المس زر الترتيب مرتين.', 'deck.denseOn': 'عرض مضغوط', 'deck.denseOff': 'عرض عادي', 'tab.create': 'إنشاء', 'tab.profile': 'الملف', 'studio.gyro': 'الجيروسكوب', 'studio.more': 'المزيد', 'deck.sortTitle': 'ترتيب حسب' },
 };
 for (const l in EXTRA) Object.assign(I18N[l], EXTRA[l]);
 

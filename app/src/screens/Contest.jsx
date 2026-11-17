@@ -6,7 +6,7 @@ import { RARITIES, rarName, clone, TEMPLATE, PALS } from '../lib/cards.js';
 import { media, uk, session, cardImage, lsGet, lsSet, CONTEST_COINS } from '../lib/store.js';
 import { cloud, weekId, weekEnd, nowD, fmtLeft, settleWeeks, isMod, demoOff } from '../lib/cloud.js';
 import { thumbUrl } from '../lib/draw.js';
-import { Thumb } from '../components/ui.jsx';
+import { Thumb, Screen } from '../components/ui.jsx';
 
 const votesText = n => tr(n === 1 ? 'contest.votesOne' : 'contest.votesMany', { n });
 const entThumb = e => () => Promise.resolve(e.hasImg ? media.get('ent:' + e.id) : null).then(img => thumbUrl('e:' + e.id + ':' + (e.card.t || 0), e.card, img));
@@ -25,7 +25,7 @@ export function Contest() {
   }, []);
   useEffect(() => { load(); }, [load, ver]);
   useEffect(() => { if (!own.some(c => c.id === pick) && own.length) setPick(own[0].id); }, [own.length]); // eslint-disable-line react-hooks/exhaustive-deps
-  if (!d) return <section className="screen" id="contest"><header className="top"><div className="tt"><h1>{tr('contest.title')}</h1></div></header></section>;
+  if (!d) return <Screen id="contest" title={tr('contest.title')} />;
 
   const me = uk(), mine = d.ents.find(e => e.uk === me), my = d.votes[me];
   const cnt = {}; Object.values(d.votes).forEach(id => { cnt[id] = (cnt[id] || 0) + 1; });
@@ -70,9 +70,7 @@ export function Contest() {
   };
 
   return (
-    <section className="screen" id="contest">
-      <header className="top"><div className="tt"><h1>{tr('contest.title')}</h1><p className="sub" id="ct-week">{tr('contest.week', { n: +d.wk.split('-W')[1], t: fmtLeft(weekEnd() - nowD()) })}</p></div></header>
-      <div className="scroll"><div className="wrap">
+    <Screen id="contest" title={tr('contest.title')} sub={tr('contest.week', { n: +d.wk.split('-W')[1], t: fmtLeft(weekEnd() - nowD()) })}>
         <p className="demo">{tr('contest.demo')}</p>
         <div className="group pad" id="ct-mine">
           <h2 className="sec-h" style={{ marginTop: 0 }}>{tr('contest.mine')}</h2>
@@ -115,7 +113,6 @@ export function Contest() {
             <button type="button" className="btn sm" id="dm-clear" onClick={() => demo('clear')}>{tr('demo.clear')}</button>
           </div>
         </details>
-      </div></div>
-    </section>
+    </Screen>
   );
 }

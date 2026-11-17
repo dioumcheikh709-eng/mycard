@@ -8,7 +8,7 @@ import { catalog, catImg } from '../lib/cloud.js';
 import { SHOP, COIN_PACKS, packTotal, payments, rollPack, packLuck, luckRGB, hex2rgb, PACK_SIZE } from '../lib/shop.js';
 import { packHTML, setPackVars, runPack } from '../lib/packOpen.js';
 import { thumbUrl } from '../lib/draw.js';
-import { Sheet } from '../components/ui.jsx';
+import { Sheet, Screen } from '../components/ui.jsx';
 import { IcoInfo } from '../components/icons.jsx';
 
 const eurTxt = (v, lang) => new Intl.NumberFormat(lang, { style: 'currency', currency: 'EUR' }).format(v);
@@ -70,15 +70,10 @@ export function Shop() {
   const shortPicks = want => { const need = want.price - readCoins(), idx = COIN_PACKS.findIndex(p => packTotal(p) >= need), first = idx < 0 ? COIN_PACKS.length - 1 : idx; return { need, picks: COIN_PACKS.slice(first, first + 2) }; };
 
   return (
-    <section className="screen" id="shop">
-      <header className="top">
-        <div className="tt"><h1>{tr('shop.title')}</h1></div>
-        <div className="acts">
+    <Screen id="shop" title={tr('shop.title')} actions={<>
           <button type="button" className="coins" id="shop-coins" aria-label={tr('cc.plus')} onClick={() => ccRef.current && ccRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })}><i className="coin" /><b id="coin-n" role="status">{coins.toLocaleString(lang)}</b><span className="coins-plus" aria-hidden="true">+</span></button>
           <button type="button" className="ibtn" id="bst-info" aria-label={tr('info.btn')} onClick={() => setInfo(true)}><IcoInfo /></button>
-        </div>
-      </header>
-      <div className="scroll"><div className="wrap">
+        </>}>
         <p className="demo">{tr('shop.demo')}</p>
         <div className="free">
           <MiniPack off={!ready || empty} />
@@ -106,7 +101,6 @@ export function Shop() {
             <button type="button" className="btn sm" id="dm-coins" onClick={() => addCoins(500)}>{tr('demo.addCoins')}</button>
           </div>
         </details>
-      </div></div>
 
       {cc && cc.mode === 'short' && (() => { const { need, picks } = shortPicks(cc.want); return (
         <Sheet title={tr('cc.shortT')} onClose={() => setCc(null)}>
@@ -123,7 +117,7 @@ export function Shop() {
         </Sheet>
       )}
       {info && <InfoSheet onClose={() => setInfo(false)} />}
-    </section>
+    </Screen>
   );
 }
 

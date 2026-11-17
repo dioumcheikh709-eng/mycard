@@ -1,5 +1,5 @@
 /* Briques d'interface : feuille du bas, alerte, message, miniature de carte, barre d'onglets. */
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useApp, buzz } from '../state.jsx';
 import { tr } from '../lib/i18n.js';
@@ -82,5 +82,26 @@ export function TabBar() {
       <T id="shop" Ico={IcoShop} label={tr('tab.booster')} badge={!!user && dropReady()} />
       <T id="profile" Ico={IcoProfile} label={tr('tab.profile')} />
     </div></nav>
+  );
+}
+
+/* Écran d'onglet : grand titre qui défile et se range ; une barre fine avec le titre en petit apparaît à sa place.
+   Les boutons d'action restent toujours en haut à droite. */
+const scrollMem = {};   /* position de défilement de chaque écran (gardée si l'écran est reconstruit, ex. changement de thème) */
+export function Screen({ id, label, hello, onHello, title, sub, actions, children }) {
+  const [mini, setMini] = useState(() => (scrollMem[id] || 0) > 56);
+  const ref = useRef(null);
+  useEffect(() => { if (ref.current && scrollMem[id]) ref.current.scrollTop = scrollMem[id]; }, [id]);
+  const onScroll = useCallback(e => { const y = e.currentTarget.scrollTop; scrollMem[id] = y; setMini(y > 56); }, [id]);
+  return (
+    <section className={'screen' + (mini ? ' scrolled' : '')} id={id} aria-label={label || title}>
+      <div className="mini-bar"><span className="mini-t" aria-hidden={!mini}>{title}</span>{actions && <div className="acts">{actions}</div>}</div>
+      <div className="scroll" ref={ref} onScroll={onScroll}>
+        <header className="top">
+          <div className="tt">{hello && <p className="hello" id={id === 'deck' ? 'dk-hello' : undefined} onClick={onHello}>{hello}</p>}<h1>{title}</h1>{sub && <p className="sub" id={id === 'deck' ? 'dk-count' : id === 'contest' ? 'ct-week' : undefined}>{sub}</p>}</div>
+        </header>
+        <div className="wrap">{children}</div>
+      </div>
+    </section>
   );
 }

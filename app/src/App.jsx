@@ -21,10 +21,10 @@ function Perf() {
 }
 
 function Shell() {
-  const { phase, tab, studio } = useApp();
+  const { phase, tab, studio, theme } = useApp();
   const [perf, setPerf] = useState(false);
   return (
-    <div className={'app' + (studio ? ' studio-on' : '')}>
+    <div className={'app' + (studio ? ' studio-on' : '')} key={theme} data-theme-applied={theme}>   {/* reconstruit au changement de thème : Safari redessine tout */}
       <div className="bg" aria-hidden="true"><i /><i /><i /><i /></div>
       {phase === 'lang' && <LangPick />}
       {phase === 'login' && <Login />}
