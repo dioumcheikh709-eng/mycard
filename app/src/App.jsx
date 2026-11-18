@@ -26,6 +26,7 @@ function Shell() {
   return (
     <div className={'app' + (studio ? ' studio-on' : '')} key={theme} data-theme-applied={theme}>   {/* reconstruit au changement de thème : Safari redessine tout */}
       <div className="bg" aria-hidden="true"><i /><i /><i /><i /></div>
+      <div className="status-strip" aria-hidden="true" />
       {phase === 'lang' && <LangPick />}
       {phase === 'login' && <Login />}
       {phase === 'app' && <>

@@ -36,9 +36,10 @@ export function AppProvider({ children }) {
   useEffect(() => { setStorageFullHandler(() => toast(tr('toast.storageFull') !== 'toast.storageFull' ? tr('toast.storageFull') : 'Stockage plein : essaie avec des images plus petites.')); }, [toast]);
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
-    const m = document.querySelector('meta[name=theme-color]');               /* barre d'état du téléphone : même couleur que le haut de l'appli */
     const top = getComputedStyle(document.documentElement).getPropertyValue('--top').trim() || '#2443d4';
-    if (m) m.content = top;
+    /* barre d'état du téléphone : la balise est remplacée (et pas seulement modifiée) pour que le navigateur relise la couleur tout de suite */
+    document.querySelectorAll('meta[name=theme-color]').forEach(x => x.remove());
+    const m = document.createElement('meta'); m.name = 'theme-color'; m.content = top; document.head.appendChild(m);
     document.documentElement.style.backgroundColor = top; document.body.style.backgroundColor = top;
   }, [theme]);
 

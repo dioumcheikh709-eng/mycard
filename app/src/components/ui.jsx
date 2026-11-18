@@ -85,20 +85,24 @@ export function TabBar() {
   );
 }
 
-/* Écran d'onglet : grand titre qui défile et se range ; une barre fine avec le titre en petit apparaît à sa place.
-   Les boutons d'action restent toujours en haut à droite. */
+/* Écran d'onglet, comme sur iOS : le grand titre défile avec le contenu et s'efface en douceur, au rythme du doigt
+   (de plus en plus transparent, légèrement réduit et ralenti). Rien ne le remplace : il disparaît vraiment. */
 const scrollMem = {};   /* position de défilement de chaque écran (gardée si l'écran est reconstruit, ex. changement de thème) */
 export function Screen({ id, label, hello, onHello, title, sub, actions, children }) {
-  const [mini, setMini] = useState(() => (scrollMem[id] || 0) > 56);
-  const ref = useRef(null);
-  useEffect(() => { if (ref.current && scrollMem[id]) ref.current.scrollTop = scrollMem[id]; }, [id]);
-  const onScroll = useCallback(e => { const y = e.currentTarget.scrollTop; scrollMem[id] = y; setMini(y > 56); }, [id]);
+  const ref = useRef(null), secRef = useRef(null), hdrRef = useRef(null);
+  const paint = useCallback(y => {
+    const h = hdrRef.current ? hdrRef.current.offsetHeight : 120;
+    const p = Math.max(0, Math.min(1, y / h));
+    if (secRef.current) secRef.current.style.setProperty('--p', p.toFixed(3));
+  }, []);
+  useEffect(() => { const y = scrollMem[id] || 0; if (ref.current && y) ref.current.scrollTop = y; paint(y); }, [id, paint]);
+  const onScroll = useCallback(e => { const y = e.currentTarget.scrollTop; scrollMem[id] = y; paint(y); }, [id, paint]);
   return (
-    <section className={'screen' + (mini ? ' scrolled' : '')} id={id} aria-label={label || title}>
-      <div className="mini-bar"><span className="mini-t" aria-hidden={!mini}>{title}</span>{actions && <div className="acts">{actions}</div>}</div>
+    <section className="screen" id={id} aria-label={label || title} ref={secRef}>
       <div className="scroll" ref={ref} onScroll={onScroll}>
-        <header className="top">
+        <header className="top" ref={hdrRef}>
           <div className="tt">{hello && <p className="hello" id={id === 'deck' ? 'dk-hello' : undefined} onClick={onHello}>{hello}</p>}<h1>{title}</h1>{sub && <p className="sub" id={id === 'deck' ? 'dk-count' : id === 'contest' ? 'ct-week' : undefined}>{sub}</p>}</div>
+          {actions && <div className="acts">{actions}</div>}
         </header>
         <div className="wrap">{children}</div>
       </div>
