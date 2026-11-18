@@ -38,3 +38,7 @@ export function packLuck(cards){
 export const hex2rgb=x=>[1,3,5].map(i=>parseInt(x.slice(i,i+2),16));
 export function luckRGB(l){const st=RARITIES.map(r=>hex2rgb(r.c)),p=Math.min(RN,Math.max(0,l*RN)),i=Math.min(RN-1,Math.floor(p)),f=p-i;return st[i].map((v,q)=>Math.round(v+(st[i+1][q]-v)*f))}
 export const flashOf=i=>.08+.72*Math.pow(i/(RN||1),1.6);
+
+/* Thèmes de l'appli : noir et blanc (classiques) sont gratuits, les autres s'achètent avec des Card Coins. */
+export const THEME_SHOP=[{k:'black',price:0},{k:'white',price:0},{k:'blue',price:250},{k:'red',price:250},{k:'violet',price:350},{k:'green',price:350},{k:'rainbow',price:600}];
+export const themePrice=k=>(THEME_SHOP.find(t=>t.k===k)||{price:0}).price;

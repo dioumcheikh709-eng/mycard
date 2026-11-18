@@ -26,8 +26,8 @@ export const TY={};
 [['G','Sève','#4CAF50'],['R','Braise','#FF7043'],['W','Marée','#42A5F5'],['L','Foudre','#FDD835'],['P','Songe','#AB47BC'],['I','Givre','#4DD0E1'],['F','Ardeur','#EF5350'],['X','Venin','#AB47BC'],['O','Argile','#BCAAA4'],['Y','Zéphyr','#90CAF9'],['B','Essaim','#9CCC65'],['K','Granit','#BDBDBD'],['H','Brume','#9575CD'],['A','Mythe','#5C6BC0'],['D','Ombre','#616161'],['S','Alliage','#90A4AE'],['Z','Lueur','#F48FB1'],['N','Brut','#D7CCC8'],['C','Cristal','#C8C8C8']]
  .forEach(([k,n,c])=>TY[k]={n,c,l:lite(c),ink:(k==='L'||k==='C')?'#222':'#fff'});
 TY.C.l='#FFFFFF';
-export const TFONTS={cinzel:"'Cinzel',Tajawal,Georgia,serif",unbounded:"'Unbounded',Tajawal,system-ui,sans-serif",fraunces:"'Fraunces',Tajawal,Georgia,serif"};
-export const TFLOAD={cinzel:'700 20px Cinzel',unbounded:'700 20px Unbounded',fraunces:'700 20px Fraunces'};
+export const TFONTS={unbounded:"'Unbounded',Tajawal,system-ui,sans-serif"};
+export const TFLOAD={unbounded:'700 20px Unbounded'};
 export const FRAMES={
   night:{fr:['#4f6bd8','#24315f','#4fd1c5'],fp:'#0b1024',ink:'#f4f1ff',mute:'#9fb0e8',soft:'#d5dbf5',acc:'#c9b6ff',accInk:'#1b1240',box:'rgba(255,255,255,.06)',line:'rgba(255,255,255,.14)',badge:'#f4f1ff',badgeInk:'#141a3a'},
   ivory:{fr:['#f3ead6','#c9b48a','#f8f2e4'],fp:'#fbf7ee',ink:'#2a2418',mute:'#7a6a4c',soft:'#4a4232',acc:'#9a6b1f',accInk:'#fffaf0',box:'rgba(42,36,24,.05)',line:'rgba(42,36,24,.16)',badge:'#2a2418',badgeInk:'#fbf7ee'},
@@ -38,8 +38,8 @@ export const RFRAMES={common:{fr:['#c9ced8','#7d8596','#e3e6ec'],fp:'#151820',ac
   legendary:{fr:['#fff2b0','#b9810f','#ffe17a'],fp:'#140f05',acc:'#ffd35a',ink:'#fff5dc',mute:'#e3c27a',soft:'#f1e2c0',line:'rgba(255,225,122,.22)'}};
 
 /* forme et police choisies dans les Paramètres */
-export const LOOK={shape:'cut',font:'cinzel'};
-try{const s=JSON.parse(localStorage.getItem('mycard-look')||'{}');if(['cut','arch'].includes(s.shape))LOOK.shape=s.shape;if(TFONTS[s.font])LOOK.font=s.font}catch(e){}
+/* une seule forme (coins coupés) et une seule police des titres (Unbounded) : la forme « arche » et les polices Cinzel et Fraunces ont été retirées */
+export const LOOK={shape:'cut',font:'unbounded'};
 export function setLook(k,v){LOOK[k]=v;document.documentElement.dataset.shape=LOOK.shape;try{localStorage.setItem('mycard-look',JSON.stringify(LOOK))}catch(e){}}
 export const lookSig=()=>LOOK.shape+'.'+LOOK.font;
 

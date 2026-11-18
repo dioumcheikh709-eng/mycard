@@ -2,14 +2,17 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { tr, setLangCode, lang as curLang } from './lib/i18n.js';
 import { TEMPLATE, PALS, clone, newId, setLook as setLookRaw, LOOK, fxOf } from './lib/cards.js';
-import { session, uk, loadDeck, hydrateImages, saveCard, saveIdx, removeCardData, coins as readCoins, writeCoins, media, setStorageFullHandler, lsGet, lsSet } from './lib/store.js';
+import { session, uk, loadDeck, hydrateImages, saveCard, saveIdx, removeCardData, coins as readCoins, writeCoins, media, setStorageFullHandler, lsGet, lsSet, lsDel } from './lib/store.js';
 import { catImg } from './lib/cloud.js';
 import { clearThumbMem } from './lib/draw.js';
 
 const Ctx = createContext(null);
 export const useApp = () => useContext(Ctx);
 
-const THEMES = ['blue', 'red', 'black', 'white'];
+import { THEME_SHOP, themePrice } from './lib/shop.js';
+const THEMES = THEME_SHOP.map(t => t.k);
+const ownedKey = () => 'mycard-themes:' + uk(), avatarKey = () => 'mycard-avatar:' + uk();
+const readOwned = () => { try { const a = JSON.parse(lsGet(ownedKey()) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } };
 const cloneCard = c => ({ ...c, ab: { ...c.ab }, mv: (c.mv || []).map(m => ({ ...m })), rule: c.rule ? { ...c.rule } : c.rule, weak: [...(c.weak || ['G', '×2'])], pal: { ...c.pal } });
 export const buzz = p => { try { navigator.vibrate && navigator.vibrate(p); } catch (e) { /* ignoré */ } };
 
@@ -29,7 +32,10 @@ export function AppProvider({ children }) {
   const [toastMsg, setToastMsg] = useState(null);
   const [alert, setAlert] = useState(null);
   const [gAcct, setGAcct] = useState(null);
-  const [theme, setThemeState] = useState(() => { const v = lsGet('mycard-theme'); return THEMES.includes(v) ? v : 'blue'; });
+  const [theme, setThemeState] = useState(() => { const v = lsGet('mycard-theme'); return THEMES.includes(v) ? v : 'black'; });
+  const [owned, setOwned] = useState([]);
+  const [avatar, setAvatarState] = useState(null);
+  const [shopFocus, setShopFocus] = useState(null);
   const toastT = useRef(0);
 
   const toast = useCallback(m => { setToastMsg({ m, k: Date.now() }); clearTimeout(toastT.current); toastT.current = setTimeout(() => setToastMsg(null), 3200); }, []);
@@ -53,6 +59,8 @@ export function AppProvider({ children }) {
     const d = loadDeck(); deckRef.current = d; setDeckState(d); setReady(false);
     hydrateImages(d).then(() => { setReady(true); setDeck(x => [...x]); });
     setCoinsState(readCoins()); setTab('library'); setStudio(null); setPhase('app');
+    const o = readOwned(); setOwned(o); setAvatarState(lsGet(avatarKey()));
+    setThemeState(t => (themePrice(t) === 0 || o.includes(t)) ? t : 'black');   /* thème payant pas encore acheté par ce joueur : retour au noir */
   }, [setDeck]);
   const logout = useCallback(() => { setStudio(null); setPhase('login'); }, []);
 
@@ -103,13 +111,24 @@ export function AppProvider({ children }) {
 
   /* -------- réglages -------- */
   const setLang = useCallback(code => { if (setLangCode(code)) { clearThumbMem(); bump(); } }, [bump]);
-  const setTheme = useCallback(code => { if (!THEMES.includes(code)) return; lsSet('mycard-theme', code); setThemeState(code); }, []);
+  const canUse = useCallback(code => themePrice(code) === 0 || owned.includes(code), [owned]);
+  const setTheme = useCallback(code => { if (!THEMES.includes(code) || !canUse(code)) return false; setThemeState(code); return true; }, [canUse]);
+  useEffect(() => { lsSet('mycard-theme', theme); }, [theme]);
+  /* achat d'un thème : renvoie 'ok', 'owned' ou 'short' (pas assez de Card Coins) */
+  const buyTheme = useCallback(code => {
+    if (canUse(code)) return 'owned';
+    const price = themePrice(code); if (readCoins() < price) return 'short';
+    writeCoins(readCoins() - price); setCoinsState(readCoins());
+    const o = [...readOwned(), code]; lsSet(ownedKey(), JSON.stringify(o)); setOwned(o); setThemeState(code);
+    return 'ok';
+  }, [canUse]);
+  const setAvatar = useCallback(url => { if (url) lsSet(avatarKey(), url); else lsDel(avatarKey()); setAvatarState(url || null); }, []);
   const setLook = useCallback((k, v) => { setLookRaw(k, v); clearThumbMem(); bump(); }, [bump]);
 
   const value = useMemo(() => ({
     phase, setPhase, user, deck, deckRef, ready, coins, tab, setTab, studio, setStudio, pack, setPack, toastMsg, toast, alert, ask, answer,
-    gAcct, setGAcct, theme, THEMES, login, logout, setCoins, addCoins, updateCard, newCard, openCard, startEdit, deleteCard, closeStudio, cancelEdit,
+    gAcct, setGAcct, theme, THEMES, owned, canUse, buyTheme, avatar, setAvatar, shopFocus, setShopFocus, login, logout, setCoins, addCoins, updateCard, newCard, openCard, startEdit, deleteCard, closeStudio, cancelEdit,
     unlock, setLang, setTheme, setLook, lang: curLang, look: { ...LOOK }, media, uk, bump, ver,
-  }), [ver, phase, user, deck, ready, coins, tab, studio, pack, toastMsg, toast, alert, ask, answer, gAcct, theme, login, logout, setCoins, addCoins, updateCard, newCard, openCard, startEdit, deleteCard, closeStudio, cancelEdit, unlock, setLang, setTheme, setLook, bump]);
+  }), [ver, phase, user, deck, ready, coins, tab, studio, pack, toastMsg, toast, alert, ask, answer, gAcct, theme, owned, canUse, buyTheme, avatar, setAvatar, shopFocus, login, logout, setCoins, addCoins, updateCard, newCard, openCard, startEdit, deleteCard, closeStudio, cancelEdit, unlock, setLang, setTheme, setLook, bump]);
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

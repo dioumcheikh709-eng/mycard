@@ -2,14 +2,15 @@
 import { useEffect, useState } from 'react';
 import { useApp } from '../state.jsx';
 import { tr, LANGS } from '../lib/i18n.js';
-import { TFONTS, LOOK } from '../lib/cards.js';
+import { themePrice } from '../lib/shop.js';
+import { IcoCamera, IcoLock } from '../components/icons.jsx';
 import { isMod, modHash, MOD_HASH, bioGet, bioSupported, bioEnroll, bioVerify, BIO_KEY } from '../lib/cloud.js';
 import { lsSet, lsDel } from '../lib/store.js';
 import { googleLogout, googleMe } from '../lib/auth.js';
 import { Screen } from '../components/ui.jsx';
 
 export function Profile() {
-  const { user, logout, lang, setLang, theme, THEMES, setTheme, setLook, gAcct, setGAcct, ver } = useApp();
+  const { user, logout, lang, setLang, theme, THEMES, setTheme, canUse, setTab, setShopFocus, toast, gAcct, setGAcct, avatar, setAvatar } = useApp();
   const [mod, setMod] = useState(isMod());
   useEffect(() => { if (!gAcct) googleMe().then(a => a && setGAcct(a)); }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
@@ -17,6 +18,15 @@ export function Profile() {
         <div>
           <p className="group-h">{tr('settings.account')}</p>
           <div className="group">
+            <div className="row" style={{ gap: 14, paddingBlock: 14 }}>
+              <label className="avatar" id="set-avatar" aria-label={avatar ? tr('profile.photoChange') : tr('profile.photoAdd')}>
+                {avatar ? <img src={avatar} alt={tr('profile.photo')} /> : <span aria-hidden="true">{(user || '?').trim().charAt(0).toUpperCase()}</span>}
+                <span className="cam" aria-hidden="true"><IcoCamera /></span>
+                <input type="file" accept="image/*" id="f-avatar" onChange={e => { const f = e.target.files[0]; e.target.value = ''; if (f) toAvatar(f).then(setAvatar).catch(() => toast(tr('profile.photoBad'))); }} />
+              </label>
+              <div className="grow"><b style={{ font: "700 20px 'Barlow Condensed',Tajawal,sans-serif" }}>{user}</b><small>{avatar ? tr('profile.photoChange') : tr('profile.photoAdd')}</small>
+                {avatar && <button type="button" className="link" id="avatar-del" style={{ padding: '4px 0' }} onClick={() => setAvatar(null)}>{tr('profile.photoRemove')}</button>}</div>
+            </div>
             <div className="row"><div className="grow" id="set-loggedas">{tr('settings.loggedAs', { user })}{gAcct && <small id="set-gacct">{tr('auth.linked', { name: gAcct.name, email: gAcct.email })}</small>}</div></div>
             {gAcct && <button type="button" className="row" id="set-gout" onClick={async () => { await googleLogout(); setGAcct(null); }}>{tr('auth.signOut')}</button>}
             <button type="button" className="row" id="set-change" onClick={logout}>{tr('deck.changeUser')}</button>
@@ -28,16 +38,10 @@ export function Profile() {
         </div>
         <div>
           <p className="group-h">{tr('settings.theme')}</p>
-          <div className="seg" id="set-theme">{THEMES.map(c => <button type="button" key={c} data-t={c} aria-pressed={c === theme} onClick={() => setTheme(c)}><span className="tsw" data-t={c} aria-hidden="true" />{tr('theme.' + c)}</button>)}</div>
-        </div>
-        <div key={ver}>
-          <p className="group-h">{tr('settings.look')}</p>
-          <div className="group pad" style={{ display: 'grid', gap: 10 }}>
-            <span className="note">{tr('look.shape')}</span>
-            <div className="seg" id="set-shape">{['cut', 'arch'].map(v => <button type="button" key={v} data-v={v} aria-pressed={LOOK.shape === v} onClick={() => setLook('shape', v)}><i className={'shp ' + v} aria-hidden="true" /><span>{tr('look.shape.' + v)}</span></button>)}</div>
-            <span className="note">{tr('look.font')}</span>
-            <div className="seg" id="set-font">{Object.keys(TFONTS).map(v => <button type="button" key={v} data-v={v} aria-pressed={LOOK.font === v} onClick={() => setLook('font', v)}><span style={{ fontFamily: TFONTS[v], fontSize: 17 }}>{v[0].toUpperCase() + v.slice(1)}</span></button>)}</div>
-          </div>
+          <div className="seg" id="set-theme">{THEMES.map(c => { const ok = canUse(c); return (
+            <button type="button" key={c} data-t={c} className={ok ? '' : 'locked'} aria-pressed={c === theme} onClick={() => { if (ok) setTheme(c); else { toast(tr('theme.locked')); setShopFocus('themes'); setTab('shop'); } }}>
+              <span className="tsw" data-t={c} aria-hidden="true" />{tr('theme.' + c)}{!ok && <span className="lock"><IcoLock />{themePrice(c)}</span>}
+            </button>); })}</div>
         </div>
         <div>
           <p className="group-h">{tr('settings.mod')}</p>
@@ -88,4 +92,16 @@ function ModBlock({ mod, setMod }) {
       <p className="note">{tr('settings.modNote')}</p>
     </form>
   );
+}
+
+/* photo de profil : carré central, 256 × 256, JPEG */
+function toAvatar(file) {
+  return new Promise((ok, no) => {
+    const r = new FileReader(); r.onerror = no;
+    r.onload = () => { const im = new Image(); im.onerror = no; im.onload = () => {
+      const n = Math.min(im.width, im.height), cv = document.createElement('canvas'); cv.width = cv.height = 256;
+      cv.getContext('2d').drawImage(im, (im.width - n) / 2, (im.height - n) / 2, n, n, 0, 0, 256, 256); ok(cv.toDataURL('image/jpeg', .85));
+    }; im.src = r.result; };
+    r.readAsDataURL(file);
+  });
 }

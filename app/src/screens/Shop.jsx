@@ -5,7 +5,7 @@ import { tr } from '../lib/i18n.js';
 import { RARITIES, rarOf, rarName } from '../lib/cards.js';
 import { coins as readCoins, dropReady, useDrop, resetDrop, msToMidnight, DUP_COINS, CONTEST_COINS } from '../lib/store.js';
 import { catalog, catImg } from '../lib/cloud.js';
-import { SHOP, COIN_PACKS, packTotal, payments, rollPack, packLuck, luckRGB, hex2rgb, PACK_SIZE } from '../lib/shop.js';
+import { SHOP, COIN_PACKS, packTotal, payments, rollPack, packLuck, luckRGB, hex2rgb, PACK_SIZE, THEME_SHOP } from '../lib/shop.js';
 import { packHTML, setPackVars, runPack } from '../lib/packOpen.js';
 import { thumbUrl } from '../lib/draw.js';
 import { Sheet, Screen } from '../components/ui.jsx';
@@ -35,12 +35,14 @@ function CcTile({ p, i, hl, lang, onClick }) {
 }
 
 export function Shop() {
-  const { coins, setCoins, addCoins, unlock, setPack, pack, toast, lang, ver } = useApp();
+  const { coins, setCoins, addCoins, unlock, setPack, pack, toast, lang, ver, theme, setTheme, canUse, buyTheme, shopFocus, setShopFocus } = useApp();
   const [cat, setCat] = useState(null);
   const [now, setNow] = useState(Date.now());
   const [cc, setCc] = useState(null);         /* {mode:'short'|'confirm', p, want} */
   const [info, setInfo] = useState(false);
-  const ccRef = useRef(null), busy = useRef(false);
+  const ccRef = useRef(null), themesRef = useRef(null), busy = useRef(false);
+  useEffect(() => { if (shopFocus === 'themes') { setShopFocus(null); setTimeout(() => themesRef.current && themesRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120); } }, [shopFocus, setShopFocus]);
+  const getTheme = k => { const r = buyTheme(k); if (r === 'short') setCc({ mode: 'short', want: { theme: k, price: THEME_SHOP.find(t => t.k === k).price } }); else if (r === 'ok') toast(tr('shop.themeBought', { t: tr('theme.' + k) })); };
   useEffect(() => { catalog().then(setCat); }, [ver]);
   useEffect(() => { const t = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(t); }, []);
   const ready = dropReady(), empty = cat && !cat.length;
@@ -65,7 +67,7 @@ export function Shop() {
     let ok = false; try { ok = await payments.buy(p); } catch (e) { /* refusé */ }
     if (!ok) { toast(tr('cc.failed')); return; }
     addCoins(packTotal(p)); const want = cc && cc.want; setCc(null); toast(tr('cc.bought', { n: packTotal(p).toLocaleString(lang) }));
-    if (want && readCoins() >= want.price) openBooster(want.k);
+    if (want && readCoins() >= want.price) { if (want.theme) getTheme(want.theme); else openBooster(want.k); }
   }
   const shortPicks = want => { const need = want.price - readCoins(), idx = COIN_PACKS.findIndex(p => packTotal(p) >= need), first = idx < 0 ? COIN_PACKS.length - 1 : idx; return { need, picks: COIN_PACKS.slice(first, first + 2) }; };
 
@@ -89,6 +91,18 @@ export function Shop() {
               <MiniPack rgb={rgb} />
               <h3>{shopName(p)}</h3>
               <button type="button" className={'btn primary shop-buy' + (coins < p.price ? ' poor' : '')} data-buy={p.k} aria-label={tr('shop.buy', { n: p.price })} disabled={!cat || empty || !!pack} onClick={() => openBooster(p.k)}><i className="coin" />{p.price}</button>
+            </article>); })}
+        </div>
+        <h2 className="sec-h" id="themes-section" ref={themesRef}>{tr('shop.themes')}</h2>
+        <p className="note" style={{ marginTop: -6 }}>{tr('shop.themesD')}</p>
+        <div className="theme-grid" id="theme-grid">
+          {THEME_SHOP.map(t => { const own = canUse(t.k), on = theme === t.k; return (
+            <article className="theme-tile" key={t.k} data-theme-k={t.k}>
+              <div className="theme-prev" data-t={t.k} aria-hidden="true"><i /><i /><b /></div>
+              <h3>{tr('theme.' + t.k)}</h3>
+              {on ? <button type="button" className="btn sm on" disabled>{tr('shop.themeActive')}</button>
+                : own ? <button type="button" className="btn sm" data-apply={t.k} onClick={() => setTheme(t.k)}>{t.price ? tr('shop.themeApply') : tr('shop.themeFree')}</button>
+                : <button type="button" className={'btn sm primary shop-buy' + (coins < t.price ? ' poor' : '')} data-theme-buy={t.k} aria-label={tr('shop.buy', { n: t.price })} onClick={() => getTheme(t.k)}><i className="coin" />{t.price}</button>}
             </article>); })}
         </div>
         <h2 className="sec-h" id="cc-section" ref={ccRef}>{tr('cc.store')}</h2>

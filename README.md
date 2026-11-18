@@ -27,7 +27,7 @@ Application **React** pour créer, personnaliser et collectionner des cartes hol
 - **Export** PNG 840 × 1174 ou **GIF animé** (encodeur écrit pour le projet), partage natif.
 - **Fluidité** : vise 120, puis 100, 90, 60 images/s avant de simplifier l'effet ; 30 images/s au repos après 1 minute.
 - **Boutique** (booster gratuit du jour, boosters à acheter, Card Coins), **concours hebdomadaire**, **modérateur** (code ou Touch ID / Face ID).
-- **5 langues** (français, anglais, espagnol, allemand, arabe de droite à gauche), **4 thèmes**.
+- **5 langues** (français, anglais, espagnol, allemand, arabe de droite à gauche), **7 thèmes** (Noir et Blanc gratuits, Bleu, Rouge, Violet, Vert et Arc-en-ciel à acheter dans la boutique), **photo de profil**.
 - Les cartes créées avec l'ancienne version sont **retrouvées telles quelles** (mêmes clés de stockage).
 
 ## Lancer
@@ -157,8 +157,21 @@ de simuler la fin de la semaine et de réactiver le booster.
 ## Icônes
 Les icônes (onglets du bas, studio, boutique) sont **dessinées en SVG** dans `app/src/components/icons.jsx`, sans emoji.
 
-## Paramètres
-Accessible depuis la bibliothèque (icône ⚙️) : pseudo actuel avec bouton pour en changer, langue, **thème de couleur**, connexion **modérateur**, **politique de confidentialité** et **crédits** (chacun dans un volet repliable), traduits dans les 5 langues.
+## Profil (paramètres)
+Onglet **Profil** : **photo de profil** (recadrée en carré 256 × 256, gardée sur l'appareil, affichée aussi dans l'onglet), pseudo et compte Google,
+langue, **thème**, connexion **modérateur**, confidentialité et crédits.
+
+## Thèmes
+| Thème | Prix | Style |
+|---|---|---|
+| Noir, Blanc | gratuits | classiques, couleur unie (sans dégradé ni fond animé), façon iOS |
+| Bleu, Rouge | 250 Card Coins | dégradé et fond animé |
+| Violet, Vert | 350 Card Coins | dégradé et fond animé |
+| Arc-en-ciel | 600 Card Coins | dégradé multicolore et fond animé |
+
+Les thèmes payants s'achètent dans la **Boutique → Thèmes** (si le solde manque, les offres de Card Coins sont proposées, puis le thème
+s'achète et s'applique). Ils sont gardés **par joueur** (`mycard-themes:<pseudo>`). Dans le Profil, un thème verrouillé affiche un cadenas
+et son prix, et renvoie vers la boutique. Prix réglables dans `THEME_SHOP` (`app/src/lib/shop.js`), couleurs dans `app/src/styles/app.css`.
 
 ## Langues
 Interface en **français, anglais, espagnol, allemand et arabe** (RTL pris en charge). Après le pseudo, un écran propose de choisir la langue une seule fois ; elle reste modifiable ensuite via le bouton 🌐 (bibliothèque et fiche de carte). Le texte imprimé *sur* la carte (HP, Ability, weakness/resistance/retreat…) reste volontairement en anglais, comme une vraie carte à collectionner.
@@ -166,9 +179,8 @@ Interface en **français, anglais, espagnol, allemand et arabe** (RTL pris en ch
 Limites connues : les chiffres de dimension du PNG peuvent s'afficher dans un ordre inhabituel en arabe (effet bidi standard, pas un bug) ; l'accord du pluriel arabe du compteur de cartes est simplifié (pas de forme duelle).
 
 ## Apparence des cartes
-La carte a sa propre mise en page (format 3:5). Dans **Paramètres → Apparence des cartes** :
-- **Forme** : coins coupés ou arche (s'applique aussi au dos de la carte et aux cartes des packs) ;
-- **Police des titres** : Cinzel, Unbounded ou Fraunces (Google Fonts).
+La carte a sa propre mise en page (format 3:5), une seule **forme** (coins coupés) et une seule **police des titres** (Unbounded).
+La forme « arche » et les polices Cinzel et Fraunces ont été retirées.
 
 Le **cadre** (Nuit, Ivoire, Corail, Jade) se choisit **carte par carte**, dans l'étape « Carte » de la personnalisation.
 La forme est portée par une enveloppe intérieure (`.cin`) et reprise par chaque calque d'effet, jamais par l'élément incliné en 3D :

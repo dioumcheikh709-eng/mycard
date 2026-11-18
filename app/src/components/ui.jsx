@@ -67,7 +67,7 @@ export function Thumb({ load, deps, alt = '' }) {
 }
 
 export function TabBar() {
-  const { tab, setTab, newCard, user } = useApp();
+  const { tab, setTab, newCard, user, avatar } = useApp();
   const go = t => { if (t !== tab) buzz(8); setTab(t); };
   const T = ({ id, Ico, label, badge }) => (
     <button type="button" className="tab" data-tab={id} aria-current={tab === id ? 'page' : 'false'} onClick={() => go(id)}>
@@ -80,7 +80,7 @@ export function TabBar() {
       <T id="contest" Ico={IcoContest} label={tr('tab.contest')} />
       <button type="button" className="tab create" id="tab-create" aria-label={tr('deck.newTitle')} onClick={() => { buzz(12); newCard(); }}><span className="plus"><IcoPlus /></span><span>{tr('tab.create')}</span></button>
       <T id="shop" Ico={IcoShop} label={tr('tab.booster')} badge={!!user && dropReady()} />
-      <T id="profile" Ico={IcoProfile} label={tr('tab.profile')} />
+      <T id="profile" Ico={avatar ? () => <img className="tav" src={avatar} alt="" /> : IcoProfile} label={tr('tab.profile')} />
     </div></nav>
   );
 }
