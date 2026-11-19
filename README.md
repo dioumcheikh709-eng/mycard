@@ -170,9 +170,9 @@ langue, **thème**, connexion **modérateur**, confidentialité et crédits.
 - le **nom en or brillant** (bibliothèque et Profil).
 
 Avant l'abonnement, la fenêtre MyCard+ montre un **aperçu visuel** des avantages (3 boosters contre 9, les 7 thèmes, le prix barré des Card Coins,
-une de tes cartes en Or, ton nom en or). Après le paiement, une **scène plein écran** : la carte de membre argentée se charge d'énergie, se
-retourne dans un éclair et devient or à ton nom (rayons, gerbes d'étincelles, vibrations), puis les avantages apparaissent un à un
-(`app/src/components/MemberFx.jsx`).
+une de tes cartes en Or, ton nom en or). Après le paiement, une **scène de déblocage** dans l'esprit des passes de combat : le titre MYCARD+ s'écrase en argent,
+une vague d'or le traverse (éclair, secousse, confettis), tampon « DÉBLOQUÉ ! », puis les récompenses tombent une à une en tuiles
+et le bouton « C'EST PARTI ! » apparaît (`app/src/components/MemberFx.jsx`).
 La **résiliation** n'est pas dans la boutique : Profil → Abonnement → « Gérer l'abonnement » (replié), avec confirmation.
 
 Mode démo : `payments.subscribe` ne débite personne et l'abonnement (30 jours) est gardé sur l'appareil (`mycard-member:<pseudo>`).
