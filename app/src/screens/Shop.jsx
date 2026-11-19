@@ -201,7 +201,7 @@ export function PackOpening() {
   useEffect(() => {
     if (!pack || !ref.current) return;
     run.current = runPack(ref.current, pack, { onStage: setStage, blocked: () => infoRef.current });
-    const k = e => { if (infoRef.current) return; if (e.key === 'Escape') close(); else if ((e.key === 'Enter' || e.key === ' ') && !e.target.closest('button')) { e.preventDefault(); run.current && run.current.advance(); } };
+    const k = e => { if (infoRef.current) return; if (e.key === 'Escape') { if (run.current && run.current.stage === 'final') close(); } else if ((e.key === 'Enter' || e.key === ' ') && !e.target.closest('button')) { e.preventDefault(); run.current && run.current.advance(); } };
     document.addEventListener('keydown', k);
     return () => { document.removeEventListener('keydown', k); run.current && run.current.stop(); };
   }, [pack]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -211,8 +211,8 @@ export function PackOpening() {
     <div className="pk" id="pk" ref={ref} role="dialog" aria-modal="true" aria-label={tr('drop.pack')} tabIndex={-1}>
       <div className="pk-rays" /><div className="pk-flash" /><canvas className="pk-fx" />
       {stage === 'ready' || stage === 'torn' ? <button type="button" className="pk-skip" id="pk-skip" onClick={() => run.current && run.current.skip()}>{tr('drop.skip')}</button> : null}
-      <button type="button" className="pk-info" aria-label={tr('info.btn')} onClick={() => setInfo(true)}>i</button>
-      <button type="button" className="pk-close" id="pk-close" aria-label={tr('drop.close')} onClick={close}>✕</button>
+      <button type="button" className="pk-info" aria-label={tr('info.btn')} style={stage !== 'final' ? { right: 'max(14px, env(safe-area-inset-right, 0px))' } : undefined} onClick={() => setInfo(true)}>i</button>
+      {stage === 'final' && <button type="button" className="pk-close" id="pk-close" aria-label={tr('drop.close')} onClick={close}>✕</button>}   {/* on ne quitte qu'après avoir vu toutes les cartes */}
       <div className="pk-world"><div className="pk-tilt"><div className="pk-bob"><div className="pk-stage">
         <div className="pk-portal" /><div className="pk-beam" /><i className="pk-spill" />
         <div className="pk-cardwrap" /><div className="pk-pack" id="pk-pack" />
