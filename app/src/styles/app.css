@@ -413,3 +413,7 @@ details.manage>summary::-webkit-details-marker{display:none}
 details.manage>summary::after{content:"›";margin-inline-start:auto;font-size:20px;transition:transform .2s}
 details.manage[open]>summary::after{transform:rotate(90deg)}
 @media (prefers-reduced-motion:reduce){.member-card.upgrading,.member-card.upgrading *,.gold-name{animation:none!important}}
+
+/* récapitulatif du booster : les cartes restent visibles même si Safari ne joue pas l'animation d'apparition */
+.pk-fin-grid figure{animation-fill-mode:backwards!important}
+.pk-fin-grid .fin-ph{display:block;width:100%;aspect-ratio:3/5;border-radius:7px;background:rgba(255,255,255,.08);box-shadow:0 0 0 2px var(--rc)}

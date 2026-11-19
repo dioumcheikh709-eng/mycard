@@ -169,10 +169,6 @@ export function runPack(root, data, opts) {
   function final() {
     pk.stage = 'final'; pk.until = Date.now() + 1e9; if (pk.cur) { leave(pk.cur); pk.cur = null; }
     pkHint(''); opts.onStage && opts.onStage('final'); $('.pk-rar').classList.remove('go'); $('.pk-row').innerHTML = ''; pack.classList.add('spent');
-    const grid = $('.pk-fin-grid');
-    grid.innerHTML = pk.cards.map((c, i) => `<figure style="--rc:${rarOf(c.rarity).c};animation-delay:${.08 * i + .15}s"><img alt="${esc(c.name)}" data-i="${i}"><span class="rar" style="--rc:${rarOf(c.rarity).c}">${esc(rarName(c.rarity))}</span><small>${pk.res[i].isNew ? tr('drop.new') : tr('drop.dup', { n: pk.res[i].n })}</small></figure>`).join('');
-    pk.urls.forEach((p, i) => p.then(u => { const im = grid.querySelector(`img[data-i="${i}"]`); if (im) im.src = u; }));
-    $('.pk-fin-msg').textContent = tr('drop.added', { n: pk.res.filter(r => r.isNew).length, t: pk.cards.length }) + (pk.gain ? ' · ' + tr('shop.dupGain', { n: pk.gain }) : '');
     if (pk.cards.some(c => c.rarity === 'legendary')) fx.burst(innerWidth / 2, innerHeight * .45, pk.rgb, 90, 360);
   }
   const onDown = e => { if (e.target.closest('button')) return; advance(); };

@@ -185,6 +185,12 @@ export function InfoSheet({ onClose }) {
   );
 }
 
+/* image d'une carte du récapitulatif (la miniature est dessinée pendant l'ouverture) */
+function FinImg({ p, alt }) {
+  const [src, setSrc] = useState('');
+  useEffect(() => { let live = true; Promise.resolve(p).then(u => { if (live && u) setSrc(u); }).catch(() => {}); return () => { live = false; }; }, [p]);
+  return src ? <img alt={alt} src={src} /> : <span className="fin-ph" aria-hidden="true" />;
+}
 /* l'invocation plein écran (au-dessus de tout) */
 export function PackOpening() {
   const { pack, setPack, setTab } = useApp();
@@ -215,7 +221,16 @@ export function PackOpening() {
       <div className="pk-row" />
       <p className="pk-hint" id="pk-hint" role="status" />
       <div className="pk-final" id="pk-final" hidden={stage !== 'final'}>
-        <h2>{tr('drop.pack')}</h2><div className="pk-fin-grid" /><p className="pk-fin-msg" />
+        <h2>{tr('drop.pack')}</h2>
+        {stage === 'final' && <>
+          <div className="pk-fin-grid" id="pk-fin-grid">{pack.cards.map((c, i) => (
+            <figure key={i} style={{ '--rc': rarOf(c.rarity).c, animationDelay: (.08 * i + .15) + 's' }}>
+              <FinImg p={pack.urls[i]} alt={c.name} />
+              <span className="rar" style={{ '--rc': rarOf(c.rarity).c }}>{rarName(c.rarity)}</span>
+              <small>{pack.res[i].isNew ? tr('drop.new') : tr('drop.dup', { n: pack.res[i].n })}</small>
+            </figure>))}</div>
+          <p className="pk-fin-msg" id="pk-fin-msg">{tr('drop.added', { n: pack.res.filter(r => r.isNew).length, t: pack.cards.length }) + (pack.gain ? ' · ' + tr('shop.dupGain', { n: pack.gain }) : '')}</p>
+        </>}
         <div className="pk-fin-btns"><button type="button" className="btn primary" id="pk-see" onClick={() => { close(); setTab('library'); }}>{tr('drop.see')}</button><button type="button" className="btn" id="pk-done" onClick={close}>{tr('drop.close')}</button></div>
       </div>
       {info && <InfoSheet onClose={() => setInfo(false)} />}
