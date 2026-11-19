@@ -10,7 +10,7 @@ import { packHTML, setPackVars, runPack } from '../lib/packOpen.js';
 import { thumbUrl } from '../lib/draw.js';
 import { Sheet, Screen } from '../components/ui.jsx';
 import { MemberPreview, MemberUpgrade } from '../components/MemberFx.jsx';
-import { IcoInfo } from '../components/icons.jsx';
+import { IcoInfo, IcoLock } from '../components/icons.jsx';
 
 const eurTxt = (v, lang) => new Intl.NumberFormat(lang, { style: 'currency', currency: 'EUR' }).format(v);
 const shopName = p => p.min ? tr('shop.tier', { r: rarName(p.min) }) : tr('shop.normal');
@@ -23,21 +23,37 @@ function MiniPack({ off, rgb }) {
   useEffect(() => { if (ref.current) { ref.current.innerHTML = packHTML(false); setPackVars(ref.current); } }, []);
   return <div className={'pk-mini' + (off ? ' off' : '')} style={rgb ? { '--lc-rgb': rgb.join(',') } : null}><div className="pk-pack" ref={ref} /></div>;
 }
-function CcTile({ p, i, hl, lang, onClick, member }) {
+function CcTile({ p, i, hl, lang, onClick, member, reveal }) {
   const bp = p.bonus ? Math.round(p.bonus / p.coins * 100) : 0;
   return (
-    <button type="button" className={'cc-tile' + (hl ? ' hl' : '')} data-cc={p.id} onClick={onClick}>
+    <button type="button" className={'cc-tile' + (hl ? ' hl' : '') + (reveal ? ' reveal' : '')} data-cc={p.id} data-reveal={reveal === undefined ? undefined : 'cc-' + p.id} onClick={onClick}>
       {p.tag && hl == null && <span className="cc-tag">{tr('cc.' + p.tag)}</span>}
       <span className="pile" aria-hidden="true">{[...Array(Math.min(5, i + 1))].map((_, k) => <i className="coin" key={k} />)}</span>
       <b className="cc-amt">{packTotal(p).toLocaleString(lang)}</b><small>Card Coins</small>
-      <span className="cc-bonus">{bp ? tr('cc.bonus', { p: bp }) : ''}</span><span className="cc-price">{member && <s>{eurTxt(p.eur, lang)}</s>}{eurTxt(packEur(p, member), lang)}</span>
+      <span className="cc-bonus">{bp ? tr('cc.bonus', { p: bp }) : ''}</span><span className="cc-price">{member && <s>{eurTxt(p.eur, lang)}</s>}<span className="now" key={member ? 'm' : 'n'}>{eurTxt(packEur(p, member), lang)}</span></span>{member && reveal && <span className="cc-off">−{Math.round(MEMBER.discount * 100)} %</span>}
     </button>
   );
 }
 
 export function Shop() {
-  const { coins, setCoins, addCoins, unlock, setPack, pack, toast, lang, ver, theme, setTheme, canUse, buyTheme, shopFocus, setShopFocus, member, memberTs, joinMember, endMember, deck, user } = useApp();
+  const { coins, setCoins, addCoins, unlock, setPack, pack, toast, lang, ver, theme, setTheme, canUse, buyTheme, owned, shopFocus, setShopFocus, member, memberTs, joinMember, endMember, deck, user } = useApp();
   const [celebrate, setCelebrate] = useState(false);
+  /* visite après l'abonnement : chaque élément garde son ancien état (prix plein, thème verrouillé, 3 boosters)
+     jusqu'à ce qu'il arrive à l'écran ; il se transforme alors sous les yeux du joueur */
+  const [tour, setTour] = useState(false), [seen, setSeen] = useState(() => new Set()), [goldIn, setGoldIn] = useState(false);
+  const isOn = id => member && (!tour || seen.has(id));
+  const fresh = id => tour && seen.has(id);
+  useEffect(() => {
+    if (!tour) return;
+    const root = document.querySelector('#shop .scroll');
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      const passed = e.rootBounds && e.boundingClientRect.bottom < e.rootBounds.top + 4;   /* dépassé d'un coup (défilement rapide) */
+      if (e.intersectionRatio < .6 && !passed) return; const id = e.target.dataset.reveal; io.unobserve(e.target);
+      setTimeout(() => { setSeen(prev => { if (prev.has(id)) return prev; const n = new Set(prev); n.add(id); return n; }); buzz(8); }, 180);
+    }), { root, threshold: [0, .6, 1] });
+    const t = setTimeout(() => document.querySelectorAll('#shop [data-reveal]').forEach(el => io.observe(el)), 400);
+    return () => { clearTimeout(t); io.disconnect(); };
+  }, [tour]);
   const [mem, setMem] = useState(false);
   const [upgrading, setUpgrading] = useState(false);
   const [cat, setCat] = useState(null);
@@ -50,6 +66,7 @@ export function Shop() {
   useEffect(() => { catalog().then(setCat); }, [ver]);
   useEffect(() => { const t = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(t); }, []);
   const ready = dropReady(), empty = cat && !cat.length;
+  const shownLimit = isOn('daily') ? MEMBER_DROPS : FREE_DROPS, shownLeft = Math.max(0, shownLimit - (dropLimit() - dropsLeft()));
 
   async function openBooster(kind) {
     const prod = SHOP.find(p => p.k === kind);
@@ -81,7 +98,7 @@ export function Shop() {
           <button type="button" className="ibtn" id="bst-info" aria-label={tr('info.btn')} onClick={() => setInfo(true)}><IcoInfo /></button>
         </>}>
         <p className="demo">{tr('shop.demo')}</p>
-        <div className={'member-card' + (member ? ' on' : '') + (upgrading ? ' upgrading' : '')} id="member">
+        <div className={'member-card' + (member && !celebrate ? ' on' : '') + (goldIn ? ' goldin' : '')} id="member">   {/* verre transparent → or au retour de la scène */}
           <i className="mgold" aria-hidden="true" /><i className="mshine" aria-hidden="true" />{upgrading && <span className="msparks" aria-hidden="true">{[...Array(14)].map((_, k) => <i key={k} style={{ '--a': (k * 360 / 14) + 'deg', '--d': (k % 3) * .06 + 's' }} />)}</span>}
           <div className="mh"><span className="mlogo">MyCard<b>+</b></span>{member && <span className="mbadge">{tr('member.badge')}</span>}</div>
           <ul>
@@ -93,11 +110,11 @@ export function Shop() {
               <p className="msub" style={{ opacity: .75 }}>{tr('member.manageHint')}</p></>
             : <button type="button" className="btn primary block" id="member-join" onClick={() => setMem(true)}>{tr('member.join')} · {tr('member.price', { p: eurTxt(MEMBER.eur, lang) })}</button>}
         </div>
-        <div className="free">
+        <div className={'free' + (fresh('daily') ? ' reveal' : '')} data-reveal={tour ? 'daily' : undefined}>
           <MiniPack off={!ready || empty} />
-          <div className="txt"><span className="shop-badge">{tr('shop.dailyN', { n: dropLimit() })}</span><h2>{tr('shop.dailyName')}</h2>
-            <p id="bst-msg" role="status">{empty ? tr('drop.empty') : ready ? tr('drop.left', { n: dropsLeft(), t: dropLimit() }) : tr('drop.wait', { t: clock(msToMidnight()) })}</p>
-            <button type="button" className="btn primary" id="bst-open" disabled={!ready || !cat || empty || !!pack} onClick={() => openBooster('daily')}>{tr('drop.open')}</button>
+          <div className="txt"><span className="shop-badge" key={'b' + isOn('daily')}>{tr('shop.dailyN', { n: isOn('daily') ? MEMBER_DROPS : FREE_DROPS })}</span><h2>{tr('shop.dailyName')}</h2>
+            <p id="bst-msg" role="status">{empty ? tr('drop.empty') : shownLeft > 0 ? <span key={'l' + isOn('daily')} className="cnt">{tr('drop.left', { n: shownLeft, t: shownLimit })}</span> : tr('drop.wait', { t: clock(msToMidnight()) })}</p>
+            <button type="button" className="btn primary" id="bst-open" disabled={!ready || shownLeft === 0 || !cat || empty || !!pack} onClick={() => openBooster('daily')}>{tr('drop.open')}</button>
           </div>
         </div>
         <h2 className="sec-h">{tr('shop.packs')}</h2>
@@ -112,8 +129,9 @@ export function Shop() {
         <h2 className="sec-h" id="themes-section" ref={themesRef}>{tr('shop.themes')}</h2>
         <p className="note" style={{ marginTop: -6 }}>{tr('shop.themesD')}</p>
         <div className="theme-grid" id="theme-grid">
-          {THEME_SHOP.map(t => { const own = canUse(t.k), on = theme === t.k; return (
-            <article className="theme-tile" key={t.k} data-theme-k={t.k}>
+          {THEME_SHOP.map(t => { const bought = !t.price || owned.includes(t.k), own = bought || isOn('theme-' + t.k), on = theme === t.k, unlocking = !bought && fresh('theme-' + t.k); return (
+            <article className={'theme-tile' + (unlocking ? ' unlock' : '')} key={t.k} data-theme-k={t.k} data-reveal={tour && !bought ? 'theme-' + t.k : undefined}>
+              {unlocking && <span className="t-lock" aria-hidden="true"><IcoLock /></span>}
               <div className="theme-prev" data-t={t.k} aria-hidden="true"><i /><i /><b /></div>
               <h3>{tr('theme.' + t.k)}</h3>
               {on ? <button type="button" className="btn sm on" disabled>{tr('shop.themeActive')}</button>
@@ -122,7 +140,7 @@ export function Shop() {
             </article>); })}
         </div>
         <h2 className="sec-h" id="cc-section" ref={ccRef}>{tr('cc.store')}</h2>
-        <div className="cc-grid" id="cc-grid">{COIN_PACKS.map((p, i) => <CcTile key={p.id} p={p} i={i} lang={lang} member={member} onClick={() => setCc({ mode: 'confirm', p })} />)}</div>
+        <div className="cc-grid" id="cc-grid">{COIN_PACKS.map((p, i) => <CcTile key={p.id} p={p} i={i} lang={lang} member={isOn('cc-' + p.id)} reveal={tour ? fresh('cc-' + p.id) : undefined} onClick={() => setCc({ mode: 'confirm', p })} />)}</div>
         <p className="demo">{tr('cc.demoNote')}</p>
         <details className="group pad">
           <summary className="sec-h" style={{ margin: 0, cursor: 'pointer' }}>{tr('demo.tools')}</summary>
@@ -156,7 +174,7 @@ export function Shop() {
           <button type="button" className="btn block" onClick={() => setMem(false)}>{tr('cc.cancel')}</button>
         </Sheet>
       )}
-      {celebrate && <MemberUpgrade user={user} onJoin={() => joinMember()} onDone={() => { setCelebrate(false); toast(tr('member.joined')); }} />}
+      {celebrate && <MemberUpgrade user={user} onJoin={() => joinMember()} onDone={() => { setCelebrate(false); setSeen(new Set()); setTour(true); setGoldIn(true); buzz([20, 40, 60]); setTimeout(() => setGoldIn(false), 2200); setTimeout(() => toast(tr('member.tour')), 1400); }} />}
     </Screen>
   );
 }

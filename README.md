@@ -169,6 +169,10 @@ langue, **thème**, connexion **modérateur**, confidentialité et crédits.
 - l'effet **Or** en personnalisation (les cartes universelles en or restent visibles pour tous) ;
 - le **nom en or brillant** (bibliothèque et Profil).
 
+Dans la boutique, la carte MyCard+ est en **verre transparent** (« liquid glass ») ; au retour de la scène de déblocage, l'or la
+recouvre en diagonale. Puis, en **descendant dans la boutique**, chaque avantage s'active quand il arrive à l'écran : le booster du jour
+passe de 3 à 9, le cadenas des thèmes saute, les prix des Card Coins se barrent et le prix réduit apparaît avec « −15 % ».
+
 Avant l'abonnement, la fenêtre MyCard+ montre un **aperçu visuel** des avantages (3 boosters contre 9, les 7 thèmes, le prix barré des Card Coins,
 une de tes cartes en Or, ton nom en or). Après le paiement, une **scène de déblocage** dans l'esprit des passes de combat : le titre MYCARD+ s'écrase en argent,
 une vague d'or le traverse (éclair, secousse, confettis), tampon « DÉBLOQUÉ ! », puis les récompenses tombent une à une en tuiles
