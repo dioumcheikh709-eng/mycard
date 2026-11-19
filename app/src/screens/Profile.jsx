@@ -7,14 +7,14 @@ import { IcoCamera, IcoLock } from '../components/icons.jsx';
 import { isMod, modHash, MOD_HASH, bioGet, bioSupported, bioEnroll, bioVerify, BIO_KEY } from '../lib/cloud.js';
 import { lsSet, lsDel } from '../lib/store.js';
 import { googleLogout, googleMe } from '../lib/auth.js';
-import { Screen } from '../components/ui.jsx';
+import { Screen, Hello, NameTag } from '../components/ui.jsx';
 
 export function Profile() {
-  const { user, logout, lang, setLang, theme, THEMES, setTheme, canUse, setTab, setShopFocus, toast, gAcct, setGAcct, avatar, setAvatar, member } = useApp();
+  const { user, logout, lang, setLang, theme, THEMES, setTheme, canUse, setTab, setShopFocus, toast, gAcct, setGAcct, avatar, setAvatar, member, memberTs, endMember, ask } = useApp();
   const [mod, setMod] = useState(isMod());
   useEffect(() => { if (!gAcct) googleMe().then(a => a && setGAcct(a)); }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
-    <Screen id="settings" hello={tr('deck.hello', { user })} title={tr('settings.title')}>
+    <Screen id="settings" hello={<Hello user={user} member={member} />} title={tr('settings.title')}>
         <div>
           <p className="group-h">{tr('settings.account')}</p>
           <div className="group">
@@ -24,7 +24,7 @@ export function Profile() {
                 <span className="cam" aria-hidden="true"><IcoCamera /></span>
                 <input type="file" accept="image/*" id="f-avatar" onChange={e => { const f = e.target.files[0]; e.target.value = ''; if (f) toAvatar(f).then(setAvatar).catch(() => toast(tr('profile.photoBad'))); }} />
               </label>
-              <div className="grow"><b style={{ font: "700 20px 'Barlow Condensed',Tajawal,sans-serif" }}>{user}</b>{member && <span className="mbadge" style={{ marginInlineStart: 8 }}>MyCard+</span>}<small>{avatar ? tr('profile.photoChange') : tr('profile.photoAdd')}</small>
+              <div className="grow"><b style={{ font: "700 20px 'Barlow Condensed',Tajawal,sans-serif" }}><NameTag user={user} member={member} /></b>{member && <span className="mbadge" style={{ marginInlineStart: 8 }}>MyCard+</span>}<small>{avatar ? tr('profile.photoChange') : tr('profile.photoAdd')}</small>
                 {avatar && <button type="button" className="link" id="avatar-del" style={{ padding: '4px 0' }} onClick={() => setAvatar(null)}>{tr('profile.photoRemove')}</button>}</div>
             </div>
             <div className="row"><div className="grow" id="set-loggedas">{tr('settings.loggedAs', { user })}{gAcct && <small id="set-gacct">{tr('auth.linked', { name: gAcct.name, email: gAcct.email })}</small>}</div></div>
@@ -32,6 +32,19 @@ export function Profile() {
             <button type="button" className="row" id="set-change" onClick={logout}>{tr('deck.changeUser')}</button>
           </div>
         </div>
+        {member && <div>
+          <p className="group-h">{tr('member.section')}</p>
+          <div className="group">
+            <div className="row"><div className="grow"><span className="mbadge">MyCard+</span><small>{tr('member.active', { d: new Date(memberTs).toLocaleDateString(lang) })}</small></div></div>
+            <details className="manage">
+              <summary className="row">{tr('member.manage')}</summary>
+              <div className="pad" style={{ display: 'grid', gap: 10 }}>
+                <p className="note">{tr('member.cancelT')}</p>
+                <button type="button" className="btn danger" id="member-cancel" onClick={async () => { if (await ask(tr('member.cancelQ'), tr('member.cancelT'), tr('member.cancel'), true)) { endMember(); toast(tr('member.ended')); } }}>{tr('member.cancel')}</button>
+              </div>
+            </details>
+          </div>
+        </div>}
         <div>
           <p className="group-h">{tr('settings.language')}</p>
           <div className="seg" id="set-lgrid">{LANGS.map(([code, flag, name]) => <button type="button" key={code} data-l={code} aria-pressed={code === lang} onClick={() => setLang(code)}><span className="flag" aria-hidden="true">{flag}</span>{name}</button>)}</div>

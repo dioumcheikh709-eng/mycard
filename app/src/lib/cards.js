@@ -72,7 +72,8 @@ export const typeName=k=>tr('type.'+(TY[k]?k:'C'));
 /* anciens identifiants d'effets (avant la réécriture) → nouveaux effets */
 const FX_OLD={regular:'prism',cosmos:'nebula',sitereverse:'mosaic',vfull:'aurora',rainbow:'opal',shinyv:'glitter',amazing:'ripple',vmax:'gold'};
 export const fxOf=v=>FX_OLD[v]||v||'classic';
-export const FX_LIST=['classic','reverse','prism','nebula','mosaic','aurora','opal','glitter','ripple','metal','gold'];
+export const FX_LIST=['classic','reverse','prism','nebula','mosaic','aurora','opal','glitter','ripple','metal','silver','gold'];
+export const MEMBER_FX=['gold'];   /* effets réservés aux membres MyCard+ (en personnalisation) */
 
 export const CARDS=[
  {id:'c3',name:'MyCard',hp:310,type:'D',evo:'Série Origine',special:'',

@@ -109,3 +109,10 @@ export function Screen({ id, label, hello, onHello, title, sub, actions, childre
     </section>
   );
 }
+
+/* « Bonjour, X » avec le nom en or brillant pour les membres MyCard+ */
+export function Hello({ user, member }) {
+  const parts = String(tr('deck.hello', { user: '\u0000' })).split('\u0000');
+  return <>{parts[0]}<span className={member ? 'gold-name' : undefined}>{user}</span>{parts.slice(1).join('')}</>;
+}
+export const NameTag = ({ user, member }) => <span className={member ? 'gold-name' : undefined}>{user}</span>;

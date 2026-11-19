@@ -5,12 +5,12 @@ import { useApp, buzz } from '../state.jsx';
 import { tr } from '../lib/i18n.js';
 import { typeName, rarName, rarOf } from '../lib/cards.js';
 import { SORTS, sortDeck, normQ, hayOf, lsGet, lsSet } from '../lib/store.js';
-import { Sheet, Thumb, deckThumb, Screen } from '../components/ui.jsx';
+import { Sheet, Thumb, deckThumb, Screen, Hello } from '../components/ui.jsx';
 import { IcoSearch, IcoSort, IcoPlus } from '../components/icons.jsx';
 import { gov } from '../lib/fxEngine.js';
 
 export function Library({ onPerf }) {
-  const { deck, user, newCard, openCard, ready, ver, toast } = useApp();
+  const { deck, user, newCard, openCard, ready, ver, toast, member } = useApp();
   const [q, setQ] = useState('');
   const [sort, setSort] = useState(() => { const v = lsGet('mycard-sort'); return SORTS.includes(v) ? v : 'added'; });
   const [sortOpen, setSortOpen] = useState(false);
@@ -30,7 +30,7 @@ export function Library({ onPerf }) {
   };
   const count = (q ? shown.length + ' / ' : '') + deck.length + ' ' + (deck.length > 1 ? tr('deck.cardsMany') : tr('deck.cardsOne'));
   return (
-    <Screen id="deck" label={tr('deck.title')} hello={tr('deck.hello', { user })} onHello={hello} title={tr('deck.title')} sub={count}
+    <Screen id="deck" label={tr('deck.title')} hello={<Hello user={user} member={member} />} onHello={hello} title={tr('deck.title')} sub={count}
       actions={<button type="button" className={'ibtn' + (dense ? ' dense-on' : '')} id="dk-sort" aria-label={tr('deck.sortAria')} aria-haspopup="dialog" onClick={onSortTap}><IcoSort /></button>}>
       <label className="search"><IcoSearch /><input id="dk-q" type="search" enterKeyHint="search" autoComplete="off" value={q} placeholder={tr('deck.searchPh')} aria-label={tr('deck.searchAria')} onChange={e => setQ(e.target.value)} /></label>
       <div className={'grid' + (dense ? ' dense' : '')} id="dk-grid">

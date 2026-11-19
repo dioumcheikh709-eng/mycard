@@ -3,14 +3,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { useApp, buzz } from '../state.jsx';
 import { tr, lines } from '../lib/i18n.js';
-import { TY, FRAMES, FX_LIST, cssLin, svgOf, typeName, plain, toStored, rarName, RARITIES, fxOf } from '../lib/cards.js';
+import { TY, FRAMES, FX_LIST, MEMBER_FX, cssLin, svgOf, typeName, plain, toStored, rarName, RARITIES, fxOf } from '../lib/cards.js';
 import { media, uk, session, cardImage } from '../lib/store.js';
 import { cloud, isMod, catalog } from '../lib/cloud.js';
 import { pngBlob, gifBlob } from '../lib/gif.js';
 import * as engine from '../lib/fxEngine.js';
 import { CardStage } from '../components/Card.jsx';
 import { Sheet } from '../components/ui.jsx';
-import { IcoClose, IcoShare, IcoDownload, IcoGyro, IcoEdit, IcoTrash, IcoImage, IcoCamera, IcoSparkle } from '../components/icons.jsx';
+import { IcoLock, IcoClose, IcoShare, IcoDownload, IcoGyro, IcoEdit, IcoTrash, IcoImage, IcoCamera, IcoSparkle } from '../components/icons.jsx';
 
 const STEPS = ['image', 'card', 'ability', 'attack', 'rule', 'effect'];
 let framed = false; try { framed = self !== top; } catch (e) { framed = true; }
@@ -23,7 +23,7 @@ async function saveBlob(b, name) {
 const slug = s => String(s || 'carte').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'carte';
 
 export function Studio() {
-  const { studio, setStudio, deck, updateCard, closeStudio, cancelEdit, startEdit, deleteCard, ask, toast } = useApp();
+  const { studio, setStudio, deck, updateCard, closeStudio, cancelEdit, startEdit, deleteCard, ask, toast, member } = useApp();
   const c = studio && deck.find(x => x.id === studio.id);
   const [step, setStep] = useState(0);
   const [intro, setIntro] = useState(!!(studio && studio.intro));
@@ -105,7 +105,7 @@ export function Studio() {
           <nav className="steps" id="steps" ref={stepsRef} aria-label={tr('panel.stepsAria')}>
             {STEPS.map((s, i) => <button type="button" key={s} className="chip" aria-pressed={i === step} onClick={() => setStep(i)}>{i + 1}. {tr('panel.step.' + s)}</button>)}
           </nav>
-          <div className="dock-body" key={step}><StepBody step={STEPS[step]} c={c} set={set} toast={toast} /></div>
+          <div className="dock-body" key={step}><StepBody step={STEPS[step]} c={c} set={set} toast={toast} member={member} /></div>
           <div className="dock-nav">
             <button type="button" className="btn" id="s-prev" disabled={step === 0} onClick={() => setStep(step - 1)}>{tr('panel.prev')}</button>
             <button type="button" className="btn primary" id="s-next" onClick={() => step === STEPS.length - 1 ? done() : setStep(step + 1)}>{step === STEPS.length - 1 ? tr('panel.done') : tr('panel.next')}</button>
@@ -126,7 +126,7 @@ export function Studio() {
 
 /* -------- les étapes de personnalisation -------- */
 const TypeOpts = ({ none }) => <>{none && <option value="">—</option>}{Object.keys(TY).map(k => <option key={k} value={k}>{typeName(k)}</option>)}</>;
-function StepBody({ step, c, set, toast }) {
+function StepBody({ step, c, set, toast, member }) {
   const m0 = c.mv[0] || { n: '', d: '', t: '', c: '' };
   const recenter = d => { d.zoom = 1; d.px = 0; d.py = 0; };
   if (step === 'image') {
@@ -200,7 +200,10 @@ function StepBody({ step, c, set, toast }) {
   const k = c.k != null ? c.k : 1, fx = fxOf(c.fx);
   return <>
     <div className="field"><span>{tr('panel.effect.label')}</span>
-      <div className="fxgrid" id="fxgrid">{FX_LIST.map(v => <button type="button" key={v} data-v={v} aria-pressed={v === fx} onClick={() => set(d => { d.fx = v; })}>{tr('fx.' + v)}</button>)}</div>
+      <div className="fxgrid" id="fxgrid">{FX_LIST.map(v => { const lock = MEMBER_FX.includes(v) && !member; return (
+        <button type="button" key={v} data-v={v} className={(lock ? 'locked ' : '') + (MEMBER_FX.includes(v) ? 'plus' : '')} aria-pressed={v === fx} onClick={() => { if (lock) { toast(tr('fx.memberOnly')); return; } set(d => { d.fx = v; }); }}>
+          {tr('fx.' + v)}{MEMBER_FX.includes(v) && <span className="fx-plus">{lock && <IcoLock />}MyCard+</span>}
+        </button>); })}</div>
     </div>
     <label className="field"><span>{tr('panel.effect.intensity')} <output id="kv">{Math.round(k * 100)}%</output></span><input type="range" id="f-k" min="0" max="2" step="0.05" value={k} onChange={e => set(d => { d.k = +e.target.value; })} /></label>
   </>;

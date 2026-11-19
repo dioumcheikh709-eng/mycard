@@ -23,7 +23,7 @@ Application **React** pour créer, personnaliser et collectionner des cartes hol
 - **Studio** : la carte reste toujours visible et s'adapte à la place ; la personnalisation en 6 étapes
   (Image · Carte · Pouvoir · Attaque · Note · Effet) est dans un panneau en bas qui défile seul.
 - **Connexion** par nom d'utilisateur ou **Google** (avec le serveur et un ID client).
-- **Bibliothèque** avec miniatures, recherche, tri en 5 critères ; **11 effets holographiques**, inclinaison au doigt, **gyroscope**.
+- **Bibliothèque** avec miniatures, recherche, tri en 5 critères ; **12 effets holographiques** (dont **Argent**, gratuit, et **Or**, réservé aux membres MyCard+), inclinaison au doigt, **gyroscope**.
 - **Export** PNG 840 × 1174 ou **GIF animé** (encodeur écrit pour le projet), partage natif.
 - **Fluidité** : vise 120, puis 100, 90, 60 images/s avant de simplifier l'effet ; 30 images/s au repos après 1 minute.
 - **Boutique** (3 boosters gratuits par jour, boosters à acheter, thèmes, Card Coins, abonnement **MyCard+**), **concours hebdomadaire**, **modérateur** (code ou Touch ID / Face ID).
@@ -166,6 +166,11 @@ langue, **thème**, connexion **modérateur**, confidentialité et crédits.
 - **9 boosters gratuits par jour** au lieu de 3 ;
 - **tous les thèmes** débloqués (un thème non acheté revient au noir à la fin de l'abonnement) ;
 - **−15 % sur les Card Coins** (prix barré affiché dans la boutique).
+- l'effet **Or** en personnalisation (les cartes universelles en or restent visibles pour tous) ;
+- le **nom en or brillant** (bibliothèque et Profil).
+
+À l'abonnement, la carte MyCard+ passe de l'**argent à l'or** (l'or recouvre l'argent, éclat et étincelles, vibration).
+La **résiliation** n'est pas dans la boutique : Profil → Abonnement → « Gérer l'abonnement » (replié), avec confirmation.
 
 Mode démo : `payments.subscribe` ne débite personne et l'abonnement (30 jours) est gardé sur l'appareil (`mycard-member:<pseudo>`).
 Dans les applis iOS et Android, il devra passer par les abonnements de l'App Store et de Google Play, vérifiés par le serveur.

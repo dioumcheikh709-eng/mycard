@@ -83,6 +83,7 @@ export async function drawCard(c0,op){
     opal:{mode:'opal',blend:'screen',al:.7,gn:260,glit:3},
     glitter:{mode:'band',blend:'screen',an:120,sz:2.5,st:[['rgba(200,210,255,0)',0],['rgba(222,226,255,.35)',.5],['rgba(255,255,255,0)',1]],sheen:0,glit:3,al:.9,gn:2600},
     ripple:{mode:'rings',blend:'color-dodge',al:.5,gn:0},
+    silver:{mode:'band',blend:'hard-light',an:115,sz:2.6,st:[['#3a3f47',0],['#b9c0cc',.18],['#ffffff',.32],['#8a929e',.46],['#eef2f7',.6],['#5e6570',.76],['#d9dee6',.9],['#3a3f47',1]],sheen:1,brush:1,al:.9,gn:0},
     gold:{mode:'band',blend:'hard-light',an:115,sz:2.6,st:[['#5b3a07',0],['#c8961e',.18],['#fff1a8',.32],['#b07a12',.46],['#ffe27a',.6],['#7a5208',.76],['#f4cf5b',.9],['#5b3a07',1]],sheen:1,brush:1,al:.95,gn:0},
     metal:{mode:'band',blend:'overlay',an:115,sz:2.6,st:[['#4a4d55',0],['#e6e9f0',.15],['#7b808b',.3],['#fafbfd',.45],['#5a5f6b',.6],['#d5d9e2',.75],['#868b97',.9],['#4a4d55',1]],sheen:1,brush:1,al:.9,gn:0}};
   const C=CFG[fxm]||CFG.classic,PX=mx/100*W,PY=my/100*H,DIAG=Math.hypot(W,H);

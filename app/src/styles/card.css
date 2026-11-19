@@ -65,7 +65,7 @@
 .fxa>i{position:absolute;inset:0;border-radius:inherit}
 .fxg{z-index:5;mix-blend-mode:soft-light;opacity:calc(var(--k)*(.15 + var(--po)*.65));
   background:radial-gradient(circle at var(--at),rgba(255,255,255,.95),rgba(255,255,255,.3) 20%,rgba(255,255,255,0) 50%)}
-.card:is([data-fx=prism],[data-fx=nebula],[data-fx=mosaic],[data-fx=aurora],[data-fx=opal],[data-fx=glitter],[data-fx=ripple],[data-fx=gold],[data-fx=metal]) :is(.fxa,.fxg){display:block}
+.card:is([data-fx=prism],[data-fx=nebula],[data-fx=mosaic],[data-fx=aurora],[data-fx=opal],[data-fx=glitter],[data-fx=ripple],[data-fx=gold],[data-fx=silver],[data-fx=metal]) :is(.fxa,.fxg){display:block}
 
 /* PRISME : réseau de fines lignes qui décompose la lumière en arc-en-ciel */
 .card[data-fx=prism] .fxa{mix-blend-mode:color-dodge}
@@ -234,3 +234,9 @@ body[data-q]:not([data-q="0"]) .card[data-fx=opal] .fxa>i:nth-child(1){filter:no
 .pk-card.legend img{box-shadow:none;filter:drop-shadow(0 0 2px var(--rc)) drop-shadow(0 0 30px var(--rc)) drop-shadow(0 14px 18px rgba(0,0,0,.5))}
 .pk-row img{border-radius:0;box-shadow:none;object-fit:contain;filter:drop-shadow(0 0 1.5px var(--rc))}
 .pk-fin-grid img{border-radius:0;box-shadow:none;object-fit:contain;filter:drop-shadow(0 0 1.5px var(--rc)) drop-shadow(0 0 10px var(--rc))}
+
+/* ARGENT : feuille d'argent brossée, froide et brillante (gratuit) */
+.card[data-fx=silver] .fxa{mix-blend-mode:hard-light;opacity:calc(var(--k)*(.4 + var(--po)*.32))}
+.card[data-fx=silver] .fxa>i:nth-child(1){background:linear-gradient(115deg,#3a3f47 0%,#b9c0cc 18%,#ffffff 32%,#8a929e 46%,#eef2f7 60%,#5e6570 76%,#d9dee6 90%,#3a3f47 100%);background-size:260% 260%;background-position:var(--at)}
+.card[data-fx=silver] .fxa>i:nth-child(2){mix-blend-mode:soft-light;background:repeating-linear-gradient(0deg,rgba(255,255,255,.12) 0 .2cqw,rgba(0,0,0,.1) .2cqw .45cqw),repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 .1cqw,transparent .1cqw .7cqw)}
+.card[data-fx=silver] .fxa>i:nth-child(3){mix-blend-mode:screen;background:radial-gradient(circle at var(--at),rgba(240,246,255,.8),transparent 40%)}

@@ -1,6 +1,6 @@
 /* Boutique : booster gratuit du jour, boosters à acheter, Card Coins (offres façon Brawl Stars), chances et couleurs. */
 import { useEffect, useRef, useState } from 'react';
-import { useApp } from '../state.jsx';
+import { useApp, buzz } from '../state.jsx';
 import { tr } from '../lib/i18n.js';
 import { RARITIES, rarOf, rarName } from '../lib/cards.js';
 import { coins as readCoins, dropReady, useDrop, resetDrop, msToMidnight, DUP_COINS, CONTEST_COINS, dropsLeft, dropLimit, FREE_DROPS, MEMBER_DROPS } from '../lib/store.js';
@@ -37,6 +37,7 @@ function CcTile({ p, i, hl, lang, onClick, member }) {
 export function Shop() {
   const { coins, setCoins, addCoins, unlock, setPack, pack, toast, lang, ver, theme, setTheme, canUse, buyTheme, shopFocus, setShopFocus, member, memberTs, joinMember, endMember } = useApp();
   const [mem, setMem] = useState(false);
+  const [upgrading, setUpgrading] = useState(false);
   const [cat, setCat] = useState(null);
   const [now, setNow] = useState(Date.now());
   const [cc, setCc] = useState(null);         /* {mode:'short'|'confirm', p, want} */
@@ -78,7 +79,8 @@ export function Shop() {
           <button type="button" className="ibtn" id="bst-info" aria-label={tr('info.btn')} onClick={() => setInfo(true)}><IcoInfo /></button>
         </>}>
         <p className="demo">{tr('shop.demo')}</p>
-        <div className={'member-card' + (member ? ' on' : '')} id="member">
+        <div className={'member-card' + (member ? ' on' : '') + (upgrading ? ' upgrading' : '')} id="member">
+          <i className="mgold" aria-hidden="true" /><i className="mshine" aria-hidden="true" />{upgrading && <span className="msparks" aria-hidden="true">{[...Array(14)].map((_, k) => <i key={k} style={{ '--a': (k * 360 / 14) + 'deg', '--d': (k % 3) * .06 + 's' }} />)}</span>}
           <div className="mh"><span className="mlogo">MyCard<b>+</b></span>{member && <span className="mbadge">{tr('member.badge')}</span>}</div>
           <ul>
             <li>{tr('member.b1', { n: MEMBER_DROPS, f: FREE_DROPS })}</li>
@@ -86,7 +88,7 @@ export function Shop() {
             <li>{tr('member.b3', { p: Math.round(MEMBER.discount * 100) })}</li>
           </ul>
           {member ? <><p className="msub">{tr('member.active', { d: new Date(memberTs).toLocaleDateString(lang) })}</p>
-              <button type="button" className="link" id="member-cancel" onClick={() => { endMember(); toast(tr('member.ended')); }}>{tr('member.cancel')}</button></>
+              <p className="msub" style={{ opacity: .75 }}>{tr('member.manageHint')}</p></>
             : <button type="button" className="btn primary block" id="member-join" onClick={() => setMem(true)}>{tr('member.join')} · {tr('member.price', { p: eurTxt(MEMBER.eur, lang) })}</button>}
         </div>
         <div className="free">
@@ -148,7 +150,7 @@ export function Shop() {
           <p className="cc-msg">{tr('member.confirm', { p: eurTxt(MEMBER.eur, lang) })}</p>
           <ul className="shop-info"><li>{tr('member.b1', { n: MEMBER_DROPS, f: FREE_DROPS })}</li><li>{tr('member.b2')}</li><li>{tr('member.b3', { p: Math.round(MEMBER.discount * 100) })}</li></ul>
           <p className="note">{tr('member.demo')}</p>
-          <div className="two"><button type="button" className="btn primary" id="member-pay" onClick={async () => { let ok = false; try { ok = await payments.subscribe(); } catch (e) { /* refusé */ } if (!ok) { toast(tr('cc.failed')); return; } joinMember(); setMem(false); toast(tr('member.joined')); }}>{tr('member.join')}</button>
+          <div className="two"><button type="button" className="btn primary" id="member-pay" onClick={async () => { let ok = false; try { ok = await payments.subscribe(); } catch (e) { /* refusé */ } if (!ok) { toast(tr('cc.failed')); return; } setMem(false); setUpgrading(true); buzz([20, 40, 20, 40, 120]); document.getElementById('member') && document.getElementById('member').scrollIntoView({ block: 'center', behavior: 'smooth' }); setTimeout(() => { joinMember(); toast(tr('member.joined')); }, 700); setTimeout(() => setUpgrading(false), 2600); }}>{tr('member.join')}</button>
             <button type="button" className="btn" onClick={() => setMem(false)}>{tr('cc.cancel')}</button></div>
         </Sheet>
       )}
