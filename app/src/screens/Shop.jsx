@@ -9,6 +9,7 @@ import { SHOP, COIN_PACKS, packTotal, payments, rollPack, packLuck, luckRGB, hex
 import { packHTML, setPackVars, runPack } from '../lib/packOpen.js';
 import { thumbUrl } from '../lib/draw.js';
 import { Sheet, Screen } from '../components/ui.jsx';
+import { MemberPreview, MemberUpgrade } from '../components/MemberFx.jsx';
 import { IcoInfo } from '../components/icons.jsx';
 
 const eurTxt = (v, lang) => new Intl.NumberFormat(lang, { style: 'currency', currency: 'EUR' }).format(v);
@@ -35,7 +36,8 @@ function CcTile({ p, i, hl, lang, onClick, member }) {
 }
 
 export function Shop() {
-  const { coins, setCoins, addCoins, unlock, setPack, pack, toast, lang, ver, theme, setTheme, canUse, buyTheme, shopFocus, setShopFocus, member, memberTs, joinMember, endMember } = useApp();
+  const { coins, setCoins, addCoins, unlock, setPack, pack, toast, lang, ver, theme, setTheme, canUse, buyTheme, shopFocus, setShopFocus, member, memberTs, joinMember, endMember, deck, user } = useApp();
+  const [celebrate, setCelebrate] = useState(false);
   const [mem, setMem] = useState(false);
   const [upgrading, setUpgrading] = useState(false);
   const [cat, setCat] = useState(null);
@@ -63,7 +65,7 @@ export function Shop() {
     const urls = cards.map(x => catImg(x).then(img => thumbUrl('cat:' + x.id + ':' + (x.upd || 0), x, img)));
     const luck = packLuck(cards);
     busy.current = false;
-    setPack({ cards, res, urls, luck, rgb: luckRGB(luck), gain });
+    setPack({ id: Date.now() + Math.random(), cards, res, urls, luck, rgb: luckRGB(luck), gain });
   }
   async function buy(p) {
     let ok = false; try { ok = await payments.buy(p); } catch (e) { /* refusé */ }
@@ -147,13 +149,14 @@ export function Shop() {
       {info && <InfoSheet onClose={() => setInfo(false)} />}
       {mem && (
         <Sheet title="MyCard+" onClose={() => setMem(false)}>
-          <p className="cc-msg">{tr('member.confirm', { p: eurTxt(MEMBER.eur, lang) })}</p>
-          <ul className="shop-info"><li>{tr('member.b1', { n: MEMBER_DROPS, f: FREE_DROPS })}</li><li>{tr('member.b2')}</li><li>{tr('member.b3', { p: Math.round(MEMBER.discount * 100) })}</li></ul>
-          <p className="note">{tr('member.demo')}</p>
-          <div className="two"><button type="button" className="btn primary" id="member-pay" onClick={async () => { let ok = false; try { ok = await payments.subscribe(); } catch (e) { /* refusé */ } if (!ok) { toast(tr('cc.failed')); return; } setMem(false); setUpgrading(true); buzz([20, 40, 20, 40, 120]); document.getElementById('member') && document.getElementById('member').scrollIntoView({ block: 'center', behavior: 'smooth' }); setTimeout(() => { joinMember(); toast(tr('member.joined')); }, 700); setTimeout(() => setUpgrading(false), 2600); }}>{tr('member.join')}</button>
-            <button type="button" className="btn" onClick={() => setMem(false)}>{tr('cc.cancel')}</button></div>
+          <p className="cc-msg">{tr('member.pv.title')}</p>
+          <MemberPreview user={user} sample={deck.find(c => !c.uni)} eurTxt={v => eurTxt(v, lang)} />
+          <p className="note">{tr('member.confirm', { p: eurTxt(MEMBER.eur, lang) })} {tr('member.demo')}</p>
+          <button type="button" className="btn primary block mpay" id="member-pay" onClick={async () => { let ok = false; try { ok = await payments.subscribe(); } catch (e) { /* refusé */ } if (!ok) { toast(tr('cc.failed')); return; } setMem(false); setCelebrate(true); }}>{tr('member.join')} · {tr('member.price', { p: eurTxt(MEMBER.eur, lang) })}</button>
+          <button type="button" className="btn block" onClick={() => setMem(false)}>{tr('cc.cancel')}</button>
         </Sheet>
       )}
+      {celebrate && <MemberUpgrade user={user} onJoin={() => joinMember()} onDone={() => { setCelebrate(false); toast(tr('member.joined')); }} />}
     </Screen>
   );
 }
@@ -192,8 +195,13 @@ function FinImg({ p, alt }) {
   return src ? <img alt={alt} src={src} /> : <span className="fin-ph" aria-hidden="true" />;
 }
 /* l'invocation plein écran (au-dessus de tout) */
+/* chaque ouverture repart de zéro (nouvel état, nouvelle structure) : rien du booster précédent ne peut réapparaître */
 export function PackOpening() {
-  const { pack, setPack, setTab } = useApp();
+  const { pack } = useApp();
+  return pack ? <PackRun key={pack.id} pack={pack} /> : null;
+}
+function PackRun({ pack }) {
+  const { setPack, setTab } = useApp();
   const ref = useRef(null), run = useRef(null);
   const [stage, setStage] = useState('summon');
   const [info, setInfo] = useState(false);
@@ -205,7 +213,6 @@ export function PackOpening() {
     document.addEventListener('keydown', k);
     return () => { document.removeEventListener('keydown', k); run.current && run.current.stop(); };
   }, [pack]); // eslint-disable-line react-hooks/exhaustive-deps
-  if (!pack) return null;
   const close = () => { if (run.current) run.current.stop(); setTimeout(() => setPack(null), 400); };
   return (
     <div className="pk" id="pk" ref={ref} role="dialog" aria-modal="true" aria-label={tr('drop.pack')} tabIndex={-1}>

@@ -30,7 +30,7 @@ export const packHTML = split => split ? `<div class="pk-shaker"><div class="pk-
 export const setPackVars = (el, top, main) => { el.style.setProperty('--art-clip', ART_CLIP); el.style.setProperty('--clip-top', top || CLIP_TOP); el.style.setProperty('--clip-main', main || CLIP_MAIN); };
 
 /* effets de lumière : étincelles en spirale (invocation) et gerbes (déchirure, révélations) */
-function particles(cv) {
+export function particles(cv) {
   const g = cv.getContext('2d'); let W = 0, H = 0, D = 1, P = [], run = false, rgb = [255, 255, 255], amb = 0, last = 0, acc = 0;
   const size = () => { D = Math.min(2, window.devicePixelRatio || 1); W = cv.clientWidth; H = cv.clientHeight; cv.width = Math.round(W * D); cv.height = Math.round(H * D); };
   function frame(t) {

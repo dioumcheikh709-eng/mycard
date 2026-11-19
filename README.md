@@ -169,7 +169,10 @@ langue, **thème**, connexion **modérateur**, confidentialité et crédits.
 - l'effet **Or** en personnalisation (les cartes universelles en or restent visibles pour tous) ;
 - le **nom en or brillant** (bibliothèque et Profil).
 
-À l'abonnement, la carte MyCard+ passe de l'**argent à l'or** (l'or recouvre l'argent, éclat et étincelles, vibration).
+Avant l'abonnement, la fenêtre MyCard+ montre un **aperçu visuel** des avantages (3 boosters contre 9, les 7 thèmes, le prix barré des Card Coins,
+une de tes cartes en Or, ton nom en or). Après le paiement, une **scène plein écran** : la carte de membre argentée se charge d'énergie, se
+retourne dans un éclair et devient or à ton nom (rayons, gerbes d'étincelles, vibrations), puis les avantages apparaissent un à un
+(`app/src/components/MemberFx.jsx`).
 La **résiliation** n'est pas dans la boutique : Profil → Abonnement → « Gérer l'abonnement » (replié), avec confirmation.
 
 Mode démo : `payments.subscribe` ne débite personne et l'abonnement (30 jours) est gardé sur l'appareil (`mycard-member:<pseudo>`).
