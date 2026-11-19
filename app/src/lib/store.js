@@ -90,7 +90,21 @@ export function coins() { try { const v = localStorage.getItem(walletKey()); if 
 export function writeCoins(n) { lsSet(walletKey(), Math.max(0, Math.round(n))); }
 export const dayKey = () => { const d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); };
 const dropKey = () => 'mycard-drop:' + uk();
-export const dropReady = () => lsGet(dropKey()) !== dayKey();
-export const useDrop = () => lsSet(dropKey(), dayKey());
+/* MyCard+ (abonnement) : date de fin enregistrée par joueur (mode démo : sur l'appareil) */
+const memberKey = () => 'mycard-member:' + uk();
+export const memberUntil = () => +(lsGet(memberKey()) || 0) || 0;
+export const isMemberNow = () => memberUntil() > Date.now();
+export const setMemberUntil = ts => { if (ts) lsSet(memberKey(), String(ts)); else lsDel(memberKey()); };
+/* boosters gratuits : 3 par jour, 9 avec MyCard+ */
+export const FREE_DROPS = 3, MEMBER_DROPS = 9;
+export const dropLimit = () => isMemberNow() ? MEMBER_DROPS : FREE_DROPS;
+export function dropsUsed() {
+  const v = lsGet(dropKey()); if (!v) return 0;
+  if (v === dayKey()) return 1;                                  /* ancien format : un booster pris aujourd'hui */
+  try { const o = JSON.parse(v); return o && o.d === dayKey() ? Math.max(0, +o.n || 0) : 0; } catch (e) { return 0; }
+}
+export const dropsLeft = () => Math.max(0, dropLimit() - dropsUsed());
+export const dropReady = () => dropsLeft() > 0;
+export const useDrop = () => lsSet(dropKey(), JSON.stringify({ d: dayKey(), n: dropsUsed() + 1 }));
 export const resetDrop = () => lsDel(dropKey());
 export const msToMidnight = () => { const d = new Date(); d.setHours(24, 0, 0, 0); return d - new Date(); };

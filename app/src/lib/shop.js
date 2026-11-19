@@ -42,3 +42,9 @@ export const flashOf=i=>.08+.72*Math.pow(i/(RN||1),1.6);
 /* Thèmes de l'appli : noir et blanc (classiques) sont gratuits, les autres s'achètent avec des Card Coins. */
 export const THEME_SHOP=[{k:'black',price:0},{k:'white',price:0},{k:'blue',price:250},{k:'red',price:250},{k:'violet',price:350},{k:'green',price:350},{k:'rainbow',price:600}];
 export const themePrice=k=>(THEME_SHOP.find(t=>t.k===k)||{price:0}).price;
+
+/* MyCard+ : abonnement mensuel. 9 boosters gratuits par jour, tous les thèmes, −15 % sur les Card Coins.
+   En mode démo, `payments.subscribe` ne débite personne : le vrai abonnement passera par l'App Store et Google Play. */
+export const MEMBER={eur:4.99,days:30,discount:.15};
+export const packEur=(p,member)=>member?Math.round(p.eur*(1-MEMBER.discount)*100)/100:p.eur;
+payments.subscribe=async()=>true;

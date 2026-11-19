@@ -3,9 +3,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useApp } from '../state.jsx';
 import { tr } from '../lib/i18n.js';
 import { RARITIES, rarOf, rarName } from '../lib/cards.js';
-import { coins as readCoins, dropReady, useDrop, resetDrop, msToMidnight, DUP_COINS, CONTEST_COINS } from '../lib/store.js';
+import { coins as readCoins, dropReady, useDrop, resetDrop, msToMidnight, DUP_COINS, CONTEST_COINS, dropsLeft, dropLimit, FREE_DROPS, MEMBER_DROPS } from '../lib/store.js';
 import { catalog, catImg } from '../lib/cloud.js';
-import { SHOP, COIN_PACKS, packTotal, payments, rollPack, packLuck, luckRGB, hex2rgb, PACK_SIZE, THEME_SHOP } from '../lib/shop.js';
+import { SHOP, COIN_PACKS, packTotal, payments, rollPack, packLuck, luckRGB, hex2rgb, PACK_SIZE, THEME_SHOP, MEMBER, packEur } from '../lib/shop.js';
 import { packHTML, setPackVars, runPack } from '../lib/packOpen.js';
 import { thumbUrl } from '../lib/draw.js';
 import { Sheet, Screen } from '../components/ui.jsx';
@@ -22,20 +22,21 @@ function MiniPack({ off, rgb }) {
   useEffect(() => { if (ref.current) { ref.current.innerHTML = packHTML(false); setPackVars(ref.current); } }, []);
   return <div className={'pk-mini' + (off ? ' off' : '')} style={rgb ? { '--lc-rgb': rgb.join(',') } : null}><div className="pk-pack" ref={ref} /></div>;
 }
-function CcTile({ p, i, hl, lang, onClick }) {
+function CcTile({ p, i, hl, lang, onClick, member }) {
   const bp = p.bonus ? Math.round(p.bonus / p.coins * 100) : 0;
   return (
     <button type="button" className={'cc-tile' + (hl ? ' hl' : '')} data-cc={p.id} onClick={onClick}>
       {p.tag && hl == null && <span className="cc-tag">{tr('cc.' + p.tag)}</span>}
       <span className="pile" aria-hidden="true">{[...Array(Math.min(5, i + 1))].map((_, k) => <i className="coin" key={k} />)}</span>
       <b className="cc-amt">{packTotal(p).toLocaleString(lang)}</b><small>Card Coins</small>
-      <span className="cc-bonus">{bp ? tr('cc.bonus', { p: bp }) : ''}</span><span className="cc-price">{eurTxt(p.eur, lang)}</span>
+      <span className="cc-bonus">{bp ? tr('cc.bonus', { p: bp }) : ''}</span><span className="cc-price">{member && <s>{eurTxt(p.eur, lang)}</s>}{eurTxt(packEur(p, member), lang)}</span>
     </button>
   );
 }
 
 export function Shop() {
-  const { coins, setCoins, addCoins, unlock, setPack, pack, toast, lang, ver, theme, setTheme, canUse, buyTheme, shopFocus, setShopFocus } = useApp();
+  const { coins, setCoins, addCoins, unlock, setPack, pack, toast, lang, ver, theme, setTheme, canUse, buyTheme, shopFocus, setShopFocus, member, memberTs, joinMember, endMember } = useApp();
+  const [mem, setMem] = useState(false);
   const [cat, setCat] = useState(null);
   const [now, setNow] = useState(Date.now());
   const [cc, setCc] = useState(null);         /* {mode:'short'|'confirm', p, want} */
@@ -77,10 +78,21 @@ export function Shop() {
           <button type="button" className="ibtn" id="bst-info" aria-label={tr('info.btn')} onClick={() => setInfo(true)}><IcoInfo /></button>
         </>}>
         <p className="demo">{tr('shop.demo')}</p>
+        <div className={'member-card' + (member ? ' on' : '')} id="member">
+          <div className="mh"><span className="mlogo">MyCard<b>+</b></span>{member && <span className="mbadge">{tr('member.badge')}</span>}</div>
+          <ul>
+            <li>{tr('member.b1', { n: MEMBER_DROPS, f: FREE_DROPS })}</li>
+            <li>{tr('member.b2')}</li>
+            <li>{tr('member.b3', { p: Math.round(MEMBER.discount * 100) })}</li>
+          </ul>
+          {member ? <><p className="msub">{tr('member.active', { d: new Date(memberTs).toLocaleDateString(lang) })}</p>
+              <button type="button" className="link" id="member-cancel" onClick={() => { endMember(); toast(tr('member.ended')); }}>{tr('member.cancel')}</button></>
+            : <button type="button" className="btn primary block" id="member-join" onClick={() => setMem(true)}>{tr('member.join')} · {tr('member.price', { p: eurTxt(MEMBER.eur, lang) })}</button>}
+        </div>
         <div className="free">
           <MiniPack off={!ready || empty} />
-          <div className="txt"><span className="shop-badge">{tr('shop.daily')}</span><h2>{tr('shop.dailyName')}</h2>
-            <p id="bst-msg" role="status">{empty ? tr('drop.empty') : ready ? tr('drop.ready') : tr('drop.wait', { t: clock(msToMidnight() + (now - now)) })}</p>
+          <div className="txt"><span className="shop-badge">{tr('shop.dailyN', { n: dropLimit() })}</span><h2>{tr('shop.dailyName')}</h2>
+            <p id="bst-msg" role="status">{empty ? tr('drop.empty') : ready ? tr('drop.left', { n: dropsLeft(), t: dropLimit() }) : tr('drop.wait', { t: clock(msToMidnight()) })}</p>
             <button type="button" className="btn primary" id="bst-open" disabled={!ready || !cat || empty || !!pack} onClick={() => openBooster('daily')}>{tr('drop.open')}</button>
           </div>
         </div>
@@ -101,12 +113,12 @@ export function Shop() {
               <div className="theme-prev" data-t={t.k} aria-hidden="true"><i /><i /><b /></div>
               <h3>{tr('theme.' + t.k)}</h3>
               {on ? <button type="button" className="btn sm on" disabled>{tr('shop.themeActive')}</button>
-                : own ? <button type="button" className="btn sm" data-apply={t.k} onClick={() => setTheme(t.k)}>{t.price ? tr('shop.themeApply') : tr('shop.themeFree')}</button>
+                : own ? <button type="button" className="btn sm" data-apply={t.k} onClick={() => setTheme(t.k)}>{!t.price ? tr('shop.themeFree') : member ? tr('member.included') : tr('shop.themeApply')}</button>
                 : <button type="button" className={'btn sm primary shop-buy' + (coins < t.price ? ' poor' : '')} data-theme-buy={t.k} aria-label={tr('shop.buy', { n: t.price })} onClick={() => getTheme(t.k)}><i className="coin" />{t.price}</button>}
             </article>); })}
         </div>
         <h2 className="sec-h" id="cc-section" ref={ccRef}>{tr('cc.store')}</h2>
-        <div className="cc-grid" id="cc-grid">{COIN_PACKS.map((p, i) => <CcTile key={p.id} p={p} i={i} lang={lang} onClick={() => setCc({ mode: 'confirm', p })} />)}</div>
+        <div className="cc-grid" id="cc-grid">{COIN_PACKS.map((p, i) => <CcTile key={p.id} p={p} i={i} lang={lang} member={member} onClick={() => setCc({ mode: 'confirm', p })} />)}</div>
         <p className="demo">{tr('cc.demoNote')}</p>
         <details className="group pad">
           <summary className="sec-h" style={{ margin: 0, cursor: 'pointer' }}>{tr('demo.tools')}</summary>
@@ -119,18 +131,27 @@ export function Shop() {
       {cc && cc.mode === 'short' && (() => { const { need, picks } = shortPicks(cc.want); return (
         <Sheet title={tr('cc.shortT')} onClose={() => setCc(null)}>
           <p className="cc-msg">{tr('cc.short', { n: need.toLocaleString(lang) })}</p>
-          <div className="cc-offers">{picks.map((p, k) => <CcTile key={p.id} p={p} i={COIN_PACKS.indexOf(p)} hl={k === 0} lang={lang} onClick={() => setCc({ mode: 'confirm', p, want: cc.want })} />)}</div>
+          <div className="cc-offers">{picks.map((p, k) => <CcTile key={p.id} p={p} i={COIN_PACKS.indexOf(p)} hl={k === 0} lang={lang} member={member} onClick={() => setCc({ mode: 'confirm', p, want: cc.want })} />)}</div>
           <button type="button" className="btn" id="cc-all" onClick={() => { setCc(null); setTimeout(() => ccRef.current && ccRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50); }}>{tr('cc.all')}</button>
         </Sheet>); })()}
       {cc && cc.mode === 'confirm' && (
         <Sheet title={tr('cc.confirmT')} onClose={() => setCc(null)}>
-          <div className="cc-offers"><CcTile p={cc.p} i={COIN_PACKS.indexOf(cc.p)} hl={false} lang={lang} /></div>
-          <p className="cc-msg">{tr('cc.confirmQ', { n: packTotal(cc.p).toLocaleString(lang), p: eurTxt(cc.p.eur, lang) })}{cc.want ? ' ' + tr('cc.then') : ''}</p>
+          <div className="cc-offers"><CcTile p={cc.p} i={COIN_PACKS.indexOf(cc.p)} hl={false} lang={lang} member={member} /></div>
+          <p className="cc-msg">{tr('cc.confirmQ', { n: packTotal(cc.p).toLocaleString(lang), p: eurTxt(packEur(cc.p, member), lang) })}{cc.want ? ' ' + tr('cc.then') : ''}</p>
           <p className="note">{tr('cc.demoNote')}</p>
-          <div className="two"><button type="button" className="btn primary" id="cc-pay" onClick={() => buy(cc.p)}>{tr('cc.pay', { p: eurTxt(cc.p.eur, lang) })}</button><button type="button" className="btn" id="cc-cancel" onClick={() => setCc(null)}>{tr('cc.cancel')}</button></div>
+          <div className="two"><button type="button" className="btn primary" id="cc-pay" onClick={() => buy(cc.p)}>{tr('cc.pay', { p: eurTxt(packEur(cc.p, member), lang) })}</button><button type="button" className="btn" id="cc-cancel" onClick={() => setCc(null)}>{tr('cc.cancel')}</button></div>
         </Sheet>
       )}
       {info && <InfoSheet onClose={() => setInfo(false)} />}
+      {mem && (
+        <Sheet title="MyCard+" onClose={() => setMem(false)}>
+          <p className="cc-msg">{tr('member.confirm', { p: eurTxt(MEMBER.eur, lang) })}</p>
+          <ul className="shop-info"><li>{tr('member.b1', { n: MEMBER_DROPS, f: FREE_DROPS })}</li><li>{tr('member.b2')}</li><li>{tr('member.b3', { p: Math.round(MEMBER.discount * 100) })}</li></ul>
+          <p className="note">{tr('member.demo')}</p>
+          <div className="two"><button type="button" className="btn primary" id="member-pay" onClick={async () => { let ok = false; try { ok = await payments.subscribe(); } catch (e) { /* refusé */ } if (!ok) { toast(tr('cc.failed')); return; } joinMember(); setMem(false); toast(tr('member.joined')); }}>{tr('member.join')}</button>
+            <button type="button" className="btn" onClick={() => setMem(false)}>{tr('cc.cancel')}</button></div>
+        </Sheet>
+      )}
     </Screen>
   );
 }

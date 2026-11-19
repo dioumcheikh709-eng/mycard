@@ -10,7 +10,7 @@ import { googleLogout, googleMe } from '../lib/auth.js';
 import { Screen } from '../components/ui.jsx';
 
 export function Profile() {
-  const { user, logout, lang, setLang, theme, THEMES, setTheme, canUse, setTab, setShopFocus, toast, gAcct, setGAcct, avatar, setAvatar } = useApp();
+  const { user, logout, lang, setLang, theme, THEMES, setTheme, canUse, setTab, setShopFocus, toast, gAcct, setGAcct, avatar, setAvatar, member } = useApp();
   const [mod, setMod] = useState(isMod());
   useEffect(() => { if (!gAcct) googleMe().then(a => a && setGAcct(a)); }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
@@ -24,7 +24,7 @@ export function Profile() {
                 <span className="cam" aria-hidden="true"><IcoCamera /></span>
                 <input type="file" accept="image/*" id="f-avatar" onChange={e => { const f = e.target.files[0]; e.target.value = ''; if (f) toAvatar(f).then(setAvatar).catch(() => toast(tr('profile.photoBad'))); }} />
               </label>
-              <div className="grow"><b style={{ font: "700 20px 'Barlow Condensed',Tajawal,sans-serif" }}>{user}</b><small>{avatar ? tr('profile.photoChange') : tr('profile.photoAdd')}</small>
+              <div className="grow"><b style={{ font: "700 20px 'Barlow Condensed',Tajawal,sans-serif" }}>{user}</b>{member && <span className="mbadge" style={{ marginInlineStart: 8 }}>MyCard+</span>}<small>{avatar ? tr('profile.photoChange') : tr('profile.photoAdd')}</small>
                 {avatar && <button type="button" className="link" id="avatar-del" style={{ padding: '4px 0' }} onClick={() => setAvatar(null)}>{tr('profile.photoRemove')}</button>}</div>
             </div>
             <div className="row"><div className="grow" id="set-loggedas">{tr('settings.loggedAs', { user })}{gAcct && <small id="set-gacct">{tr('auth.linked', { name: gAcct.name, email: gAcct.email })}</small>}</div></div>
@@ -40,7 +40,7 @@ export function Profile() {
           <p className="group-h">{tr('settings.theme')}</p>
           <div className="seg" id="set-theme">{THEMES.map(c => { const ok = canUse(c); return (
             <button type="button" key={c} data-t={c} className={ok ? '' : 'locked'} aria-pressed={c === theme} onClick={() => { if (ok) setTheme(c); else { toast(tr('theme.locked')); setShopFocus('themes'); setTab('shop'); } }}>
-              <span className="tsw" data-t={c} aria-hidden="true" />{tr('theme.' + c)}{!ok && <span className="lock"><IcoLock />{themePrice(c)}</span>}
+              <span className="tsw" data-t={c} aria-hidden="true" />{tr('theme.' + c)}{!ok && <span className="lock"><IcoLock />{themePrice(c)}</span>}{ok && member && themePrice(c) > 0 && <span className="lock">+</span>}
             </button>); })}</div>
         </div>
         <div>

@@ -26,7 +26,7 @@ Application **React** pour créer, personnaliser et collectionner des cartes hol
 - **Bibliothèque** avec miniatures, recherche, tri en 5 critères ; **11 effets holographiques**, inclinaison au doigt, **gyroscope**.
 - **Export** PNG 840 × 1174 ou **GIF animé** (encodeur écrit pour le projet), partage natif.
 - **Fluidité** : vise 120, puis 100, 90, 60 images/s avant de simplifier l'effet ; 30 images/s au repos après 1 minute.
-- **Boutique** (booster gratuit du jour, boosters à acheter, Card Coins), **concours hebdomadaire**, **modérateur** (code ou Touch ID / Face ID).
+- **Boutique** (3 boosters gratuits par jour, boosters à acheter, thèmes, Card Coins, abonnement **MyCard+**), **concours hebdomadaire**, **modérateur** (code ou Touch ID / Face ID).
 - **5 langues** (français, anglais, espagnol, allemand, arabe de droite à gauche), **7 thèmes** (Noir et Blanc gratuits, Bleu, Rouge, Violet, Vert et Arc-en-ciel à acheter dans la boutique), **photo de profil**.
 - Les cartes créées avec l'ancienne version sont **retrouvées telles quelles** (mêmes clés de stockage).
 
@@ -97,7 +97,7 @@ Pour en changer : calcule la nouvelle empreinte de `identifiant + "\n" + code` a
 
 L'image est incluse dans l'extrait (en `data:` URL). Si elle alourdit trop le fichier (l'application prévient au-delà de 300 Ko), héberge-la et remplace la valeur de `img` par son adresse.
 
-**Boutique et Card Coins.** L'onglet **Boutique** contient le **booster gratuit du jour** (un par jour, comme dans Brawl Stars), des **boosters à acheter avec des Card Coins** et les **offres de Card Coins** (achetables avec de l'argent réel).
+**Boutique et Card Coins.** L'onglet **Boutique** contient les **boosters gratuits du jour** (3 par jour, 9 avec MyCard+), des **boosters à acheter avec des Card Coins** et les **offres de Card Coins** (achetables avec de l'argent réel).
 
 | Booster | Prix (Card Coins) | Contenu |
 |---|---|---|
@@ -124,7 +124,7 @@ Quand le solde ne suffit pas pour un booster, une fenêtre propose directement l
 
 On commence avec 300 Card Coins. On en gagne avec les **doublons** (Commune 5 · Peu commune 12 · Rare 30 · Épique 80 · Légendaire 200) et **50 Card Coins** à la première inscription de la semaine au concours (`SHOP`, `DUP_COINS`, `CONTEST_COINS`, `START_COINS`). Les « Outils démo » permettent d'ajouter 500 Card Coins.
 
-**Booster du jour.** Un booster par jour (il se recharge à minuit, heure locale), de **5 cartes avec au plus 1 légendaire**.
+**Boosters du jour.** 3 boosters gratuits par jour, 9 avec MyCard+ (le compteur repart à zéro à minuit, heure locale), de **5 cartes avec au plus 1 légendaire**.
 Chaque carte est tirée selon sa rareté ; dès qu'une légendaire sort, les cartes suivantes du booster ne peuvent plus l'être. Une carte n'apparaît pas deux fois dans le même booster tant que sa rareté a assez de cartes.
 
 | Rareté | Chance par carte |
@@ -160,6 +160,15 @@ Les icônes (onglets du bas, studio, boutique) sont **dessinées en SVG** dans `
 ## Profil (paramètres)
 Onglet **Profil** : **photo de profil** (recadrée en carré 256 × 256, gardée sur l'appareil, affichée aussi dans l'onglet), pseudo et compte Google,
 langue, **thème**, connexion **modérateur**, confidentialité et crédits.
+
+## MyCard+ (abonnement)
+4,99 € par mois (réglable dans `MEMBER`, `app/src/lib/shop.js`) :
+- **9 boosters gratuits par jour** au lieu de 3 ;
+- **tous les thèmes** débloqués (un thème non acheté revient au noir à la fin de l'abonnement) ;
+- **−15 % sur les Card Coins** (prix barré affiché dans la boutique).
+
+Mode démo : `payments.subscribe` ne débite personne et l'abonnement (30 jours) est gardé sur l'appareil (`mycard-member:<pseudo>`).
+Dans les applis iOS et Android, il devra passer par les abonnements de l'App Store et de Google Play, vérifiés par le serveur.
 
 ## Thèmes
 | Thème | Prix | Style |
